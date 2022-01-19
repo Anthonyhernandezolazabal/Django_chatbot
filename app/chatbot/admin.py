@@ -1,3 +1,8 @@
 from django.contrib import admin
+from chatbot.models import chat_user
 
-# Register your models here.
+class chat_userAdmin(admin.ModelAdmin):
+    list_display = ('pregunta','key_session_id')
+
+
+admin.site.register(chat_user,chat_userAdmin)
