@@ -14,7 +14,6 @@ $(document).ready(function () {
     } else {
 
       var nombre_usuario = $('#txtusuario').val();
-      $('#nombre_text').val(nombre_usuario);
       $('.chat-mail').addClass('hide');
       $('.chat-body').removeClass('hide');
       $('.chat-input').removeClass('hide');
@@ -52,7 +51,6 @@ $(document).ready(function () {
     });
     $.get("http://127.0.0.1:8000/getchat", {
       msg: rawText,
-      nom: usuario_nomb
     }).done(function (data) {
 
       var botHtml = '<div class="chat-bubble you">' + data + "</div>";
