@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from datetime import datetime
+from chatbot.models import chat_user
 # from .bot_function import conversation_directory,initialize
 
 import os
@@ -101,8 +102,8 @@ def select_response(message, list_response, storage=None):
   return response
 
 conversation_directory()
-initialize()
-train_bot(load_conversations())
+# initialize()
+# train_bot(load_conversations())
 ''' =============================================
   END CHATTERBOT
 ============================================= '''
@@ -143,47 +144,56 @@ def getnombre(request):
 def getchat(request):
   global session_cook
 
-  user_cook = request.session.session_key
-  user = session_cook
+  if request.GET['msg']:
 
-  myuser = user[user_cook]
+    user_cook = request.session.session_key
+    user = session_cook
 
-  bol=myuser['bol']
-  entradatmp=myuser['entradatmp']
-  chat_input = request.GET.get('msg')
+    myuser = user[user_cook]
 
-  if(bol==1):
+    bol=myuser['bol']
+    entradatmp=myuser['entradatmp']
+    chat_input = request.GET.get('msg')
 
-    trainer = ListTrainer(bot)
-    trainer.train([str(entradatmp),str(chat_input)])
-    rpta2 = "He aprendiendo que cuando digas -> {} <- debo responder -> {} <- ".format(str(entradatmp),str(chat_input))
-    myuser['bol']=0
-    user[user_cook] = myuser
-    session_cook = user
-    print('variable sesion: ',session_cook[user_cook])
-    return HttpResponse(str(rpta2))   
 
-  else:
 
-    if chat_input!='adios':
-      response = bot.get_response(chat_input)
-      if response.confidence > 0.0:
-        myuser['bol']= 0
-        user[user_cook] = myuser
-        session_cook = user
-        print('variable sesion: ',session_cook[user_cook])
-        return HttpResponse(str(response))  
-      else:
-        rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
-        myuser['bol']=1
-        user[user_cook] = myuser
-        session_cook = user
-        myuser['entradatmp']=chat_input
-        #print('variable sesion: ',session_cook[user_cook])
-        return HttpResponse(str(rpta1)) 
+    if(bol==1):
+
+      trainer = ListTrainer(bot)
+      trainer.train([str(entradatmp),str(chat_input)])
+      rpta2 = "He aprendiendo que cuando digas -> {} <- debo responder -> {} <- ".format(str(entradatmp),str(chat_input))
+      myuser['bol']=0
+      user[user_cook] = myuser
+      session_cook = user
+      print('variable sesion: ',session_cook[user_cook])
+      return HttpResponse(str(rpta2))
 
     else:
-      rpta_final = "Espero haber atendido tus dudas"
-      return HttpResponse(str(rpta_final))
+
+      if chat_input!='adios':
+        response = bot.get_response(chat_input)
+        if response.confidence > 0.0:
+          myuser['bol']= 0
+          user[user_cook] = myuser
+          session_cook = user
+          print('variable sesion: ',session_cook[user_cook])
+
+          # === GUARDA LAS SESSIONES EN LA BD
+          user_chat = chat_user(pregunta=chat_input,key_session_id=user_cook,respuesta=response)
+          user_chat.save()
+
+          return HttpResponse(str(response))  
+        else:
+          rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
+          myuser['bol']=1
+          user[user_cook] = myuser
+          session_cook = user
+          myuser['entradatmp']=chat_input
+          #print('variable sesion: ',session_cook[user_cook])
+          return HttpResponse(str(rpta1)) 
+
+      else:
+        rpta_final = "Espero haber atendido tus dudas"
+        return HttpResponse(str(rpta_final))
 
   
