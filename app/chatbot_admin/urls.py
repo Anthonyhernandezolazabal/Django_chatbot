@@ -8,4 +8,5 @@ urlpatterns = [
     path('inicio/',login_required(views.Home),name='home'),
     path('',LoginFormViews.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
+    path('test_chatbot/',login_required(views.test_chatbot),name='test_chatbot'),
 ]

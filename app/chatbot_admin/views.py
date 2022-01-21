@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 @ login_required ( login_url= 'home' )
 def Home(request):
-  return render(request, 'chatbot_admin/base.html')
+  return render(request, 'chatbot_admin/inicio.html')
 
 class LoginFormViews(LoginView):
   template_name = 'chatbot_admin/acceso.html'
@@ -19,3 +19,6 @@ class LoginFormViews(LoginView):
       context = super().get_context_data(**kwargs)
       context['title'] = 'Iniciar sesion'
       return context
+
+def test_chatbot(request):
+  return render(request, 'chatbot_admin/test_chatbot.html')
