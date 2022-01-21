@@ -155,8 +155,6 @@ def getchat(request):
     entradatmp=myuser['entradatmp']
     chat_input = request.GET.get('msg')
 
-
-
     if(bol==1):
 
       trainer = ListTrainer(bot)
@@ -195,5 +193,3 @@ def getchat(request):
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))
-
-  
