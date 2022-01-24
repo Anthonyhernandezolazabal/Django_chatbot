@@ -123,6 +123,7 @@ def HomeChatbot(request):
 # ==== VALIDAR SESION CAPTURANDO NOMBRE ===
 def getnombre(request):
   global session_cook
+  global user_alias
   if not request.session.session_key:
     request.session.create()
   else:
@@ -143,10 +144,12 @@ def getnombre(request):
 # ==== EJECUTAR CONVERSACIÓN ===
 def getchat(request):
   global session_cook
+  global user_alias
 
   if request.GET['msg']:
 
-    user_cook = request.session.session_key
+    user_cook = user_alias
+    print('capturando mi session :',user_cook)
     user = session_cook
 
     myuser = user[user_cook]

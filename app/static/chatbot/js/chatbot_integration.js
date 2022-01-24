@@ -1,7 +1,6 @@
 var boddy = document.querySelector("body");
 var body = document.createElement("div");
 
-
 var htmlbot = `
           <div class="chat-screen" style='overflow-y: hidden;'>
               <div class="chat-header">
@@ -114,8 +113,6 @@ var htmlbot = `
               <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
               </div>
-
-
 `;
 body.innerHTML = htmlbot
 boddy.append(body);
