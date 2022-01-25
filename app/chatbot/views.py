@@ -29,9 +29,12 @@ def conversation_directory():
   print('TODOS MIS JSON:',CONVERSATION_SETTINGS)
 
 ''' ======= INICIANDO LIBRERIA CHATTERBOT ==== '''
-def initialize():
+def initialize(id_user_create):
   global bot
   global trainer
+  global nombre_bd
+
+  nombre_bd = 'midbaprendida_'+id_user_create
 
   bot = ChatBot(
     "Chatbot INGyTAL",
@@ -39,7 +42,7 @@ def initialize():
     statement_comparison_function=comparate_messages,
     response_selection_method=select_response,
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
-    database_uri='sqlite:///midbaprendida.sqlite3',
+    database_uri='sqlite:///'+nombre_bd+'.sqlite3',
     logic_adapters=[
         {
             "import_path":"chatterbot.logic.BestMatch",
