@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
   <meta content="Coderthemes" name="author">
-  {% include 'chatbot_admin/head.html' %}
+  {% include 'chatbot_admin/layouts/head.html' %}
 
 </head>
 
@@ -18,11 +18,11 @@
   <!-- Begin page -->
   <div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
-    {% include 'chatbot_admin/menu.html' %}
+    {% include 'chatbot_admin/layouts/menu.html' %}
 
     <div class="content-page">
       <div class="content">
-        {% include 'chatbot_admin/nav.html' %}
+        {% include 'chatbot_admin/layouts/nav.html' %}
 
         {% block content %} {% endblock %}
 

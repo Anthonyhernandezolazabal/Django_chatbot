@@ -9,4 +9,6 @@ urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
     path('test_chatbot/',login_required(views.test_chatbot),name='test_chatbot'),
+    path('registro/',views.register_view,name='registro'),
+    # path('register/',views.register,name='register'),
 ]

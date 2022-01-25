@@ -102,8 +102,8 @@ def select_response(message, list_response, storage=None):
   return response
 
 conversation_directory()
-initialize()
-train_bot(load_conversations())
+# initialize()
+# train_bot(load_conversations())
 ''' =============================================
   END CHATTERBOT
 ============================================= '''

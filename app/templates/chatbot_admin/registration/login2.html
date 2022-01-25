@@ -8,12 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
   <meta content="Coderthemes" name="author">
-  {% include 'chatbot_admin/head.html' %}
+  {% include 'chatbot_admin/layouts/head.html' %}
 
 </head>
 
 <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
-
 
   <div class="auth-fluid">
     <div class="auth-fluid-form-box">
@@ -30,8 +29,8 @@
             </a>
           </div>
 
-          <h4 class="mt-0">Iniciar sesión</h4>
-          <p class="text-muted mb-4">Ingrese su usuario y contraseña para acceder al sistema.</p>
+          <h4 class="mt-0" id='h4_initsession'>Iniciar sesión</h4>
+          <p class="text-muted mb-4" id='p_inf'>Ingrese su usuario y contraseña para acceder al sistema.</p>
 
           <!-- INICIAR SESION -->
           <form method="post" id='frm_access'>
@@ -80,7 +79,7 @@
 
           <!-- REGISTRARSE -->
           <form method="post" style='display: none' id='frm_register'>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="fullname" class="form-label">Full Name</label>
               <input class="form-control" type="text" id="fullname" placeholder="Enter your name" required>
             </div>
@@ -98,12 +97,16 @@
                 <label class="form-check-label" for="checkbox-signup">I accept <a href="javascript: void(0);"
                     class="text-muted">Terms and Conditions</a></label>
               </div>
-            </div>
+            </div>-->
+
+            {% csrf_token %}
+
+            { { form.as_p } }
+
             <div class="mb-0 d-grid text-center">
-              <button class="btn btn-primary" type="submit"><i class="mdi mdi-account-circle"></i> Sign Up
+              <button class="btn btn-primary" type="submit"><i class="mdi mdi-account-circle"></i> Registrar
               </button>
             </div>
-            <!-- social-->
             <div class="text-center mt-4">
               <p class="text-muted font-16">Sign up using</p>
               <ul class="social-list list-inline mt-3">
@@ -124,7 +127,10 @@
                       class="mdi mdi-github"></i></a>
                 </li>
               </ul>
-            </div>
+            </div> 
+            
+           
+          
           </form>
 
           <!-- Footer-->
@@ -154,17 +160,30 @@
   </div>
 
 
-
-
-
   <script>
-
     function cambiarDiv() {
 
-      console.log('Hola')
+      var x = document.getElementById("frm_access");
+      var y = document.getElementById("frm_register");
+
+      if (x.style.display === "none") {
+          x.style.display = "block";
+          y.style.display = "none";
+          document.querySelector('#h4_initsession').innerText = 'Iniciar Sesion';
+          document.querySelector('#p_inf').innerText = 'Ingrese su usuario y contraseña para acceder al sistema.';
+          
+          document.querySelector('#dv_footer').innerHTML = "<p class='text-muted'>¿No tienes una cuenta? <a href='#' id='registrarme' onclick='cambiarDiv();'class='text-muted ms-1'><b>Registrate</b></a></p>";
+          
+      } else {
+          x.style.display = "none";
+          y.style.display = "block";
+          document.querySelector('#h4_initsession').innerText = 'Registro';
+          document.querySelector('#p_inf').innerText = '¿No tienes una cuenta? Crea tu cuenta, te llevará menos de un minuto';
+
+          document.querySelector('#dv_footer').innerHTML = "<p class='text-muted'>¿Tienes una cuenta? <a href='#' id='registrarme' onclick='cambiarDiv();'class='text-muted ms-1'><b>Inicia Sesión</b></a></p>";
+      }
 
     }
-
 
   </script>
 
