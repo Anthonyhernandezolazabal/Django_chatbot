@@ -29,14 +29,17 @@ def conversation_directory():
   print('TODOS MIS JSON:',CONVERSATION_SETTINGS)
 
 ''' ======= INICIANDO LIBRERIA CHATTERBOT ==== '''
+global bot
+bot = {}
+
+print('bot id que recibo :',bot)
 def initialize(id_user_create):
-  global bot
   global trainer
   global nombre_bd
 
   nombre_bd = 'midbaprendida_'+id_user_create
 
-  bot = ChatBot(
+  bot[id_user_create] = ChatBot(
     "Chatbot INGyTAL",
     read_only=True,
     statement_comparison_function=comparate_messages,
@@ -48,7 +51,8 @@ def initialize(id_user_create):
             "import_path":"chatterbot.logic.BestMatch",
         }
     ])
-  trainer = ListTrainer(bot)
+    
+  trainer = ListTrainer(bot[id_user_create])
 
 ''' ======= CARGAR CONVERSACIÓN ==== '''
 def load_conversations():
@@ -161,9 +165,11 @@ def getchat(request):
     entradatmp=myuser['entradatmp']
     chat_input = request.GET.get('msg')
 
+    id_user_create = request.GET.get('id_user_create')
+
     if(bol==1):
 
-      trainer = ListTrainer(bot)
+      trainer = ListTrainer(bot[id_user_create])
       trainer.train([str(entradatmp),str(chat_input)])
       rpta2 = "He aprendiendo que cuando digas -> {} <- debo responder -> {} <- ".format(str(entradatmp),str(chat_input))
       myuser['bol']=0
@@ -175,7 +181,7 @@ def getchat(request):
     else:
 
       if chat_input!='adios':
-        response = bot.get_response(chat_input)
+        response = bot[id_user_create].get_response(chat_input)
         if response.confidence > 0.0:
           myuser['bol']= 0
           user[user_cook] = myuser

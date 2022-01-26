@@ -16,14 +16,12 @@
           </ol>
         </div>
         <h4 class="page-title">Plantilla principal</h4>
-<!-- 
-        {% if messages %}
-          {% for message in messages %}
 
-            <h1>{{message}} Bienvenido</h1>
+        {% if username_user %}
 
-          {% endfor %}
-        {% endif %} -->
+          <h1>{{ username_user|upper }} - Bienvenido</h1>
+
+        {% endif %}
         
       </div>
     </div>
