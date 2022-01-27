@@ -12,20 +12,24 @@ $(document).ready(function () {
 
     var id_cliente = $("#id_user_logueado").val();
     var username = $("#username_logueado").val();
+    var nombrebd = $("#nombrebd_logueado").val();
     
   }else{
 
     var id_cliente =  JSON.parse(guardado).id_cliente;
     var username = JSON.parse(guardado).username;
+    var nombrebd = JSON.parse(guardado).nombrebd;
 
     $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase()+' - Bienvenido')
     $('#id_id_user').val(JSON.parse(guardado).id_cliente)
+    $('#id_nombreBD').val(JSON.parse(guardado).nombrebd+'.sqlite3')
 
   }
 
   datos = {
     id_cliente: id_cliente,
-    username: username
+    username: username,
+    nombrebd: nombrebd
   }
 
 

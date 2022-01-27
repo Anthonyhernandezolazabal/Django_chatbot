@@ -24,9 +24,10 @@ class ClientRegisterForm(forms.ModelForm):
         model = cliente
     #campos que necesitamos
         # fields = '__all__'  #Todo los campos
-        fields = ["nombre","direccion","web","avatar","residencia",'id_user']
+        fields = ["nombre","direccion","web","avatar","residencia",'id_user','nombreBD']
         # exclude = ('nombre campo')
         widgets = {
-            'id_user': forms.HiddenInput()
+            'id_user': forms.HiddenInput(),
+            'nombreBD': forms.HiddenInput(),
         }
         

@@ -33,7 +33,6 @@ bot = {}
 
 def initialize(id_user_create):
   global trainer
-  global nombre_bd
 
   nombre_bd = 'midbaprendida_'+id_user_create
 
@@ -51,6 +50,8 @@ def initialize(id_user_create):
     ])
     
   trainer = ListTrainer(bot[id_user_create])
+
+  return nombre_bd
 
 ''' ======= CARGAR CONVERSACIÓN ==== '''
 def load_conversations():

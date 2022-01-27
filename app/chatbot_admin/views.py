@@ -25,14 +25,14 @@ class LoginFormViews(LoginView):
         id_user_login = request.session.get('_auth_user_id')
         username_user_login = request.user.username
 
-        params = {"id_user": id_user_login,"username_user": username_user_login}
-
         #INICIAR BOT
-        initialize(id_user_login)
+        t = initialize(id_user_login)
         conversations = load_conversations()
 
         if conversations:
           train_bot(conversations)
+
+        params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t}
         
         # return redirect('home')
         return render(request,"chatbot_admin/layouts/empresa.html",params)

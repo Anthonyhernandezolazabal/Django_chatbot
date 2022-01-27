@@ -10,6 +10,7 @@ class cliente(models.Model):
     estado = models.BooleanField(default=True)
     registrado = models.DateTimeField(auto_now_add=True)
     id_user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    nombreBD = models.CharField(max_length=50, default=None)
 
     def _str_(self):
         return self.nombre
