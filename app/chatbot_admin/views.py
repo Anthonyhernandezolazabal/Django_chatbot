@@ -6,6 +6,10 @@ from .forms import UserRegisterForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from chatbot.views import initialize,conversation_directory,load_conversations,train_bot
+from django.http import HttpResponse
+from chatbot_admin.models import cliente
+from django.http import HttpRequest
+from chatbot_admin.forms import ClientRegisterForm
 
 @ login_required ( login_url= 'home' )
 def Home(request):
@@ -22,18 +26,16 @@ class LoginFormViews(LoginView):
         username_user_login = request.user.username
 
         params = {"id_user": id_user_login,"username_user": username_user_login}
-        print('params :',params)
 
         #INICIAR BOT
         initialize(id_user_login)
         conversations = load_conversations()
 
-        print('conversations: ',conversations)
         if conversations:
           train_bot(conversations)
         
         # return redirect('home')
-        return render(request,"chatbot_admin/layouts/inicio.html",params)
+        return render(request,"chatbot_admin/layouts/empresa.html",params)
         
         
       return super().dispatch(request, *args, **kwargs)
@@ -68,7 +70,6 @@ def register_view(request):
       initialize(id_user_create)
       conversations = load_conversations()
 
-      print('conversations: ',conversations)
       if conversations:
           train_bot(conversations)
 
@@ -81,4 +82,17 @@ def register_view(request):
   
   context = {'form':form}
   return render(request,'chatbot_admin/registration/register.html',context)
-    
+ 
+class FormularioCliente(HttpRequest):
+
+  def index(request):
+    cliente = ClientRegisterForm()
+    return render(request, 'chatbot_admin/layouts/empresa.html',{'form':cliente})
+
+  def procesar_formulario(request):
+    cliente = ClientRegisterForm(request.POST)
+    if cliente.is_valid():
+      cliente.save()
+      cliente = ClientRegisterForm()
+
+    return render(request, "chatbot_admin/layouts/empresa.html", {'form':cliente,'mensaje':'ok'})

@@ -26,13 +26,11 @@ def conversation_directory():
     # ===== CONFORME SE VAN CREANDO ARCHIVOS, LOS ALMACENA EN EL ARRAY =====
     for x in ficheros:
         CONVERSATION_SETTINGS.append(ruta+x)
-  print('TODOS MIS JSON:',CONVERSATION_SETTINGS)
 
 ''' ======= INICIANDO LIBRERIA CHATTERBOT ==== '''
 global bot
 bot = {}
 
-print('bot id que recibo :',bot)
 def initialize(id_user_create):
   global trainer
   global nombre_bd

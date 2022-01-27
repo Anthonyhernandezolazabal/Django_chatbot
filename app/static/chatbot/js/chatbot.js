@@ -18,6 +18,9 @@ $(document).ready(function () {
     var id_cliente =  JSON.parse(guardado).id_cliente;
     var username = JSON.parse(guardado).username;
 
+    $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase()+' - Bienvenido')
+    $('#id_id_user').val(JSON.parse(guardado).id_cliente)
+
   }
 
   datos = {
