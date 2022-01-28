@@ -15,10 +15,7 @@
 <body class="show sidebar-enable"
   data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'
   data-leftbar-compact-mode="condensed">
-
-  <input type="hidden" name="id_user_logueado" id="id_user_logueado" value='{{ id_user }}'>
   <input type="hidden" name="username_logueado" id="username_logueado" value='{{ username_user }}'>
-  <input type="hidden" name="nombrebd_logueado" id="nombrebd_logueado" value='{{ nombreBD }}'>
   <!-- Begin page -->
   <div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
@@ -30,10 +27,10 @@
 
         {% block content %} {% endblock %}
 
-      </div> 
+      </div>
 
 
-      
+
 
 
     </div>
@@ -140,20 +137,26 @@
 
   <div class="rightbar-overlay"></div>
   <!-- /End-bar -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <script>
+            document.write(new Date().getFullYear())
+          </script> © Hyper - Coderthemes.com
+        </div>
+        <div class="col-md-6">
+          <div class="text-md-end footer-links d-none d-md-block">
+            <a href="javascript: void(0);">About</a>
+            <a href="javascript: void(0);">Support</a>
+            <a href="javascript: void(0);">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% include 'chatbot_admin/layouts/footer.html' %}
 
-
-  <!-- bundle -->
-  <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
-  <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
-
-  <!-- INTEGRACION DEL CHATBOT -->
-
-  <!-- <link rel="stylesheet" href="{% static 'chatbot/css/style.css' %}"> -->
-  <link rel="stylesheet" href="{% static 'chatbot/css/chatBot.css' %}">
-  <script src="{% static 'chatbot/js/jquery-3.1.1.min.js' %}"></script>
-  <script src="{% static 'chatbot/js/chatbot.js' %}"></script>
-  
-  <!-- <script src="{% static 'chatbot/js/chatbot_links.js' %}"></script> -->
 
 </body>
 

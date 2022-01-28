@@ -35,6 +35,12 @@ class UserProfile(AbstractUser):
   """ Modelo Base de Datos para Usuarios en el Sistema """
   telefono=models.CharField(max_length=12, null=True)
   id_cliente = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
+
+  class Meta:
+      verbose_name = 'UserProfile'
+      verbose_name_plural = 'UserProfiles'
+      db_table = 'UserProfile'
+      ordering = ['id'] #ordenar por ID
 #   email = models.EmailField(max_length=255,unique=True)
 #   name = models.CharField(max_length=255)
 #   is_active = models.BooleanField(default=True) #Cada usuario creado sera activo

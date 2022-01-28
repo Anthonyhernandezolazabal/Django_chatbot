@@ -18,15 +18,15 @@ class UserRegisterForm(UserCreationForm):
 
 
 class ClientRegisterForm(forms.ModelForm):
-    nombre = forms.CharField(label="Nombre de Empresa", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ingresa nombre",'autofocus': ''}))
-    direccion = forms.CharField(label="Direccion", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ingresa direccion",'autofocus': ''}))
-    web = forms.CharField(label="Página web", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "www.url.com",'autofocus': ''}))
-    residencia = forms.CharField(label="Residencia", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Departamento / Provincia / Distrito",'autofocus': ''}))
+    nombre = forms.CharField(label="Nombre de Empresa", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa nombre",'autofocus': ''}))
+    direccion = forms.CharField(label="Direccion", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa direccion",'autofocus': ''}))
+    web = forms.CharField(label="Página web", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "www.url.com",'autofocus': ''}))
+    residencia = forms.CharField(label="Residencia", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Departamento / Provincia / Distrito",'autofocus': ''}))
     class Meta: #Generación de formularios
         model = cliente
     #campos que necesitamos
         # fields = '__all__'  #Todo los campos
-        fields = ["nombre","direccion","web","avatar","residencia",'nombreBD']
+        fields = ["nombre","direccion","web","residencia",'nombreBD']
         # exclude = ('nombre campo')
         widgets = {
             'nombreBD': forms.HiddenInput(),

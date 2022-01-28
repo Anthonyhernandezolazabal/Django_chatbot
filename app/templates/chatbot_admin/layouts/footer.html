@@ -1,18 +1,17 @@
-<footer class="footer">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6">
-          <script>
-            document.write(new Date().getFullYear())
-          </script> © Hyper - Coderthemes.com
-        </div>
-        <div class="col-md-6">
-          <div class="text-md-end footer-links d-none d-md-block">
-            <a href="javascript: void(0);">About</a>
-            <a href="javascript: void(0);">Support</a>
-            <a href="javascript: void(0);">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+{% load static %}
+
+
+
+  
+  <!-- bundle -->
+  <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
+  <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
+
+  <!-- INTEGRACION DEL CHATBOT -->
+
+  <!-- <link rel="stylesheet" href="{% static 'chatbot/css/style.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'chatbot/css/chatBot.css' %}">
+  <script src="{% static 'chatbot/js/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'chatbot/js/chatbot.js' %}"></script>
+  
+  <!-- <script src="{% static 'chatbot/js/chatbot_links.js' %}"></script> -->
