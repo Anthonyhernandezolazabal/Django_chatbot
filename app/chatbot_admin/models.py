@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+
 
 class cliente(models.Model):
     nombre = models.CharField(max_length=255, verbose_name='Nombre de empresa')
@@ -9,7 +9,6 @@ class cliente(models.Model):
     residencia = models.CharField(max_length=255, verbose_name='Residencia')
     estado = models.BooleanField(default=True)
     registrado = models.DateTimeField(auto_now_add=True)
-    id_user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     nombreBD = models.CharField(max_length=50, default=None)
 
     def _str_(self):

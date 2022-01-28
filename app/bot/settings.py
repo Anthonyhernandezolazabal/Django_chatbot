@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'chatbot',
     'chatbot_admin',
-    'crispy_forms'
+    'crispy_forms',
+    'profile_user',
     
 ]
 
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bd_chatbot',
+        'NAME': 'db_chatboot',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -137,3 +138,5 @@ LOGIN_REDIRECT_URL = 'login'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'profile_user.UserProfile'

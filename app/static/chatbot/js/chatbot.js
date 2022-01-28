@@ -21,7 +21,6 @@ $(document).ready(function () {
     var nombrebd = JSON.parse(guardado).nombrebd;
 
     $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase()+' - Bienvenido')
-    $('#id_id_user').val(JSON.parse(guardado).id_cliente)
     $('#id_nombreBD').val(JSON.parse(guardado).nombrebd+'.sqlite3')
 
   }
