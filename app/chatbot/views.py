@@ -34,7 +34,6 @@ bot = {}
 def initialize(id_user_create):
   global trainer
 
-
   nombre_bd = 'midbaprendida_'+id_user_create
 
   bot[id_user_create] = ChatBot(

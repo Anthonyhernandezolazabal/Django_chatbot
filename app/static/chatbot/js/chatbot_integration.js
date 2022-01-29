@@ -1,7 +1,6 @@
 var boddy = document.querySelector("body");
 var body = document.createElement("div");
 
-
 var htmlbot = `
                     
             <div class="chat-screen" style='overflow-y: hidden;'>

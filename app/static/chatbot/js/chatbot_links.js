@@ -1,6 +1,5 @@
 function init() {
  
-  
   let a = document.createElement("link");
   a.setAttribute("src", "static/chatbot/css/style.css");
   // let aTexto = document.createTextNode("Google");

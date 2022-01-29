@@ -5,7 +5,6 @@ from chatbot_admin.models import cliente
 # from django.contrib.auth.models import PermissionsMixin
 # from django.contrib.auth.models import BaseUserManager
 
-
 # class UserProfileManage(BaseUserManager):
 #   """ Manage para perfiles de usuario (Especifica funciones para manipular lo que tenemos dentro de nuestros objetos de userprofile"""
 

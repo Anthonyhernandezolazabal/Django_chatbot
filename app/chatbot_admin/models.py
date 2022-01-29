@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class cliente(models.Model):
     nombre = models.CharField(max_length=255, verbose_name='Nombre de empresa')
     direccion = models.CharField(max_length=255, verbose_name='Dirección')
