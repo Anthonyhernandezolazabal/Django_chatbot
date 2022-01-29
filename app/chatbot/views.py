@@ -26,26 +26,32 @@ def conversation_directory():
     # ===== CONFORME SE VAN CREANDO ARCHIVOS, LOS ALMACENA EN EL ARRAY =====
     for x in ficheros:
         CONVERSATION_SETTINGS.append(ruta+x)
-  print('TODOS MIS JSON:',CONVERSATION_SETTINGS)
 
 ''' ======= INICIANDO LIBRERIA CHATTERBOT ==== '''
-def initialize():
-  global bot
+global bot
+bot = {}
+
+def initialize(id_user_create):
   global trainer
 
-  bot = ChatBot(
+  nombre_bd = 'midbaprendida_'+id_user_create
+
+  bot[id_user_create] = ChatBot(
     "Chatbot INGyTAL",
     read_only=True,
     statement_comparison_function=comparate_messages,
     response_selection_method=select_response,
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
-    database_uri='sqlite:///midbaprendida.sqlite3',
+    database_uri='sqlite:///'+nombre_bd+'.sqlite3',
     logic_adapters=[
         {
             "import_path":"chatterbot.logic.BestMatch",
         }
     ])
-  trainer = ListTrainer(bot)
+    
+  trainer = ListTrainer(bot[id_user_create])
+
+  return nombre_bd
 
 ''' ======= CARGAR CONVERSACIÓN ==== '''
 def load_conversations():
@@ -102,8 +108,8 @@ def select_response(message, list_response, storage=None):
   return response
 
 conversation_directory()
-initialize()
-train_bot(load_conversations())
+# initialize()
+# train_bot(load_conversations())
 ''' =============================================
   END CHATTERBOT
 ============================================= '''
@@ -158,9 +164,12 @@ def getchat(request):
     entradatmp=myuser['entradatmp']
     chat_input = request.GET.get('msg')
 
+    id_user_create = request.GET.get('id_user_create')
+    print('id_user_create recibido desde JS :',id_user_create)
+
     if(bol==1):
 
-      trainer = ListTrainer(bot)
+      trainer = ListTrainer(bot[id_user_create])
       trainer.train([str(entradatmp),str(chat_input)])
       rpta2 = "He aprendiendo que cuando digas -> {} <- debo responder -> {} <- ".format(str(entradatmp),str(chat_input))
       myuser['bol']=0
@@ -172,7 +181,7 @@ def getchat(request):
     else:
 
       if chat_input!='adios':
-        response = bot.get_response(chat_input)
+        response = bot[id_user_create].get_response(chat_input)
         if response.confidence > 0.0:
           myuser['bol']= 0
           user[user_cook] = myuser
