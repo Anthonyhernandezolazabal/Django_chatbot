@@ -8,6 +8,7 @@ $(document).ready(function () {
 
   console.log('objetoObtenido: ', guardado);
 
+  
   if (guardado == '') {
 
     var id_cliente = $("#id_user_logueado").val();

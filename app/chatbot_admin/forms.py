@@ -4,6 +4,7 @@ from django import forms
 from chatbot_admin.models import cliente
 from profile_user.models import UserProfile
 
+
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label="Nombre de usuario", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa usuario",'autofocus': ''}))
     email = forms.EmailField(label="Dirección de Correo Electrónico", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa Correo",'autofocus': ''}))

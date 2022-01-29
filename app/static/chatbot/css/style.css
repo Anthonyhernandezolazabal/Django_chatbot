@@ -1004,6 +1004,7 @@ select.form-control.form-custom {
 .hide{
     display: none !important;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
