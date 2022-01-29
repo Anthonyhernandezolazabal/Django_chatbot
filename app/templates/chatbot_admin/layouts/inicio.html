@@ -1,0 +1,50 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+            <li class="breadcrumb-item active">Starter</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Plantilla principal</h4>
+
+        
+        
+
+
+        {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+          <i class="dripicons-checkmark me-2"></i>
+          <b class="text-uppercase">Te has registrado exitosamente</b>
+        </div>
+        {% endif %}
+
+        {% if username_user %}
+
+          <h1>{{ username_user|upper }} - Bienvenido</h1>
+
+        {% else %}
+
+          <h1 class='username_user_ls'></h1>
+
+        {% endif %}
+          
+
+       
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

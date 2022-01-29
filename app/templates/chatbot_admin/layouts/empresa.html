@@ -1,0 +1,139 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+            <li class="breadcrumb-item active">Starter</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Perfil</h4>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-xl-5 col-lg-4">
+      <div class="card-body">
+        <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+          <li class="nav-item">
+            <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+              Datos básicos
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#timeline" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
+              Cambiar contraseña
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane show" id="timeline">
+
+            <!-- comment box -->
+            <div class="border rounded mt-2 mb-3">
+              <h1>Cambiar contraseña</h1>
+            </div> <!-- end .border-->
+
+          </div>
+
+          <div class="tab-pane active" id="settings">
+
+            <!-- <form action="registrar_empresa/" method="post">
+
+              {% csrf_token %}
+
+              <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building me-1"></i>Completa la información de la empresa </h5>
+
+              <div class="mb-3">
+                <label for="em_nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="em_nombre" name="em_nombre" placeholder="Ingresa Nombre">
+              </div>
+
+              <div class="mb-3">
+                <label for="em_web" class="form-label">Página web</label>
+                <input type="text" class="form-control" id="em_web" name="em_web" placeholder="Enter last name">
+              </div>
+
+              <div class="mb-3">
+                <label for="em_direccion" class="form-label">Direcció</label>
+                <input type="text" class="form-control" id="em_direccion" name='em_direccion' placeholder="Enter first name">
+              </div>
+              <div class="mb-3">
+                <label for="em_residencia" class="form-label">residencia</label>
+                <input type="text" class="form-control" id="em_residencia" name='em_residencia' placeholder="Enter last name">
+              </div>
+
+              <center>
+                <div class="row">
+                  <div class="col-md-9">
+                    <h4 class="mb-2 mt-2">Foto de perfil</h4>
+                    <img src="{% static 'chatbot_admin/assets/images/default.png' %}"
+                      class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style='margin-bottom: 10px;'>
+                    <div>
+                      <label class="form-label">Cambiar Avatar</label>
+                      <input class="form-control" type="file" id="inputGroupFile04">
+                    </div>
+                  </div>
+                </div>
+              </center>
+
+              <div class="text-end">
+                <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+              </div>
+            </form> -->
+
+            {% if form.errors %}
+              <div class="alert alert-danger" role="alert">
+                <i class="dripicons-checkmark me-2"></i> 
+                  Mensaje de error
+              </div>
+            {% endif %}
+
+            <form action="{% url 'guardarCliente' %}" method='POST'>
+              {% csrf_token %} 
+  
+              
+              {% if mensaje %}
+                <div class="alert alert-success" role="alert">
+                  <i class="dripicons-checkmark me-2"></i> 
+                    Cliente registrado exitosamente
+                </div>
+              {% endif %}
+                
+              {{ form|crispy }}
+  
+              <div class="text-end">
+                <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Guardar</button>
+              </div>
+  
+            </form>
+
+            
+          </div>
+
+
+          
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

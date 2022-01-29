@@ -12,6 +12,7 @@ from django.http import HttpRequest
 from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
 
+
 @ login_required ( login_url= 'home' )
 def Home(request):
   return render(request, 'chatbot_admin/layouts/inicio.html')

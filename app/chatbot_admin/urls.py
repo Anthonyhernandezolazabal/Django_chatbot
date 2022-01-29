@@ -5,6 +5,7 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
 # from chatbot_admin.views import FormularioCliente
 
+
 urlpatterns = [
     path('inicio/',login_required(views.Home),name='home'),
     # path('empresa/',login_required(views.empresa),name='empresa'),
