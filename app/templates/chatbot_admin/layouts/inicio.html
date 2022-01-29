@@ -17,6 +17,16 @@
         </div>
         <h4 class="page-title">Plantilla principal</h4>
 
+        
+
+
+        {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+          <i class="dripicons-checkmark me-2"></i>
+          <b class="text-uppercase">Te has registrado exitosamente</b>
+        </div>
+        {% endif %}
+
         {% if username_user %}
 
           <h1>{{ username_user|upper }} - Bienvenido</h1>

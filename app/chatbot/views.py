@@ -165,6 +165,7 @@ def getchat(request):
     chat_input = request.GET.get('msg')
 
     id_user_create = request.GET.get('id_user_create')
+    print('id_user_create recibido desde JS :',id_user_create)
 
     if(bol==1):
 
