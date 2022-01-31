@@ -27,28 +27,20 @@ class LoginFormViews(LoginView):
         id_user_login = request.session.get('_auth_user_id')
         username_user_login = request.user.username
 
-        print('id_user_login :',id_user_login)
-        print('username_user_login :',username_user_login)
-
-        
-
         user = UserProfile.objects.get(pk=id_user_login)
 
         id_clt = user.id_cliente
-        
 
         if id_clt is None:
 
           #INICIAR BOT
           t = initialize(id_user_login)
           # conversations = load_conversations()
-
           # if conversations:
           #   train_bot(conversations)
 
           params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt}
           return render(request,"chatbot_admin/layouts/registrar_empresa.html",params)
-
 
         else:
 
@@ -61,14 +53,12 @@ class LoginFormViews(LoginView):
         # return redirect('home')
         # return render(request,"chatbot_admin/layouts/registrar_empresa.html",params)
         
-        
       return super().dispatch(request, *args, **kwargs)
 
   def get_context_data(self,**kwargs):
       context = super().get_context_data(**kwargs)
       context['title'] = 'Iniciar sesion'
       return context
-
 
 def test_chatbot(request):
   return render(request, 'chatbot_admin/layouts/test_chatbot.html')
@@ -102,11 +92,11 @@ def register_view(request):
       return redirect('login')
 
   else:
+
     form = UserRegisterForm()
   
   context = {'form':form}
   return render(request,'chatbot_admin/registration/register.html',context)
- 
 
 def procesar_formulario(request):
   global id_user_login
@@ -117,8 +107,7 @@ def procesar_formulario(request):
       clt = ClientRegisterForm()
       c = cliente.objects.get(pk=s.id)
 
-      user = UserProfile.objects.filter(pk=id_user_login).first()
-      print(id_user_login)
+      # user = UserProfile.objects.filter(pk=id_user_login).first()
       UserProfile.objects.filter(pk=id_user_login).update(id_cliente=c.id)
 
       # usuario = UserProfile(user)
@@ -129,7 +118,6 @@ def procesar_formulario(request):
       # UserProfile.id_cliente=c.id
       # id_clt = UserProfile.id_cliente
       # UserProfile.save()
-
       return render(request, "chatbot_admin/layouts/inicio.html", {'mensaje':'ok'})
 
   else:
@@ -137,3 +125,12 @@ def procesar_formulario(request):
     clt = ClientRegisterForm()
 
   return render(request, "chatbot_admin/layouts/registrar_empresa.html", {'form':clt})
+
+"""=============================================
+MÓDULO ENTRENAMIENTO
+============================================="""
+class modulo_conversacion(HttpRequest):
+
+  def conversacion(request):
+
+    return render(request, 'chatbot_admin/layouts/conversacion.html')

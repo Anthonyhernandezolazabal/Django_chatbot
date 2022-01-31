@@ -1,0 +1,23 @@
+{
+    "conversations": [
+      {
+        "messages": [
+          "Aceptar"
+        ],
+        "response": "Gracias por aceptar nuestros T&C. \n Hola tengo las siguientes opciones para ti o puedes escribir una consulta:"
+      },
+      {
+        "messages": [
+          "Rechazar"
+        ],
+        "response": "Nos apena que no aceptes nuestros T&C. \n Lamentablemente no podemos brindarte ninguna ayuda por este medio."
+      },
+      {
+        "messages": [
+          "Ahorros"
+        ],
+        "response": "a, tengo esta información sobre ahorros:"
+      }
+    ]
+  }
+  

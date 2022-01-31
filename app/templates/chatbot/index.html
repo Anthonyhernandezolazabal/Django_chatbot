@@ -11,6 +11,7 @@
 
   <link rel="stylesheet" href="{% static 'chatbot/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'chatbot/css/chatBot.css' %}">
+  <link rel="stylesheet" href="{% static 'chatbot/css/slider.css' %}">
 
 
 </head>
@@ -50,7 +51,7 @@
       </div>
 
     </div>
-    
+
     <div class="chat-mail">
       <div class="row">
         <div class="col-md-12 text-center mb-2">
@@ -80,9 +81,37 @@
 
       <div id="chat">
         <div class="chat-start">Lunes, 1:27 PM</div>
-        
+
         <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este
           mensaje, estamos en línea y listos para ayudar.</div>
+
+        <div class="chat-bubble you">
+
+          <div class="slide-contenedor">
+            <div class="miSlider fadee">
+              <img src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/ahorros.png" alt="">
+              <button class='btn_slider'>Ahorros</button>
+            </div>
+            <div class="miSlider fadee">
+              <img src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/creditos.png" alt="">
+              <button class='btn_slider'>Creditos</button>
+            </div>
+            <div class="miSlider fadee">
+              <img src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/servicios.png" alt="">
+              <button class='btn_slider'>Servicios</button>
+            </div>
+            <div class="direcciones">
+              <a href="#" class="atras" onclick="avanzaSlide(-1)">&#10094;</a>
+              <a href="#" class="adelante" onclick="avanzaSlide(1)">&#10095;</a>
+            </div>
+            <div class="barras">
+              <span class="barra active" onclick="posicionSlide(1)"></span>
+              <span class="barra" onclick="posicionSlide(2)"></span>
+              <span class="barra" onclick="posicionSlide(3)"></span>
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </div>
@@ -103,9 +132,10 @@
   </div>
 
 
+  <script src="{% static 'chatbot/js/slider.js' %}"></script>
   <script src="{% static 'chatbot/js/jquery-3.1.1.min.js' %}"></script>
   <script src="{% static 'chatbot/js/chatbot.js' %}"></script>
-  
+
 </body>
 
 </html>

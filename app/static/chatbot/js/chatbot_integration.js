@@ -65,12 +65,37 @@ var htmlbot = `
             <div class="chat-body hide" style='overflow-y: scroll;' id="chat2">
 
                 <div id="chat">
-                <div class="chat-start">Lunes, 1:27 PM</div>
-                
-                <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este
-                    mensaje, estamos en línea y listos para ayudar.</div>
+                    <div class="chat-start">Lunes, 1:27 PM</div>
+                    
+                    <div class="chat-bubble you">Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. https://bit.ly/3dbjnBg.</div>
+
+                    <center>
+                    <button class='btn_aceptar_rechazar' at='Aceptar'>Aceptar</button> <button class='btn_aceptar_rechazar' at='Rechazar'>Rechazar</button>
+                    </center>
+
+                    
+
+
+
+
+
+
+                    
 
                 </div>
+
+      
+
+
+
+                
+
+
+
+
+
+
+                
             </div>
             <div class="chat-input hide" id="userInput">
                 <input type="text" placeholder="Escribir algo..." id='textInput'>
