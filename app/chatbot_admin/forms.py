@@ -19,18 +19,19 @@ class UserRegisterForm(UserCreationForm):
 
 class ClientRegisterForm(forms.ModelForm):
     nombre = forms.CharField(label="Nombre de Empresa", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa nombre",'autofocus': ''}))
-    direccion = forms.CharField(label="Direccion", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa direccion",'autofocus': ''}))
-    web = forms.CharField(label="Página web", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "www.url.com",'autofocus': ''}))
-    residencia = forms.CharField(label="Residencia", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Departamento / Provincia / Distrito",'autofocus': ''}))
-    rubro = forms.CharField(label="Rubro", max_length=255, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa Rubro",'autofocus': ''}))
+    direccion = forms.CharField(label="Direccion", max_length=250, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa direccion",'autofocus': ''}))
+    web = forms.CharField(label="Página web", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "www.url.com",'autofocus': ''}))
+    residencia = forms.CharField(label="Residencia", max_length=120, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Departamento / Provincia / Distrito",'autofocus': ''}))
+    rubro = forms.CharField(label="Rubro", max_length=150, widget=forms.TextInput(attrs={'class': 'form-control mb-2', 'placeholder': "Ingresa Rubro",'autofocus': ''}))
     
     class Meta: #Generación de formularios
         model = cliente
     #campos que necesitamos
         # fields = '__all__'  #Todo los campos
-        fields = ["nombre","direccion","web","residencia",'rubro','nombreBD']
+        fields = ["nombre","direccion","web","residencia","rubro","nombreBD"]
         # exclude = ('nombre campo')
         widgets = {
             'nombreBD': forms.HiddenInput(),
         }
+        help_text = {k: "" for k in fields} #remover los textos de ayuda 
         

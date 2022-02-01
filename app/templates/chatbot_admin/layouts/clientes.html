@@ -1,0 +1,94 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+            <li class="breadcrumb-item active">Clientes | Empresas</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Clientes | Empresas</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-12 col-lg-6">
+    <div class="card card-h-100">
+      <div class="card-body">
+        <table id="#" class="table table-striped dt-responsive nowrap w-100">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>nombre</th>
+              <th>direccion</th>
+              <th>web</th>
+              <th>residencia</th>
+              <th>nombreBD</th>
+              <th>rubro</th>
+              <th>Registrado</th>
+              <th>estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for clt in cltall %}
+
+              <tr>
+                <td>{{ clt.id }}</td>
+                <td>{{ clt.nombre }}</td>
+                <td>{{ clt.direccion }}</td>
+                <td>{{ clt.web }}</td>
+                <td>{{ clt.residencia }}</td>
+                <td>{{ clt.nombreBD }}</td>
+                <td>{{ clt.rubro }}</td>
+                <td>{{ clt.registrado }}</td>
+
+
+                {% if clt.estado == 1 %}
+
+                <td><span class="badge badge-outline-success rounded-pill">Activo</span></td>
+
+                {% else %}
+
+                <td><span class="badge badge-outline-danger rounded-pill">Inactivo</span></td>
+
+                {% endif %}
+
+
+                <td class="table-action">
+                  <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                  <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                </td>
+              </tr>
+
+            {% endfor %}
+              
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <!-- end row-->
+
+  <!-- end row-->
+
+
+  <!-- end row-->
+
+
+
+
+
+</div>
+
+{% endblock content %}

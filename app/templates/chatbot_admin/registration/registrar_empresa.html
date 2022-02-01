@@ -1,21 +1,9 @@
-{% load static %}
+{% extends "chatbot_admin/registration/confirmar_registro.html" %}
+{% block title %}Registro{% endblock %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>{% block title %} Confirmar {% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
-  <meta content="Coderthemes" name="author">
-  {% include 'chatbot_admin/layouts/head.html' %}
 
-</head>
-<input type="hidden" name="id_user_logueado" id="id_user_logueado" value='{{ id_user }}'>
-<input type="hidden" name="username_logueado" id="username_logueado" value='{{ username_user }}'>
-<input type="hidden" name="nombrebd_logueado" id="nombrebd_logueado" value='{{ nombreBD }}'>
-
+{% block content %}
 <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
   <div class="container">
     <div class="row justify-content-center">
@@ -66,4 +54,4 @@
   <!-- end container -->
 </div>
 
-{% include 'chatbot_admin/layouts/footer.html' %}
+{% endblock %}

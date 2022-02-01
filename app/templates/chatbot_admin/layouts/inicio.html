@@ -17,8 +17,6 @@
         </div>
         <h4 class="page-title">Plantilla principal</h4>
 
-        
-
 
         {% if mensaje %}
         <div class="alert alert-success" role="alert">
@@ -29,21 +27,157 @@
 
         {% if username_user %}
 
-          <h1>{{ username_user|upper }} - Bienvenido</h1>
+        <h1>{{ username_user|upper }} - Bienvenido</h1>
 
         {% else %}
 
-          <h1 class='username_user_ls'></h1>
+        <h1 class='username_user_ls'></h1>
 
         {% endif %}
-          
 
-       
-        
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-10">
+              <div class="text-center">
+                <img src="{% static 'chatbot_admin/assets/images/maintenance.svg' %}" height="140"
+                  alt="File not found Image">
+                <h3 class="mt-4">Activa el Chatbot en tu sitio web</h3>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                  <div class="mt-3 ps-1 pe-1">
+                    <h2 class="text-uppercase">CSS</h2>
+                    <p>
+
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Copie y pegue la hoja de estilo </font>
+                      </font><code>&lt;link&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">antes que </font>
+                      </font><code>&lt;head&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">todas las demás hojas de estilo para cargar nuestro CSS.
+                        </font>
+                      </font>
+
+                    </p>
+                    <p class="text-muted font-14 mb-3 board">
+
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">link</span> <span class="na">href</span><span class="o">=</span><span
+                          class="s">"http://127.0.0.1:8000/static/chatbot/css/style.css"</span> <span
+                          class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span
+                          class="na">type</span><span class="o">=</span><span class="s">"text/css"</span><span
+                          class="p">&gt;</span>
+                      </code><br>
+
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">link</span> <span class="na">href</span><span class="o">=</span><span
+                          class="s">"http://127.0.0.1:8000/static/chatbot/css/chatBot.css"</span> <span
+                          class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span
+                          class="na">type</span><span class="o">=</span><span class="s">"text/css"</span><span
+                          class="p">&gt;</span>
+                      </code>
+
+
+
+
+
+
+
+
+
+
+
+                    </p>
+                  </div>
+                  <div class="mt-3 ps-1 pe-1">
+                    <h2 class="text-uppercase">JS</h2>
+                    <p>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Muchos de nuestros componentes requieren el uso de
+                          JavaScript para funcionar </font>
+                      </font>
+
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> . </font>
+                        <font style="vertical-align: inherit;">Coloque </font>
+                      </font><strong>
+                        <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">una de las siguientes </font>
+                        </font><code>&lt;script&gt;</code>
+                      </strong>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> cerca del final de sus páginas, justo antes de la
+                          etiqueta de cierre </font>
+                      </font><code>&lt;/body&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> para habilitarlas.</font>
+                      </font>
+                    </p>
+                    <p class="text-muted font-14 mb-3 board">
+
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">script</span> <span class="na">src</span><span class="o">=</span><span
+                          class="s">"http://127.0.0.1:8000/static/chatbot/js/chatbot.js"</span>
+                        <span class="na">crossorigin</span><span class="o">=</span><span
+                          class="s">"anonymous"</span><span class="p">&gt;&lt;/</span><span
+                          class="nt">script</span><span class="p">&gt;</span>
+                      </code>
+                      <br>
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">script</span> <span class="na">src</span><span class="o">=</span><span
+                          class="s">"http://127.0.0.1:8000/chatbot/js/chatbot_integration.js"</span>
+                        <span class="na">crossorigin</span><span class="o">=</span><span
+                          class="s">"anonymous"</span><span class="p">&gt;&lt;/</span><span
+                          class="nt">script</span><span class="p">&gt;</span>
+                      </code>
+                    </p>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+
+
+
+
+
+              <!-- <div class="col-md-4">
+                  <div class="text-center mt-3 ps-1 pe-1">
+                    <i class="dripicons-clock bg-primary maintenance-icon text-white mb-2"></i>
+                    <h5 class="text-uppercase">What is the Downtime?</h5>
+                    <p class="text-muted">Contrary to popular belief, Lorem Ipsum is not simply random text. It has
+                      roots in a piece of classical but the majority.</p>
+                  </div>
+                </div> -->
+
+
+
+              <!-- <div class="col-md-4">
+                  <div class="text-center mt-3 ps-1 pe-1">
+                    <i class="dripicons-question bg-primary maintenance-icon text-white mb-2"></i>
+                    <h5 class="text-uppercase">Do you need Support?</h5>
+                    <p class="text-muted">If you are going to use a passage of Lorem Ipsum, you need to be sure there
+                      isn't anything embar.. <a href="mailto:#" class="text-muted fw-bold">no-reply@domain.com</a></p>
+                  </div>
+                </div> -->
+
+
+
+
+            </div>
+          </div>
+
+
+        </div>
       </div>
     </div>
+
   </div>
 
-</div>
-
-{% endblock content %}
+  {% endblock content %}

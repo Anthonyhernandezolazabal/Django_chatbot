@@ -125,7 +125,8 @@ $(document).ready(function () {
       id_user_create: id_cliente
     }).done(function (data) {
 
-      console.log('rpta data :',data)
+
+
 
       var botHtml = '<div class="chat-bubble you">' + data + "</div>";
 
@@ -138,19 +139,11 @@ $(document).ready(function () {
 
 
               <div class="miSlider fadee">
-                <img
-                  src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/ahorros.png"
+                <img src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/ahorros.png"
                   alt="">
                   <button class='btn_slider' id='btn_ahorros'>Ahorros</button>
               </div>
 
-
-              <div class="miSlider fadee">
-                <img
-                  src="https://r1live.conexaris.com/assets/cajasullana/principal-v1/creditos.png"
-                  alt="">
-                  <button class='btn_slider' >Creditos</button>
-              </div>
 
 
               <div class="miSlider fadee">
