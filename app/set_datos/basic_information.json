@@ -1,0 +1,71 @@
+{
+  "conversations": [{
+      "messages": [
+        "¿Dónde se encuentra INGyTAL?",
+        "¿Cuál es la dirección de INGyTAL?",
+        "¿Dónde está INGyTAL",
+        "¿Dónde está la fábrica?",
+        "¿Donde esta la tienda?"
+    
+      ],
+      "response": "INGyTAL se encuentra en Rua Carneiro de Campos, No. 280, B. Iracema, Vitória da Conquista - BA"
+    },
+    {
+      "messages": [
+        "¿A que hora abren?",
+        "¿A qué horario trabaja la tienda?",
+        "¿A qué hora abre la tienda?",
+        "¿A qué hora abre la tienda?",
+        "¿Qué tan tarde está abierta la tienda?"
+      ],
+      "response": "INGyTAL está abierta de lunes a viernes de 7:30 a. m. a 5:45 p. m. y los sábados de 8:00 a. m. a 11:30 a. m."
+    },
+    {
+      "messages": [
+        "¿Cómo compro?",
+        "¿Cómo me convierto en revendedor?",
+        "Quiero ser revendedor",
+        "¿Qué necesitas para crear un registro",
+        "Quiero crear un registro allí"
+      ],
+      "response": "Las compras las puede realizar el propio sitio, simplemente eligiendo las cantidades y colores de cada pieza. Para eso, es necesario crear un registro en la opción 'Registro'."
+    },
+    {
+      "messages": [
+        "¿Cuál es la cantidad mínima para compras?",
+        "¿Hay un valor mínimo para comprar?",
+        "¿Cuánto tengo que comprar para ser revendedor?",
+        "¿Cuánto necesito comprar?",
+        "¿Cuánto cuesta la primera compra? ¿Qué valor?"
+      ],
+      "response": "La primera compra es de al menos R $ 300,00"
+    },
+    {
+      "messages": [
+        "¿Tengo derecho a intercambios?",
+        "¿Puedo cambiar la mercancía?",
+        "¿Puedo cambiar un producto?",
+        "¿Cuál es la fecha límite para el intercambio?"
+      ],
+      "response": "Puedes canjear hasta un 20% del valor de tu última compra en un plazo máximo de 3 meses"
+    },
+    {
+      "messages": [
+        "¿Cuáles son las formas de presentación?",
+        "¿Envían por transportista?",
+        "¿Envías por correo?",
+        "¿Puedo recogerlo en la tienda?"
+      ],
+      "response": "La mercancía puede ser enviada por correo y, si está disponible, también por transportistas. Si lo desea, puede recogerla en la tienda física o pedirle a otra persona que recoja la mercancía siempre que lleve la identificación documento del propietario de la mercancía "
+    },
+    {
+      "messages": [
+        "¿El envío es por quién?",
+        "¿Para quién es la cuenta de envío?",
+        "¿Quién paga el envío?",
+        "Quién paga el envío"
+      ],
+      "response": "El envío de la mercancía corre por cuenta del cliente."
+    }
+  ]
+}

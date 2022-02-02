@@ -21,9 +21,12 @@ urlpatterns = [
     # path('guardarCliente/',login_required(views.procesar_formulario),name='guardarCliente'),
     # path('ir_registrar_empr/',login_required(views.ir_registrar_empr),name='ir_registrar_empr'),
 
-    path('respuestas/', modulo_conversacion.conversacion, name='respuestas' ),
+    path('respuestas/', login_required(modulo_conversacion.respuestas), name='respuestas'),
+    path('registrar_rpta/', login_required(modulo_conversacion.registrar_rpta), name='registrar_rpta' ),
     path('usuarios/',login_required(modulo_usuarios.mod_usuario),name='usuarios' ),
     path('clientes/',login_required(modulo_clientes.mod_clientes),name='clientes' ),
+
+    
     
 
 

@@ -13,22 +13,28 @@ $(document).ready(function () {
     var id_cliente = $("#id_user_logueado").val();
     var username = $("#username_logueado").val();
     var nombrebd = $("#nombrebd_logueado").val();
+    var id_empresa = $("#empresa_logueado").val();
     
   }else{
 
     var id_cliente =  JSON.parse(guardado).id_cliente;
     var username = JSON.parse(guardado).username;
     var nombrebd = JSON.parse(guardado).nombrebd;
+    var id_empresa = JSON.parse(guardado).id_empresa;
 
     $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase()+' - Bienvenido')
-    $('#id_nombreBD').val(JSON.parse(guardado).nombrebd+'.sqlite3')
+    $('#id_nombreBD').val(JSON.parse(guardado).nombrebd+'.sqlite3') 
+    $('#nombrebd_logueado').val(JSON.parse(guardado).nombrebd+'.sqlite3') 
+    $('#empresa_rpta').val(JSON.parse(guardado).id_empresa)
+    $('#usu_rpta').val(JSON.parse(guardado).id_cliente)
 
   }
 
   datos = {
     id_cliente: id_cliente,
     username: username,
-    nombrebd: nombrebd
+    nombrebd: nombrebd,
+    id_empresa: id_empresa
   }
 
 

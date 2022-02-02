@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import generic
 from datetime import datetime
 from chatbot.models import chat_user
+from chatbot_admin.models import data_set,cliente
 # from .bot_function import conversation_directory,initialize
 
 import os
@@ -18,14 +19,44 @@ CONVERSATION_SETTINGS = []
 ACCEPTANCE = 0.70 # Una validación de la respuesta mas óptima
 
 ''' ======= CARGANDO ARCHIVOS JSON ==== '''
-def conversation_directory():
-  ruta = 'C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/'
-  # ===== CAPTURO LOS ARCHIVOS JSON =====
-  with os.scandir(ruta) as ficheros:
-    ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
-    # ===== CONFORME SE VAN CREANDO ARCHIVOS, LOS ALMACENA EN EL ARRAY =====
+# def conversation_directory():
+#   ruta = 'C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/'
+#   # ===== CAPTURO LOS ARCHIVOS JSON =====
+#   with os.scandir(ruta) as ficheros:
+#     ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
+#     # ===== CONFORME SE VAN CREANDO ARCHIVOS, LOS ALMACENA EN EL ARRAY =====
+#     for x in ficheros:
+#         CONVERSATION_SETTINGS.append(ruta+x)
+
+
+
+def conversation_directory(id_entrada):
+
+  if os.path.exists('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_'+id_entrada):
+
+    with os.scandir('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_'+id_entrada) as ficheros:
+      ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
+    
+    ruta2 = 'C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_'+id_entrada+'/'
     for x in ficheros:
-        CONVERSATION_SETTINGS.append(ruta+x)
+        CONVERSATION_SETTINGS.append(ruta2 + x)
+
+    print('EL DIRECTORIO SI EXISTE', CONVERSATION_SETTINGS)
+
+  else:
+
+    with os.scandir('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/') as ficheros:
+      ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
+
+    # CONFORME SE VAN CREANDO ARCHIVOS, LOS ALMACENA EN EL ARRAY
+    for x in ficheros:
+        CONVERSATION_SETTINGS.append('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/'+x)
+
+    print('EL DIRECTORIO NO EXISTE')
+
+
+
+
 
 ''' ======= INICIANDO LIBRERIA CHATTERBOT ==== '''
 global bot
@@ -107,7 +138,7 @@ def select_response(message, list_response, storage=None):
 
   return response
 
-conversation_directory()
+
 # initialize()
 # train_bot(load_conversations())
 ''' =============================================
@@ -205,3 +236,57 @@ def getchat(request):
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))
+
+import json
+
+def getjson(request):
+  if request.GET['json_rpt']:
+
+    json_rpt = request.GET.get('json_rpt')
+    json_nombre = request.GET.get('json_nombre')
+    id_empresa = request.GET.get('id_empresa')
+    id_user_create = request.GET.get('id_usu')
+
+    # CREAR EL ARCHIVO JSON
+    arrayRecibido = json.loads(json_rpt)
+
+    print ('mi json_nombre :',json_nombre)
+    print ('mi arrayRecibido :',arrayRecibido)
+    print ('mi id_empresa :',id_empresa)
+    print ('mi id_user_create :',id_user_create)
+
+    set_datosAdd = data_set(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
+    set_datosAdd.save()
+    
+
+    data = {}
+    data['conversations'] = []
+    data['conversations'].append({
+        'messages': arrayRecibido[0][0]['preguntas_new'],
+        'response': arrayRecibido[0][0]['respuesta_new'],
+        })
+    
+
+    with open('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+        json.dump(data, file, indent=4,ensure_ascii=False)
+
+    # conversation_directory(id_empresa)
+    # initialize(id_user_create)
+    # train_bot(load_conversations())
+
+  return render(request, 'chatbot_admin/layouts/respuestas.html')
+
+def entrenar_chatbot(request):
+
+  if request.GET['id_empresa']:
+    id_empresa = request.GET.get('id_empresa')
+    id_user_create = request.GET.get('id_user_create')
+
+    print('id_empresa :',id_empresa)
+    print('id_user_create :',id_user_create)
+
+    conversation_directory(id_empresa)
+    initialize(id_user_create)
+    train_bot(load_conversations())
+
+  return render(request, 'chatbot_admin/layouts/respuestas.html')

@@ -1,54 +1,20 @@
 {
   "conversations": [
     {
-      "messages": [
-        "Hola", 
-        "hola",
-        "ola",
-        "Ola",
-        "Hola que tal",
-        "Hola quien eres",
-        "Ola quien eres",
-        "Ola con quien tengo el gusto",
-        "Hol",
-        "Ola",
-        "Hola buenas tardes",
-        "Hola Buenas Tardes",
-        "Hola Buenas noches",
-        "Hola Buenas dias",
-        "buenos días",
-        "buenos Tardes",
-        "buenos Noches",
-        "buen día",
-        "Hola buen dia",
-        "Hola Buenas días",
-        "Hola hay alguien"
-      ],
-      "response": "Hola, soy el asistente virtual chatbot. ¿Cómo puedo ayudar?"
+      "messages": ["Hola", "hola"],
+      "response": "Hola, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
     },
     {
-      "messages": [
-        "Tengo una consulta",
-        "Tengo una duda",
-        "Tengo consulta",
-        "duda",
-        "consulta",
-        "Tengo muchas consultas",
-        "Quiero preguntar algo"
-      ],
-      "response": "Estoy en constante aprendizaje, así que trataré de ayudarte en lo mas posible"
+      "messages": [" Buenas Tardes"],
+      "response": "Buenos días, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
     },
     {
-      "messages": [
-        "Como te llamas",
-        "Llamas",
-        "Cual es tu nombre",
-        "Nombre",
-        "que nombre tienes",
-        "tu nombre cual es"
-      ],
-      "response": "soy INGyTALbot y estoy para ayudarte"
+      "messages": ["Buenas tardes"],
+      "response": "Buenas tardes, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
+    },
+    {
+      "messages": ["Buenas noches"],
+      "response": "Buenas noches, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
     }
- 
   ]
 }
