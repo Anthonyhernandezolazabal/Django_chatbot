@@ -197,6 +197,9 @@ def getchat(request):
 
     id_user_create = request.GET.get('id_user_create')
     print('id_user_create recibido desde JS :',id_user_create)
+    print('chat_input recibido desde JS :',chat_input)
+
+    initialize(id_user_create)
 
     if(bol==1):
 
@@ -225,12 +228,17 @@ def getchat(request):
 
           return HttpResponse(str(response))  
         else:
-          rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
-          myuser['bol']=1
-          user[user_cook] = myuser
-          session_cook = user
-          myuser['entradatmp']=chat_input
-          #print('variable sesion: ',session_cook[user_cook])
+          
+          if request.user.is_authenticated:
+            rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
+            myuser['bol']=1
+            user[user_cook] = myuser
+            session_cook = user
+            myuser['entradatmp']=chat_input
+            #print('variable sesion: ',session_cook[user_cook])
+          else:
+            rpta1 = 'Disculpa no te entendí, sé mas especifico!'
+          
           return HttpResponse(str(rpta1)) 
 
       else:

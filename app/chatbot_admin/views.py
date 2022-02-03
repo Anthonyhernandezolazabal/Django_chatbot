@@ -31,14 +31,12 @@ class LoginFormViews(LoginView):
       if request.user.is_authenticated:
         clt = ClientRegisterForm()
         global id_user_login
-        
 
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
         username_user_login = request.user.username
         user = UserProfile.objects.get(pk=id_user_login)
         id_clt = user.id_cliente
-
 
         if id_clt is None:
 
@@ -50,7 +48,7 @@ class LoginFormViews(LoginView):
         else:
 
           id_empresa= user.id_cliente.id
-          intempr = int(id_empresa)
+          # intempr = int(id_empresa)
           #INICIAR BOT
           t = initialize(id_user_login)
           params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':id_empresa}
@@ -132,13 +130,14 @@ class FormularioCliente(HttpRequest):
             print("La creación del directorio %s falló" % directorio)
         else:
             print("Se ha creado el directorio: %s " % directorio)
-            shutil.copy('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/basic_information.json', "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id)
+            # shutil.copy('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/basic_information.json', "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id)
             shutil.copy('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/greetings.json', "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id)
 
-
+            conversation_directory(empre_id)
+            initialize(id_user_login)
+            train_bot(load_conversations())
 
         return render(request, "chatbot_admin/layouts/inicio.html", {'mensaje':'ok','empresa_logueado2':empre_id})
-
 
     else:
 
