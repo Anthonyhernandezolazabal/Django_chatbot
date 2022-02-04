@@ -4,75 +4,76 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                        <li class="breadcrumb-item active">Respuestas automaticas registradas</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Respuestas automaticas registradas</h4>
-
-                <br><br>
-
-                {% if mensaje %}
-                <div class="alert alert-success" role="alert">
-                    <i class="dripicons-checkmark me-2"></i> Registrado correctamente!
-                </div>
-                {% endif %}
-
-                <center><a href="{% url 'registrar_rpta' %}" class="btn btn-danger btn-rounded mb-3"><i
-                            class="mdi mdi-plus"></i> Registrar respuestas automaticas</a></center>
-
-
-                <div class="col-xl-12 col-lg-6">
-                    <div class="card card-h-100">
-                        <div class="card-body">
-                            <table id="#" class="table table-striped dt-responsive nowrap w-100">
-                                <thead class='table-light'>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Respuestas automaticas</th>
-                                        <th>Empresa</th>
-                                        <th>Registrado</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-
-                                    {% for dato in datos  %}
-
-                                    <tr>
-                                        <td>{{ dato.id }}</td>
-                                        <td>{{ dato.nombre }}</td>
-                                        <td>{{ dato.id_cliente.nombre }}</td>
-                                        <td>{{ dato.registrado }}</td>
-                                        <td><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i>
-                                            </button><button type="button" class="btn btn-warning"><i
-                                                    class="mdi mdi-square-edit-outline"></i></button><button
-                                                type="button" class="btn btn-danger"><i class="mdi mdi-delete"></i>
-                                            </button></td>
-                                    </tr>
-
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <center>
-                                                    
-                                <input type="hidden" name="empresa_rpta" id="empresa_rpta">
-                                <input type="hidden" name="usu_rpta" id="usu_rpta">
-                                <button type="button" onclick="entrenar_chat()" class="btn btn-outline-success"><i class="uil-money-withdrawal"></i> Guardar | Entrenar</button>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+            <li class="breadcrumb-item active">Respuestas automaticas registradas</li>
+          </ol>
         </div>
+        <h4 class="page-title">Respuestas automaticas registradas</h4>
+
+        <br><br>
+
+        {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+          <i class="dripicons-checkmark me-2"></i> Registrado correctamente!
+        </div>
+        {% endif %}
+
+        <center><a href="{% url 'registrar_rpta' %}" class="btn btn-danger btn-rounded mb-3"><i
+              class="mdi mdi-plus"></i> Registrar respuestas automaticas</a></center>
+
+
+        <div class="col-xl-12 col-lg-6">
+          <div class="card card-h-100">
+            <div class="card-body">
+              <table id="#" class="table table-striped dt-responsive nowrap w-100">
+                <thead class='table-light'>
+                  <tr>
+                    <th>#</th>
+                    <th>Respuestas automaticas</th>
+                    <th>Empresa</th>
+                    <th>Registrado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for dato in datos %}
+
+                  <tr>
+                    <td>{{ dato.id }}</td>
+                    <td>{{ dato.nombre }}</td>
+                    <td>{{ dato.nombre_cliente }}</td>
+                    <td>{{ dato.registrado }}</td>
+                    <td><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i>
+                      </button><button type="button" class="btn btn-warning"><i
+                          class="mdi mdi-square-edit-outline"></i></button><button type="button"
+                        class="btn btn-danger"><i class="mdi mdi-delete"></i>
+                      </button></td>
+                  </tr>
+
+                  {% endfor %}
+
+                </tbody>
+              </table>
+              <center>
+
+                <input type="hidden" name="empresa_rpta" id="empresa_rpta">
+                <input type="hidden" name="usu_rpta" id="usu_rpta">
+                <button type="button" onclick="entrenar_chat()" class="btn btn-outline-success"><i
+                    class="uil-money-withdrawal"></i> Guardar | Entrenar</button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 

@@ -151,7 +151,7 @@ body{
 
 /* MESSAGES */
 .chat-body {
-    padding: 25px;
+    /* padding: 25px; */
     display: inline-block;
     /* background: #f1f1f16b; */
     min-height: 420px;

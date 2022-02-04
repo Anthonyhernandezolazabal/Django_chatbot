@@ -31,12 +31,14 @@ class LoginFormViews(LoginView):
       if request.user.is_authenticated:
         clt = ClientRegisterForm()
         global id_user_login
+        global id_empresa
 
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
         username_user_login = request.user.username
         user = UserProfile.objects.get(pk=id_user_login)
         id_clt = user.id_cliente
+        tipo_usu = user.is_superuser
 
         if id_clt is None:
 
@@ -51,7 +53,7 @@ class LoginFormViews(LoginView):
           # intempr = int(id_empresa)
           #INICIAR BOT
           t = initialize(id_user_login)
-          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':id_empresa}
+          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':id_empresa,'tipo_usu':tipo_usu}
           return render(request,"chatbot_admin/layouts/inicio.html",params)
         
       return super().dispatch(request, *args, **kwargs)
@@ -151,10 +153,17 @@ MÓDULO RESPUESTAS
 class modulo_conversacion(HttpRequest):
 
   def respuestas(request):
+    global id_empresa
 
-    jsondata = data_set.objects.all()
+    jsondata = data_set.objects.filter(id_cliente=id_empresa)
+    # id = jsondata.id
+    # nombre = jsondata.nombre 
+    # nombre_cliente = jsondata.id_cliente.nombre
+    # registrado = jsondata.registrado
+
 
     context = {
+      # 'id':id,'nombre':nombre,'nombre_cliente':nombre_cliente,'registrado':registrado
       'datos':jsondata
     }
 

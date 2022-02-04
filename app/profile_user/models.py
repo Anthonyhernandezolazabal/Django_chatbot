@@ -39,7 +39,7 @@ class UserProfile(AbstractUser):
   class Meta:
       verbose_name = 'UserProfile'
       verbose_name_plural = 'UserProfiles'
-      db_table = 'UserProfile'
+      db_table = 'usuarios'
       ordering = ['id'] #ordenar por ID
 #   email = models.EmailField(max_length=255,unique=True)
 #   name = models.CharField(max_length=255)

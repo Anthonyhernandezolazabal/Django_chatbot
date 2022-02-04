@@ -1,13 +1,10 @@
-
-
-
 function comenzar_chat() {
   var element = document.getElementById("chat-mai");
   var element2 = document.getElementById("body-chat");
   var camp_obli = document.getElementById("camp_obli");
   var nombre_usuario = document.getElementById('txtusuario').value
 
-  console.log("nombre_usuario :",nombre_usuario)
+  console.log("nombre_usuario :", nombre_usuario)
 
   if (nombre_usuario == "") {
     camp_obli.style.display = "block";
@@ -27,6 +24,7 @@ function comenzar_chat() {
   }
 }
 
+
 /*=============================================
 AGREGAMOS DATOS AL LOCALSTORAGE
 =============================================*/
@@ -38,6 +36,11 @@ if (guardado == '') {
   var username = $("#username_logueado").val();
   var nombrebd = $("#nombrebd_logueado").val();
   var id_empresa = $("#empresa_logueado").val();
+  var tipo_usu = $("#permisos_logueado").val();
+
+  if (tipo_usu == 'True') {
+    $('.li_permisos').show()
+  }
 
 } else {
 
@@ -45,14 +48,19 @@ if (guardado == '') {
   var username = JSON.parse(guardado).username;
   var nombrebd = JSON.parse(guardado).nombrebd;
   var id_empresa = JSON.parse(guardado).id_empresa;
+  var tipo_usu = JSON.parse(guardado).tipo_usu;
 
-  // $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase() + ' - Bienvenido')
+  $('.username_user_ls').html(JSON.parse(guardado).username.toUpperCase() + ' - Bienvenido')
   $('#id_nombreBD').val(JSON.parse(guardado).nombrebd + '.sqlite3')
   $('#nombrebd_logueado').val(JSON.parse(guardado).nombrebd + '.sqlite3')
   $('#empresa_rpta').val(JSON.parse(guardado).id_empresa)
   $('#usu_rpta').val(JSON.parse(guardado).id_cliente)
 
-  $("#libreria_chatbot").attr('empresa_id',id_cliente);
+  $("#libreria_chatbot").attr('empresa_id', id_cliente);
+
+  if (tipo_usu == 'True') {
+    $('.li_permisos').show()
+  }
 
 }
 
@@ -61,7 +69,18 @@ datos = {
   username: username,
   nombrebd: nombrebd,
   id_empresa: id_empresa,
+  tipo_usu: tipo_usu
 }
+
+/*=============================================
+GENERANDO LINK
+=============================================*/
+$('#linkcss01').html('"http://127.0.0.1:8000/static/chatbot/css/style_chatbot.css"')
+$('#scriptjs01').html('"http://127.0.0.1:8000/static/chatbot/js/js.js"')
+$('#scriptjs02').html('"http://127.0.0.1:8000/static/chatbot/js/a076d05399.js"')
+$('#id_empr').html('"'+id_cliente+'"')
+$('#scriptjs03').html('"http://127.0.0.1:8000/static/chatbot/js/chatbot.js"')
+$('#scriptjs04').html('"http://127.0.0.1:8000/static/chatbot/js/chatbot_integration.js"')
 
 // Guardo el objeto como un string
 localStorage.setItem('datos', JSON.stringify(datos));
@@ -88,9 +107,9 @@ chat.scrollTop = chat.scrollHeight - chat.clientHeight;
 
 
 function getBotResponse() {
-  
+
   var id_cliente_usu = $("#libreria_chatbot").attr('empresa_id');
-  console.log('id_empresa y id_empresa :',id_cliente_usu);
+  console.log('id_empresa y id_empresa :', id_cliente_usu);
 
 
   $("#chat2").animate({
@@ -124,8 +143,8 @@ function getBotResponse() {
 
       $('#carga_new').hide();
       $("#chat").append(botHtml);
-  
-  
+
+
       $("#chat2").animate({
         scrollTop: $('#chat').prop("scrollHeight")
       }, 1000);
