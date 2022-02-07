@@ -192,8 +192,14 @@ def getchat(request):
     myuser = user[user_cook]
 
     bol=myuser['bol']
+    nombre_nombre=myuser['nombre']
     entradatmp=myuser['entradatmp']
     chat_input = request.GET.get('msg')
+
+    id_empresa_id = request.GET.get('id_empresa_id')
+
+    print('id_empresa_id chat: ',id_empresa_id)
+
 
     id_user_create = request.GET.get('id_user_create')
     print('id_user_create recibido desde JS :',id_user_create)
@@ -223,7 +229,7 @@ def getchat(request):
           print('variable sesion: ',session_cook[user_cook])
 
           # === GUARDA LAS SESSIONES EN LA BD
-          user_chat = chat_user(pregunta=chat_input,key_session_id=user_cook,respuesta=response)
+          user_chat = chat_user(pregunta=chat_input,key_session_id=user_cook,respuesta=response,nombre_persona=nombre_nombre,cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
 
           return HttpResponse(str(response))  
@@ -265,7 +271,6 @@ def getjson(request):
 
     set_datosAdd = data_set(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
     set_datosAdd.save()
-    
 
     data = {}
     data['conversations'] = []

@@ -1,0 +1,223 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+            <li class="breadcrumb-item active">Chat</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Historial de conversaciones</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xxl-4 col-xl-6 order-xl-1">
+      <div class="card">
+        <div class="card-body p-0">
+
+          <ul class="nav nav-tabs nav-bordered">
+            <li class="nav-item">
+              <a href="#allUsers" data-bs-toggle="tab" aria-expanded="false" class="nav-link py-2 active">
+                Historial de HOY 04/02/2022
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane show active p-3" id="newpost">
+
+              <div class="row">
+                <div class="col">
+                  <div data-simplebar="init" style="max-height: 506px">
+                    <div class="simplebar-wrapper" style="margin: 0px;">
+                      <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                      </div>
+                      <div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                          <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                            <div class="simplebar-content" style="padding: 0px;">
+
+                              <a href="javascript:void(0);" class="text-body">
+                                <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                  <h1 class="me-2 rounded-circle" height="48">M</h1>
+                                  <div class="w-100 overflow-hidden">
+                                    <h5 class="mt-0 mb-0 font-14">
+                                      <span class="float-end text-muted font-12">4:30am</span>
+                                      Manuel
+                                    </h5>
+                                    <p class="mt-1 mb-0 text-muted font-14">
+                                      <span class="w-75">Última pregunta que fue respondid</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+
+                              <a href="javascript:void(0);" class="text-body">
+                                <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                  <h1 class="me-2 rounded-circle" height="48">L</h1>
+                                  <div class="w-100 overflow-hidden">
+                                    <h5 class="mt-0 mb-0 font-14">
+                                      <span class="float-end text-muted font-12">4:30am</span>
+                                      Lucía
+                                    </h5>
+                                    <p class="mt-1 mb-0 text-muted font-14">
+                                      <span class="w-75">Última pregunta que fue respondid</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="simplebar-placeholder" style="width: 237px; height: 810px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                      <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                      <div class="simplebar-scrollbar"
+                        style="height: 373px; transform: translate3d(0px, 176px, 0px); display: block;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-8 col-xl-12 order-xl-2">
+      <div class="card">
+        <div class="card-body">
+          <ul class="conversation-list" data-simplebar="init" style="max-height: 537px">
+            <div class="simplebar-wrapper" style="margin: 0px -15px;">
+              <div class="simplebar-height-auto-observer-wrapper">
+                <div class="simplebar-height-auto-observer"></div>
+              </div>
+              <div class="simplebar-mask">
+
+                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+
+                  <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+
+                    <div class="simplebar-content" style="padding: 0px 15px;">
+
+                      <li class="clearfix">
+                        <div class="chat-avatar">
+                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" class="rounded"
+                            alt="Shreyu N">
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Shreyu N</i>
+                            <p>
+                              Hola!
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="clearfix odd">
+                        <div class="chat-avatar">
+                          <h1 class="me-2 rounded-circle" height="48">M</h1>
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Dominic</i>
+                            <p>
+                              ¿Hola, cómo estás? ¿Qué hay de nuestra próxima reunión?
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="clearfix">
+                        <div class="chat-avatar">
+                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" class="rounded"
+                            alt="Shreyu N">
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Shreyu N</i>
+                            <p>
+                              Sí, todo está bien
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="clearfix odd">
+                        <div class="chat-avatar">
+                          <h1 class="me-2 rounded-circle" height="48">M</h1>
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Dominic</i>
+                            <p>
+                              Wow that's great
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="clearfix">
+                        <div class="chat-avatar">
+                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" alt="Shreyu N"
+                            class="rounded">
+                          <i>10:02</i>
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Shreyu N</i>
+                            <p>
+                              Let's have it today if you are free
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="clearfix odd">
+                        <div class="chat-avatar">
+                          <h1 class="me-2 rounded-circle" height="48">M</h1>
+                        </div>
+                        <div class="conversation-text">
+                          <div class="ctext-wrap">
+                            <i>Dominic</i>
+                            <p>
+                              Sure thing! let me know if 2pm works for you
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="simplebar-placeholder" style="width: 546px; height: 930px;"></div>
+            </div>
+            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+              <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+            </div>
+            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+              <div class="simplebar-scrollbar"
+                style="height: 310px; transform: translate3d(0px, 227px, 0px); display: block;"></div>
+            </div>
+          </ul>
+
+        </div> <!-- end card-body -->
+      </div> <!-- end card -->
+    </div>
+  </div> <!-- end row-->
+
+</div>
+
+{% endblock content %}

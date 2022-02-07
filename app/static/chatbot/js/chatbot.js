@@ -24,7 +24,6 @@ function comenzar_chat() {
   }
 }
 
-
 /*=============================================
 AGREGAMOS DATOS AL LOCALSTORAGE
 =============================================*/
@@ -56,7 +55,8 @@ if (guardado == '') {
   $('#empresa_rpta').val(JSON.parse(guardado).id_empresa)
   $('#usu_rpta').val(JSON.parse(guardado).id_cliente)
 
-  $("#libreria_chatbot").attr('empresa_id', id_cliente);
+  $("#libreria_chatbot").attr('user', id_cliente);
+  $("#libreria_chatbot").attr('empresa', id_empresa);
 
   if (tipo_usu == 'True') {
     $('.li_permisos').show()
@@ -78,7 +78,8 @@ GENERANDO LINK
 $('#linkcss01').html('"http://127.0.0.1:8000/static/chatbot/css/style_chatbot.css"')
 $('#scriptjs01').html('"http://127.0.0.1:8000/static/chatbot/js/js.js"')
 $('#scriptjs02').html('"http://127.0.0.1:8000/static/chatbot/js/a076d05399.js"')
-$('#id_empr').html('"'+id_cliente+'"')
+$('#id_user').html('"' + id_cliente + '"')
+$('#id_empr').html('"' + id_empresa + '"')
 $('#scriptjs03').html('"http://127.0.0.1:8000/static/chatbot/js/chatbot.js"')
 $('#scriptjs04').html('"http://127.0.0.1:8000/static/chatbot/js/chatbot_integration.js"')
 
@@ -99,17 +100,14 @@ $(document).on('click', '#logout_sess', (e) => {
 })
 
 // === EMPEZAR CHAT ===
-
-
 var chat = document.getElementById("chat"); // Scrool
 chat.scrollTop = chat.scrollHeight - chat.clientHeight;
 
-
-
 function getBotResponse() {
 
-  var id_cliente_usu = $("#libreria_chatbot").attr('empresa_id');
-  console.log('id_empresa y id_empresa :', id_cliente_usu);
+  var id_cliente_usu = $("#libreria_chatbot").attr('user');
+  var id_empresa_e = $("#libreria_chatbot").attr('empresa');
+  console.log('id_empresa y id_empresa :', id_empresa_e);
 
 
   $("#chat2").animate({
@@ -126,12 +124,10 @@ function getBotResponse() {
     scrollTop: $('#chat').prop("scrollHeight")
   }, 1000);
 
-
-
-
   $.get("http://127.0.0.1:8000/getchat", {
     msg: rawText,
-    id_user_create: id_cliente_usu
+    id_user_create: id_cliente_usu,
+    id_empresa_id: id_empresa_e
   }).done(function (data) {
 
     var botHtml = '<div class="chat-bubble you">' + data + "</div>";
@@ -156,7 +152,16 @@ function getBotResponse() {
 }
 
 $("#textInput").keypress(function (e) {
-  if (e.which == 13) {
+
+  console.log('enter')
+  if (e.keyCode == 13) {
     getBotResponse();
   }
 });
+
+
+
+function enviar_texto(){
+  getBotResponse();
+
+}

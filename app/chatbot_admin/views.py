@@ -31,7 +31,7 @@ class LoginFormViews(LoginView):
       if request.user.is_authenticated:
         clt = ClientRegisterForm()
         global id_user_login
-        global id_empresa
+        global empre_id
 
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
@@ -49,11 +49,11 @@ class LoginFormViews(LoginView):
 
         else:
 
-          id_empresa= user.id_cliente.id
+          empre_id= user.id_cliente.id
           # intempr = int(id_empresa)
           #INICIAR BOT
           t = initialize(id_user_login)
-          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':id_empresa,'tipo_usu':tipo_usu}
+          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':empre_id,'tipo_usu':tipo_usu}
           return render(request,"chatbot_admin/layouts/inicio.html",params)
         
       return super().dispatch(request, *args, **kwargs)
@@ -105,6 +105,7 @@ class FormularioCliente(HttpRequest):
 
   def procesar_formulario(request):
     global id_user_login
+    global empre_id
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
       if clt .is_valid():
@@ -153,9 +154,11 @@ MÓDULO RESPUESTAS
 class modulo_conversacion(HttpRequest):
 
   def respuestas(request):
-    global id_empresa
+    global empre_id
 
-    jsondata = data_set.objects.filter(id_cliente=id_empresa)
+    print('empre_id de registro :',empre_id)
+
+    jsondata = data_set.objects.filter(id_cliente=empre_id)
     # id = jsondata.id
     # nombre = jsondata.nombre 
     # nombre_cliente = jsondata.id_cliente.nombre
@@ -201,3 +204,12 @@ class modulo_clientes(HttpRequest):
     }
 
     return render(request, 'chatbot_admin/layouts/clientes.html',context)
+
+"""=============================================
+MÓDULO HISTORIAL
+============================================="""
+class modulo_historial_conversacion(HttpRequest):
+
+  def mod_historial(request):
+
+    return render(request, 'chatbot_admin/layouts/historial.html')

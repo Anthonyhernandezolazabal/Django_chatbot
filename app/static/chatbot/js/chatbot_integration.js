@@ -40,12 +40,19 @@ var htmlbot = `
                 <span class="messages__dot"></span>
             </div>
         </div>
+
         <div class="chat-bar-input-block">
-        <div id="userInput">
-            <input id="textInput" class="input-box" type="text" name="msg" placeholder="Escribir...">
-            <p></p>
+          <div id="userInput">
+              <input id="textInput" class="input-box" type="text" name="msg" placeholder="Tap 'Enter' to send a message">
+              <p></p>
+          </div>
+          <div class="chat-bar-icons">
+              <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send" onclick="enviar_texto()"></i>
+          </div>
         </div>
-        </div>
+
+
+
     </div>
     </div>
 `;

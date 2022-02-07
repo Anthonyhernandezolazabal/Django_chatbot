@@ -43,22 +43,26 @@
                 </thead>
                 <tbody>
 
-                  {% for dato in datos %}
+                  
+                  {% if datos %}
+                    
+                    {% for dato in datos %}
 
-                  <tr>
-                    <td>{{ dato.id }}</td>
-                    <td>{{ dato.nombre }}</td>
-                    <td>{{ dato.nombre_cliente }}</td>
-                    <td>{{ dato.registrado }}</td>
-                    <td><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i>
-                      </button><button type="button" class="btn btn-warning"><i
-                          class="mdi mdi-square-edit-outline"></i></button><button type="button"
-                        class="btn btn-danger"><i class="mdi mdi-delete"></i>
-                      </button></td>
-                  </tr>
+                    <tr>
+                      <td>{{ dato.id }}</td>
+                      <td>{{ dato.nombre }}</td>
+                      <td>{{ dato.nombre_cliente }}</td>
+                      <td>{{ dato.registrado }}</td>
+                      <td><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i>
+                        </button><button type="button" class="btn btn-warning"><i
+                            class="mdi mdi-square-edit-outline"></i></button><button type="button"
+                          class="btn btn-danger"><i class="mdi mdi-delete"></i>
+                        </button></td>
+                    </tr>
 
-                  {% endfor %}
+                    {% endfor %}
 
+                  {% endif %}
                 </tbody>
               </table>
               <center>

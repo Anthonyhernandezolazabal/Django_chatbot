@@ -28,6 +28,17 @@
     b.setAttribute("attr_cont", cont);
   })
 
+
+  function uuidv4(){
+    var hoy = new Date();
+    var fecha = hoy.getDate() + '' + ( hoy.getMonth() + 1 );
+    var hora = hoy.getMinutes() + '' + hoy.getSeconds();
+    var alias_id = fecha + '' + hora;
+
+    return alias_id
+  }
+
+
   /*=============================================
     QUITAR PREGUNTAS
   =============================================*/
@@ -41,6 +52,26 @@
     b.setAttribute("attr_cont", cont);
 
   }
+
+  function quitar_prg(btn){
+
+    let prg_id = btn.closest('.col-lg-4').getAttribute('id_prg')
+    btn.closest('.col-lg-4').remove()
+    let prg;
+    prg = recuperarLS();
+    prg.forEach(function (pre,indice) {
+
+      if (pre[0].id === prg_id) {
+
+        prg.splice(indice,1);
+        
+      }
+      
+    });
+    localStorage.setItem("pregunta", JSON.stringify(prg))
+    
+  }
+
 
 
   let check_inpt3 = document.querySelector("#customRadio3");
@@ -70,11 +101,12 @@
   =============================================*/
   function myFunction() {
 
-    var b = document.querySelector(".btn_save");
-    var align = b.getAttribute("attr_cont");
-    var old_ques = []
-    var preguntas = [];
-    var est_campos = false;
+    let id = uuidv4()
+    let b = document.querySelector(".btn_save");
+    let align = b.getAttribute("attr_cont");
+    let old_ques = []
+    let preguntas = [];
+    let est_campos = false;
     micont++;
 
     n = -1;
@@ -82,7 +114,7 @@
     while (n < align) {
       n++;
       x = +n;
-      var capId = "question" + x
+      let capId = "question" + x
       let inputValue = document.getElementById(capId).value
       if (inputValue != '') {
         est_campos = true
@@ -94,8 +126,10 @@
     let rpta_i = document.getElementById('txt_autorpta').value
     preguntas.push({
       'preguntas_new': old_ques,
-      'respuesta_new': rpta_i
+      'respuesta_new': rpta_i,
+      'id':id
     })
+    let id_tmp = preguntas[0].id
 
     if (est_campos == false) {
 
@@ -112,14 +146,11 @@
       $('#full-width-modal').modal('hide');
 
       template = `
-        <div class="col-lg-4">
+        <div class="col-lg-4" id_prg='${id_tmp}'>
           <div class="card border-secondary border">
             <div class="card-body">
               <div class="dropdown float-end">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <i class="mdi mdi-close-circle" style='color: #c01f1f;'></i>
-                </a>
+                <i onclick='quitar_prg(this)' class="mdi mdi-close-circle" style='color: #c01f1f;cursor:pointer'></i>
               </div>
               <h4 class="header-title mb-3">CONVERSACIÓN N° ${micont}</h4>
               <div data-simplebar="init" style="max-height: 320px; overflow-x: hidden;">
@@ -222,127 +253,18 @@
   /*=============================================
     MOSTRAR SECCIONES DE PREGUNTAS Y RESPUESTAS
   =============================================*/
-  function conversaciones_pyr_old() {
-    let pregunta, cont = 0;
-    pregunta = recuperarLS();
-    pregunta.forEach(prg => {
-      cont++
-      template = `
-        <div class="col-lg-4">
-          <div class="card border-secondary border">
-            <div class="card-body">
-              <div class="dropdown float-end">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <i class="mdi mdi-close-circle" style='color: #c01f1f;'></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <!-- item-->
-                  <a href="javascript:void(0);" class="dropdown-item">Preguntas</a>
-                  <!-- item-->
-                  <a href="javascript:void(0);" class="dropdown-item">Respuesta</a>
-                </div>
-              </div>
-              <h4 class="header-title mb-3">CONVERSACIÓN N° ${cont}</h4>
-              <div data-simplebar="init" style="max-height: 320px; overflow-x: hidden;">
-                <div class="simplebar-wrapper" style="margin: 0px;">
-                  <div class="simplebar-height-auto-observer-wrapper">
-                    <div class="simplebar-height-auto-observer"></div>
-                  </div>
-                  <div class="simplebar-mask">
-                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                      <div class="simplebar-content-wrapper">
-                        <div class="simplebar-content" style="padding: 0px;">
-                          <div class="row py-1 align-items-center">
-                            <div class="table-responsive">
-                              <table class="table mb-0">
-                                <thead class="table-light">
-                                  <tr>
-                                    <th>Pregunta</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="simplebar-content-wrapper;">`;
-
-      for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
-        template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
-      }
-      template += `
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="simplebar-placeholder" style="width: 340px; height: 485px;"></div>
-                </div>
-              </div>
-              <div data-simplebar="init" style="max-height: 200px; overflow-x: hidden;">
-                <div class="simplebar-wrapper" style="margin: 0px;">
-                  <div class="simplebar-height-auto-observer-wrapper">
-                    <div class="simplebar-height-auto-observer"></div>
-                  </div>
-                  <div class="simplebar-mask">
-                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                      <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
-                        <div class="simplebar-content" style="padding: 0px;">
-                          <div class="row py-1 align-items-center">
-                            <div class="table-responsive">
-                              <table class="table mb-0">
-                                <thead class="table-light">
-                                  <tr>
-                                    <th>Respuesta</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr style="text-align: justify;">
-                                    <td><i class="mdi mdi-format-quote-open font-20"></i> <b>
-                                    ${prg[0]['respuesta_new']}
-                                        </b> <i
-                                        class="mdi mdi-format-quote-close font-20"></i></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="simplebar-placeholder" style="width: 340px; height: 485px;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>`;
-
-
-      let contenedor = document.querySelector('#lista_template')
-      let p = document.createElement('div')
-      p.innerHTML = template
-      contenedor.append(p);
-
-      // txt = document.getElementById("lista_template");
-      // console.log(txt.innerHTML = template)
-
-    });
-  }
-
   function conversaciones_pyr() {
+    let id = uuidv4()
     let pregunta, cont = 0;
     pregunta = recuperarLS();
     pregunta.forEach(prg => {
       cont++
       template = `
-        <div class="col-lg-4">
+        <div class="col-lg-4" id_prg='${prg[0].id}'>
           <div class="card border-secondary border">
             <div class="card-body">
               <div class="dropdown float-end">
-                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <i class="mdi mdi-close-circle" style='color: #c01f1f;'></i>
-                </a>
+                <i onclick='quitar_prg(this)' class="mdi mdi-close-circle" style='color: #c01f1f;cursor:pointer'></i>
               </div>
               <h4 class="header-title mb-3">CONVERSACIÓN N° ${cont}</h4>
               <div data-simplebar="init" style="max-height: 320px; overflow-x: hidden;">
