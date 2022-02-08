@@ -26,7 +26,7 @@ urlpatterns = [
     path('usuarios/',login_required(modulo_usuarios.mod_usuario),name='usuarios' ),
     path('clientes/',login_required(modulo_clientes.mod_clientes),name='clientes' ),
 
-    path('historial/',login_required(modulo_historial_conversacion.mod_historial), name='historial')
+    path('historial/',login_required(modulo_historial_conversacion.mod_historial), name='historial'),
 
     
     

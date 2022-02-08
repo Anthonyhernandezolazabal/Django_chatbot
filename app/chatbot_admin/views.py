@@ -1,4 +1,6 @@
 import os
+import shutil #mover archivos
+from datetime import datetime
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
@@ -12,7 +14,7 @@ from chatbot_admin.models import cliente,data_set
 from django.http import HttpRequest
 from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
-import shutil #mover archivos
+from chatbot.models import chat_user
 
 """=============================================
 VISTA INICIO
@@ -211,5 +213,21 @@ MÓDULO HISTORIAL
 class modulo_historial_conversacion(HttpRequest):
 
   def mod_historial(request):
+    global empre_id
 
-    return render(request, 'chatbot_admin/layouts/historial.html')
+    jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
+    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
+    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).queryset.filter(created_at=(first_date))
+
+    # print('empre_id de mod_historial :',empre_id)
+    # print('jsondata de mod_historial :',jsondata_h)
+  
+    # print("El día actual es {}".format(dd.day))
+    # print("El mes actual es {}".format(dd.month))
+    # print("El año actual es {}".format(dd.year))
+
+    context = {
+      'datos':jsondata_h
+    }
+
+    return render(request, 'chatbot_admin/layouts/historial.html',context)

@@ -24,7 +24,7 @@ class cliente(models.Model):
 
 class data_set(models.Model):
     nombre = models.CharField(max_length=50, verbose_name='Nombre de la sección json')
-    conversacion = models.CharField(max_length=500, verbose_name='Preguntas y respuestas')
+    conversacion = models.TextField(verbose_name='Preguntas y respuestas')
     id_cliente = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
     registrado = models.DateTimeField(auto_now_add=True)
 

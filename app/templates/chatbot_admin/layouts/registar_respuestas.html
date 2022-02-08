@@ -22,92 +22,117 @@
 
         <div class="row">
           <center>
-            
-          <div class="col-md-6">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="rpta_json_nomb" name="rpta_json_nomb" placeholder="Ejm: Respuestas de información">
-              <label for="floatingInput">Nombre de las respuestas automaticas</label>
-              <input type="hidden" name="empresa_rpta" id="empresa_rpta">
-              <input type="hidden" name="usu_rpta" id="usu_rpta">
+
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="rpta_json_nomb" name="rpta_json_nomb"
+                  placeholder="Ejm: Respuestas de información">
+                <label for="floatingInput">Nombre de las respuestas automaticas</label>
+                <input type="hidden" name="empresa_rpta" id="empresa_rpta">
+                <input type="hidden" name="usu_rpta" id="usu_rpta">
+              </div>
             </div>
-          </div>
           </center>
         </div>
 
         <div class="row" id="lista_template">
-
-
-
         </div>
 
-        <center><button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3"><i class="mdi mdi-plus"></i> Guardar</button></center>
+        <center>
+
+          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3 btn_sav"><i class="mdi mdi-plus"></i>
+            Guardar</button>
+
+          <button class="btn btn-danger btn-rounded mb-3 btn_loader" type="button" disabled="" style="display: none">
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            Guardando...
+          </button>
+
+
+        </center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </div>
   </div>
 </div>
 
 
-
-
-
 <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-xxl-9 col-lg-5">
-              <h4 class="header-title">Respuesta automatica :</h4>
-              <p class="text-muted font-14">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá
-                mejor
-                cuál es la respuesta asociada para ese tópico.:</p>
-              <h4><ins>Si el cliente escribe:</ins> </h4>
-              <hr>
-              <br>
-              <div class="row">
+  <form id="form-crear-rpta">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xxl-9 col-lg-5">
+                <h4 class="header-title">Respuesta automatica :</h4>
+                <p class="text-muted font-14">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá
+                  mejor
+                  cuál es la respuesta asociada para ese tópico.:</p>
+                <h4><ins>Si el cliente escribe:</ins> </h4>
+                <hr>
+                <br>
+                <div class="row">
 
-                <div class="col-12" style='margin-top: -24px;margin-bottom: -6px;'>
-                  <!-- FORMULAR PREGUNTA -->
-                  <div class="mb-2" id='add_input_new'>
+                  <div class="col-12" style='margin-top: -24px;margin-bottom: -6px;'>
+                    <!-- FORMULAR PREGUNTA -->
+                    <div class="mb-2" id='add_input_new'>
 
-                    <input class="form-control" type="text" placeholder="Formular pregunta" id="question0"
-                      name="question0">
+                      <input class="form-control" type="text" placeholder="Formular pregunta" id="question0"
+                        name="question0">
+
+                    </div>
+                    <a style="cursor: pointer;" id='add_quest' class='text-success'><i
+                        class="mdi mdi-plus-circle me-1"></i>Agregar mas preguntas</a>
 
                   </div>
-                  <a style="cursor: pointer;" id='add_quest' class='text-success'><i class="mdi mdi-plus-circle me-1"></i>Agregar mas preguntas</a>
-                      
-                </div>
 
-
-              </div>
-              <hr>
-              <h4 style="display: none" id="rptatit"><ins>El robot responderá:</ins> </h4>
-              <h6 class="font-15 mt-3">Tipo de respuesta</h6>
-              <!-- GENERAR RESPUESTA -->
-              <div class="form-floating" style='display: none' id='add_chek_txt'>
-                <textarea class="form-control" placeholder="Ingresa aquí la autorespuesta" name="txt_autorpta"
-                  id="txt_autorpta" style="height: 100px"></textarea>
-                <label for="txt_autorpta">Autorespuesta</label>
-              </div>
-              <div class="mt-2">
-                <div class="form-check form-check-inline">
-                  <input type="radio" id="customRadio3" name="customRadio1" class="form-check-input">
-                  <label class="form-check-label" for="customRadio3">Texto</label>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input type="radio" id="customRadio4" name="customRadio1" class="form-check-input">
-                  <label class="form-check-label" for="customRadio4">Slider</label>
+                <hr>
+                <h4 style="display: none" id="rptatit"><ins>El robot responderá:</ins> </h4>
+                <h6 class="font-15 mt-3">Tipo de respuesta</h6>
+                <!-- GENERAR RESPUESTA -->
+                <div class="form-floating" style='display: none' id='add_chek_txt'>
+                  <textarea class="form-control" placeholder="Ingresa aquí la autorespuesta" name="txt_autorpta"
+                    id="txt_autorpta" style="height: 100px"></textarea>
+                  <label for="txt_autorpta">Autorespuesta</label>
                 </div>
-              </div><br>
-              <div class="alert alert-danger mb-0" role="alert" style='display:none' id='alert_check'>
-                <i class="dripicons-information me-2"></i><strong>El slider</strong> no está disponible
-              </div>
-              <!-- <div class="alert alert-info mb-0" role="alert">
+                <div class="mt-2">
+                  <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadio3" name="customRadio1" class="form-check-input">
+                    <label class="form-check-label" for="customRadio3">Texto</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" id="customRadio4" name="customRadio1" class="form-check-input">
+                    <label class="form-check-label" for="customRadio4">Slider</label>
+                  </div>
+                </div><br>
+                <div class="alert alert-danger mb-0" role="alert" style='display:none' id='alert_check'>
+                  <i class="dripicons-information me-2"></i><strong>El slider</strong> no está disponible
+                </div>
+                <!-- <div class="alert alert-info mb-0" role="alert">
                     <i class="dripicons-information me-2"></i><strong>Un slider</strong> consiste en mostrar distintas
                     imágenes que se van deslizando unas sobre otras, <strong>pueden contener texto y botones</strong>
                   </div> -->
-              <!-- <div class="row">
+                <!-- <div class="row">
 
                     <div class="col-sm-5 mt-2">
                       <label for="example-fileinput" class="form-label">Selecciona imagen</label>
@@ -126,16 +151,17 @@
                     </div>
 
                   </div> -->
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary btn_save" onclick="myFunction()" attr_cont='0'>GUARDAR</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary btn_save" onclick="myFunction()" attr_cont='0'>GUARDAR</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </form>
 </div><!-- /.modal -->
 
 {% endblock content %}

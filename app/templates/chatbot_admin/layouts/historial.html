@@ -25,10 +25,8 @@
         <div class="card-body p-0">
 
           <ul class="nav nav-tabs nav-bordered">
-            <li class="nav-item">
-              <a href="#allUsers" data-bs-toggle="tab" aria-expanded="false" class="nav-link py-2 active">
-                Historial de HOY 04/02/2022
-              </a>
+            <li class="nav-item" style="width: 100%;margin: 3px 15px 8px 15px;">
+                Historial de <input type="text" name="dates" class="form-control pull-right">
             </li>
           </ul>
 
@@ -45,37 +43,34 @@
                       <div class="simplebar-mask">
                         <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                           <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
-                            <div class="simplebar-content" style="padding: 0px;">
+                            <div class="simplebar-content" style="padding: 0px;" id="tmp_api">
 
-                              <a href="javascript:void(0);" class="text-body">
-                                <div class="d-flex align-items-start bg-light mt-1 p-2">
-                                  <h1 class="me-2 rounded-circle" height="48">M</h1>
-                                  <div class="w-100 overflow-hidden">
-                                    <h5 class="mt-0 mb-0 font-14">
-                                      <span class="float-end text-muted font-12">4:30am</span>
-                                      Manuel
-                                    </h5>
-                                    <p class="mt-1 mb-0 text-muted font-14">
-                                      <span class="w-75">Última pregunta que fue respondid</span>
-                                    </p>
-                                  </div>
-                                </div>
-                              </a>
 
-                              <a href="javascript:void(0);" class="text-body">
-                                <div class="d-flex align-items-start bg-light mt-1 p-2">
-                                  <h1 class="me-2 rounded-circle" height="48">L</h1>
-                                  <div class="w-100 overflow-hidden">
-                                    <h5 class="mt-0 mb-0 font-14">
-                                      <span class="float-end text-muted font-12">4:30am</span>
-                                      Lucía
-                                    </h5>
-                                    <p class="mt-1 mb-0 text-muted font-14">
-                                      <span class="w-75">Última pregunta que fue respondid</span>
-                                    </p>
-                                  </div>
-                                </div>
-                              </a>
+                              {% if datos %}
+
+                                {% for dato in datos %}
+                                  <a href="javascript:void(0);" class="text-body">
+                                    <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                      <h1 class="me-2 rounded-circle" height="48">M</h1>
+                                      <div class="w-100 overflow-hidden">
+                                        <h5 class="mt-0 mb-0 font-14">
+                                          <span class="float-end text-muted font-12">4:30am</span>
+                                          {{ dato.nombre_persona }}
+                                        </h5>
+                                        <p class="mt-1 mb-0 text-muted font-14">
+                                          <span class="w-75">Última pregunta que fue respondid</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                {% endfor %}
+
+                              {% endif %}
+
+
+
+
+
 
                             </div>
                           </div>

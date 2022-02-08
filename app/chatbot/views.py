@@ -4,6 +4,11 @@ from django.views import generic
 from datetime import datetime
 from chatbot.models import chat_user
 from chatbot_admin.models import data_set,cliente
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from chatbot.serializers import historialChatSerializers
+
+
 # from .bot_function import conversation_directory,initialize
 
 import os
@@ -303,3 +308,29 @@ def entrenar_chatbot(request):
     train_bot(load_conversations())
 
   return render(request, 'chatbot_admin/layouts/respuestas.html')
+
+
+'''=============================================
+  RECIBIENDO RANGO DE FECHAS
+============================================= '''
+class historialChatApiView(APIView):
+
+  def get(self, request, format=None):
+
+    desde = request.GET.get('desde')
+    hasta = request.GET.get('hasta')
+    id_empresa = request.GET.get('id_empresa')
+
+    print('desde :',desde)
+    print('hasta :',hasta)
+    print('id_empresa :',id_empresa)
+
+    search = chat_user.objects.all()
+    rpta = search.filter(cliente_empresa_id=id_empresa,registrado__range=[desde,hasta])
+
+    serializer_historial = historialChatSerializers(rpta, many=True)
+
+    print(serializer_historial.data)
+
+
+    return Response(serializer_historial.data)

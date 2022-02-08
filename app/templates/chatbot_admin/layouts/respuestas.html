@@ -62,6 +62,14 @@
 
                     {% endfor %}
 
+                  {% else %}
+
+                      <tr>
+
+                        <th colspan="5" scope="rowgroup" class="text-center">No hay registros</th>
+                  
+                      </tr>
+
                   {% endif %}
                 </tbody>
               </table>
@@ -69,9 +77,21 @@
 
                 <input type="hidden" name="empresa_rpta" id="empresa_rpta">
                 <input type="hidden" name="usu_rpta" id="usu_rpta">
-                <button type="button" onclick="entrenar_chat()" class="btn btn-outline-success"><i
-                    class="uil-money-withdrawal"></i> Guardar | Entrenar</button>
-              </center>
+                
+                
+                {% if datos %}
+
+                  <button type="button" onclick="entrenar_chat()" class="btn btn-outline-success btn_sav2"><i class="uil-money-withdrawal"></i> Guardar | Entrenar</button>
+                
+                  
+
+                  <button type="button" class="btn btn-outline-success btn_loadersav" style="display: none"> <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    Guardando...</button>
+
+                
+                {% endif %}
+                  
+                </center>
             </div>
           </div>
         </div>

@@ -72,8 +72,6 @@
     
   }
 
-
-
   let check_inpt3 = document.querySelector("#customRadio3");
   check_inpt3.addEventListener("click", () => {
 
@@ -96,6 +94,13 @@
     titulo.style.display = "none";
   })
 
+  /*===========================
+    VACIAR TODO LOS PRODUCTO DEL LOCASLTORAGE
+    =============================*/
+  function eliminarLS() {
+    // localStorage.clear(); /*Elimina todo del localstorage */
+    localStorage.removeItem('pregunta')
+  }
   /*=============================================
     EVENTO ONCLICK
   =============================================*/
@@ -143,6 +148,7 @@
 
       agregarLS(preguntas)
 
+      $("#form-crear-rpta").trigger('reset');
       $('#full-width-modal').modal('hide');
 
       template = `
@@ -383,8 +389,12 @@
         },
         type: "GET",
         success: function () {
-          alert('ok');
-          // location.href = "../respuestas";
+          eliminarLS()
+          $('.btn_sav').hide();
+          $('.btn_loader').show();
+          location.href = "../respuestas";
+
+
         }
       });
 
@@ -392,6 +402,9 @@
   }
 
   function entrenar_chat() {
+
+    $('.btn_sav2').hide();
+    $('.btn_loadersav').show();
 
     var id_empresa = document.getElementById('empresa_rpta').value
     var id_usu = document.getElementById('usu_rpta').value

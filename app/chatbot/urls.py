@@ -10,4 +10,6 @@ urlpatterns = [
     path('getchat/', views.getchat, name='chat'),
     path('getjson/', views.getjson, name='rptajson'),
     path('entrenar_chatbot/', views.entrenar_chatbot, name='entrenar_chatbot'),
+
+    path('historial_fecha/',views.historialChatApiView.as_view(), name='historial_fecha')
 ]

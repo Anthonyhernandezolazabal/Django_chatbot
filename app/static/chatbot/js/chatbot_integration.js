@@ -44,6 +44,8 @@ var htmlbot = `
         <div class="chat-bar-input-block">
           <div id="userInput">
               <input id="textInput" class="input-box" type="text" name="msg" placeholder="Tap 'Enter' to send a message">
+              <input type='hidden' id='rpta_data'>
+              <input type='hidden' id='historial_chat'>
               <p></p>
           </div>
           <div class="chat-bar-icons">

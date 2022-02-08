@@ -6,6 +6,7 @@ colorama==0.4.4
 Django==4.0.1
 django-cors-headers==3.11.0
 django-crispy-forms==1.13.0
+djangorestframework==3.13.1
 joblib==1.1.0
 mathparse==0.1.2
 mysqlclient==2.1.0
