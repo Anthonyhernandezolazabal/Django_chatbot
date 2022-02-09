@@ -185,7 +185,7 @@ body{
 
 }
 .chat-body .chat-bubble.you{
-  background: #e0e0e0 !important;
+  background: #f1f3fa !important;
   color: #000 !important;
   border-radius: 0 15px 15px 15px !important;
   align-self: flex-start !important;
@@ -216,12 +216,12 @@ body{
 }
 
 .chat-bar-icons {
-    display: flex !important;
+    /* display: flex !important; */
     justify-content: space-evenly !important;
     box-sizing: border-box !important;
     width: 20% !important;
     float: right !important;
-    font-size: 40px !important;
+    font-size: 30px !important;
     border-radius: 10px 10px 10px 10px !important;
 
     background-color: #fbf7f7de;

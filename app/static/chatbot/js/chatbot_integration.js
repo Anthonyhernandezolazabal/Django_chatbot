@@ -25,7 +25,7 @@ var htmlbot = `
     </div>
     <!-- CHAT -->
     <div class="chat-box" id='body-chat' style='display: none !important;'>
-        <div class="chat-body hide" id="chat2">
+        <div class="chat-body" id="chat2">
             <div id="chat">
                 <div class="chat-start">Lunes, 1:27 PM</div>
                 <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este
@@ -48,9 +48,13 @@ var htmlbot = `
               <input type='hidden' id='historial_chat'>
               <p></p>
           </div>
-          <div class="chat-bar-icons">
-              <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send" onclick="enviar_texto()"></i>
+
+          <div>
+
+              <button id='chat-icon' onclick="enviar_texto()">Enviar</button>
+
           </div>
+
         </div>
 
 

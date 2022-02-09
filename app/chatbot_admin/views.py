@@ -1,6 +1,6 @@
 import os
 import shutil #mover archivos
-from datetime import datetime
+import datetime
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
@@ -41,9 +41,9 @@ class LoginFormViews(LoginView):
         user = UserProfile.objects.get(pk=id_user_login)
         id_clt = user.id_cliente
         tipo_usu = user.is_superuser
+        
 
         if id_clt is None:
-
           #INICIAR BOT
           t = initialize(id_user_login)
           params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt}
@@ -214,8 +214,27 @@ class modulo_historial_conversacion(HttpRequest):
 
   def mod_historial(request):
     global empre_id
+    #CAPTURANDO EL ALIAS
+    user_alias = request.session.session_key
 
-    jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
+    print('capturando user_alias :',user_alias)
+
+    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
+
+    hoy = datetime.datetime.utcnow().strftime("%Y/%m/%d")
+
+    ahora = datetime.datetime.utcnow()
+    tomorrow = ahora + datetime.timedelta(days=1)
+    hasta = tomorrow.strftime("%Y/%m/%d")
+    
+
+    print('str id :',empre_id)
+    print('str hoy :',hoy)
+    print('str hasta :',hasta)
+
+    jsondata_h = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+str(empre_id)+' AND  registrado BETWEEN "'+str(hoy)+'" AND "'+str(hasta)+'" GROUP BY nombre_persona')
+
+    print('jsondata_h :',jsondata_h)
     # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
     # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).queryset.filter(created_at=(first_date))
 

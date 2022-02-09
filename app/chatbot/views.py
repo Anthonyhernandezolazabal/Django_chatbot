@@ -197,7 +197,8 @@ def getchat(request):
     myuser = user[user_cook]
 
     bol=myuser['bol']
-    nombre_nombre=myuser['nombre']
+    nombre_nombre=myuser['nombre']+'-'+user_cook
+
     entradatmp=myuser['entradatmp']
     chat_input = request.GET.get('msg')
 
@@ -325,8 +326,10 @@ class historialChatApiView(APIView):
     print('hasta :',hasta)
     print('id_empresa :',id_empresa)
 
-    search = chat_user.objects.all()
-    rpta = search.filter(cliente_empresa_id=id_empresa,registrado__range=[desde,hasta])
+    # search = chat_user.objects.all()
+    # rpta = search.filter(cliente_empresa_id=id_empresa,registrado__range=[desde,hasta])
+    
+    rpta = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+id_empresa+' AND registrado BETWEEN "'+desde+'" AND "'+hasta+'" GROUP BY nombre_persona')
 
     serializer_historial = historialChatSerializers(rpta, many=True)
 
@@ -334,3 +337,24 @@ class historialChatApiView(APIView):
 
 
     return Response(serializer_historial.data)
+
+'''=============================================
+   MOSTRAR HISTORIAL POR USUARIOS
+============================================= '''
+class conversacionesApiView(APIView):
+  
+  def get(self, request, format=None):
+
+    alias_nom = request.GET.get('usuario_alias')
+
+    print('alias_nom :',alias_nom)
+
+    datos = chat_user.objects.filter(nombre_persona=alias_nom)
+
+    serializer_conversacion = historialChatSerializers(datos, many=True)
+
+    print(serializer_conversacion.data)
+
+    return Response(serializer_conversacion.data)
+
+

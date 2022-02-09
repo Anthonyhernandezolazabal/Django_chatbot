@@ -26,7 +26,7 @@
 
           <ul class="nav nav-tabs nav-bordered">
             <li class="nav-item" style="width: 100%;margin: 3px 15px 8px 15px;">
-                Historial de <input type="text" name="dates" class="form-control pull-right">
+              Historial de <input type="text" name="dates" class="form-control pull-right">
             </li>
           </ul>
 
@@ -35,7 +35,7 @@
 
               <div class="row">
                 <div class="col">
-                  <div data-simplebar="init" style="max-height: 506px">
+                  <div data-simplebar="init" style="max-height: 482px">
                     <div class="simplebar-wrapper" style="margin: 0px;">
                       <div class="simplebar-height-auto-observer-wrapper">
                         <div class="simplebar-height-auto-observer"></div>
@@ -48,29 +48,25 @@
 
                               {% if datos %}
 
-                                {% for dato in datos %}
-                                  <a href="javascript:void(0);" class="text-body">
-                                    <div class="d-flex align-items-start bg-light mt-1 p-2">
-                                      <h1 class="me-2 rounded-circle" height="48">M</h1>
-                                      <div class="w-100 overflow-hidden">
-                                        <h5 class="mt-0 mb-0 font-14">
-                                          <span class="float-end text-muted font-12">4:30am</span>
-                                          {{ dato.nombre_persona }}
-                                        </h5>
-                                        <p class="mt-1 mb-0 text-muted font-14">
-                                          <span class="w-75">Última pregunta que fue respondid</span>
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </a>
-                                {% endfor %}
+                              {% for dato in datos %}
+                              <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}');" class="text-body">
+                                <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                  <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
+                                  <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|make_list|first|upper }}</h1>
+                                  <div class="w-100 overflow-hidden">
+                                    <h5 class="mt-0 mb-0 font-14">
+                                      <span class="float-end text-muted font-12">4:30am</span>
+                                      {{ dato.nombre_persona }}
+                                    </h5>
+                                    <p class="mt-1 mb-0 text-muted font-14">
+                                      <span class="w-75">{{ dato.pregunta }}</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                              {% endfor %}
 
                               {% endif %}
-
-
-
-
-
 
                             </div>
                           </div>
@@ -94,7 +90,7 @@
       </div>
     </div>
 
-    <div class="col-xxl-8 col-xl-12 order-xl-2">
+    <div class="col-xxl-8 col-xl-12 order-xl-2" id="card_conver" style="display: none;">
       <div class="card">
         <div class="card-body">
           <ul class="conversation-list" data-simplebar="init" style="max-height: 537px">
@@ -108,91 +104,9 @@
 
                   <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
 
-                    <div class="simplebar-content" style="padding: 0px 15px;">
+                    <div class="simplebar-content" style="padding: 0px 15px;" id="conv_hist">
 
-                      <li class="clearfix">
-                        <div class="chat-avatar">
-                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" class="rounded"
-                            alt="Shreyu N">
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Shreyu N</i>
-                            <p>
-                              Hola!
-                            </p>
-                          </div>
-                        </div>
-                      </li>
 
-                      <li class="clearfix odd">
-                        <div class="chat-avatar">
-                          <h1 class="me-2 rounded-circle" height="48">M</h1>
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Dominic</i>
-                            <p>
-                              ¿Hola, cómo estás? ¿Qué hay de nuestra próxima reunión?
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="clearfix">
-                        <div class="chat-avatar">
-                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" class="rounded"
-                            alt="Shreyu N">
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Shreyu N</i>
-                            <p>
-                              Sí, todo está bien
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="clearfix odd">
-                        <div class="chat-avatar">
-                          <h1 class="me-2 rounded-circle" height="48">M</h1>
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Dominic</i>
-                            <p>
-                              Wow that's great
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="clearfix">
-                        <div class="chat-avatar">
-                          <img src="{% static 'chatbot_admin/assets/images/default.png' %}" alt="Shreyu N"
-                            class="rounded">
-                          <i>10:02</i>
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Shreyu N</i>
-                            <p>
-                              Let's have it today if you are free
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="clearfix odd">
-                        <div class="chat-avatar">
-                          <h1 class="me-2 rounded-circle" height="48">M</h1>
-                        </div>
-                        <div class="conversation-text">
-                          <div class="ctext-wrap">
-                            <i>Dominic</i>
-                            <p>
-                              Sure thing! let me know if 2pm works for you
-                            </p>
-                          </div>
-                        </div>
-                      </li>
                     </div>
                   </div>
                 </div>

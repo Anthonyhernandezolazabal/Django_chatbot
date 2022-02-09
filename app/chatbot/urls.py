@@ -11,5 +11,6 @@ urlpatterns = [
     path('getjson/', views.getjson, name='rptajson'),
     path('entrenar_chatbot/', views.entrenar_chatbot, name='entrenar_chatbot'),
 
-    path('historial_fecha/',views.historialChatApiView.as_view(), name='historial_fecha')
+    path('historial_fecha/',views.historialChatApiView.as_view(), name='historial_fecha'),
+    path('obtener_conversacion/',views.conversacionesApiView.as_view(), name='obtener_conversacion')
 ]
