@@ -1,0 +1,28 @@
+{
+    "conversations": [
+        {
+            "messages": [
+                "Hola"
+            ],
+            "response": "Hola, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
+        },
+        {
+            "messages": [
+                "Buenas días"
+            ],
+            "response": "Buenos días, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
+        },
+        {
+            "messages": [
+                "Buenas tardes"
+            ],
+            "response": "Buenos tardes, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
+        },
+        {
+            "messages": [
+                "Buenas noches"
+            ],
+            "response": "Buenos noches, soy el robot contestador de INGyTAL. ¿Cómo puedo ayudar?"
+        }
+    ]
+}

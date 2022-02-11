@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from chatbot.models import chat_user
-
 class historialChatSerializers(serializers.ModelSerializer):
     class Meta:
         model = chat_user

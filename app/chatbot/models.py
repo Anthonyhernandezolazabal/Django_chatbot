@@ -14,3 +14,14 @@ class chat_user(models.Model):
   class Meta:
     db_table = 'historial_chat'
     ordering = ['id'] #ordenar por ID
+
+class chatbot_style(models.Model):
+  titulo_header = models.CharField(max_length=100)
+  titulo_cuerpo = models.CharField(max_length=100)
+  botones = models.CharField(max_length=100)
+  text_bienvenida = models.CharField(max_length=255)
+  id_empresa = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
+  
+  class Meta:
+    db_table = 'chatbot_style'
+    ordering = ['id'] #ordenar por ID

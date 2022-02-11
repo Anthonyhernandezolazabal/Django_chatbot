@@ -1,16 +1,13 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
-
 {% block content %}
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a></li>
             <li class="breadcrumb-item active">Registrar Respuestas</li>
           </ol>
         </div>
@@ -19,10 +16,8 @@
           data-bs-target="#full-width-modal"><span>Agregar respuestas automáticas <i
               class="mdi mdi-plus-circle me-1"></i></span> </button>
         <br><br>
-
-        <div class="row">
+        <div class="row" id="lista_template">
           <center>
-
             <div class="col-md-6">
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="rpta_json_nomb" name="rpta_json_nomb"
@@ -34,46 +29,22 @@
             </div>
           </center>
         </div>
-
-        <div class="row" id="lista_template">
+        <div>
         </div>
-
         <center>
-
-          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3 btn_sav"><i class="mdi mdi-plus"></i>
+          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3" id="btn_sav"><i
+              class="mdi mdi-plus"></i>
             Guardar</button>
-
-          <button class="btn btn-danger btn-rounded mb-3 btn_loader" type="button" disabled="" style="display: none">
+          <button class="btn btn-danger btn-rounded mb-3" id="btn_loader" type="button" disabled=""
+            style="display: none">
             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             Guardando...
           </button>
-
-
         </center>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </div>
   </div>
 </div>
-
-
 <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
   aria-hidden="true">
   <form id="form-crear-rpta">
@@ -91,20 +62,15 @@
                 <hr>
                 <br>
                 <div class="row">
-
                   <div class="col-12" style='margin-top: -24px;margin-bottom: -6px;'>
                     <!-- FORMULAR PREGUNTA -->
                     <div class="mb-2" id='add_input_new'>
-
                       <input class="form-control" type="text" placeholder="Formular pregunta" id="question0"
                         name="question0">
-
                     </div>
                     <a style="cursor: pointer;" id='add_quest' class='text-success'><i
                         class="mdi mdi-plus-circle me-1"></i>Agregar mas preguntas</a>
-
                   </div>
-
                 </div>
                 <hr>
                 <h4 style="display: none" id="rptatit"><ins>El robot responderá:</ins> </h4>
@@ -128,40 +94,17 @@
                 <div class="alert alert-danger mb-0" role="alert" style='display:none' id='alert_check'>
                   <i class="dripicons-information me-2"></i><strong>El slider</strong> no está disponible
                 </div>
-                <!-- <div class="alert alert-info mb-0" role="alert">
-                    <i class="dripicons-information me-2"></i><strong>Un slider</strong> consiste en mostrar distintas
-                    imágenes que se van deslizando unas sobre otras, <strong>pueden contener texto y botones</strong>
-                  </div> -->
-                <!-- <div class="row">
-
-                    <div class="col-sm-5 mt-2">
-                      <label for="example-fileinput" class="form-label">Selecciona imagen</label>
-                      <input type="file" id="example-fileinput" class="form-control">
-                    </div>
-
-                    <div class="col-sm-4 mt-2">
-                      <label for="example-fileinput" class="form-label">Acción a este boton</label>
-                      <input class="form-control mb-2" type="text" placeholder="Formular pregunta" id="billing-address">
-                    </div>
-
-                    <div class="col-sm-3 mt-3">
-                      <br>
-                      <a href="#" class='text-success'><i class="mdi mdi-plus-circle me-1"></i>Agregar mas acciones en
-                        botones</a>
-                    </div>
-
-                  </div> -->
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary btn_save" onclick="myFunction()" attr_cont='0'>GUARDAR</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_cerrar">Cerrar</button>
+          <button type="button" class="btn btn-primary btn_save" data-bs-dismiss="modal" onclick="myFunction()"
+            attr_cont='0'>GUARDAR</button>
         </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+      </div>
+    </div>
   </form>
-</div><!-- /.modal -->
-
+</div>
 {% endblock content %}

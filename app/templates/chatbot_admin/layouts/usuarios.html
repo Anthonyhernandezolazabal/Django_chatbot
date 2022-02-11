@@ -1,10 +1,7 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
-
 {% block content %}
 <div class="container-fluid">
-
-  <!-- start page title -->
   <div class="row">
     <div class="col-12">
       <div class="page-title-box">
@@ -19,7 +16,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-xl-12 col-lg-6">
     <div class="card card-h-100">
       <div class="card-body">
@@ -38,64 +34,38 @@
             </tr>
           </thead>
           <tbody>
-            
             {% for alluser in userall %}
-              <tr>
-                <td>{{ alluser.id }}</td>
-                <td>{{ alluser.username }}</td>
-                <td>{{ alluser.email }}</td>
-                
-                {% if alluser.is_superuser == 1 %}
-                  <td><span class="badge badge-outline-info">AdministraROOT</span></td>
-                {% else %}
-                  <td><span class="badge badge-outline-secondary">Empresa</span></td>
-                {% endif %}
-                <td>{{ alluser.telefono }}</td>
-                <td>{{ alluser.last_login }}</td>
-
-                {% if alluser.is_superuser == 1 %}
-                  <td>Root</td>
-                {% else %}
-                  <td>{{ alluser.id_cliente.nombre }}</td>
-                {% endif %}
-
-                {% if alluser.is_active == 1 %}
-
-                <td><span class="badge badge-outline-success rounded-pill">Activo</span></td>
-
-                {% else %}
-
-                <td><span class="badge badge-outline-danger rounded-pill">Inactivo</span></td>
-
-                {% endif %}
-
-                <td class="table-action">
-                  <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                  <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                </td>
-              </tr>
-
-              
-
+            <tr>
+              <td>{{ alluser.id }}</td>
+              <td>{{ alluser.username }}</td>
+              <td>{{ alluser.email }}</td>
+              {% if alluser.is_superuser == 1 %}
+              <td><span class="badge badge-outline-info">AdministraROOT</span></td>
+              {% else %}
+              <td><span class="badge badge-outline-secondary">Empresa</span></td>
+              {% endif %}
+              <td>{{ alluser.telefono }}</td>
+              <td>{{ alluser.last_login }}</td>
+              {% if alluser.is_superuser == 1 %}
+              <td>Root</td>
+              {% else %}
+              <td>{{ alluser.id_cliente.nombre }}</td>
+              {% endif %}
+              {% if alluser.is_active == 1 %}
+              <td><span class="badge badge-outline-success rounded-pill">Activo</span></td>
+              {% else %}
+              <td><span class="badge badge-outline-danger rounded-pill">Inactivo</span></td>
+              {% endif %}
+              <td class="table-action">
+                <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+              </td>
+            </tr>
             {% endfor %}
-              
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
-  <!-- end row-->
-
-  <!-- end row-->
-
-
-  <!-- end row-->
-
-
-
-
-
 </div>
-
 {% endblock content %}

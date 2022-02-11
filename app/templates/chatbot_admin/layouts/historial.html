@@ -1,38 +1,31 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
-
 {% block content %}
 <div class="container-fluid">
-
   <div class="row">
     <div class="col-12">
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-            <li class="breadcrumb-item active">Chat</li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">REPORTES</a></li>
+            <li class="breadcrumb-item active">Historial</li>
           </ol>
         </div>
         <h4 class="page-title">Historial de conversaciones</h4>
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-xxl-4 col-xl-6 order-xl-1">
       <div class="card">
         <div class="card-body p-0">
-
           <ul class="nav nav-tabs nav-bordered">
             <li class="nav-item" style="width: 100%;margin: 3px 15px 8px 15px;">
               Historial de <input type="text" name="dates" class="form-control pull-right">
             </li>
           </ul>
-
           <div class="tab-content">
             <div class="tab-pane show active p-3" id="newpost">
-
               <div class="row">
                 <div class="col">
                   <div data-simplebar="init" style="max-height: 482px">
@@ -45,14 +38,13 @@
                           <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
                             <div class="simplebar-content" style="padding: 0px;" id="tmp_api">
 
-
                               {% if datos %}
-
                               {% for dato in datos %}
                               <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}');" class="text-body">
                                 <div class="d-flex align-items-start bg-light mt-1 p-2">
                                   <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
-                                  <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|make_list|first|upper }}</h1>
+                                  <h1 class="me-2 rounded-circle" height="48">
+                                    {{ dato.nombre_persona|make_list|first|upper }}</h1>
                                   <div class="w-100 overflow-hidden">
                                     <h5 class="mt-0 mb-0 font-14">
                                       <span class="float-end text-muted font-12">4:30am</span>
@@ -65,9 +57,16 @@
                                 </div>
                               </a>
                               {% endfor %}
-
+                              {% else %}
+                              <div class="tab-pane show active" id="additional-content-preview">
+                                <div class="alert alert-warning mb-0" role="alert">
+                                  <h4 class="alert-heading"><i class="dripicons-warning me-2"></i> Oh no!</h4>
+                                  <p style="text-align: right;">Aún no tienes historial de conversaciones.</p>
+                                  <hr>
+                                  <p class="mb-0">Toda interacción que se tenga con el chatbot aparecerá aquí!.</p>
+                                </div>
+                              </div>
                               {% endif %}
-
                             </div>
                           </div>
                         </div>
@@ -89,7 +88,6 @@
         </div>
       </div>
     </div>
-
     <div class="col-xxl-8 col-xl-12 order-xl-2" id="card_conver" style="display: none;">
       <div class="card">
         <div class="card-body">
@@ -99,14 +97,9 @@
                 <div class="simplebar-height-auto-observer"></div>
               </div>
               <div class="simplebar-mask">
-
                 <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-
                   <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
-
                     <div class="simplebar-content" style="padding: 0px 15px;" id="conv_hist">
-
-
                     </div>
                   </div>
                 </div>
@@ -121,12 +114,9 @@
                 style="height: 310px; transform: translate3d(0px, 227px, 0px); display: block;"></div>
             </div>
           </ul>
-
-        </div> <!-- end card-body -->
-      </div> <!-- end card -->
+        </div>
+      </div>
     </div>
-  </div> <!-- end row-->
-
+  </div>
 </div>
-
 {% endblock content %}

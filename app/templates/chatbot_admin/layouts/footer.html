@@ -1,21 +1,11 @@
 {% load static %}
-
-  <!-- bundle -->
   <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
   <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
   <script src="{% static 'chatbot_admin/assets/js/respuestas.js' %}"></script>
-
-  <!-- INTEGRACION DEL CHATBOT -->
-  <link rel="stylesheet" href="{% static 'chatbot/css/style_chatbot.css' %}">
-  
-  <script src="{% static 'chatbot/js/jquery-3.1.1.min.js' %}"></script>
-  <script src="{% static 'chatbot/js/a076d05399.js' %}"></script>
-  <script id='libreria_chatbot' user='{{ id_user }}' empresa='{{ id_empresa }}' empresa src="{% static 'chatbot/js/chatbot.js' %}" ></script>
-
-  
-  <!-- <script src="{% static 'chatbot/js/chatbot_links.js' %}"></script> -->
-  
-
   <script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
   <script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/spanish.js' %}"></script>
   <script src="{% static 'chatbot_admin/assets/js/reportes.js' %}"></script>
+  <!-- INTEGRACION DEL CHATBOT -->
+  <link rel="stylesheet" href="{% static 'chatbot/css/style_chatbot.css' %}">
+  <script src="{% static 'chatbot/js/a076d05399.js' %}"></script>
+  <script id='libreria_chatbot' user='{{ id_user }}' empresa='{{ id_empresa }}' empresa src="{% static 'chatbot/js/chatbot.js' %}" ></script>
