@@ -103,6 +103,7 @@ def getnombre(request):
   user = globals()['users__']
   user_alias = request.session.session_key
   user_nom = request.GET.get('nomb')
+  print('my nombre :',user_nom)
   user[user_alias]={'nombre': user_nom.lower(), 'bol': 0, 'entradatmp': entradatmp}
   session_cook = user
   return HttpResponse(status=201)
@@ -151,6 +152,7 @@ def getchat(request):
             myuser['entradatmp']=chat_input
             #print('variable sesion: ',session_cook[user_cook])
           else:
+            print('autenticateee :',request.user.is_authenticated)
             rpta1 = 'Disculpa no te entendí, sé mas especifico!'
           return HttpResponse(str(rpta1)) 
       else:

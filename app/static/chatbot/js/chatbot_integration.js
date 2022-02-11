@@ -19,7 +19,7 @@ var htmlbot = `
         </div>
         <div class="chat-box" id='body-chat' style='display: none !important;'>
             <div class="chat-body" id="chat2">
-              <div class="chat-start">Lunes, 1:27 PM</div>
+              <div class="chat-start" id='dia_hora_chat'>Lunes, 1:27 PM</div>
               <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.</div>
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
@@ -64,7 +64,7 @@ function comenzar_chat() {
     element2.style.display = "block";
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
-    fetch(`http://127.0.0.1:8000/getnombre/?nomb=` + nombre_usuario, {
+    fetch(`https://127.0.0.1:8000/getnombre/?nomb=` + nombre_usuario, {
       method: 'GET',
     }).then(jsonRsp => {}).catch(e => {
       console.log(e);
@@ -75,7 +75,7 @@ function comenzar_chat() {
 INICIAR CHATBOT
 =============================================*/
 function getBotResponse() {
-    
+
   var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
   var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
 
@@ -87,7 +87,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('http://127.0.0.1:8000/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr, {
+    fetch('https://127.0.0.1:8000/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
@@ -106,12 +106,14 @@ function getBotResponse() {
     })
   }
 }
+
 function escribir(e) {
   if (e.keyCode == 13) {
     getBotResponse();
     document.getElementById('textInput').value = ''
   }
 }
+
 function enviar_texto(e) {
   getBotResponse();
   document.getElementById('textInput').value = ''
@@ -120,18 +122,49 @@ function enviar_texto(e) {
 CHAT MICROFONO
 =============================================*/
 let mic = document.getElementById("mic");
+let texto = document.getElementById('textInput');
 
 let recognition = new webkitSpeechRecognition()
 recognition.lang = 'es-ES';
 recognition.continuous = true; //Siga grabando
 recognition.interimResults = false; //Si nos quedamos callado que deje de grabar
 
-recognition.onresult = (event) =>{
-  const result = event.result;
-  console.log(result);
+recognition.onresult = (event) => {
+  const results = event.results;
+  console.log(results);
+  const frase = results[results.length - 1][0].transcript;
+  texto.value += frase
+  getBotResponse();
+  texto.value = ''
+  recognition.abort();
+  mic.style.color = '#6C757D';
+
+}
+mic.addEventListener("click", function () {
+  recognition.start();
+  mic.style.color = '#009805';
+})
+
+
+function formatAMPM() {
+  let dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+  let date = new Date();
+  var day = dias[date.getDay()-1]
+
+  date = new Date;
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = day+', '+hours + ':' + minutes + ' ' + ampm;
+
+  document.getElementById('dia_hora_chat').innerHTML = strTime
 }
 
-mic.addEventListener("click", function(){
-  recognition.start();
-  mic.style.color='#009805';
-})
+console.log(formatAMPM());
+
+
+// Sabado 12 de Febrero de 2022
+//  4:01 pm

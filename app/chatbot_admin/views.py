@@ -27,6 +27,9 @@ class LoginFormViews(LoginView):
   template_name = 'chatbot_admin/registration/login.html'
   def dispatch(self, request, *args, **kwargs):
       if request.user.is_authenticated:
+
+        print('user.is_authenticated: ',request.user.is_authenticated)
+
         clt = ClientRegisterForm()
         global id_user_login
         global empre_id
