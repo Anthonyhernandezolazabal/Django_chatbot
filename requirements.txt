@@ -12,7 +12,6 @@ django-extensions==3.1.5
 djangorestframework==3.13.1
 joblib==1.1.0
 mathparse==0.1.2
-mysqlclient==2.1.0
 nltk==3.6.7
 packaging==21.3
 Pillow==9.0.0
@@ -20,7 +19,6 @@ Pint==0.18
 psycopg2==2.9.3
 pycparser==2.21
 pymongo==3.12.3
-PyMySQL==1.0.2
 pyOpenSSL==22.0.0
 pyparsing==3.0.6
 python-dateutil==2.7.5
