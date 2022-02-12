@@ -74,11 +74,11 @@ function comenzar_chat() {
 /*=============================================
 INICIAR CHATBOT
 =============================================*/
+var ls_LS = localStorage.getItem('datos')
 function getBotResponse() {
-
   var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
   var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
-
+  var user_autenticate = JSON.parse(ls_LS).user_autenticate;
   var rawText = document.getElementById('textInput').value
   if (rawText != '') {
     var userHtml = '<div class="chat-bubble me"> ' + rawText + ' </div>';
@@ -87,7 +87,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://127.0.0.1:8000/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr, {
+    fetch('https://127.0.0.1:8000/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr+ '&user_autenticate=' + user_autenticate, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
@@ -106,14 +106,12 @@ function getBotResponse() {
     })
   }
 }
-
 function escribir(e) {
   if (e.keyCode == 13) {
     getBotResponse();
     document.getElementById('textInput').value = ''
   }
 }
-
 function enviar_texto(e) {
   getBotResponse();
   document.getElementById('textInput').value = ''
@@ -123,12 +121,10 @@ CHAT MICROFONO
 =============================================*/
 let mic = document.getElementById("mic");
 let texto = document.getElementById('textInput');
-
 let recognition = new webkitSpeechRecognition()
 recognition.lang = 'es-ES';
 recognition.continuous = true; //Siga grabando
 recognition.interimResults = false; //Si nos quedamos callado que deje de grabar
-
 recognition.onresult = (event) => {
   const results = event.results;
   console.log(results);
@@ -138,19 +134,15 @@ recognition.onresult = (event) => {
   texto.value = ''
   recognition.abort();
   mic.style.color = '#6C757D';
-
 }
 mic.addEventListener("click", function () {
   recognition.start();
   mic.style.color = '#009805';
 })
-
-
 function formatAMPM() {
   let dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
   let date = new Date();
   var day = dias[date.getDay()-1]
-
   date = new Date;
   var hours = date.getHours();
   var minutes = date.getMinutes();
@@ -159,12 +151,5 @@ function formatAMPM() {
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
   var strTime = day+', '+hours + ':' + minutes + ' ' + ampm;
-
   document.getElementById('dia_hora_chat').innerHTML = strTime
 }
-
-console.log(formatAMPM());
-
-
-// Sabado 12 de Febrero de 2022
-//  4:01 pm

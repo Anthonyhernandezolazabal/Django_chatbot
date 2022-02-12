@@ -1,22 +1,6 @@
 {% load static %}
 <div class="navbar-custom">
   <ul class="list-unstyled topbar-menu float-end mb-0">
-    <li class="dropdown notification-list d-lg-none">
-      <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
-        aria-haspopup="false" aria-expanded="false">
-        <i class="dripicons-search noti-icon"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
-        <form class="p-3">
-          <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-        </form>
-      </div>
-    </li>
-    <li class="notification-list">
-      <a class="nav-link end-bar-toggle" href="javascript: void(0);">
-        <i class="dripicons-gear noti-icon"></i>
-      </a>
-    </li>
     <li class="dropdown notification-list">
       <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button"
         aria-haspopup="false" aria-expanded="false">
@@ -24,8 +8,8 @@
           <img src="{% static 'chatbot_admin/assets/images/default.png' %}" alt="user-image" class="rounded-circle">
         </span>
         <span>
-          <span class="account-user-name username_user_ls">Soeng Souy</span>
-          <span class="account-position">Founder</span>
+          <span class="account-user-name username_user_ls"></span>
+          <span class="account-position">Bienvenido</span>
         </span>
       </a>
       <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
@@ -47,4 +31,14 @@
   <button class="button-menu-mobile open-left">
     <i class="mdi mdi-menu"></i>
   </button>
+  <script>
+    var LSs = localStorage.getItem('datos')
+    document.querySelector('.username_user_ls').innerHTML = JSON.parse(LSs).username.toUpperCase()
+    /*=============================================
+    LIMPIAR EL LOCALSTORAGE AL CERRAR SESSIÓN
+    =============================================*/
+    document.querySelector("#logout_sess").addEventListener("click", () => {
+      localStorage.clear();
+    })
+  </script>
 </div>

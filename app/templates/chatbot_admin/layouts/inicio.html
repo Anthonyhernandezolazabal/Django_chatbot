@@ -120,5 +120,21 @@
     document.querySelector('#id_user').innerHTML = '"' + id_cliente + '"'
     document.querySelector('#id_empr').innerHTML = '"' + id_empresa + '"'
     document.querySelector('#username_user_i').innerHTML = username_user_i.toUpperCase() 
+
+    // EMPRESA REGISTRADA
+    var id_new_logueo = document.getElementById('empresa_logueado').value;
+    if (id_new_logueo != '') {
+      document.querySelector('#id_empr').innerHTML = '"' + id_new_logueo + '"'
+    }
+
+    if (id_empresa == '') {
+      /* SOBREESCRIBIR UN VALOR DE LA VARIABLE DEL LS */
+      datos = JSON.parse(Ls);
+      datos.id_empresa = id_new_logueo
+      localStorage.setItem('datos',JSON.stringify(datos))
+    }
+
+    // 
+    // id_new_logueo.setAttribute('id_cliente02',document.querySelector('#id_empr').value);
   </script>
   {% endblock content %}

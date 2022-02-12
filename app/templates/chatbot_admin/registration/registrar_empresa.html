@@ -38,4 +38,11 @@
   </div>
 </div>
 
+<script>
+
+  var LS_s = localStorage.getItem('datos')
+  document.getElementById('id_nombreBD').value = JSON.parse(LS_s).nombrebd + '.sqlite3'
+
+</script>
+
 {% endblock %}

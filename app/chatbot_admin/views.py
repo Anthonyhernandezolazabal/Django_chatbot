@@ -14,6 +14,11 @@ from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
 from chatbot.models import chat_user
 
+
+
+
+
+
 """=============================================
 VISTA INICIO
 ============================================="""
@@ -27,10 +32,11 @@ class LoginFormViews(LoginView):
   template_name = 'chatbot_admin/registration/login.html'
   def dispatch(self, request, *args, **kwargs):
       if request.user.is_authenticated:
-        print('user.is_authenticated: ',request.user.is_authenticated)
         clt = ClientRegisterForm()
         global id_user_login
         global empre_id
+        print('user.is_authenticated: ',request.user.is_authenticated)
+        user_autenticate = request.user.is_authenticated
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
         username_user_login = request.user.username
@@ -38,10 +44,18 @@ class LoginFormViews(LoginView):
         id_clt = user.id_cliente
         tipo_usu = user.is_superuser
         # Si no tiene empresa registrada
+
+
+        
+        print('os.path.join:',)
+
+
+
+
         if id_clt is None:
           #INICIAR BOT
           t = initialize(id_user_login)
-          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt}
+          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt,'user_autenticate':user_autenticate}
           return render(request,"chatbot_admin/registration/confirmar_registro.html",params)
         # Tiene empresa registrada
         else:
@@ -50,7 +64,7 @@ class LoginFormViews(LoginView):
           # intempr = int(id_empresa)
           #INICIAR BOT
           t = initialize(id_user_login)
-          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':empre_id,'tipo_usu':tipo_usu}
+          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':empre_id,'tipo_usu':tipo_usu,'user_autenticate':user_autenticate}
           return render(request,"chatbot_admin/layouts/inicio.html",params)
       return super().dispatch(request, *args, **kwargs)
   def get_context_data(self,**kwargs):
@@ -90,12 +104,14 @@ class FormularioCliente(HttpRequest):
   def procesar_formulario(request):
     global id_user_login
     global empre_id
+
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
       if clt .is_valid():
         s = clt.save()
         clt = ClientRegisterForm()
         id_empresa = cliente.objects.get(pk=s.id)
+        print('my logiiiiiiiiiiiiiiiin:', id_user_login)
         # user = UserProfile.objects.filter(pk=id_user_login).first()
         UserProfile.objects.filter(pk=id_user_login).update(id_cliente=id_empresa.id)
         empre_id = str(id_empresa.id)
@@ -115,12 +131,10 @@ class FormularioCliente(HttpRequest):
             print("La creación del directorio %s falló" % directorio)
         else:
             print("Se ha creado el directorio: %s " % directorio)
-            # shutil.copy('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/basic_information.json', "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id)
-            shutil.copy('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/greetings.json', "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id)
             conversation_directory(empre_id)
             initialize(id_user_login)
             train_bot(load_conversations())
-        return render(request, "chatbot_admin/layouts/inicio.html", {'mensaje':'ok','empresa_logueado2':empre_id})
+        return render(request, "chatbot_admin/layouts/inicio.html", {'mensaje':'ok','id_empresa':empre_id})
     else:
       clt = ClientRegisterForm()
     return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt})
@@ -175,21 +189,34 @@ class modulo_historial_conversacion(HttpRequest):
     #CAPTURANDO EL ALIAS
     user_alias = request.session.session_key
     # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
-    hoy = datetime.datetime.utcnow().strftime("%Y/%m/%d")
+    hoy = datetime.datetime.utcnow().strftime("%Y-%m-%d")
     ahora = datetime.datetime.utcnow()
     tomorrow = ahora + datetime.timedelta(days=1)
-    hasta = tomorrow.strftime("%Y/%m/%d")
-    jsondata_h = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+str(empre_id)+' AND  registrado BETWEEN "'+str(hoy)+'" AND "'+str(hasta)+'" GROUP BY nombre_persona')
-    print('jsondata_h :',jsondata_h)
+    hasta = tomorrow.strftime("%Y-%m-%d")
+    
+    #MYSQL
+    # jsondata_h = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+str(empre_id)+' AND  registrado BETWEEN "'+str(hoy)+'" AND "'+str(hasta)+'" GROUP BY nombre_persona')
+
+    print('empre_id :::',empre_id)
+    print('hoy :::',hoy)
+    print('hasta :::',hasta)
+
     # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
     # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).queryset.filter(created_at=(first_date))
 
     # print('empre_id de mod_historial :',empre_id)
     # print('jsondata de mod_historial :',jsondata_h)
-  
-    # print("El día actual es {}".format(dd.day))
-    # print("El mes actual es {}".format(dd.month))
-    # print("El año actual es {}".format(dd.year))
+
+    #POSTGRESQL
+    jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empre_id)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
+
+
+    # shear = chat_user.objects.all()
+    # jsondata_h = shear.filter(cliente_empresa_id=empre_id,registrado__range=[hoy,hasta]).distinct('nombre_persona')
+
+    print('jsondata_h :',jsondata_h)
+
+
     context = {
       'datos':jsondata_h
     }

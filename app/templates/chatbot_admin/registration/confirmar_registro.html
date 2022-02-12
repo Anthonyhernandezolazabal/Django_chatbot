@@ -15,6 +15,9 @@
 <input type="hidden" name="id_user_logueado" id="id_user_logueado" value='{{ id_user }}'>
 <input type="hidden" name="username_logueado" id="username_logueado" value='{{ username_user }}'>
 <input type="hidden" name="nombrebd_logueado" id="nombrebd_logueado" value='{{ nombreBD }}'>
+<input type="hidden" name="empresa_logueado" id="empresa_logueado" value='{{ id_empresa }}'>
+<input type="hidden" name="permisos_logueado" id="permisos_logueado" value='{{ tipo_usu }}'>
+<input type="hidden" name="user_autenticate_logueado" id="user_autenticate_logueado" value='{{ user_autenticate }}'>
 
 {% block content %}
 
@@ -25,10 +28,10 @@
         <div class="card">
           <div class="card-body p-4">
             <div class="text-center">
-              <h4 class="text-error mt-4"
+              <h4 class="text-error mt-1"
                 style="font-size: 3.25rem;color: #b30707;text-shadow: rgb(114 124 245 / 30%) 5px 1px, rgb(221 160 160 / 20%) 10px 3px;">
                 IMPORTANTE</h4>
-              <h4 class="text-uppercase text-danger mt-3">Siguiente Paso</h4>
+                <img src="{% static 'chatbot_admin/assets/images/Chatbot2.png' %}" height="230" alt="File not found Image">
               <p class="text-muted mt-3">Para poder continuar, es necesario registrar tu empresa</p>
               <a class="btn btn-success mt-3" href="{% url 'ir_registrar_empr' %}"><i class="dripicons-exit me-2"></i>
                 ir a Registrar</a>

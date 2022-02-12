@@ -39,24 +39,24 @@
                             <div class="simplebar-content" style="padding: 0px;" id="tmp_api">
 
                               {% if datos %}
-                              {% for dato in datos %}
-                              <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}');" class="text-body">
-                                <div class="d-flex align-items-start bg-light mt-1 p-2">
-                                  <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
-                                  <h1 class="me-2 rounded-circle" height="48">
-                                    {{ dato.nombre_persona|make_list|first|upper }}</h1>
-                                  <div class="w-100 overflow-hidden">
-                                    <h5 class="mt-0 mb-0 font-14">
-                                      <span class="float-end text-muted font-12">4:30am</span>
-                                      {{ dato.nombre_persona }}
-                                    </h5>
-                                    <p class="mt-1 mb-0 text-muted font-14">
-                                      <span class="w-75">{{ dato.pregunta }}</span>
-                                    </p>
+                                {% for dato in datos %}
+                                <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}');" class="text-body">
+                                  <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                    <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
+                                    <h1 class="me-2 rounded-circle" height="48">
+                                      {{ dato.nombre_persona|make_list|first|upper }}</h1>
+                                    <div class="w-100 overflow-hidden">
+                                      <h5 class="mt-0 mb-0 font-14">
+                                        <span class="float-end text-muted font-12">4:30am</span>
+                                        {{ dato.nombre_persona }}
+                                      </h5>
+                                      <p class="mt-1 mb-0 text-muted font-14">
+                                        <span class="w-75">{{ dato.pregunta }}</span>
+                                      </p>
+                                    </div>
                                   </div>
-                                </div>
-                              </a>
-                              {% endfor %}
+                                </a>
+                                {% endfor %}
                               {% else %}
                               <div class="tab-pane show active" id="additional-content-preview">
                                 <div class="alert alert-warning mb-0" role="alert">
