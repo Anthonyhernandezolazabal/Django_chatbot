@@ -15,7 +15,6 @@ from django.conf import settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
-
 ''' =============================================
   CHATTERBOT
 ============================================= '''
@@ -23,8 +22,6 @@ ACCEPTANCE = 0.70 # Una validación de la respuesta mas óptima
 ''' ======= CARGANDO ARCHIVOS JSON ==== '''
 def conversation_directory(id_entrada):
   global CONVERSATION_SETTINGS
-  # ruta_actual2 = settings.BASE_DIR
-  print('ruta_actuallll :',ruta_actual)
   CONVERSATION_SETTINGS = []
   with os.scandir(ruta_actual + '/empresa_'+id_entrada) as ficheros:
     ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
@@ -110,7 +107,6 @@ def getnombre(request):
   user = globals()['users__']
   user_alias = request.session.session_key
   user_nom = request.GET.get('nomb')
-  print('my nombre :',user_nom)
   user[user_alias]={'nombre': user_nom.lower(), 'bol': 0, 'entradatmp': entradatmp}
   session_cook = user
   return HttpResponse(status=201)
@@ -129,7 +125,6 @@ def getchat(request):
     id_empresa_id = request.GET.get('id_empresa_id')
     id_user_create = request.GET.get('id_user_create')
     user_autenticate = request.GET.get('user_autenticate')
-    print('user_autenticate :',user_autenticate)
     initialize(id_user_create)
     if(bol==1):
       trainer = ListTrainer(bot[id_user_create])
@@ -138,7 +133,6 @@ def getchat(request):
       myuser['bol']=0
       user[user_cook] = myuser
       session_cook = user
-      print('variable sesion: ',session_cook[user_cook])
       return HttpResponse(str(rpta2))
     else:
       if chat_input!='adios':
@@ -147,7 +141,6 @@ def getchat(request):
           myuser['bol']= 0
           user[user_cook] = myuser
           session_cook = user
-          print('variable sesion: ',session_cook[user_cook])
           # === GUARDA LAS SESSIONES EN LA BD
           user_chat = chat_user(pregunta=chat_input,key_session_id=user_cook,respuesta=response,nombre_persona=nombre_nombre,cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
@@ -159,7 +152,6 @@ def getchat(request):
             user[user_cook] = myuser
             session_cook = user
             myuser['entradatmp']=chat_input
-            #print('variable sesion: ',session_cook[user_cook])
           else:
             rpta1 = 'Disculpa no te entendí, sé mas especifico!'
           return HttpResponse(str(rpta1)) 
@@ -183,7 +175,7 @@ def getjson(request):
           'messages': arrayRecibido[x][0]['preguntas_new'],
           'response': arrayRecibido[x][0]['respuesta_new'],
         })
-    with open('C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+    with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
         json.dump(data, file, indent=4,ensure_ascii=False)
     conversation_directory(id_empresa)
     initialize(id_user_create)
@@ -197,17 +189,8 @@ class historialChatApiView(APIView):
     desde = request.GET.get('desde')
     hasta = request.GET.get('hasta')
     id_empresa = request.GET.get('id_empresa')
-    # search = chat_user.objects.all()
-    # rpta = search.filter(cliente_empresa_id=id_empresa,registrado__range=[desde,hasta])
-
-    # MYSQL
-    # rpta = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+id_empresa+' AND registrado BETWEEN "'+desde+'" AND "'+hasta+'" GROUP BY nombre_persona')
-    
-    #POSTGRESQL
-    
     #POSTGRESQL
     rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
-    
     serializer_historial = historialChatSerializers(rpta, many=True)
     return Response(serializer_historial.data)
 '''=============================================

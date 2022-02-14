@@ -1,5 +1,4 @@
 import os
-import shutil #mover archivos
 import datetime
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
@@ -13,10 +12,10 @@ from django.http import HttpRequest
 from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
 from chatbot.models import chat_user
+from pathlib import Path
 
-
-
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
 
 
 """=============================================
@@ -25,6 +24,7 @@ VISTA INICIO
 @ login_required ( login_url= 'home' )
 def Home(request):
   return render(request, 'chatbot_admin/layouts/inicio.html')
+
 """=============================================
 INICIAR SESION
 ============================================="""
@@ -35,7 +35,6 @@ class LoginFormViews(LoginView):
         clt = ClientRegisterForm()
         global id_user_login
         global empre_id
-        print('user.is_authenticated: ',request.user.is_authenticated)
         user_autenticate = request.user.is_authenticated
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
@@ -44,14 +43,6 @@ class LoginFormViews(LoginView):
         id_clt = user.id_cliente
         tipo_usu = user.is_superuser
         # Si no tiene empresa registrada
-
-
-        
-        print('os.path.join:',)
-
-
-
-
         if id_clt is None:
           #INICIAR BOT
           t = initialize(id_user_login)
@@ -60,8 +51,6 @@ class LoginFormViews(LoginView):
         # Tiene empresa registrada
         else:
           empre_id= user.id_cliente.id
-          # nombre_bd = user.id_cliente.nombreBD
-          # intempr = int(id_empresa)
           #INICIAR BOT
           t = initialize(id_user_login)
           params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'id_empresa':empre_id,'tipo_usu':tipo_usu,'user_autenticate':user_autenticate}
@@ -71,11 +60,13 @@ class LoginFormViews(LoginView):
       context = super().get_context_data(**kwargs)
       context['title'] = 'Iniciar sesion'
       return context
+
 """=============================================
 MODULO PRUEBAR CHATBOT
 ============================================="""
 def test_chatbot(request):
   return render(request, 'chatbot_admin/layouts/test_chatbot.html')
+
 """=============================================
 REGISTRAR NUEVO USUARIO
 ============================================="""
@@ -104,27 +95,16 @@ class FormularioCliente(HttpRequest):
   def procesar_formulario(request):
     global id_user_login
     global empre_id
-
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
       if clt .is_valid():
         s = clt.save()
         clt = ClientRegisterForm()
         id_empresa = cliente.objects.get(pk=s.id)
-        print('my logiiiiiiiiiiiiiiiin:', id_user_login)
-        # user = UserProfile.objects.filter(pk=id_user_login).first()
         UserProfile.objects.filter(pk=id_user_login).update(id_cliente=id_empresa.id)
         empre_id = str(id_empresa.id)
-        # usuario = UserProfile(user)
-        # usuario.id_cliente = cliente.objects.get(pk=s.id)
-        # usuario.save()
-
-        # user = UserProfile.objects.get(pk=id_user_login)
-        # UserProfile.id_cliente=c.id
-        # id_clt = UserProfile.id_cliente
-        # UserProfile.save()
         # CREAR DIRECTORIO
-        directorio = "C:/Users/ANTHONY/Desktop/Django_chatbot/app/set_datos/empresa_"+empre_id
+        directorio = ruta_actual+"/empresa_"+empre_id
         try:
             os.mkdir(directorio)
         except OSError:
@@ -146,12 +126,7 @@ class modulo_conversacion(HttpRequest):
   def respuestas(request):
     global empre_id
     jsondata = data_set.objects.filter(id_cliente=empre_id)
-    # id = jsondata.id
-    # nombre = jsondata.nombre 
-    # nombre_cliente = jsondata.id_cliente.nombre
-    # registrado = jsondata.registrado
     context = {
-      # 'id':id,'nombre':nombre,'nombre_cliente':nombre_cliente,'registrado':registrado
       'datos':jsondata
     }
     return render(request, 'chatbot_admin/layouts/respuestas.html',context)
@@ -188,34 +163,13 @@ class modulo_historial_conversacion(HttpRequest):
     global empre_id
     #CAPTURANDO EL ALIAS
     user_alias = request.session.session_key
-    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
     hoy = datetime.datetime.utcnow().strftime("%Y-%m-%d")
     ahora = datetime.datetime.utcnow()
     tomorrow = ahora + datetime.timedelta(days=1)
     hasta = tomorrow.strftime("%Y-%m-%d")
-    
-    #MYSQL
-    # jsondata_h = chat_user.objects.raw('SELECT * FROM historial_chat WHERE cliente_empresa_id_id='+str(empre_id)+' AND  registrado BETWEEN "'+str(hoy)+'" AND "'+str(hasta)+'" GROUP BY nombre_persona')
-
-    print('empre_id :::',empre_id)
-    print('hoy :::',hoy)
-    print('hasta :::',hasta)
-
-    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).values('registrado') 
-    # jsondata_h = chat_user.objects.filter(cliente_empresa_id=empre_id).queryset.filter(created_at=(first_date))
-
-    # print('empre_id de mod_historial :',empre_id)
-    # print('jsondata de mod_historial :',jsondata_h)
 
     #POSTGRESQL
     jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empre_id)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
-
-
-    # shear = chat_user.objects.all()
-    # jsondata_h = shear.filter(cliente_empresa_id=empre_id,registrado__range=[hoy,hasta]).distinct('nombre_persona')
-
-    print('jsondata_h :',jsondata_h)
-
 
     context = {
       'datos':jsondata_h

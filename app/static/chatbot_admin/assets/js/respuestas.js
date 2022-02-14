@@ -343,7 +343,7 @@
       var json_ls = JSON.stringify(preguntas);
       console.log('json_ls :', json_ls)
       var nnn = nombre_json.split(" ").join("_")
-      fetch('https://demoregistro.xyz/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu, {
+      fetch('https://{url_servidor}/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu, {
         method: 'GET',
       }).then(function (response) {
         console.log(response);

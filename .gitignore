@@ -154,5 +154,5 @@ env/*
 app/bot/__pycache__/settings.cpython-310.pyc
 app/bot/__pycache__/settings.cpython-310.pyc
 app/bot/__pycache__/settings.cpython-310.pyc
-cert.crt
-cert.key
+app/cert.crt
+app/cert.key
