@@ -103,7 +103,7 @@
       n++;
       x = +n;
       let capId = "question" + x
-      let inputValue = document.getElementById(capId).value
+      let inputValue = document.getElementById(capId).value.toLowerCase()
       if (inputValue != '') {
         est_campos = true
         old_ques.push(inputValue);
@@ -124,17 +124,11 @@
       alert('Es necesario registrar una respuesta')
     } else {
       agregarLS(preguntas)
-
       // $("#form-crear-rpta").trigger('reset');
       // $('#full-width-modal').modal('hide');
-
       document.getElementById('form-crear-rpta').reset();
       document.getElementById("rptatit").style.display = 'none';
       document.getElementById("add_chek_txt").style.display = 'none';
-
-
-      
-
       template = `
           <div class="card border-secondary border tmpl" id_prg='${id_tmp}'>
             <div class="card-body">
