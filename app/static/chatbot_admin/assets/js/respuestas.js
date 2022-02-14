@@ -124,6 +124,8 @@
       alert('Es necesario registrar una respuesta')
     } else {
       agregarLS(preguntas)
+      // $("#form-crear-rpta").trigger('reset');
+      // $('#full-width-modal').modal('hide');
       document.getElementById('form-crear-rpta').reset();
       document.getElementById("rptatit").style.display = 'none';
       document.getElementById("add_chek_txt").style.display = 'none';

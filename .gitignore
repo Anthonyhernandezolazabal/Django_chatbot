@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+app/cert.crt
+app/cert.key
+
 # C extensions
 *.so
 
@@ -154,5 +157,3 @@ env/*
 app/bot/__pycache__/settings.cpython-310.pyc
 app/bot/__pycache__/settings.cpython-310.pyc
 app/bot/__pycache__/settings.cpython-310.pyc
-app/cert.crt
-app/cert.key
