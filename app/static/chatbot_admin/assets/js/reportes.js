@@ -14,7 +14,7 @@ $('input[name="dates"]').daterangepicker({
     let desde = start.format('YYYY-MM-DD');
     let hasta = end.format('YYYY-MM-DD');
     let id_empresa = empresa_id
-    fetch('https://127.0.0.1:8000/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa + '', {
+    fetch('https://demoregistro.xyz/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa + '', {
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
       var total_datos = response;
@@ -56,7 +56,7 @@ MOSTRAR HISTORIAL POR USUARIOS
 =============================================*/
 function ver_conversacion(alias_nom) {
   document.getElementById('card_conver').style.display = 'block'
-  fetch('https://127.0.0.1:8000/obtener_conversacion/?usuario_alias=' + alias_nom, {
+  fetch('https://demoregistro.xyz/obtener_conversacion/?usuario_alias=' + alias_nom, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
     console.log('response :', response)
