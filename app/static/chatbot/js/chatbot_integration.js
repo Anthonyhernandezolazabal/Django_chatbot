@@ -87,7 +87,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://{url_servidor}/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr+ '&user_autenticate=' + user_autenticate, {
+    fetch('https://{url_servidor}/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
@@ -106,12 +106,14 @@ function getBotResponse() {
     })
   }
 }
+
 function escribir(e) {
   if (e.keyCode == 13) {
     getBotResponse();
     document.getElementById('textInput').value = ''
   }
 }
+
 function enviar_texto(e) {
   getBotResponse();
   document.getElementById('textInput').value = ''
@@ -139,17 +141,18 @@ mic.addEventListener("click", function () {
   recognition.start();
   mic.style.color = '#009805';
 })
+
 function formatAMPM() {
   let dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
   let date = new Date();
-  var day = dias[date.getDay()-1]
+  var day = dias[date.getDay() - 1]
   date = new Date;
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = day+', '+hours + ':' + minutes + ' ' + ampm;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = day + ', ' + hours + ':' + minutes + ' ' + ampm;
   document.getElementById('dia_hora_chat').innerHTML = strTime
 }
