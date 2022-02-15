@@ -124,12 +124,15 @@ MÓDULO RESPUESTAS
 ============================================="""
 class modulo_conversacion(HttpRequest):
   def respuestas(request):
-    global empre_id
-    jsondata = data_set.objects.filter(id_cliente=empre_id)
-    context = {
-      'datos':jsondata
-    }
-    return render(request, 'chatbot_admin/layouts/respuestas.html',context)
+    if request.GET['empre_id']:
+      empre_id=request.GET.get('empre_id')
+      jsondata = data_set.objects.filter(id_cliente=empre_id)
+      context = {
+        'datos':jsondata
+      }
+      return render(request, 'chatbot_admin/layouts/respuestas.html',context)
+    else:
+      return render(request, 'chatbot_admin/layouts/404.html')
   def registrar_rpta(request):
     return render(request, 'chatbot_admin/layouts/registar_respuestas.html')
 
@@ -160,21 +163,28 @@ MÓDULO HISTORIAL
 ============================================="""
 class modulo_historial_conversacion(HttpRequest):
   def mod_historial(request):
-    global empre_id
-    #CAPTURANDO EL ALIAS
-    user_alias = request.session.session_key
-    hoy = datetime.datetime.utcnow().strftime("%Y-%m-%d")
-    ahora = datetime.datetime.utcnow()
-    tomorrow = ahora + datetime.timedelta(days=1)
-    hasta = tomorrow.strftime("%Y-%m-%d")
+    if request.GET['id_empresa']:
+      empre_id=request.GET.get('id_empresa')
+      #CAPTURANDO EL ALIAS
+      user_alias = request.session.session_key
+      hoy = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+      ahora = datetime.datetime.utcnow()
+      tomorrow = ahora + datetime.timedelta(days=1)
+      hasta = tomorrow.strftime("%Y-%m-%d")
 
-    #POSTGRESQL
-    jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empre_id)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
+      try:
+        obj_idcl = cliente.objects.get(pk=empre_id)
+      except cliente.DoesNotExist:
+        return render(request, 'chatbot_admin/layouts/404.html')
 
-    context = {
-      'datos':jsondata_h
-    }
-    return render(request, 'chatbot_admin/layouts/historial.html',context)
+      #POSTGRESQL
+      jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empre_id)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
+      context = {
+        'datos':jsondata_h
+      }
+      return render(request, 'chatbot_admin/layouts/historial.html',context)
+    else:
+      return render(request, 'chatbot_admin/layouts/404.html')
 
 """=============================================
 MÓDULO APARIENCIA

@@ -4,7 +4,6 @@ from chatbot_admin.views import LoginFormViews
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
 from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usuarios,modulo_clientes,modulo_historial_conversacion,modulo_apariencia
-
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
