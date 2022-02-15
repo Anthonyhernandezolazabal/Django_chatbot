@@ -1,3 +1,4 @@
+var url_servidor = 'chatbot.demoregistro.xyz';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var htmlbot = `
@@ -64,7 +65,7 @@ function comenzar_chat() {
     element2.style.display = "block";
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
-    fetch(`https://{url_servidor}/getnombre/?nomb=` + nombre_usuario, {
+    fetch(`https://`+url_servidor+`/getnombre/?nomb=` + nombre_usuario, {
       method: 'GET',
     }).then(jsonRsp => {}).catch(e => {
       console.log(e);
@@ -87,7 +88,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://{url_servidor}/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr+ '&user_autenticate=' + user_autenticate, {
+    fetch('https://'+url_servidor+'/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr+ '&user_autenticate=' + user_autenticate, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
