@@ -33,7 +33,7 @@
                 IMPORTANTE</h4>
                 <img src="{% static 'chatbot_admin/assets/images/Chatbot2.png' %}" height="230" alt="File not found Image">
               <p class="text-muted mt-3">Para poder continuar, es necesario registrar tu empresa</p>
-              <a class="btn btn-success mt-3" href="{% url 'ir_registrar_empr' %}"><i class="dripicons-exit me-2"></i>
+              <a class="btn btn-success mt-3" href="#" onclick="return fn_id_user()"><i class="dripicons-exit me-2"></i>
                 ir a Registrar</a>
             </div>
           </div>
@@ -42,5 +42,16 @@
     </div>
   </div>
 </div>
+<script>
+  var Ls = localStorage.getItem('datos')
+  var id_cliente = JSON.parse(Ls).id_cliente;
+
+  function fn_id_user(){
+    var url_python = '{% url "ir_registrar_empr" %}?id='+id_cliente
+    location.replace(url_python)
+  }
+
+
+</script>
 {% endblock %}
 {% include 'chatbot_admin/layouts/footer.html' %}

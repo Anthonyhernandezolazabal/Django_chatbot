@@ -34,7 +34,6 @@ class LoginFormViews(LoginView):
       if request.user.is_authenticated:
         clt = ClientRegisterForm()
         global id_user_login
-        global empre_id
         user_autenticate = request.user.is_authenticated
         # capturando el id
         id_user_login = request.session.get('_auth_user_id')
@@ -90,13 +89,14 @@ REGISTRAR NUEVA EMPRESA
 ============================================="""
 class FormularioCliente(HttpRequest):
   def ir_registrar_empresa(request):
-    clt = ClientRegisterForm()
-    return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt})
+    if request.GET['id']:
+      cliente_id=request.GET.get('id')
+      clt = ClientRegisterForm()
+      return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt,'cliente_id':cliente_id})
   def procesar_formulario(request):
-    global id_user_login
-    global empre_id
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
+      id_user_login = request.POST.get('cliente_id')
       if clt .is_valid():
         s = clt.save()
         clt = ClientRegisterForm()
