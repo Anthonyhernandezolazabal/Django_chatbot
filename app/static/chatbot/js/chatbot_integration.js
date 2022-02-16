@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = '127.0.0.1:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var htmlbot = `
@@ -20,7 +20,7 @@ var htmlbot = `
         </div>
         <div class="chat-box" id='body-chat' style='display: none !important;'>
             <div class="chat-body" id="chat2">
-              <div class="chat-start" id='dia_hora_chat'>Lunes, 1:27 PM</div>
+              <div class="chat-start" id='dia_hora_chat'></div>
               <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.</div>
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
@@ -53,6 +53,7 @@ boddy.append(div_chatbot);
 INGRESAR CAMPO NOMBRE 
 =============================================*/
 function comenzar_chat() {
+  formatAMPM()
   var element = div_chatbot.querySelector('#chat-mai')
   var element2 = div_chatbot.querySelector('#body-chat')
   var camp_obli = div_chatbot.querySelector('#camp_obli')
@@ -152,5 +153,6 @@ function formatAMPM() {
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
   var strTime = day+', '+hours + ':' + minutes + ' ' + ampm;
-  document.getElementById('dia_hora_chat').innerHTML = strTime
+  console.log(strTime)
+  document.getElementById('dia_hora_chat').innerText = strTime
 }
