@@ -180,7 +180,9 @@ def getjson(request):
     conversation_directory(id_empresa)
     initialize(id_user_create)
     train_bot(load_conversations())
-  return render(request, 'chatbot_admin/layouts/respuestas.html')
+  # return render(request, 'chatbot_admin/layouts/respuestas.html')
+  return render(request, 'chatbot_admin/layouts/inicio.html')
+  
 '''=============================================
   RECIBIENDO RANGO DE FECHAS
 ============================================= '''

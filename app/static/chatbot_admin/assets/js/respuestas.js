@@ -351,9 +351,18 @@ function rpt_aut_save() {
       eliminarLS()
       document.getElementById('btn_sav').style.display = 'none'
       document.getElementById('btn_loader').style.display = 'block'
-      location.href = "../respuestas";
+      
+      // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
+      // location.replace(url_python)
+
+      location.href = "../respuestas/?empre_id="+id_empresa;
+    
     }).catch(e => {
+
+
       console.log(e);
+
+
     })
   }
 }
