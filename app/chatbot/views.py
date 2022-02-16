@@ -96,26 +96,23 @@ entradatmp=''
 #A traves de funciones
 def HomeChatbot(request):
   return render(request, 'chatbot/index.html')
+
 # ==== VALIDAR SESION CAPTURANDO NOMBRE ===
 def getnombre(request):
   global session_cook
-  global user_alias
-  if not request.session.session_key:
-    request.session.create()
-  else:
-    request.session.session_key
   user = globals()['users__']
-  user_alias = request.session.session_key
+  user_alias = request.GET.get('user_alias')
+  print('user_aliasuser_alias2 :',user_alias)
   user_nom = request.GET.get('nomb')
   user[user_alias]={'nombre': user_nom.lower(), 'bol': 0, 'entradatmp': entradatmp}
   session_cook = user
   return HttpResponse(status=201)
+
 # ==== EJECUTAR CONVERSACIÓN ===
 def getchat(request):
   global session_cook
-  global user_alias
   if request.GET['msg']:
-    user_cook = user_alias
+    user_cook = request.GET.get('user_alias')
     user = session_cook
     myuser = user[user_cook]
     bol=myuser['bol']
@@ -142,7 +139,7 @@ def getchat(request):
           user[user_cook] = myuser
           session_cook = user
           # === GUARDA LAS SESSIONES EN LA BD
-          user_chat = chat_user(pregunta=chat_input,key_session_id=user_cook,respuesta=response,nombre_persona=nombre_nombre,cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
+          user_chat = chat_user(pregunta=chat_input,key_session_alias=user_cook,respuesta=response,nombre_persona=nombre_nombre,cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
           return HttpResponse(str(response))  
         else:
@@ -158,6 +155,7 @@ def getchat(request):
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))
+  return HttpResponse(str('ok'))
 def getjson(request):
   if request.GET['json_rpt']:
     json_rpt = request.GET.get('json_rpt')
@@ -192,7 +190,7 @@ class historialChatApiView(APIView):
     hasta = request.GET.get('hasta')
     id_empresa = request.GET.get('id_empresa')
     #POSTGRESQL
-    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_id,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
+    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
     serializer_historial = historialChatSerializers(rpta, many=True)
     return Response(serializer_historial.data)
 '''=============================================
