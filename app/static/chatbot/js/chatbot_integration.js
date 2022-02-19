@@ -1,4 +1,4 @@
-var url_servidor = '127.0.0.1:8000';
+var url_servidor = 'chatbot.demoregistro.xyz';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var htmlbot = `
