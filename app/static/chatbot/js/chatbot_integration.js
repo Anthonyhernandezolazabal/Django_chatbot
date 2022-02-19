@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = '127.0.0.1:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var htmlbot = `
@@ -21,7 +21,7 @@ var htmlbot = `
         <div class="chat-box" id='body-chat' style='display: none !important;'>
             <div class="chat-body" id="chat2">
               <div class="chat-start" id='dia_hora_chat'></div>
-              <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.</div>
+              <div class="chat-bubble you">Hola <b id='nomb_chat'></b> Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.</div>
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
               <div class="messages__item messages__item--typing">
@@ -33,9 +33,8 @@ var htmlbot = `
             <div class="chat-bar-input-block">
               <div id="userInput">
                 <input id="textInput" onkeypress='return escribir(event)' class="input-box" type="text" name="msg" placeholder="Escribe algo...">
-                <input type='hidden' id='rpta_data'>
-                <input type='hidden' id='historial_chat'>
                 <input type='hidden' id='key_alias'>
+                <input type='hidden' id='nombre_chat'>
                 <p></p>
               </div>
               <div>
@@ -57,13 +56,19 @@ function aliasLS() {
   let num = 30
   const characters = '1234567890abcdefghijklmnopqrstuvwxyz';
   let codigo = '';
+  var nombre_usuario = div_chatbot.querySelector('#txtusuario').value
   const charactersLength = characters.length;
   for (let i = 0; i < num; i++) {
     codigo += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  localStorage.setItem('alias_key', JSON.stringify(codigo));
+  datosLS = {
+    codigo: codigo,
+    nombre:nombre_usuario,
+  }
+  localStorage.setItem('alias_key', JSON.stringify(datosLS));
   key_alias = codigo
   div_chatbot.querySelector('#key_alias').value = key_alias
+  div_chatbot.querySelector('#nombre_chat').value = nombre_usuario
   return key_alias
 }
 /*=============================================
@@ -82,6 +87,7 @@ function comenzar_chat() {
     camp_obli.style.display = "none";
     element.style.display = "none";
     element2.style.display = "block";
+    div_chatbot.querySelector('#nomb_chat').innerText = nombre_usuario.toUpperCase()
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
     fetch(`https://` + url_servidor + `/getnombre/?nomb=` + nombre_usuario+ '&user_alias=' + key_alias, {
@@ -106,6 +112,7 @@ function getBotResponse() {
     user_autenticate = JSON.parse(ls_LS).user_autenticate;
   }
   var key_alias = div_chatbot.querySelector('#key_alias').value
+  var nombre_chat = div_chatbot.querySelector('#nombre_chat').value
   var rawText = document.getElementById('textInput').value
   if (rawText != '') {
     var userHtml = '<div class="chat-bubble me"> ' + rawText + ' </div>';
@@ -114,7 +121,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate+ '&user_alias=' + key_alias, {
+    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate+ '&user_alias=' + key_alias+ '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
