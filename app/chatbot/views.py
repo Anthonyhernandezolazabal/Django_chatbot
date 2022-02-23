@@ -2,16 +2,17 @@ import os
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
-from chatbot.models import chat_user
+from chatbot.models import chat_user,chatbot_style
 from chatbot_admin.models import data_set,cliente
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from chatbot.serializers import historialChatSerializers
+from chatbot.serializers import historialChatSerializers,personalizarChatSerializers
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 from difflib import SequenceMatcher
 from pathlib import Path
 from django.conf import settings
+from rest_framework import status
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -239,3 +240,52 @@ class conversacionesApiView(APIView):
     datos = chat_user.objects.filter(nombre_persona=alias_nom)
     serializer_conversacion = historialChatSerializers(datos, many=True)
     return Response(serializer_conversacion.data)
+
+'''=============================================
+   REGISTRAR / EDITAR  PERSONALIZACIÓN
+============================================= '''
+class personalizarApiView(APIView):
+
+  def get(self, request, format=None):
+    
+    id_empresa = request.GET.get('id_empr')
+    rpta_pr = chatbot_style.objects.filter(id_empresa_cliente=id_empresa)
+
+    serializer_historial = personalizarChatSerializers(rpta_pr, many=True)
+
+    return Response(serializer_historial.data)
+
+
+  def post(self, request, format=None):
+    serializer = personalizarChatSerializers(data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+  def put(self, request, pk, format=None):
+
+    dt = chatbot_style.objects.get(pk=pk)
+    serializer = personalizarChatSerializers(dt, data=request.data)
+
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def personalizar_edit(request):
+
+  json_datos = request.GET.get('datos')
+  arrayRecibido = json.loads(json_datos)
+
+  print('header',arrayRecibido[0]['titulo_header'])
+  print('cuerpo',arrayRecibido[0]['titulo_cuerpo'])
+  print('botones',arrayRecibido[0]['botones'])
+  print('text_bienvenida',arrayRecibido[0]['text_bienvenida'])
+
+  id_empresa = cliente.objects.get(pk=arrayRecibido[0]['id_empresa_cliente'])
+  chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(titulo_header=arrayRecibido[0]['titulo_header'],titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],botones=arrayRecibido[0]['botones'],text_bienvenida=arrayRecibido[0]['text_bienvenida'],id_empresa_cliente=id_empresa)
+
+  return HttpResponse(str('ok'))

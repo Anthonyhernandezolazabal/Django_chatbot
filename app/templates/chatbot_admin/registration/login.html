@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>{% block title %} Acceso a la administración {% endblock %}</title>
@@ -9,6 +10,7 @@
   <meta content="Coderthemes" name="author">
   {% include 'chatbot_admin/layouts/head.html' %}
 </head>
+
 <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
   <div class="auth-fluid">
     <div class="auth-fluid-form-box">
@@ -21,53 +23,58 @@
             </a>
           </div>
           {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-success" role="alert">
-                <i class="dripicons-checkmark me-2"></i>
-                <b>{{message}}</b>
-              </div>
-            {% endfor %}
+          {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            <i class="dripicons-checkmark me-2"></i>
+            <b>{{message}}</b>
+          </div>
+          {% endfor %}
           {% endif %}
           <h4 class="mt-0">Iniciar sesión</h4>
           <p class="text-muted mb-4">Ingrese su usuario y contraseña para acceder al sistema.</p>
           <!-- INICIAR SESION -->
           <form method="post">
             {% csrf_token %}
-              <div class="mb-3">
-                <label for="emailaddress" class="form-label">Usuario</label>
-                <input class="form-control" type="text" name='username' id='username' required=""
-                  placeholder="Ingresa tu usuario">
-              </div>
-              <div class="mb-3">
-                <a href="#" class="text-muted float-end"><small>¿Olvidaste tu contraseña?</small></a>
-                <label for="password" class="form-label">Contraseña</label>
-                <input class="form-control" type="password" required="" name='password' id='password'
-                  placeholder="Ingresa tu contraseña">
-              </div>
-              <div class="d-grid mb-0 text-center">
-                <button class="btn btn-primary" type="submit"><i class="mdi mdi-login"></i> Iniciar sesión </button>
-              </div>
+            <div class="mb-3">
+              <label for="emailaddress" class="form-label">Usuario</label>
+              <input class="form-control" type="text" name='username' id='username' required=""
+                placeholder="Ingresa tu usuario">
+            </div>
+            <div class="mb-3">
+              <a href="#" class="text-muted float-end"><small>¿Olvidaste tu contraseña?</small></a>
+              <label for="password" class="form-label">Contraseña</label>
+              <input class="form-control" type="password" required="" name='password' id='password'
+                placeholder="Ingresa tu contraseña">
+            </div>
+            <div class="d-grid mb-0 text-center">
+              <button class="btn btn-info ingresando" type="submit"><i class="mdi mdi-login"></i> Iniciar sesión </button>
+              <button class="btn btn-info ingresandolider" type="button" disabled="" style="display: none">
+                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                Ingresando...
+              </button>
+            </div>
             <!-- social-->
-              <div class="text-center mt-4">
-                <p class="text-muted font-16">Inicia sesión con</p>
-                <ul class="social-list list-inline mt-3">
-                  <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i
-                        class="mdi mdi-google"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i
-                        class="mdi mdi-twitter"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i
-                        class="mdi mdi-github"></i></a>
-                  </li>
-                </ul>
-              </div>
+            <div class="text-center mt-4">
+              <p class="text-muted font-16">Inicia sesión con</p>
+              <ul class="social-list list-inline mt-3">
+                <li class="list-inline-item">
+                  <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i
+                      class="mdi mdi-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i
+                      class="mdi mdi-google"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="javascript: void(0);" class="social-list-item border-info text-info"><i
+                      class="mdi mdi-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i
+                      class="mdi mdi-github"></i></a>
+                </li>
+              </ul>
+            </div>
           </form>
           <footer class="footer footer-alt">
             <p class="text-muted">¿No tienes una cuenta? <a href="{% url 'registro' %}"
@@ -79,7 +86,9 @@
     <div class="auth-fluid-right text-center">
       <div class="auth-user-testimonial">
         <h2 class="mb-3">== NOMBRE DEL PRODUCTO ==</h2>
-        <p class="lead"><i class="mdi mdi-format-quote-open"></i> Experimenta en primera persona la interacción con el bot, personaliza consultas, conversa y mejora la experiencia de tus clientes en tiempo real. <i class="mdi mdi-format-quote-close"></i>
+        <p class="lead"><i class="mdi mdi-format-quote-open"></i> Experimenta en primera persona la interacción con el
+          bot, personaliza consultas, conversa y mejora la experiencia de tus clientes en tiempo real. <i
+            class="mdi mdi-format-quote-close"></i>
         </p>
         <p>
           - Chatbot by INGyTAL
@@ -89,5 +98,13 @@
   </div>
   <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
   <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
+  <script>
+    var ingresando = document.querySelector('.ingresando')
+    ingresando.addEventListener('click', () => {
+      document.querySelector(".ingresandolider").style.display = "block"
+      document.querySelector(".ingresando").style.display = "none"
+    })
+  </script>
 </body>
+
 </html>

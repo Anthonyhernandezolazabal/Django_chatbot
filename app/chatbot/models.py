@@ -16,11 +16,11 @@ class chat_user(models.Model):
 
 class chatbot_style(models.Model):
   titulo_header = models.CharField(max_length=100)
-  titulo_cuerpo = models.CharField(max_length=100)
-  botones = models.CharField(max_length=100)
-  text_bienvenida = models.CharField(max_length=255)
-  id_empresa = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
+  titulo_cuerpo = models.CharField(max_length=255)
+  botones = models.CharField(max_length=50)
+  text_bienvenida = models.CharField(max_length=120)
+  id_empresa_cliente = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
   
   class Meta:
-    db_table = 'chatbot_style'
+    db_table = 'chatbot_estilo'
     ordering = ['id'] #ordenar por ID

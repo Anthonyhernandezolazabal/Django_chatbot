@@ -34,4 +34,3 @@ class ClientRegisterForm(forms.ModelForm):
             'nombreBD': forms.HiddenInput(),
         }
         help_text = {k: "" for k in fields} #remover los textos de ayuda 
-        

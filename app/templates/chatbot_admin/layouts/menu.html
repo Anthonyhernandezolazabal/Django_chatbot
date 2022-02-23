@@ -45,9 +45,9 @@
         </a>
       </li>
       <li class="side-nav-item">
-        <a href="{% url 'apariencia' %}" class="side-nav-link">
+        <a href="{% url 'personalizar' %}" class="side-nav-link">
           <i class="uil-palette"></i>
-          <span> Apariencia </span>
+          <span> Personalizar </span>
         </a>
       </li>
       <li class="side-nav-item">
@@ -67,7 +67,7 @@
       <li class="side-nav-item">
         <a href="#" onclick="return fn_id_historial()" id="capturalink" class="side-nav-link">
           <i class="mdi mdi-wechat"></i>
-          <span> Hitorial </span>
+          <span> Historial </span>
         </a>
       </li>
     </ul>
@@ -78,13 +78,13 @@
   var Ls = localStorage.getItem('datos')
   var id_empresa = JSON.parse(Ls).id_empresa;
 
-  function fn_id_historial(){
-    var url_python = '{% url "historial" %}?id_empresa='+id_empresa
+  function fn_id_historial() {
+    var url_python = '{% url "historial" %}?id_empresa=' + id_empresa
     location.replace(url_python)
   }
 
-function fn_id_respuestas(){
-  var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
-  location.replace(url_python)
-}
+  function fn_id_respuestas() {
+    var url_python = '{% url "respuestas" %}?empre_id=' + id_empresa
+    location.replace(url_python)
+  }
 </script>

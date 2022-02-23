@@ -7,5 +7,7 @@ urlpatterns = [
     path('getchat/', views.getchat, name='chat'),
     path('getjson/', views.getjson, name='rptajson'),
     path('historial_fecha/',views.historialChatApiView.as_view(), name='historial_fecha'),
-    path('obtener_conversacion/',views.conversacionesApiView.as_view(), name='obtener_conversacion')
+    path('obtener_conversacion/',views.conversacionesApiView.as_view(), name='obtener_conversacion'),
+    path('personalizar_chat/',views.personalizarApiView.as_view(), name='personalizar_chat'),
+    path('personalizar_edit/', views.personalizar_edit, name='personalizar_edit'),
 ]

@@ -1,27 +1,29 @@
 var url_servidor = 'chatbot.demoregistro.xyz';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
+chatbot_personalizado();
 var htmlbot = `
     <input type="checkbox" id="click">
     <label for="click" id='label_l'><i class="fab fa-discourse"></i><i class="fas fa-times"></i></label>
     <div class="wrapper2">
-      <div class="head-text">¿Charlemos? - En línea</div>
+      <div class="head-text" id='cb_tl'>¿Charlemos? - En línea</div>
         <div class="chat-box" id='chat-mai'>
-          <div class="desc-text">Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</div>
+          <div class="desc-text" id='cb_frm'>Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</div>
             <div id="form_id">
               <div class="field">
                 <input type="text" placeholder="Ingresa tu nombre" id="txtusuario" name="txtusuario">
               </div>
               <p style='text-align: center;color: red;display: none' id='camp_obli'>campo obligatorio</p>
               <div class="field">
-                  <button type="button" onclick="comenzar_chat()">Comenzar chat</button>
+                  <button type="button" onclick="comenzar_chat()" id='cb_btn'>Comenzar chat</button>
               </div>
             </div>
         </div>
         <div class="chat-box" id='body-chat' style='display: none !important;'>
             <div class="chat-body" id="chat2">
               <div class="chat-start" id='dia_hora_chat'></div>
-              <div class="chat-bubble you">Hola <b id='nomb_chat'></b> Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.</div>
+              <div class="chat-bubble you"><i>Hola <strong id='nomb_chat'>{Nombre} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,
+              simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
               <div class="messages__item messages__item--typing">
@@ -63,7 +65,7 @@ function aliasLS() {
   }
   datosLS = {
     codigo: codigo,
-    nombre:nombre_usuario,
+    nombre: nombre_usuario,
   }
   localStorage.setItem('alias_key', JSON.stringify(datosLS));
   key_alias = codigo
@@ -90,7 +92,7 @@ function comenzar_chat() {
     div_chatbot.querySelector('#nomb_chat').innerText = nombre_usuario.toUpperCase()
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
-    fetch(`https://` + url_servidor + `/getnombre/?nomb=` + nombre_usuario+ '&user_alias=' + key_alias, {
+    fetch(`https://` + url_servidor + `/getnombre/?nomb=` + nombre_usuario + '&user_alias=' + key_alias, {
       method: 'GET',
     }).then(jsonRsp => {}).catch(e => {
       console.log(e);
@@ -121,7 +123,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate+ '&user_alias=' + key_alias+ '&nombre_chat=' + nombre_chat, {
+    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       var botHtml = '<div class="chat-bubble you">' + response + "</div>";
@@ -190,4 +192,29 @@ function formatAMPM() {
   var strTime = day + ', ' + hours + ':' + minutes + ' ' + ampm;
   console.log(strTime)
   document.getElementById('dia_hora_chat').innerText = strTime
+}
+/*=============================================
+CHATBOT PERSONALIZADO
+=============================================*/
+function chatbot_personalizado() {
+  var ls = localStorage.getItem('datos')
+  var empresa_id = JSON.parse(ls).id_empresa;
+
+  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+    method: 'GET',
+  }).then(rsp => rsp.json()).then(function (response) {
+
+    console.log(response)
+    console.log(response[0]['botones'])
+    console.log(response[0]['text_bienvenida'])
+    console.log(response[0]['titulo_cuerpo'])
+    console.log(response[0]['titulo_header'])
+
+    document.querySelector('#cb_tl').innerText = response[0]['titulo_header']
+    document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
+    document.querySelector('#cb_bienv').innerText = response[0]['text_bienvenida']
+    document.querySelector('#cb_btn').innerText = response[0]['botones']
+
+  })
+
 }

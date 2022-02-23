@@ -189,6 +189,6 @@ class modulo_historial_conversacion(HttpRequest):
 """=============================================
 MÓDULO APARIENCIA
 ============================================="""
-class modulo_apariencia(HttpRequest):
-  def mod_apariencia(request):
-    return render(request, 'chatbot_admin/layouts/apariencia.html')
+class modulo_Personalizar(HttpRequest):
+  def mod_Personalizar(request):
+    return render(request, 'chatbot_admin/layouts/personalizar.html')

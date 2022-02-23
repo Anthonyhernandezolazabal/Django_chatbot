@@ -104,7 +104,7 @@ function myFunction() {
     n++;
     x = +n;
     let capId = "question" + x
-    let inputValue = document.getElementById(capId).value.toLowerCase()
+    let inputValue = document.getElementById(capId).value
     if (inputValue != '') {
       est_campos = true
       old_ques.push(inputValue);

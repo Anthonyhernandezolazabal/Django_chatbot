@@ -33,6 +33,3 @@ class data_set(models.Model):
     class Meta:
       db_table = 'data_set'
       ordering = ['id'] #ordenar por ID
-   
-        
-
