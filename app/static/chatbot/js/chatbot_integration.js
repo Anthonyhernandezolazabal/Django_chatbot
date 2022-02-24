@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = 'http://chatbot.demoregistro.xyz/';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 chatbot_personalizado();

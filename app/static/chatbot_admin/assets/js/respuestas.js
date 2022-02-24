@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = 'http://chatbot.demoregistro.xyz/';
 conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
 var id_cliente_id = JSON.parse(Ls_rpt).id_cliente;

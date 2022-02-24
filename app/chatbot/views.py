@@ -264,16 +264,16 @@ class personalizarApiView(APIView):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-  def put(self, request, pk, format=None):
+  # def put(self, request, pk, format=None):
 
-    dt = chatbot_style.objects.get(pk=pk)
-    serializer = personalizarChatSerializers(dt, data=request.data)
+  #   dt = chatbot_style.objects.get(pk=pk)
+  #   serializer = personalizarChatSerializers(dt, data=request.data)
 
-    if serializer.is_valid():
-      serializer.save()
-      return Response(serializer.data)
+  #   if serializer.is_valid():
+  #     serializer.save()
+  #     return Response(serializer.data)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def personalizar_edit(request):
 

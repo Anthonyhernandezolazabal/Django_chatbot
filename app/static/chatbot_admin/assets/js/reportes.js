@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = 'http://chatbot.demoregistro.xyz/';
 /*=============================================
 ENVIO AL APIVIEWS AL VIEWS DEL CHATBOT POR RANGO DE FECHAS
 =============================================*/
