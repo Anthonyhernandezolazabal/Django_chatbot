@@ -1,4 +1,4 @@
-env/*
+env
 app/chatbot/__pycache__
 app/chatbot/migrations
 
@@ -13,3 +13,7 @@ notes.txt
 app/*.sqlite3
 app/*.crt
 app/*.key
+
+app/set_datos/*
+
+recursosCajaSullana

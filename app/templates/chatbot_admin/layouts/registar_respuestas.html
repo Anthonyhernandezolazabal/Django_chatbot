@@ -45,19 +45,22 @@
     </div>
   </div>
 </div>
-<div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
-  aria-hidden="true">
+<div id="full-width-modal" data-bs-backdrop="static" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="fullWidthModalLabel" aria-hidden="true">
   <form id="form-crear-rpta">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered cls_modal">
+    <!-- <div class="modal-dialog modal-lg modal-dialog-centered modal-full-width"> -->
       <div class="modal-content">
         <div class="modal-body">
           <div class="container">
             <div class="row justify-content-center">
-              <div class="col-xxl-9 col-lg-5">
-                <h4 class="header-title">Respuesta automatica :</h4>
-                <p class="text-muted font-14">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá
-                  mejor
-                  cuál es la respuesta asociada para ese tópico.:</p>
+
+              <h4 class="header-title">Respuesta automatica :</h4>
+              <p class="text-muted font-14">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá
+                mejor
+                cuál es la respuesta asociada para ese tópico:</p>
+              <!-- cls_col col-lg-10 -->
+              <div class="col-lg-10" id="cls_col">
                 <h4><ins>Si el cliente escribe:</ins> </h4>
                 <hr>
                 <br>
@@ -76,32 +79,29 @@
                 <h4 style="display: none" id="rptatit"><ins>El robot responderá:</ins> </h4>
                 <h6 class="font-15 mt-3">Tipo de respuesta</h6>
                 <!-- GENERAR RESPUESTA -->
-                <div class="form-floating" style='display: none' id='add_chek_txt'>
-                  <textarea class="form-control" placeholder="Ingresa aquí la autorespuesta" name="txt_autorpta"
-                    id="txt_autorpta" style="height: 100px"></textarea>
-                  <label for="txt_autorpta">Autorespuesta</label>
-                </div>
+                <div class="form-floating" id='add_chek_txt'></div>
                 <div class="mt-2">
                   <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadio3" name="customRadio1" class="form-check-input">
-                    <label class="form-check-label" for="customRadio3">Texto</label>
+                    <input type="radio" id="customRadio3" name="customRadio1" class="form-check-input" style="cursor: pointer;">
+                    <label class="form-check-label" for="customRadio3" style="cursor: pointer;">Texto</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="radio" id="customRadio4" name="customRadio1" class="form-check-input">
-                    <label class="form-check-label" for="customRadio4">Slider</label>
+                    <input type="radio" id="customRadio4" name="customRadio1" class="form-check-input" style="cursor: pointer;">
+                    <label class="form-check-label" for="customRadio4" style="cursor: pointer;">Slider</label>
                   </div>
-                </div><br>
-                <div class="alert alert-danger mb-0" role="alert" style='display:none' id='alert_check'>
-                  <i class="dripicons-information me-2"></i><strong>El slider</strong> no está disponible
+                  <a style="cursor: pointer;display: none;" id="add_slider" attradd_slider="" class="text-info"><i class="mdi mdi-plus-circle me-1"></i>Agregar un slider</a>
                 </div>
+              </div>
+              <div class="col-lg-6" id="divSlider">
+              
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_cerrar">Cerrar</button>
-          <button type="button" class="btn btn-primary btn_save" data-bs-dismiss="modal" onclick="myFunction()"
-            attr_cont='0'>GUARDAR</button>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="modal_cerrar">Cerrar</button>
+          <button type="button" class="btn btn-success btn_save" data-bs-dismiss="modal" onclick="myFunction()"
+            attr_cont='0' attr_cont_slider='1'>GUARDAR</button>
         </div>
       </div>
     </div>
