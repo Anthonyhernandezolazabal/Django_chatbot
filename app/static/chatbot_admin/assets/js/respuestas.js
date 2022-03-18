@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = '192.168.18.23:8000';
 
 conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
@@ -126,7 +126,6 @@ check_inpt4.addEventListener("click", () => {
                                     <br>
                                     
                                     <label for="example-fileinput" class="form-label">Accion:</label>
-
 
                                     <div class="mb-2 mt-2" id='add_input_new_action1'>
                                     
@@ -366,8 +365,6 @@ function myFunction() {
   let old_ques = []
   let preguntas = [];
   let est_campos = false;
-  console.log(est_campos)
-
 
   micont++; //Contador para la vista conforme se va registrando
   n = -1;
@@ -405,22 +402,64 @@ function myFunction() {
     let id_tmp = preguntas[0].id
     console.log('id_tmp', id_tmp)
     if (est_campos == false) {
-      alert('Es necesario registrar preguntas')
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Es necesario registrar preguntas'
+      })
     } else if (rpta_i == '') {
-      alert('Es necesario registrar una respuesta')
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Es necesario registrar una respuesta'
+      })
     } else {
       agregarLS(preguntas)
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'success',
+        title: 'Registrado correctamente'
+      })
+      $('#full-width-modal').modal('hide');
+      $('#form-crear-rpta').trigger('reset');
     }
   } else if (selslider.checked == true) { // SI EL TIPO DE RESPUESTA ES UN SLIDER
-
-
     let nslider = document.querySelectorAll('.clsSlider').length; //total de slider imagen
     let slidersall = document.querySelectorAll('.clsSlider') //trae toda las cabeceras
     let respuestas = {};
     let rptaFinal = [];
-
-
-
 
     slidersall.forEach(sl => {
       let descripcionsl = sl.querySelector('.descripcion').value;
@@ -434,32 +473,61 @@ function myFunction() {
         'descripcion': descripcionsl,
         'acciones': []
       }
-
-      rptaFinal.push(respuestas)
-
+      rptaFinal.push(respuestas) //BASE 64
       accioninicial.forEach(accion => {
+        // console.log('accioninicial :', accion.value)
         respuestas.acciones.push(accion.value);
       });
 
     });
 
-
     preguntas.push({
       'preguntas_new': old_ques,
-      'respuesta_new': rptaFinal,
+      'respuesta_new': btoa(rptaFinal),
       'id': id,
       'tipo': 'slider'
     })
 
     agregarLS(preguntas)
 
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Registrado correctamente'
+    })
+    $('#full-width-modal').modal('hide');
+    $('#form-crear-rpta').trigger('reset');
 
-
-
-
-    alert("Slider");
   } else {
-    alert('no seleccionó')
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'error',
+      title: 'Es necesario registrar datos'
+    })
+
+
   }
 
 }
@@ -601,6 +669,7 @@ function conversaciones_pyr() {
     div_rptas.append(rpt)
   });
 }
+
 /*=============================================
   ENVIO AL VIEWS DE CHATBOT EL NOMBRE Y LAS RESPUESTAS AUTOMATICAS DEL LS
 =============================================*/
@@ -615,7 +684,7 @@ function rpt_aut_save() {
     alert('Debe asignarle un nombre')
   } else {
     var json_ls = JSON.stringify(preguntas);
-    console.log('json_ls :', json_ls)
+    console.log('json_ls DE JSON :', json_ls)
     var nnn = nombre_json.split(" ").join("_")
     fetch('https://' + url_servidor + '/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu, {
       method: 'GET',
@@ -626,15 +695,9 @@ function rpt_aut_save() {
       document.getElementById('btn_loader').style.display = 'block';
       // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
       // location.replace(url_python)
-
       location.href = "../respuestas/?empre_id=" + id_empresa;
-
     }).catch(e => {
-
-
       console.log(e);
-
-
     })
   }
 }

@@ -1,4 +1,4 @@
-var url_servidor = 'chatbot.demoregistro.xyz';
+var url_servidor = '192.168.18.23:8000';
 var ls = localStorage.getItem('datos')
 var empresa_id = JSON.parse(ls).id_empresa;
 chatbot_personalizado();
