@@ -1,4 +1,4 @@
-var url_servidor = '192.168.18.23:8000';
+var url_servidor = '192.168.1.2:8000';
 /*=============================================
 ENVIO AL APIVIEWS AL VIEWS DEL CHATBOT POR RANGO DE FECHAS
 =============================================*/

@@ -13,6 +13,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from django.conf import settings
 from rest_framework import status
+import base64
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -178,7 +179,8 @@ def getchat(request):
           return HttpResponse(str(response))  
         else:
           if user_autenticate == 'True':
-            rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
+            # rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
+            rpta1 = base64.b64encode('Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?'.encode('utf-8'))
             myuser['bol']=1
             print('bol 1 getchat2 :',myuser['bol'])
             myuser['entradatmp']=chat_input
@@ -188,8 +190,9 @@ def getchat(request):
             session_cook = user
             print('session_cook 1 getchat2 :',session_cook)
           else:
-            rpta1 = 'Disculpa no te entendí!'
-          return HttpResponse(str(rpta1)) 
+            # rpta1 = 'Disculpa no te entendí!'
+            rpta1 = base64.b64encode('Disculpa no te entendí!'.encode('utf-8'))
+          return HttpResponse(str(rpta1,'utf-8')) 
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))

@@ -1,4 +1,4 @@
-var url_servidor = '127.0.0.1:8000';
+var url_servidor = '192.168.1.2:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 chatbot_personalizado();
@@ -24,6 +24,39 @@ var htmlbot = `
               <div class="chat-start" id='dia_hora_chat'></div>
               <div class="chat-bubble you"><i>Hola <strong id='nomb_chat'>{Nombre} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,
               simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+
+
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
               <div class="messages__item messages__item--typing">
@@ -92,10 +125,10 @@ function comenzar_chat() {
     div_chatbot.querySelector('#nomb_chat').innerText = nombre_usuario.toUpperCase()
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
-    fetch(`https://` + url_servidor + `/getnombre/?nomb=` + nombre_usuario + '&user_alias=' + key_alias, {
+    fetch('https://' + url_servidor + '/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
       method: 'GET',
     }).then(jsonRsp => {}).catch(e => {
-      console.log(e);
+      console.log('e :', e);
     })
   }
 }
@@ -126,16 +159,83 @@ function getBotResponse() {
     fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
-      var botHtml = '<div class="chat-bubble you">' + response + "</div>";
-      document.getElementById('carga_new').style.display = "block";
-      setTimeout(function () {
-        document.getElementById('carga_new').style.display = "none";
-        var div_r = document.querySelector("#chat2");
-        let r = document.createElement("div");
-        r.innerHTML = botHtml
-        div_r.append(r)
-        div_r.scrollTop = div_r.scrollHeight;
-      }, 1600)
+      let decodedStr = atob(response);
+      const rpta_rpta = JSON.parse(decodedStr)
+      console.log('rpta_rpta :', rpta_rpta);
+      console.log('rpta_rpta 2 :', rpta_rpta[0]['tipo']);
+
+
+      if (rpta_rpta[0]['tipo'] == 'texto') {
+        var botHtml = '<div class="chat-bubble you">' + rpta_rpta[0]['rpta'] + "</div>";
+        document.getElementById('carga_new').style.display = "block";
+        setTimeout(function () {
+          document.getElementById('carga_new').style.display = "none";
+          var div_r = document.querySelector("#chat2");
+          let r = document.createElement("div");
+          r.innerHTML = botHtml
+          div_r.append(r)
+          div_r.scrollTop = div_r.scrollHeight;
+        }, 1600)
+      }
+
+      if (rpta_rpta[0]['tipo'] == 'slider') {
+
+        var botHtml = `
+                    <section id="container-slider" style='margin-top: 60px;'>
+                        <a href="javascript: fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
+                        <a href="javascript: fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
+                        <ul class="listslider">
+                            <li><a itlist="itList_0" href="#" class="item-select-slid"></a></li>
+                            <li><a itlist="itList_1" href="#"></a></li>
+                            <li><a itlist="itList_2" href="#"></a></li>
+                        </ul>
+                        <ul id="slider">
+                            <li
+                                style="background-image: url('https://r1live.conexaris.com/assets/cajasullana/principal-v1/ahorros.png'); z-index:0; opacity: 1;">
+                                <div class="content_slider">
+                                    <div>
+                                        <h5>Emprendimiento empresarial</h5>
+                                        <p>Descubra en qué consiste el emprendimiento empresarial por medio de 5 estrategias
+                                            fundamentales.</p>
+                                        <a href="#" class="btnSlider">Ver más</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li
+                                style="background-image: url('https://r1live.conexaris.com/assets/cajasullana/principal-v1/creditos.png'); ">
+                                <div class="content_slider">
+                                    <div>
+                                        <h5>Negocios</h5>
+                                        <p>Recursos, guías, herramientas y consejos para emprender, crear tu empresa o iniciar un
+                                            negocio exitoso</p>
+                                        <a href="#" class="btnSlider">Ver más</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li
+                                style="background-image: url('https://r1live.conexaris.com/assets/cajasullana/principal-v1/servicios.png'); ">
+                                <div class="content_slider">
+                                    <div>
+                                        <h5>Estrategias de negocio</h5>
+                                        <p>Las estrategias de negocio representan planes o métodos...</p>
+                                        <a href="#" class="btnSlider">Ver más</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>`;
+        document.getElementById('carga_new').style.display = "block";
+        setTimeout(() => {
+          document.getElementById('carga_new').style.display = "none";
+          var div_r = document.querySelector("#chat2");
+          let r = document.createElement("div");
+          r.innerHTML = botHtml
+          div_r.append(r)
+          div_r.scrollTop = div_r.scrollHeight;
+        }, 1600);
+      }
+
+
     }).catch(e => {
       //mostrar mensaje de error
       console.log(e);
@@ -204,12 +304,6 @@ function chatbot_personalizado() {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
 
-    console.log(response)
-    console.log(response[0]['botones'])
-    console.log(response[0]['text_bienvenida'])
-    console.log(response[0]['titulo_cuerpo'])
-    console.log(response[0]['titulo_header'])
-
     document.querySelector('#cb_tl').innerText = response[0]['titulo_header']
     document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
     document.querySelector('#cb_bienv').innerText = response[0]['text_bienvenida']
@@ -217,4 +311,63 @@ function chatbot_personalizado() {
 
   })
 
+}
+
+
+
+/*=============================================
+                     SLIDER 
+=============================================*/
+
+// if (document.querySelector('#container-slider')) {
+//   setInterval('fntExecuteSlide("next")', 5000);
+// }
+//------------------------------ LIST SLIDER -------------------------
+if (document.querySelector('.listslider')) {
+  let link = document.querySelectorAll(".listslider li a");
+  link.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      let item = this.getAttribute('itlist');
+      let arrItem = item.split("_");
+      fntExecuteSlide(arrItem[1]);
+      return false;
+    });
+  });
+}
+
+//-------------------------------- SLIDER HOME --------------------------------
+function fntExecuteSlide(side) {
+
+  let parentTarget = document.getElementById('slider');
+  let elements = parentTarget.getElementsByTagName('li');
+  let curElement, nextElement;
+
+  for (var i = 0; i < elements.length; i++) {
+
+    if (elements[i].style.opacity == 1) {
+      curElement = i;
+      break;
+    }
+  }
+  if (side == 'prev' || side == 'next') {
+
+    if (side == "prev") {
+      nextElement = (curElement == 0) ? elements.length - 1 : curElement - 1;
+    } else {
+      nextElement = (curElement == elements.length - 1) ? 0 : curElement + 1;
+    }
+  } else {
+    nextElement = side;
+    side = (curElement > nextElement) ? 'prev' : 'next';
+
+  }
+  //RESALTA LOS PUNTOS
+  let elementSel = document.getElementsByClassName("listslider")[0].getElementsByTagName("a");
+  elementSel[curElement].classList.remove("item-select-slid");
+  elementSel[nextElement].classList.add("item-select-slid");
+  elements[curElement].style.opacity = 0;
+  elements[curElement].style.zIndex = 0;
+  elements[nextElement].style.opacity = 1;
+  elements[nextElement].style.zIndex = 1;
 }

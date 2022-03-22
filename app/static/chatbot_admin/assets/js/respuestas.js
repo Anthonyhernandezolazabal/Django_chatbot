@@ -1,4 +1,4 @@
-var url_servidor = '192.168.18.23:8000';
+var url_servidor = '192.168.1.2:8000';
 
 conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
@@ -389,15 +389,23 @@ function myFunction() {
   }
   var seltexto = document.getElementById("customRadio3");
   var selslider = document.getElementById("customRadio4");
-
+  var rptaFinal_texto = []
   // SI EL TIPO DE RESPUESTA ES TEXTO
   if (seltexto.checked == true) {
     let rpta_i = document.getElementById('txt_autorpta').value
+
+    let rpta_all = {
+      'tipo': "texto",
+      'rpta': rpta_i,
+    }
+
+    rptaFinal_texto.push(rpta_all)
+
+
     preguntas.push({
       'preguntas_new': old_ques,
-      'respuesta_new': rpta_i,
+      'respuesta_new': btoa(JSON.stringify(rptaFinal_texto)),
       'id': id,
-      'tipo': "texto"
     })
     let id_tmp = preguntas[0].id
     console.log('id_tmp', id_tmp)
@@ -468,6 +476,7 @@ function myFunction() {
       let accioninicial = sl.querySelectorAll('.accioninicial')
 
       respuestas = {
+        'tipo': 'slider',
         'img': imgsl,
         'titulo_imagen': titulosl,
         'descripcion': descripcionsl,
@@ -483,9 +492,8 @@ function myFunction() {
 
     preguntas.push({
       'preguntas_new': old_ques,
-      'respuesta_new': btoa(rptaFinal),
+      'respuesta_new': btoa(JSON.stringify(rptaFinal)),
       'id': id,
-      'tipo': 'slider'
     })
 
     agregarLS(preguntas)
