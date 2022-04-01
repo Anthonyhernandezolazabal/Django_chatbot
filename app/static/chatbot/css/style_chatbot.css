@@ -399,8 +399,9 @@ span.messages__dot {
   position: relative;
   display: block;
   width: 100%;
-  height: 100vh;
-  min-height: 500px;
+  /* height: 100vh; */
+  min-height: 200px;
+  /*Tamaño del slider*/
 }
 
 #slider li {
@@ -428,14 +429,14 @@ span.messages__dot {
   color: rgba(204, 204, 204, 0.65);
   cursor: pointer;
   position: absolute;
-  top: 50%;
-  left: 50px;
+  top: 35%;
+  left: 10px;
   z-index: 2;
 }
 
 #container-slider .arrowNext {
   left: initial;
-  right: 50px !important;
+  right: 10px !important;
 }
 
 .content_slider {
@@ -446,30 +447,38 @@ span.messages__dot {
 }
 
 .content_slider div {
-  text-align: center;
+  text-align: left;
 }
 
+
 .content_slider h5 {
-  font-family: 'arial';
+  /* font-family: 'arial';
   font-size: 23pt;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
+  font-size: 15pt;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 115px;
+  margin-bottom: 5px;
+  color: black;
+  font-weight: bold;
 }
 
 .content_slider p {
-  font-size: 15pt;
+  font-size: 13pt;
   font-family: 'arial';
   color: #FFF;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-#slider li .content_slider {
+/* #slider li .content_slider {
   background: rgba(0, 0, 0, 0.50);
   padding: 10px 125px;
-}
+} */
 
-.content_slider {
+/* .content_slider {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -477,26 +486,27 @@ span.messages__dot {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
+} */
 .btnSlider {
   color: #FFF;
   font-size: 15pt;
-  font-family: 'arial';
+  /* font-family: 'arial'; */
   letter-spacing: 1px;
   padding: 10px 50px;
-  border: 1px solid #CCC;
-  background: rgba(13, 13, 13, 0.55);
-  border-radius: 31px;
+  /* border: 1px solid #f6f6f6; */
+  background: rgb(223,4,11);
+  /* border-radius: 30px; */
   text-decoration: none;
   transition: .5s all;
+  /* margin-left: 74px; */
+  padding: 5px 125px 5px 115px;
+  font-weight: bold;
 }
 
 .btnSlider:hover {
-  background: #111;
-  border: 1px solid #111;
+  background: #FF8000;
+  border: 1px solid rgb(223,4,11);
 }
-
 .listslider {
   position: absolute;
   display: -webkit-flex;
@@ -506,7 +516,7 @@ span.messages__dot {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  left: 50%;
+  left: 48%;
   bottom: 5%;
   list-style: none;
   z-index: 2;
@@ -520,7 +530,6 @@ span.messages__dot {
   cursor: pointer;
   margin: 0 5px;
 }
-
 .listslider li a {
   background: #CCC;
   border-radius: 50%;
@@ -532,7 +541,6 @@ span.messages__dot {
 .item-select-slid {
   background: #FFF !important;
 }
-
 @media screen and (max-width: 460px) {
   .content_slider h2 {
     font-size: 15pt !important;
@@ -568,5 +576,4 @@ span.messages__dot {
     padding: 10px 30px;
     font-size: 10pt;
   }
-
 }

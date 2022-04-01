@@ -1,4 +1,4 @@
-var url_servidor = '192.168.1.2:8000';
+var url_servidor = '192.168.18.12:8000';
 
 conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
@@ -110,7 +110,7 @@ check_inpt4.addEventListener("click", () => {
                                   <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-12"></div>
                                   <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10 col-sm-12">
                                     <label for="example-fileinput" class="form-label">Cargar Archivo:</label>
-                                    <input type="file" id="example-fileinput01" class="form-control imagen">
+                                    <input type="file" onchange="guardar_imagen_slider()" id="example-fileinput01" class="form-control imagen">
                                     <h6 class="text-warning">Puedes cargar: Imagen | Video | Audio</h6>
                                   </div>
                                   <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-12"></div>
@@ -228,6 +228,17 @@ function eliminarLS() {
   // localStorage.clear(); /*Elimina todo del localstorage */
   localStorage.removeItem('pregunta')
 }
+
+/*=============================================
+  GUARDAR IMAGEN EN EL SERVIDOR
+=============================================*/
+function guardar_imagen_slider(){
+
+  let slidersall = document.querySelectorAll('.imagen')
+  console.log('a :',slidersall)
+
+}
+
 /*=============================================
   EVENTO ONCLICK
 =============================================*/
@@ -357,7 +368,6 @@ function myFunction_old() {
     div_rptas.append(rpt)
   }
 }
-
 function myFunction() {
   let id = uuidv4() //generar un id para cada array
   let b = document.querySelector(".btn_save");
@@ -398,10 +408,7 @@ function myFunction() {
       'tipo': "texto",
       'rpta': rpta_i,
     }
-
     rptaFinal_texto.push(rpta_all)
-
-
     preguntas.push({
       'preguntas_new': old_ques,
       'respuesta_new': btoa(JSON.stringify(rptaFinal_texto)),
