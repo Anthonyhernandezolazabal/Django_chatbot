@@ -1,4 +1,4 @@
-var url_servidor = '192.168.18.12:8000';
+var url_servidor = '192.168.18.23:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 chatbot_personalizado();
@@ -133,13 +133,12 @@ function getBotResponse() {
       let decodedStr = atob(response);
       const rpta_rpta = JSON.parse(decodedStr)
 
-      rpta_rpta.forEach(rpta => {
+      console.log('decodedStr :', rpta_rpta)
 
-        console.log('decodedStr :', rpta)
 
-        if (rpta['tipo'] == 'texto') {
+        if (rpta_rpta[0]['tipo'] == 'texto') {
           document.getElementById('carga_new').style.display = "block";
-          html_all += '<div class="chat-bubble you">' + rpta['rpta'] + "</div>";
+          html_all += '<div class="chat-bubble you">' + rpta_rpta[0]['rpta'] + "</div>";
           setTimeout(function () {
             document.getElementById('carga_new').style.display = "none";
             var div_r = document.querySelector("#chat2");
@@ -150,29 +149,36 @@ function getBotResponse() {
           }, 1600)
         }
 
-        if (rpta['tipo'] == 'slider') {
+        if (rpta_rpta[0]['tipo'] == 'slider') {
+
           document.getElementById('carga_new').style.display = "block";
           html_all += `
-          <section id="container-slider" style='margin-top: 60px;margin-bottom: 35px;'>
-            <a href="javascript: fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
-            <a href="javascript: fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
-            <ul class="listslider">
-                <li><a itlist="itList_0" href="#" class="item-select-slid"></a></li>
-                <li><a itlist="itList_1" href="#"></a></li>
-                <li><a itlist="itList_2" href="#"></a></li>
-            </ul>
-            <ul id="slider">
-            <li style="background-image: url('https://192.168.18.12:8000/static/chatbot_admin/img/canales.png'); z-index:0; opacity: 1;border-radius: 10px;">
-                <div class="content_slider">
-                    <div>
-                        <h5>titulo_imagen</h5>
-                        <p>descripcion</p>
-                        <a href="#" class="btnSlider">act</a> <br><br>                        
-                        </div>
+            <section id="container-slider" class='slider_all'>
+                <a href="javascript: fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
+                <a href="javascript: fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
+            
+                <ul id="slider">`;
+
+              rpta_rpta.forEach(elent_rpta => {
+                console.log('descripcion :',elent_rpta['descripcion'])
+                console.log('img :',elent_rpta['img'])
+                console.log('titulo_imagen :',elent_rpta['titulo_imagen'])
+                
+                html_all += `
+                  <li style="background-image: url('https://192.168.18.23:8000/static/chatbot_admin/img/canales.png'); z-index:0; opacity: 1;">
+                    <div class="content_slider" >
+                      <div>
+                        <h5>${elent_rpta['titulo_imagen']}</h5>
+                        <p>${elent_rpta['descripcion']}</p>
+                        <div class='btnAccion'><a href="#" class="btnSlider">Ver mas saber</a></div>
+                      </div>
                     </div>
-                </li>
+                  </li>`
+
+              });
+  html_all += `
                 </ul>
-                  </section>`;
+            </section>`;
           setTimeout(function () {
             document.getElementById('carga_new').style.display = "none";
             var div_r = document.querySelector("#chat2");
@@ -182,80 +188,62 @@ function getBotResponse() {
             div_r.scrollTop = div_r.scrollHeight;
           }, 1600)
         }
-
-      });
       return;
-
-
-      if (rpta_rpta[0]['tipo'] == 'texto') {
-        document.getElementById('carga_new').style.display = "block";
-        setTimeout(function () {
-          document.getElementById('carga_new').style.display = "none";
-          var div_r = document.querySelector("#chat2");
-          let r = document.createElement("div");
-          r.innerHTML = botHtml_texto
-          div_r.append(r)
-          div_r.scrollTop = div_r.scrollHeight;
-        }, 1600)
-      }
-
-      if (rpta_rpta[0]['tipo'] == 'slider') {
-        botHtml_slider += `
-                  <section id="container-slider" style='margin-top: 60px;'>
-                      <a href="javascript: fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
-                      <a href="javascript: fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
-                      <ul class="listslider">
-                          <li><a itlist="itList_0" href="#" class="item-select-slid"></a></li>
-                          <li><a itlist="itList_1" href="#"></a></li>
-                          <li><a itlist="itList_2" href="#"></a></li>
-                      </ul>
-                      <ul id="slider">`;
-
-        rpta_rpta.forEach(elent_rpta => {
-          var acciones_rpta = elent_rpta['acciones'];
-
-
-          botHtml_slider += `           
-            <li
-                style="background-image: url('https://192.168.18.12:8000/static/chatbot_admin/img/canales.png'); z-index:0; opacity: 1;">
-                <div class="content_slider">
-                    <div>
-                        <h5>${elent_rpta['titulo_imagen']}</h5>
-                        <p>${elent_rpta['descripcion']}</p>
-                        `;
-          acciones_rpta.forEach(act => {
-            botHtml_slider += `<a href="#" class="btnSlider">${act}</a> <br><br>`
-          });
-
-          botHtml_slider += `                        
-                    </div>
-                </div>
-            </li>`;
-
-        });
-
-
-        botHtml_slider += `
-                          </ul>
-                            </section>`;
-        document.getElementById('carga_new').style.display = "block";
-        setTimeout(() => {
-          document.getElementById('carga_new').style.display = "none";
-          var div_r = document.querySelector("#chat2");
-          let r = document.createElement("div");
-          r.innerHTML = botHtml_slider
-          div_r.append(r)
-          div_r.scrollTop = div_r.scrollHeight;
-        }, 1600);
-      }
-
-
     }).catch(e => {
       //mostrar mensaje de error
       console.log(e);
     })
   }
 }
+//-------------------------------- SLIDER HOME --------------------------------
+function fntExecuteSlide(side) {
+
+  let parentTarget = document.getElementById('slider');
+  let elements = parentTarget.getElementsByTagName('li');
+  let curElement, nextElement;
+
+  for (var i = 0; i < elements.length; i++) {
+
+    if (elements[i].style.opacity == 1) {
+      curElement = i;
+      break;
+    }
+  }
+  if (side == 'prev' || side == 'next') {
+
+    if (side == "prev") {
+      nextElement = (curElement == 0) ? elements.length - 1 : curElement - 1;
+    } else {
+      nextElement = (curElement == elements.length - 1) ? 0 : curElement + 1;
+    }
+  } else {
+    nextElement = side;
+    side = (curElement > nextElement) ? 'prev' : 'next';
+
+  }
+  elements[curElement].style.opacity = 0;
+  elements[curElement].style.zIndex = 0;
+  elements[nextElement].style.opacity = 1;
+  elements[nextElement].style.zIndex = 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function escribir(e) {
   if (e.keyCode == 13) {
@@ -334,52 +322,4 @@ function chatbot_personalizado() {
 // if (document.querySelector('#container-slider')) {
 //   setInterval('fntExecuteSlide("next")', 5000);
 // }
-//------------------------------ LIST SLIDER -------------------------
-if (document.querySelector('.listslider')) {
-  let link = document.querySelectorAll(".listslider li a");
-  link.forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      let item = this.getAttribute('itlist');
-      let arrItem = item.split("_");
-      fntExecuteSlide(arrItem[1]);
-      return false;
-    });
-  });
-}
 
-//-------------------------------- SLIDER HOME --------------------------------
-function fntExecuteSlide(side) {
-
-  let parentTarget = document.getElementById('slider');
-  let elements = parentTarget.getElementsByTagName('li');
-  let curElement, nextElement;
-
-  for (var i = 0; i < elements.length; i++) {
-
-    if (elements[i].style.opacity == 1) {
-      curElement = i;
-      break;
-    }
-  }
-  if (side == 'prev' || side == 'next') {
-
-    if (side == "prev") {
-      nextElement = (curElement == 0) ? elements.length - 1 : curElement - 1;
-    } else {
-      nextElement = (curElement == elements.length - 1) ? 0 : curElement + 1;
-    }
-  } else {
-    nextElement = side;
-    side = (curElement > nextElement) ? 'prev' : 'next';
-
-  }
-  //RESALTA LOS PUNTOS
-  let elementSel = document.getElementsByClassName("listslider")[0].getElementsByTagName("a");
-  elementSel[curElement].classList.remove("item-select-slid");
-  elementSel[nextElement].classList.add("item-select-slid");
-  elements[curElement].style.opacity = 0;
-  elements[curElement].style.zIndex = 0;
-  elements[nextElement].style.opacity = 1;
-  elements[nextElement].style.zIndex = 1;
-}

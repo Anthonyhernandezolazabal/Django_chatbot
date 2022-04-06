@@ -1,4 +1,4 @@
-var url_servidor = '192.168.18.12:8000';
+var url_servidor = '192.168.18.23:8000';
 var ls = localStorage.getItem('datos')
 var empresa_id = JSON.parse(ls).id_empresa;
 chatbot_personalizado();
@@ -28,7 +28,6 @@ document.querySelector('#frm_pdatos').addEventListener('click', function () {
   lblbl();
 })
 
-
 function myFunctionT() {
   var x = document.getElementById("frm_ptitulo").value;
   if (x != '') {
@@ -37,7 +36,6 @@ function myFunctionT() {
     document.querySelector('#pr_tl2').innerText = '¿Charlemos? - En línea'
   }
   document.querySelector('#xyz01').innerText = '';
-
 
 }
 

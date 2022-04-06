@@ -134,3 +134,10 @@ LOGIN_REDIRECT_URL = 'login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'profile_user.UserProfile'
+
+
+#URL PARA ACCEDER A LAS IMAGENES SUBIDAS
+MEDIA_URL = '/media/'
+
+#RUTAS DONDE SE VAN ALMACENAR LAS IMAGENES
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

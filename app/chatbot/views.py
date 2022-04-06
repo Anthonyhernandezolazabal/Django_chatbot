@@ -14,6 +14,7 @@ from pathlib import Path
 from django.conf import settings
 from rest_framework import status
 import base64
+from django.http import HttpRequest
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -292,3 +293,21 @@ def personalizar_edit(request):
   chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(titulo_header=arrayRecibido[0]['titulo_header'],titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],botones=arrayRecibido[0]['botones'],text_bienvenida=arrayRecibido[0]['text_bienvenida'],id_empresa_cliente=id_empresa)
 
   return HttpResponse(str('ok'))
+
+
+from django.core.files.storage import FileSystemStorage
+class mod_slider(HttpRequest):
+  def guardar_imagen_slider(request):
+
+    if request.method == 'POST':
+
+      print("hola")
+      upload = request.FILES['file']
+      fss = FileSystemStorage()
+      file = fss.save(upload.name, upload)
+
+      print('upload.name file:',file)
+
+      # # upload = request.FILES.get('images2')
+
+      return HttpResponse(str(file))

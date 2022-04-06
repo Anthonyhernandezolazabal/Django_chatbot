@@ -389,10 +389,12 @@ span.messages__dot {
 
 /******************* SLIDER *********************/
 
+
 #container-slider {
   position: relative;
   display: block;
   width: 100%;
+  margin-top: 60px;
 }
 
 #slider {
@@ -401,8 +403,10 @@ span.messages__dot {
   width: 100%;
   /* height: 100vh; */
   min-height: 200px;
-  /*Tamaño del slider*/
+  /* margin-bottom: 55px; */
+  /* margin-top: 105px; */
 }
+
 
 #slider li {
   background-repeat: no-repeat;
@@ -444,26 +448,20 @@ span.messages__dot {
   color: #FFF;
   width: 100%;
   height: 100%;
-}
-
-.content_slider div {
   text-align: left;
 }
 
-
 .content_slider h5 {
-  /* font-family: 'arial';
-  font-size: 23pt;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 20px; */
+
   font-size: 15pt;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 115px;
+  margin-top: 105px;
   margin-bottom: 5px;
-  color: black;
+  color: #FFF;
   font-weight: bold;
+  text-align: left;
+  
 }
 
 .content_slider p {
@@ -473,37 +471,33 @@ span.messages__dot {
   margin-bottom: 10px;
 }
 
-/* #slider li .content_slider {
-  background: rgba(0, 0, 0, 0.50);
-  padding: 10px 125px;
-} */
-
-/* .content_slider {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-.btnSlider {
-  color: #FFF;
-  font-size: 15pt;
-  /* font-family: 'arial'; */
-  letter-spacing: 1px;
-  padding: 10px 50px;
-  /* border: 1px solid #f6f6f6; */
-  background: rgb(223,4,11);
-  /* border-radius: 30px; */
-  text-decoration: none;
-  transition: .5s all;
-  /* margin-left: 74px; */
-  padding: 5px 125px 5px 115px;
-  font-weight: bold;
+#slider li .content_slider{
+  background: rgba(0, 0, 0, 0.4);
+  /* padding: 10px 125px; */
 }
 
-.btnSlider:hover {
+ .btnSlider{
+  color: #FFF;
+  font-size: 10pt;
+  font-family: 'arial';
+  letter-spacing: 2px;
+  font-weight: bold;
+
+  /*
+  
+  padding: 5px 125px 5px 115px;
+   */
+}
+
+.btnAccion {
+  background-color:  rgb(223,4,11);;
+  text-align: center;
+  transition: .5s all;
+  padding: 7px 0px 7px 0px;
+  margin-bottom: 5px;
+}
+
+.btnAccion:hover{
   background: #FF8000;
   border: 1px solid rgb(223,4,11);
 }
@@ -530,17 +524,16 @@ span.messages__dot {
   cursor: pointer;
   margin: 0 5px;
 }
+
 .listslider li a {
-  background: #CCC;
+  /* background: #CCC; */
   border-radius: 50%;
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.item-select-slid {
-  background: #FFF !important;
-}
+
 @media screen and (max-width: 460px) {
   .content_slider h2 {
     font-size: 15pt !important;
