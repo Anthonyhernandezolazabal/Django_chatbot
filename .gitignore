@@ -17,3 +17,5 @@ app/*.key
 app/set_datos/*
 
 recursosCajaSullana
+
+app/media/

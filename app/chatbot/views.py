@@ -304,7 +304,7 @@ class mod_slider(HttpRequest):
       print("hola")
       upload = request.FILES['file']
       fss = FileSystemStorage()
-      file = fss.save(upload.name, upload)
+      file = fss.save('slider/' + upload.name, upload)
 
       print('upload.name file:',file)
 

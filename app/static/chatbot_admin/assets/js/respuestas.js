@@ -276,9 +276,6 @@ function eliminarLS() {
   localStorage.removeItem('pregunta')
 }
 
-
-
-
 function show_add_slider(n) {
   let sliders_aall2 = document.querySelectorAll('.clsSlider') //trae toda las cabeceras
   sliders_aall2.forEach(s_l => {
@@ -288,6 +285,9 @@ function show_add_slider(n) {
     var acci = s_l.querySelector('.accioninicial').value;
     const fileInput = s_l.querySelectorAll('.imagen')
     var img_nom = fileInput[0]['files'][0]
+    print('imagen subida al servidor :', img_nom)
+
+
     if (tit == '' && des == '' && acci == '') {
       alert('Hay campos obligatorios');
     } else if (tit == '' || des == '' || acci == '') {
@@ -304,13 +304,14 @@ function show_add_slider(n) {
         alert('Acciones obligatorios')
       }
 
-    }else{
+    } else {
+
+
       document.getElementById('add_slider').style.display = "contents";
       s_l.querySelector('.collapse_sld').classList.remove('show')
       /*=============================================
         ===== GUARDAR IMAGEN EN EL SERVIDOR =====
-
-        Nota: Al enviar la imagen al servidor, esta le asigna un alias al nombre por si es imagen repetida.
+        Nota: Al enviar la imagen al servidor, ésta le asigna un alias al nombre por si es imagen repetida.
         Es nombre asigando se devuelve como response para ponerlo en un input hidden dicho nombre
         Al momento de GUARDAR , va tomar el nombre que se ha recibido para guardarlo en RESPUESTA en la funcion myFunction();
       =============================================*/
@@ -327,7 +328,7 @@ function show_add_slider(n) {
         }).then(rsp => rsp.text()).then(function (response) {
           s_l.querySelector('#nombre_imagen_bk').value = response
         })
-      }else{
+      } else {
         console.log('sin imagen')
       }
     }
@@ -446,47 +447,38 @@ function myFunction() {
 
 
   } else if (selslider.checked == true) { // SI EL TIPO DE RESPUESTA ES UN SLIDER
+
     let nslider = document.querySelectorAll('.clsSlider').length; //total de slider imagen
     let slidersall = document.querySelectorAll('.clsSlider') //trae toda las cabeceras
     let respuestas = {};
     let rptaFinal = [];
-    slidersall.forEach(sl => {
-      var descripcionsl = sl.querySelector('.descripcion').value;
-      var titulosl = sl.querySelector('.titulo').value;
-      var nombre_imgl = sl.querySelector('#nombre_imagen_bk').value;
-
-      if (descripcionsl == '' && titulosl == '') {
-
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-        Toast.fire({
-          icon: 'error',
-          title: 'Los campos no pueden quedar vacío'
-        })
-
-      } else if (descripcionsl == '' || titulosl == '') {
-
-        if (descripcionsl == '') {
-          alert('Registre una descripción')
+    let estado_aaa = false //Para validar que se han hecho registros en la respuesta slider | Es false cuando no tiene registros
+    if (est_campos == false) { //No hay registro en PREGUNTAS
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Formule preguntas!!'
+      })
 
-        if (titulosl == '') {
-          alert('Registre un título')
-        }
-      } else {
+    } else {
+      slidersall.forEach(sl => {
+        var descripcionsl = sl.querySelector('.descripcion').value;
+        var titulosl = sl.querySelector('.titulo').value;
+        var nombre_imgl = sl.querySelector('#nombre_imagen_bk').value;
 
+        if (descripcionsl == '' && titulosl == '') {
 
-        if (est_campos == false) {
-
+          estado_aaa = false
 
           const Toast = Swal.mixin({
             toast: true,
@@ -501,9 +493,24 @@ function myFunction() {
           })
           Toast.fire({
             icon: 'error',
-            title: 'Es necesario registrar preguntas'
+            title: 'Hay campos requeridos por llenar'
           })
+
+        } else if (descripcionsl == '' || titulosl == '') {
+
+          if (descripcionsl == '') {
+            alert('Registre una descripción')
+            estado_aaa = false
+          }
+
+          if (titulosl == '') {
+            alert('Registre un título')
+            estado_aaa = false
+          }
         } else {
+
+          estado_aaa = true
+
           let accioninicial = sl.querySelectorAll('.accioninicial')
           respuestas = {
             'tipo': 'slider',
@@ -517,41 +524,36 @@ function myFunction() {
             console.log('accioninicial :', accion.value)
             respuestas.acciones.push(accion.value);
           });
-
-          console.log('Esta es la respuesta original:', rptaFinal)
-
-          preguntas.push({
-            'preguntas_new': old_ques,
-            'respuesta_new': btoa(JSON.stringify(rptaFinal)),
-            'respuesta_ls': rptaFinal,
-            'id': id,
-          })
-          agregarLS(preguntas)
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          })
-          Toast.fire({
-            icon: 'success',
-            title: 'Registrado correctamente'
-          })
-          // $('#full-width-modal').modal('hide');
-          // $('#form-crear-rpta').trigger('reset');
-
-
         }
+      });
 
-
+      if (estado_aaa == true) { // Si hay registros en las respuestas
+        preguntas.push({
+          'preguntas_new': old_ques,
+          'respuesta_new': btoa(JSON.stringify(rptaFinal)),
+          'respuesta_ls': rptaFinal,
+          'id': id,
+        })
+        agregarLS(preguntas)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Registrado correctamente'
+        })
+        $('#full-width-modal').modal('hide');
+        $('#form-crear-rpta').trigger('reset');
       }
-    });
-
+    }
 
   } else {
 
@@ -568,7 +570,7 @@ function myFunction() {
     })
     Toast.fire({
       icon: 'error',
-      title: 'Es necesario registrar datos'
+      title: 'Seleccione un Tipo de respuesta'
     })
   }
 }
