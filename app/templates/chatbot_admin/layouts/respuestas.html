@@ -7,18 +7,18 @@
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a></li>
-            <li class="breadcrumb-item active">Respuestas automaticas registradas</li>
+            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">CHATBOT</a></li>
+            <li class="breadcrumb-item active animate__animated animate__bounce">Respuestas</li>
           </ol>
         </div>
-        <h4 class="page-title">Respuestas automaticas registradas</h4>
+        <h4 class="page-title animate__animated animate__bounce">Respuestas automaticas registradas</h4>
         <br><br>
         {% if mensaje %}
         <div class="alert alert-success" role="alert">
           <i class="dripicons-checkmark me-2"></i> Registrado correctamente!
         </div>
         {% endif %}
-        <center><a href="{% url 'registrar_rpta' %}" class="btn btn-danger btn-rounded mb-3"><i
+        <center><a href="{% url 'registrar_rpta' %}" class="btn btn-danger btn-rounded mb-3 animate__animated animate__backInDown"><i
               class="mdi mdi-plus"></i> Registrar respuestas automaticas</a></center>
         <div class="col-xl-12 col-lg-6">
           <div class="card card-h-100">

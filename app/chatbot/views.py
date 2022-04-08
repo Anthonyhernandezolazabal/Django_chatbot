@@ -115,51 +115,26 @@ def getchat(request):
     entradatmp=''
 
     nombre_chat = request.GET.get('nombre_chat')
-    print('nombre_chat getchat2 :',nombre_chat)
     #nombre_chat getchat : anthony
-
-
     user_cook = request.GET.get('user_alias')
-    print('user_cook getchat2 :',user_cook)
     #user_cook getchat : rynyshe55uhli6eaqei7k8b65bw5du
-
-
     session_cook = {user_cook: {'nombre':nombre_chat, 'bol': 0, 'entradatmp': ''}}
-    print('session_cook getchat2 :',session_cook)
-
-
     user = session_cook
     #user getchat : {'rynyshe55uhli6eaqei7k8b65bw5du': {'nombre': 'olazabal', 'bol': 0, 'entradatmp': ''}}
-    print('user getchat2 :',user)
-
-
     myuser = user[user_cook]
     #myuser getchat : {'nombre': 'olazabal', 'bol': 0, 'entradatmp': ''}
-    print('myuser getchat222 :',myuser)
-
-
     bol=myuser['bol']
     #bol getchat : 0
-    print('bol getchat2 :',bol)
-
-
     nombre_nombre=myuser['nombre']+'-'+user_cook
     #nombre_nombre getchat : olazabal-rynyshe55uhli6eaqei7k8b65bw5du
-    print('nombre_nombre getchat2 :',nombre_nombre)
-
-
     entradatmp=myuser['entradatmp']
     #entradatmp getchat :
-    print('entradatmp getchat2 :',entradatmp)
-
-
     chat_input = request.GET.get('msg')
     id_empresa_id = request.GET.get('id_empresa_id')
     id_user_create = request.GET.get('id_user_create')
     user_autenticate = request.GET.get('user_autenticate')
     initialize(id_user_create)
     if(bol==1):
-      print('bol getchat2123231:',bol)
       trainer = ListTrainer(bot[id_user_create])
       trainer.train([str(entradatmp),str(chat_input)])
       rpta2 = "He aprendiendo que cuando digas -> {} <- debo responder -> {} <- ".format(str(entradatmp),str(chat_input))
@@ -181,19 +156,18 @@ def getchat(request):
         else:
           if user_autenticate == 'True':
             # rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
-            rpta1 = base64.b64encode('Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?'.encode('utf-8'))
+            cda = '[{"tipo":"texto","rpta":"Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?"}]'
+            rpta1 = base64.b64encode(cda.encode('utf-8'))
+            print('rptaaaaaaaaaaaaaaaaaaaa: ',rpta1)
             myuser['bol']=1
-            print('bol 1 getchat2 :',myuser['bol'])
             myuser['entradatmp']=chat_input
-            print('myuser[entradatmp] 1 getchat2 :',myuser['entradatmp'])
             user[user_cook] = myuser
-            print('user[user_cook] 1 getchat2 :',user[user_cook])
             session_cook = user
-            print('session_cook 1 getchat2 :',session_cook)
           else:
             # rpta1 = 'Disculpa no te entendí!'
-            rpta1 = base64.b64encode('Disculpa no te entendí!'.encode('utf-8'))
-          return HttpResponse(str(rpta1,'utf-8')) 
+            cda = '[{"tipo":"texto","rpta":"Disculpa no te entendí!"}]'
+            rpta1 = base64.b64encode(cda.encode('utf-8'))
+          return HttpResponse(rpta1,'utf-8') 
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))

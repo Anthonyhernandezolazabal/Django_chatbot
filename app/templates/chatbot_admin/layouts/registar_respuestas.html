@@ -7,22 +7,21 @@
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a></li>
-            <li class="breadcrumb-item active">Registrar Respuestas</li>
+            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">CHATBOT</a></li>
+            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">Respuestas</a></li>
+            <li class="breadcrumb-item animate__animated animate__bounce active">Registrar Respuestas</li>
           </ol>
         </div>
-        <h4 class="page-title">REGISTRAR RESPUESTAS</h4>
-        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-          data-bs-target="#full-width-modal"><span>Agregar respuestas automáticas <i
-              class="mdi mdi-plus-circle me-1"></i></span> </button>
+        <h4 class="page-title animate__animated animate__bounce">REGISTRAR RESPUESTAS</h4>
+        <button type="button" class="btn btn-info animate__animated animate__backInUp" data-bs-toggle="modal" data-bs-target="#full-width-modal"><span>Agregar respuestas automáticas <i class="mdi mdi-plus-circle me-1"></i></span> </button>
         <br><br>
         <div class="row" id="lista_template">
           <center>
             <div class="col-md-6">
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="rpta_json_nomb" name="rpta_json_nomb"
+                <input type="email" class="form-control animate__animated animate__swing" id="rpta_json_nomb" name="rpta_json_nomb"
                   placeholder="Ejm: Respuestas de información">
-                <label for="floatingInput">Nombre de las respuestas automaticas</label>
+                <label for="floatingInput" class="animate__animated animate__swing" >Nombre de las respuestas automaticas</label>
                 <input type="hidden" name="empresa_rpta" id="empresa_rpta">
                 <input type="hidden" name="usu_rpta" id="usu_rpta">
               </div>
@@ -32,9 +31,7 @@
         <div>
         </div>
         <center>
-          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3" id="btn_sav"><i
-              class="mdi mdi-plus"></i>
-            Guardar</button>
+          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3 animate__animated animate__heartBeat" id="btn_sav"><i class="mdi mdi-plus"></i> Guardar</button>
           <button class="btn btn-danger btn-rounded mb-3" id="btn_loader" type="button" disabled=""
             style="display: none">
             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
@@ -55,37 +52,34 @@
           <div class="container">
             <div class="row justify-content-center">
 
-              <h4 class="header-title">Respuesta automatica :</h4>
-              <p class="text-muted font-14">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá
-                mejor
-                cuál es la respuesta asociada para ese tópico:</p>
+              <h4 class="header-title animate__animated animate__animated animate__pulse">Respuesta automatica :</h4>
+              <p class="text-muted font-14 animate__animated animate__animated animate__animated animate__pulse">Agrega diferentes formas de preguntar lo mismo. Así el robot entenderá mejor cuál es la respuesta asociada para ese tópico:</p>
               <!-- cls_col col-lg-10 -->
               <div class="col-lg-10" id="cls_col">
-                <h4><ins>Si el cliente escribe:</ins> </h4>
+                <h4 class="animate__animated animate__pulse"><ins>Si el cliente escribe:</ins> </h4>
                 <hr>
                 <br>
                 <div class="row">
                   <div class="col-12" style='margin-top: -24px;margin-bottom: -6px;'>
                     <!-- FORMULAR PREGUNTA -->
                     <div class="mb-2" id='add_input_new'>
-                      <input class="form-control" type="text" placeholder="Formular pregunta" id="question0"
+                      <input class="form-control animate__animated animate__tada" type="text" placeholder="Formular pregunta" id="question0"
                         name="question0">
                     </div>
-                    <a style="cursor: pointer;" id='add_quest' class='text-success'><i
-                        class="mdi mdi-plus-circle me-1"></i>Agregar mas preguntas</a>
+                    <a style="cursor: pointer;" id='add_quest' class='text-success'><i class="mdi mdi-plus-circle me-1"></i>Agregar mas preguntas</a>
                   </div>
                 </div>
                 <hr>
-                <h4 style="display: none" id="rptatit"><ins>El robot responderá:</ins> </h4>
-                <h6 class="font-15 mt-3">Tipo de respuesta</h6>
+                <h4 style="display: none" id="rptatit" class="animate__animated animate__flash"><ins>El robot responderá:</ins> </h4>
+                <h6 class="font-15 mt-3 animate__animated animate__pulse">Tipo de respuesta</h6>
                 <!-- GENERAR RESPUESTA -->
                 <div class="form-floating" id='add_chek_txt'></div>
                 <div class="mt-2">
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline animate__animated animate__tada">
                     <input type="radio" id="customRadio3" name="customRadio1" class="form-check-input" style="cursor: pointer;">
                     <label class="form-check-label" for="customRadio3" style="cursor: pointer;">Texto</label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline animate__animated animate__tada">
                     <input type="radio" id="customRadio4" name="customRadio1" class="form-check-input" style="cursor: pointer;">
                     <label class="form-check-label" for="customRadio4" style="cursor: pointer;">Slider</label>
                   </div>
@@ -100,7 +94,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="modal_cerrar">Cerrar</button>
-          <button type="button" class="btn btn-success btn_save" onclick="myFunction()"
+          <button type="button" class="btn btn-success btn_save" onclick="myFunction_save()"
             attr_cont='0' attr_cont_slider='1'>GUARDAR</button>
         </div>
       </div>

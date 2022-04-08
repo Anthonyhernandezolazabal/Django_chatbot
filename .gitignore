@@ -19,3 +19,4 @@ app/set_datos/*
 recursosCajaSullana
 
 app/media/
+app/bot/__pycache__/

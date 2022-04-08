@@ -7,11 +7,11 @@
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a></li>
-            <li class="breadcrumb-item active">Personalizar</li>
+            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">CHATBOT</a></li>
+            <li class="breadcrumb-item animate__animated animate__bounce active">Personalizar</li>
           </ol>
         </div>
-        <h4 class="page-title">Personalizar chatbot</h4>
+        <h4 class="page-title animate__animated animate__bounceIn"">Personalizar chatbot</h4>
       </div>
     </div>
   </div>
@@ -29,13 +29,13 @@
             <li class="nav-item">
               <a href="#cuerpo_chatbot" data-bs-toggle="tab" aria-expanded="true" id="li_cb2" class="nav-link">
                 <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                <span class="d-none d-md-block">Chatbot</span>
+                <span class="d-none d-md-block">Chatear</span>
               </a>
             </li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane show active" id="inici_chatbot">
-              <div class="wrapper2_apa">
+              <div class="wrapper2_apa animate__animated animate__bounce"">
                 <div class="head-text" id='pr_tl2'>¿Charlemos? - En línea</div>
                 <!-- NOMBRE -->
                 <div class="chat-box">
@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="cuerpo_chatbot">
+            <div class="tab-pane animate__animated animate__bounce" id="cuerpo_chatbot">
               <div class="wrapper2_apa">
                 <div class="head-text" id='pr_tl'>¿Charlemos? - En línea</div>
                 <!-- CHAT -->
@@ -89,7 +89,7 @@
             <li class="nav-item">
               <a href="#fuerahorario" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
                 <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                <span class="d-none d-md-block">Fuera de horario</span>
+                <span class="d-none d-md-block">Personalizar</span>
               </a>
             </li>
           </ul>
@@ -97,22 +97,22 @@
             <div class="tab-pane show active" id="fuerahorario">
               <div class="container row">
                 <div class="col-lg-12">
-                  <h4 class="mt-2">Personalizar el chatbot</h4>
-                  <p class="text-muted mb-4">Rellene el siguiente formulario para personalizar su chatbot.</p>
+                  <h4 class="mt-2 animate__animated animate__bounce">Personalizar el chatbot</h4>
+                  <p class="text-muted mb-4 animate__animated animate__swing">Rellene el siguiente formulario para personalizar su chatbot.</p>
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label class="form-label">Título de chatbot</label>
-                        <input type="text" class="form-control" maxlength="25" data-toggle="maxlength" required onkeyup="myFunctionT()" placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+                        <label class="form-label animate__animated animate__bounce">Título de chatbot</label>
+                        <input type="text" class="form-control animate__animated animate__bounce" maxlength="25" data-toggle="maxlength" required onkeyup="myFunctionT()" placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
                         <input type="hidden" id="id_pr_ct">
                         <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="frm_pboton" class="form-label">Texto en el boton</label>
-                        <input class="form-control" type="text" placeholder="Ingresa un texto al boton" id="frm_pboton" onkeyup="myFunctionBTN()" maxlength="20" data-toggle="maxlength" disabled="">
+                        <label for="frm_pboton" class="form-label animate__animated animate__bounce">Texto en el boton</label>
+                        <input class="form-control animate__animated animate__bounce" type="text" placeholder="Ingresa un texto al boton" id="frm_pboton" onkeyup="myFunctionBTN()" maxlength="20" data-toggle="maxlength" disabled="">
                         <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
                       </div>
                     </div>
@@ -120,16 +120,16 @@
                   <div class="row mb-4">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="frm_pdatos" class="form-label">Título de ingresa tus datos</label>
-                        <textarea data-toggle="maxlength" class="form-control" maxlength="100" rows="3" onkeyup="myFunctionBTND()" placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos" disabled=""></textarea>
+                        <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Título de ingresa tus datos</label>
+                        <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="100" rows="3" onkeyup="myFunctionBTND()" placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos" disabled=""></textarea>
                         <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="frm_pbienvenida" class="form-label">Título de bienvenida<span
+                        <label for="frm_pbienvenida" class="form-label animate__animated animate__bounce">Título de bienvenida<span
                             class="text-danger">*</span></label>
-                        <textarea data-toggle="maxlength" class="form-control" maxlength="225" rows="3" onkeyup="myFunctionBN()" placeholder="Ingresa un texto de bienvenida" id="frm_pbienvenida" disabled=""></textarea>
+                        <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="225" rows="3" onkeyup="myFunctionBN()" placeholder="Ingresa un texto de bienvenida" id="frm_pbienvenida" disabled=""></textarea>
                         <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
                       </div>
                     </div>

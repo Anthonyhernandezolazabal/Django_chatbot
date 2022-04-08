@@ -394,7 +394,12 @@ span.messages__dot {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 60px;
+  margin-top: 83px;
+  margin-bottom: 30px;
+}
+
+.cl_div{
+  margin-bottom: 1px;
 }
 
 #slider {
@@ -456,7 +461,7 @@ span.messages__dot {
   font-size: 15pt;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 105px;
+  margin-top: 115px;
   margin-bottom: 5px;
   color: #FFF;
   font-weight: bold;
@@ -468,7 +473,7 @@ span.messages__dot {
   font-size: 13pt;
   font-family: 'arial';
   color: #FFF;
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 }
 
 #slider li .content_slider{
@@ -495,11 +500,12 @@ span.messages__dot {
   transition: .5s all;
   padding: 7px 0px 7px 0px;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 
 .btnAccion:hover{
-  background: #FF8000;
-  border: 1px solid rgb(223,4,11);
+  background: rgb(223,4,11);
+  border: 1px solid #FF8000;
 }
 .listslider {
   position: absolute;
@@ -569,4 +575,21 @@ span.messages__dot {
     padding: 10px 30px;
     font-size: 10pt;
   }
+}
+
+
+.terminos_condiciones{
+  border: 2px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: black;
+  font-weight: bold;
+}
+.terminos_condiciones:hover{
+  background: rgb(223,4,11);
+  border: 1px solid #FF8000;
+  color: #ffffff
+
 }

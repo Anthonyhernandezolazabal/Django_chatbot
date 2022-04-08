@@ -1,7 +1,6 @@
 var url_servidor = '192.168.18.23:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
-var estado_terminos_condiciones = false // True= Aceptar T&C | False= Rechazo T&C
 chatbot_personalizado();
 var htmlbot = `
     <input type="checkbox" id="click">
@@ -23,18 +22,8 @@ var htmlbot = `
         <div class="chat-box" id='body-chat' style='display: none !important;'>
             <div class="chat-body" id="chat2">
               <div class="chat-start" id='dia_hora_chat'></div>
-              
-              <div class="chat-bubble you">Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-
-              <div class='row t_y_c' style='text-align: center;'>
-
-                <div class='col-md-2'></div>
-                <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-                <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-                <div class='col-md-2'></div>
-              
-              </div>
-
+              <div class="chat-bubble you"><i>Hola <strong id='nomb_chat'>{Nombre} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,
+              simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
               <div class="messages__item messages__item--typing">
@@ -110,62 +99,6 @@ function comenzar_chat() {
     })
   }
 }
-
-/*=============================================
-                     SLIDER 
-=============================================*/
-function btn_terminos_condiciones(action, ac) {
-  var tmp = ''
-
-  if (action == 'Aceptar') {
-
-    estado_terminos_condiciones = true
-
-    document.getElementById('carga_new').style.display = "block";
-    tmp += `
-      <div class="chat-bubble you" style="margin-top: 12px;"><i>Hola <strong id='nomb_chat'>{Nombre} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
-    `
-    setTimeout(() => {
-      document.getElementById('carga_new').style.display = "none";
-      var div_r = document.querySelector("#chat2");
-      let r = document.createElement("div");
-      r.innerHTML = tmp
-      div_r.append(r)
-      div_r.scrollTop = div_r.scrollHeight;
-
-      document.getElementById('textInput').value = 'Menú principal'
-      getBotResponse();
-      document.getElementById('textInput').value = ''
-
-
-
-    }, 1600);
-    ac.closest('.t_y_c').style.display = 'none'
-  }
-
-  if (action == 'Rechazar') {
-
-    estado_terminos_condiciones = false
-
-    document.getElementById('carga_new').style.display = "block";
-    tmp += `
-      <div class="chat-bubble you" style="margin-top: 12px;">Nos apena que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</div>
-    `
-    setTimeout(() => {
-      document.getElementById('carga_new').style.display = "none";
-      var div_r = document.querySelector("#chat2");
-      let r = document.createElement("div");
-      r.innerHTML = tmp
-      div_r.append(r)
-      div_r.scrollTop = div_r.scrollHeight;
-
-    }, 1600);
-    ac.closest('.t_y_c').style.display = 'none'
-
-  }
-
-}
-
 /*=============================================
 INICIAR CHATBOT
 =============================================*/
@@ -198,9 +131,9 @@ function getBotResponse() {
     fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
-      console.log('response desde pythooon :', response)
+      console.log('response desde pythooon :',response)
       let decodedStr = atob(response);
-      console.log('response desde js :', decodedStr)
+      console.log('response desde js :',decodedStr)
       const rpta_rpta = JSON.parse(decodedStr)
       console.log('decodedStr :', rpta_rpta)
 
@@ -231,43 +164,33 @@ function getBotResponse() {
         rpta_rpta.forEach(elent_rpta => {
           var acciones_rpta = elent_rpta['acciones'];
           console.log(acciones_rpta)
-          console.log('elent_rpta img', elent_rpta['img'])
 
-          if (elent_rpta['img'] != ' ') {
-
-            html_all += `
-                    <li style="background-image: url('https://192.168.18.23:8000/media/${elent_rpta['img']}'); z-index:0; opacity: 1;">`
-
-          } else {
-
-            html_all += `
-                    <li style="background-image: url('https://192.168.18.23:8000/media/slider/slider_default.png'); z-index:0; opacity: 1;">`
-
-          }
 
           html_all += `
+                  <li style="background-image: url('https://192.168.18.23:8000/media/${elent_rpta['img']}'); z-index:0; opacity: 1;">
                     <div class="content_slider" >
                       <div>
                         <h5>${elent_rpta['titulo_imagen']}</h5>
                         <p>${elent_rpta['descripcion']}</p>`;
 
+          
           //console.log('descripcion :',elent_rpta['descripcion'])
           //console.log('img :',elent_rpta['img'])
           //console.log('titulo_imagen :',elent_rpta['titulo_imagen'])
           acciones_rpta.forEach(act => {
-            //console.log('actt :',act)
-            //console.log('acciones_rpta.length :',acciones_rpta.length)
+          //console.log('actt :',act)
+          //console.log('acciones_rpta.length :',acciones_rpta.length)
 
-            if (acciones_rpta.length == 1) {
-
-              html_all += `
+          if (acciones_rpta.length == 1) {
+            
+            html_all += `
                           <div class='btnAccion' onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" ><a href="#" class="btnSlider">${act}</a></div>`
-            } else {
+          }else{
 
-              html_all += `
+            html_all += `
                           <div class='btnAccion' onclick="accion_rpta('${act}')" ><a href="#" class="btnSlider">${act}</a></div>`
 
-            }
+          }
           });
 
 
@@ -297,14 +220,14 @@ function getBotResponse() {
   }
 }
 //-------------------------------- SLIDER HOME --------------------------------
-function fntExecuteSlide(side, objeto) {
+function fntExecuteSlide(side,objeto) {
 
 
   // let parentTarget = document.getElementById('slider');
   let slider = objeto.closest('#container-slider').querySelector('#slider');
   let elements = slider.getElementsByTagName('li');
   let curElement, nextElement;
-
+  
 
 
   for (var i = 0; i < elements.length; i++) {
@@ -334,92 +257,20 @@ function fntExecuteSlide(side, objeto) {
 
 function escribir(e) {
   if (e.keyCode == 13) {
-
-    if (estado_terminos_condiciones == true) {
-
-      getBotResponse();
-      document.getElementById('textInput').value = ''
-
-    } else {
-      estado_terminos_condiciones = false
-      document.getElementById('carga_new').style.display = "block";
-      var tmp = `
-      <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-      <div class='row t_y_c' style='text-align: center;'>
-        <div class='col-md-2'></div>
-        <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-        <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-        <div class='col-md-2'></div>
-      </div>`
-      setTimeout(() => {
-        document.getElementById('carga_new').style.display = "none";
-        var div_r = document.querySelector("#chat2");
-        let r = document.createElement("div");
-        r.innerHTML = tmp
-        div_r.append(r)
-        div_r.scrollTop = div_r.scrollHeight;
-      }, 1600);
-    }
+    getBotResponse();
+    document.getElementById('textInput').value = ''
   }
 }
 
 function enviar_texto(e) {
-
-  if (estado_terminos_condiciones == true) {
-
-    getBotResponse();
-    document.getElementById('textInput').value = ''
-
-  } else {
-    estado_terminos_condiciones = false
-    document.getElementById('carga_new').style.display = "block";
-    var tmp = `
-    <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-    <div class='row t_y_c' style='text-align: center;'>
-      <div class='col-md-2'></div>
-      <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-      <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-      <div class='col-md-2'></div>
-    </div>`
-    setTimeout(() => {
-      document.getElementById('carga_new').style.display = "none";
-      var div_r = document.querySelector("#chat2");
-      let r = document.createElement("div");
-      r.innerHTML = tmp
-      div_r.append(r)
-      div_r.scrollTop = div_r.scrollHeight;
-    }, 1600);
-  }
+  getBotResponse();
+  document.getElementById('textInput').value = ''
 }
 
 function accion_rpta(e) {
-
-  if (estado_terminos_condiciones == true) {
-
-    document.getElementById('textInput').value = e
-    getBotResponse();
-    document.getElementById('textInput').value = ''
-
-  } else {
-    estado_terminos_condiciones = false
-    document.getElementById('carga_new').style.display = "block";
-    var tmp = `
-    <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-    <div class='row t_y_c' style='text-align: center;'>
-      <div class='col-md-2'></div>
-      <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-      <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-      <div class='col-md-2'></div>
-    </div>`
-    setTimeout(() => {
-      document.getElementById('carga_new').style.display = "none";
-      var div_r = document.querySelector("#chat2");
-      let r = document.createElement("div");
-      r.innerHTML = tmp
-      div_r.append(r)
-      div_r.scrollTop = div_r.scrollHeight;
-    }, 1600);
-  }
+  document.getElementById('textInput').value = e
+ getBotResponse();
+ document.getElementById('textInput').value = ''
 }
 /*=============================================
 CHAT MICROFONO
@@ -468,9 +319,20 @@ function chatbot_personalizado() {
   fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
+
     document.querySelector('#cb_tl').innerText = response[0]['titulo_header']
     document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
     document.querySelector('#cb_bienv').innerText = response[0]['text_bienvenida']
     document.querySelector('#cb_btn').innerText = response[0]['botones']
+
   })
+
 }
+
+/*=============================================
+                     SLIDER 
+=============================================*/
+
+// if (document.querySelector('#container-slider')) {
+//   setInterval('fntExecuteSlide("next")', 5000);
+// }
