@@ -22,10 +22,12 @@
               </div>
             </div>
           </div>
-        <script src="{% static 'chatbot/js/chatbot_integration.js' %}"></script>
+        <!-- <script src="{% static 'chatbot/js/chatbot_integration.js' %}"></script> -->
+        <script id="libreria_chatbot" user="{{ id_usuario_py }}" empresa="{{ id_empresa_py }}" src="https://192.168.18.23:8000/static/chatbot/js/chatbot_integration.js"></script>
       </div>
     </div>
   </div>
 </div>
 </div>
+
 {% endblock content %}

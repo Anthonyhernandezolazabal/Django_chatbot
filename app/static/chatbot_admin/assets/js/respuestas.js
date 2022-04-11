@@ -448,7 +448,6 @@ function myFunction_save() {
                               arr.forEach(element => {
                                 template_sl += `<tr><td>${element}</td></tr>`;
                               });
-
       template_sl += `
                             </tbody>
                           </table>
@@ -701,7 +700,6 @@ function conversaciones_pyr() {
   let pregunta, cont = 0;
   pregunta = recuperarLS();
   pregunta.forEach(prg => {
-
     var tp = JSON.parse(atob(prg[0]['respuesta_new']))
     console.log('tp :', tp)
     cont++
@@ -729,11 +727,11 @@ function conversaciones_pyr() {
                                     <th>Pregunta</th>
                                   </tr>
                                 </thead>
-                                <tbody class="simplebar-content-wrapper;">`;
-    for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
-      template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
-    }
-    template += `             </tbody>
+                                  <tbody class="simplebar-content-wrapper;">`;
+                      for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
+                        template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
+                      }
+                  template += ` </tbody>
                               </table>
                             </div>
                           </div>
@@ -763,38 +761,29 @@ function conversaciones_pyr() {
                                 </thead>
                                 <tbody>
                                   <tr style="text-align: justify;">`
-    if (tp[0]['tipo'] == 'slider') {
-      template += `
-                                    <td>
+                    if (tp[0]['tipo'] == 'slider') {
+                      template += `<td>
                                       <section id="container-slider" class='slider_all' style='margin-top: 0px !important;'>
                                         <a href="javascript: void(0);" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
                                         <a href="javascript: void(0);" onclick="fntExecuteSlide('next',this);" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
                                         <ul id="slider"> `
-      template += `                                    
-                                          <li style="background-image: url('https://192.168.18.23:8000/media/slider/atencion.png'); z-index:0; opacity: 1;">
+                              template += `<li style="background-image: url('https://192.168.18.23:8000/media/slider/atencion.png'); z-index:0; opacity: 1;">
                                             <div class="content_slider" >
                                               <div>
                                                 <h5>titulo_imagen</h5>
                                                 <p>descripcion</p>`;
-
-
-      template += `
-                                                  <div class='btnAccion'><a href="#" class="btnSlider">ver</a></div>`
-      template += `       
-                                              </div>
+                                      template += `<div class='btnAccion'><a href="#" class="btnSlider">ver</a></div>`
+                                  template += `</div>
                                             </div>
                                           </li>
                                         </ul>
                                       </section>
                                     </td>`
-    }
-    if (tp[0]['tipo'] == 'texto') {
-      template += `
-                                                  <td><i class="mdi mdi-format-quote-open font-20"></i> <b> ${tp[0]['rpta']} </b> <i class="mdi mdi-format-quote-close font-20"></i></td>`
-
-    }
-    template += ` 
-                                  </tr>
+                    }
+                    if (tp[0]['tipo'] == 'texto') {
+                      template += `<td><i class="mdi mdi-format-quote-open font-20"></i> <b> ${tp[0]['rpta']} </b> <i class="mdi mdi-format-quote-close font-20"></i></td>`
+                    }
+                    template += ` </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -848,7 +837,6 @@ function rpt_aut_save() {
     })
   }
 }
-
 
 //-------------------------------- SLIDER HOME --------------------------------
 function fntExecuteSlide(side, objeto) {

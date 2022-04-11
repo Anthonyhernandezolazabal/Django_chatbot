@@ -388,14 +388,22 @@ span.messages__dot {
 }
 
 /******************* SLIDER *********************/
-
-
+.img_new{
+  width: 100%;
+}
 #container-slider {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 83px;
-  margin-bottom: 30px;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  /* height: 238px; */
+  height: 290px;
+  background-color: #f1f3fa;
+
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+  border-radius: 20px;
 }
 
 .cl_div{
@@ -403,7 +411,7 @@ span.messages__dot {
 }
 
 #slider {
-  position: relative;
+  /* position: relative; */
   display: block;
   width: 100%;
   /* height: 100vh; */
@@ -434,13 +442,14 @@ span.messages__dot {
 
 #container-slider .arrowPrev,
 #container-slider .arrowNext {
-  font-size: 30pt;
+  font-size: 20pt;
   color: rgba(204, 204, 204, 0.65);
   cursor: pointer;
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 10px;
   z-index: 2;
+  background-color: transparent;
 }
 
 #container-slider .arrowNext {
@@ -449,11 +458,18 @@ span.messages__dot {
 }
 
 .content_slider {
-  padding: 15px 30px;
+  /* padding: 15px 30px; */
+  padding: 15px 15px;
   color: #FFF;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   text-align: left;
+
+
+
+  
+  position: relative;
+  top: -38px;
 }
 
 .content_slider h5 {
@@ -461,23 +477,25 @@ span.messages__dot {
   font-size: 15pt;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 115px;
+  margin-top: 0px;
   margin-bottom: 5px;
-  color: #FFF;
+  color: #050505;
   font-weight: bold;
   text-align: left;
   
 }
 
 .content_slider p {
-  font-size: 13pt;
+  font-size: 10.5pt;
   font-family: 'arial';
-  color: #FFF;
+  color: rgb(0, 0, 0);
   margin-bottom: 1px;
+  text-shadow: 2px 2px 2px #80808069;
+  /* text-align: justify; */
 }
 
 #slider li .content_slider{
-  background: rgba(0, 0, 0, 0.4);
+  /* background: rgba(0, 0, 0, 0.4); */
   /* padding: 10px 125px; */
 }
 
@@ -504,9 +522,15 @@ span.messages__dot {
 }
 
 .btnAccion:hover{
-  background: rgb(223,4,11);
+  /* background: rgb(223,4,11);
   border: 1px solid #FF8000;
+  background: #FF8000 !important; */
+
+  
+  background: #FF8000 !important;
 }
+
+
 .listslider {
   position: absolute;
   display: -webkit-flex;
@@ -551,11 +575,11 @@ span.messages__dot {
 
   #container-slider .arrowPrev,
   #container-slider .arrowNext {
-    font-size: 20pt;
+    font-size: 20pt !important;
   }
 
   #container-slider .arrowPrev {
-    left: 15px;
+    left: 15px !important;
   }
 
   #container-slider .arrowNext {
@@ -563,33 +587,32 @@ span.messages__dot {
   }
 
   #slider {
-    height: 400px;
-    min-height: 400px;
+    height: 400px !important;
+    min-height: 400px !important;
   }
 
   #slider li .content_slider {
-    padding: 10px 35px;
+    padding: 10px 35px !important;
   }
 
   .btnSlider {
-    padding: 10px 30px;
-    font-size: 10pt;
+    padding: 10px 30px !important;
+    font-size: 10pt !important;
   }
 }
 
-
 .terminos_condiciones{
-  border: 2px solid red;
-  border-radius: 5px;
-  cursor: pointer;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  color: black;
-  font-weight: bold;
+  background: rgb(44,59,94) !important;
+  border: none !important;
+  color: white !important;
+  padding: 5px 20px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+  border-radius: 5px !important;
 }
 .terminos_condiciones:hover{
-  background: rgb(223,4,11);
-  border: 1px solid #FF8000;
-  color: #ffffff
-
+  background: rgb(63, 82, 124) !important;
 }

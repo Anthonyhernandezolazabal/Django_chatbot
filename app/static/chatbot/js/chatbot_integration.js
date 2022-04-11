@@ -26,14 +26,12 @@ var htmlbot = `
               
               <div class="chat-bubble you">Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
 
-              <div class='row t_y_c' style='text-align: center;'>
+              <center class='t_y_c'>
 
-                <div class='col-md-2'></div>
-                <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-                <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-                <div class='col-md-2'></div>
+                <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones'>Aceptar</button>
+                <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones'>Rechazar</button>
               
-              </div>
+              </center>
 
             </div>
             <div class="chatbox__messages" style='display: none' id='carga_new'>
@@ -48,6 +46,9 @@ var htmlbot = `
                 <input id="textInput" onkeypress='return escribir(event)' class="input-box" type="text" name="msg" placeholder="Escribe algo...">
                 <input type='hidden' id='key_alias'>
                 <input type='hidden' id='nombre_chat'>
+
+                
+                <input type='hidden' id='texto_bienve'>
                 <p></p>
               </div>
               <div>
@@ -62,6 +63,10 @@ var htmlbot = `
 div_chatbot.innerHTML = htmlbot
 div_chatbot.setAttribute('id', 'chatboot_anthony_2020')
 boddy.append(div_chatbot);
+
+
+
+
 /*=============================================
 LOCALSTORAGE PARA ALIAS SESION
 =============================================*/
@@ -100,7 +105,7 @@ function comenzar_chat() {
     camp_obli.style.display = "none";
     element.style.display = "none";
     element2.style.display = "block";
-    div_chatbot.querySelector('#nomb_chat').innerText = nombre_usuario.toUpperCase()
+
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
     fetch('https://' + url_servidor + '/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
@@ -116,14 +121,12 @@ function comenzar_chat() {
 =============================================*/
 function btn_terminos_condiciones(action, ac) {
   var tmp = ''
-
   if (action == 'Aceptar') {
-
+    var  nombre_usuario = div_chatbot.querySelector('#txtusuario').value
     estado_terminos_condiciones = true
-
     document.getElementById('carga_new').style.display = "block";
     tmp += `
-      <div class="chat-bubble you" style="margin-top: 12px;"><i>Hola <strong id='nomb_chat'>{Nombre} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
+      <div class="chat-bubble you" style="margin-top: 12px;"><i>Hola <strong id='nomb_chat'>${nombre_usuario.toUpperCase()} </strong>, </i> <i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
     `
     setTimeout(() => {
       document.getElementById('carga_new').style.display = "none";
@@ -136,8 +139,6 @@ function btn_terminos_condiciones(action, ac) {
       document.getElementById('textInput').value = 'Menú principal'
       getBotResponse();
       document.getElementById('textInput').value = ''
-
-
 
     }, 1600);
     ac.closest('.t_y_c').style.display = 'none'
@@ -187,6 +188,7 @@ function getBotResponse() {
   var key_alias = div_chatbot.querySelector('#key_alias').value
   var nombre_chat = div_chatbot.querySelector('#nombre_chat').value
   var rawText = document.getElementById('textInput').value
+  console.log('rawText L',rawText)
   if (rawText != '') {
     var userHtml = '<div class="chat-bubble me"> ' + rawText + ' </div>';
     var div_p = document.querySelector("#chat2");
@@ -202,9 +204,7 @@ function getBotResponse() {
       let decodedStr = atob(response);
       console.log('response desde js :', decodedStr)
       const rpta_rpta = JSON.parse(decodedStr)
-      console.log('decodedStr :', rpta_rpta)
-
-
+      // console.log('decodedStr :', rpta_rpta)
       if (rpta_rpta[0]['tipo'] == 'texto') {
         document.getElementById('carga_new').style.display = "block";
         html_all += '<div class="chat-bubble you">' + rpta_rpta[0]['rpta'] + "</div>";
@@ -217,66 +217,45 @@ function getBotResponse() {
           div_r.scrollTop = div_r.scrollHeight;
         }, 1600)
       }
-
       if (rpta_rpta[0]['tipo'] == 'slider') {
-
         document.getElementById('carga_new').style.display = "block";
         html_all += `
             <section id="container-slider" class='slider_all'>
-                <a href="#" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
-                <a href="#" onclick="fntExecuteSlide('next',this);" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
+                <a href="#" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i style='color: #808080a3;' class="fas fa-chevron-circle-left"></i></a>
+                <a href="#" onclick="fntExecuteSlide('next',this);" class="arrowNext"><i style='color: #808080a3;' class="fas fa-chevron-circle-right"></i></a>
             
-                <ul id="slider">`;
-
+                <ul id="slider">
+                `;
         rpta_rpta.forEach(elent_rpta => {
           var acciones_rpta = elent_rpta['acciones'];
-          console.log(acciones_rpta)
-          console.log('elent_rpta img', elent_rpta['img'])
-
+          // console.log(acciones_rpta)
+          // console.log('elent_rpta img', elent_rpta['img'])
           if (elent_rpta['img'] != ' ') {
-
-            html_all += `
-                    <li style="background-image: url('https://192.168.18.23:8000/media/${elent_rpta['img']}'); z-index:0; opacity: 1;">`
-
+            html_all += `<li style="z-index:0; opacity: 1;"><img class='img_new' src="https://192.168.18.23:8000/media/${elent_rpta['img']}"></img>`
           } else {
-
-            html_all += `
-                    <li style="background-image: url('https://192.168.18.23:8000/media/slider/slider_default.png'); z-index:0; opacity: 1;">`
-
+            html_all += `<li style="z-index:0; opacity: 1;"><img class='img_new' src="https://192.168.18.23:8000/media/slider/ahorros.png"></img>`
           }
-
           html_all += `
                     <div class="content_slider" >
                       <div>
                         <h5>${elent_rpta['titulo_imagen']}</h5>
                         <p>${elent_rpta['descripcion']}</p>`;
-
           //console.log('descripcion :',elent_rpta['descripcion'])
           //console.log('img :',elent_rpta['img'])
           //console.log('titulo_imagen :',elent_rpta['titulo_imagen'])
           acciones_rpta.forEach(act => {
             //console.log('actt :',act)
             //console.log('acciones_rpta.length :',acciones_rpta.length)
-
             if (acciones_rpta.length == 1) {
-
-              html_all += `
-                          <div class='btnAccion' onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" ><a href="#" class="btnSlider">${act}</a></div>`
+              html_all += `<div class='btnAccion' onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" ><a href="#" class="btnSlider">${act}</a></div>`
             } else {
-
-              html_all += `
-                          <div class='btnAccion' onclick="accion_rpta('${act}')" ><a href="#" class="btnSlider">${act}</a></div>`
-
+              html_all += `<div class='btnAccion' onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" ><a href="#" class="btnSlider">${act}</a></div>`
             }
           });
-
-
           html_all += `
-                        
                       </div>
                     </div>
                   </li>`
-
         });
         html_all += `
                 </ul>
@@ -304,11 +283,7 @@ function fntExecuteSlide(side, objeto) {
   let slider = objeto.closest('#container-slider').querySelector('#slider');
   let elements = slider.getElementsByTagName('li');
   let curElement, nextElement;
-
-
-
   for (var i = 0; i < elements.length; i++) {
-
     if (elements[i].style.opacity == 1) {
       curElement = i;
       break;
@@ -345,12 +320,14 @@ function escribir(e) {
       document.getElementById('carga_new').style.display = "block";
       var tmp = `
       <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-      <div class='row t_y_c' style='text-align: center;'>
-        <div class='col-md-2'></div>
-        <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-        <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-        <div class='col-md-2'></div>
-      </div>`
+
+      <center class='t_y_c'>
+
+        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones'>Aceptar</button>
+        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones'>Rechazar</button>
+    
+      </center>
+      `
       setTimeout(() => {
         document.getElementById('carga_new').style.display = "none";
         var div_r = document.querySelector("#chat2");
@@ -366,21 +343,19 @@ function escribir(e) {
 function enviar_texto(e) {
 
   if (estado_terminos_condiciones == true) {
-
+    estado_terminos_condiciones = true
     getBotResponse();
     document.getElementById('textInput').value = ''
-
   } else {
     estado_terminos_condiciones = false
     document.getElementById('carga_new').style.display = "block";
     var tmp = `
     <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-    <div class='row t_y_c' style='text-align: center;'>
-      <div class='col-md-2'></div>
-      <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-      <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-      <div class='col-md-2'></div>
-    </div>`
+    <center class='t_y_c'>
+      <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones'>Aceptar</button>
+      <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones'>Rechazar</button>
+    </center>
+    `
     setTimeout(() => {
       document.getElementById('carga_new').style.display = "none";
       var div_r = document.querySelector("#chat2");
@@ -405,12 +380,15 @@ function accion_rpta(e) {
     document.getElementById('carga_new').style.display = "block";
     var tmp = `
     <div class="chat-bubble you" style='margin-top: 10px;'>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></div>
-    <div class='row t_y_c' style='text-align: center;'>
-      <div class='col-md-2'></div>
-      <div onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='col-md-4 terminos_condiciones' style='margin-right: 2.5px;'>Aceptar</div>
-      <div onclick='btn_terminos_condiciones("Rechazar",this);' class='col-md-4 terminos_condiciones' style='margin-left: 2.5px'>Rechazar</div>
-      <div class='col-md-2'></div>
-    </div>`
+    
+    <center class='t_y_c'>
+
+      <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones'>Aceptar</button>
+      <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones'>Rechazar</button>
+    
+    </center>
+    
+    `
     setTimeout(() => {
       document.getElementById('carga_new').style.display = "none";
       var div_r = document.querySelector("#chat2");
@@ -448,7 +426,6 @@ function formatAMPM() {
   let dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
   let date = new Date();
   var day = dias[date.getDay() - 1]
-  date = new Date;
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -462,15 +439,18 @@ function formatAMPM() {
 CHATBOT PERSONALIZADO
 =============================================*/
 function chatbot_personalizado() {
-  var ls = localStorage.getItem('datos')
-  var empresa_id = JSON.parse(ls).id_empresa;
-
+  var empresa_id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
   fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
+    // console.log('responseresponse :',response)
+    // console.log('responseresponse :',response[0]['text_bienvenida'])
+
     document.querySelector('#cb_tl').innerText = response[0]['titulo_header']
     document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
-    document.querySelector('#cb_bienv').innerText = response[0]['text_bienvenida']
+    
+
+    div_chatbot.querySelector('#texto_bienve').value = response[0]['text_bienvenida']
     document.querySelector('#cb_btn').innerText = response[0]['botones']
   })
 }

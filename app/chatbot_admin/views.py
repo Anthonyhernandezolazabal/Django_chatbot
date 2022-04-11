@@ -64,7 +64,19 @@ class LoginFormViews(LoginView):
 MODULO PRUEBAR CHATBOT
 ============================================="""
 def test_chatbot(request):
-  return render(request, 'chatbot_admin/layouts/test_chatbot.html')
+    if request.GET['emp']:
+      empre_id=request.GET.get('emp')
+      us_id=request.GET.get('us')
+
+      print('empre_idempre_id :',empre_id)
+      print('us_idus_idus_id :',us_id)
+
+      params= { 
+              'id_empresa_py':empre_id,
+              'id_usuario_py':us_id
+              }
+
+      return render(request, 'chatbot_admin/layouts/test_chatbot.html',params)
 
 """=============================================
 REGISTRAR NUEVO USUARIO

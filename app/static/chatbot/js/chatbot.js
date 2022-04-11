@@ -24,8 +24,9 @@ if (guardado == '') {
   
   // document.getElementById('id_nombreBD').value = nombrebd + '.sqlite3'
   document.getElementById('nombrebd_logueado').value = nombrebd + '.sqlite3'
-  document.querySelector('#libreria_chatbot').setAttribute('user', id_cliente)
-  document.querySelector('#libreria_chatbot').setAttribute('empresa', id_empresa)
+  // console.log(document.querySelector('#libreria_chatbot').setAttribute('user', id_cliente))
+  // console.log(document.querySelector('#libreria_chatbot').setAttribute('empresa', id_empresa))
+  
   if (tipo_usu == 'True') {
     document.getElementById('li_Clientes').style.display = "block";
     document.getElementById('li_Usuarios').style.display = "block";
