@@ -98,17 +98,40 @@ let check_inpt3 = document.querySelector("#customRadio3");
 check_inpt3.addEventListener("click", () => {
   contsl = 1;
   var textarearpta = `
-                    <textarea class="form-control animate__animated animate__tada" placeholder="Ingresa aquí la autorespuesta" id="txt_autorpta"  name="txt_autorpta" style="height: 100px"></textarea>
+                    <textarea class="form-control animate__animated animate__tada texto_autorpta" placeholder="Ingresa aquí la autorespuesta" id="txt_autorpta"  name="txt_autorpta" style="height: 100px"></textarea>
                     <label id='rmlbl01' for="txt_autorpta">Autorespuesta</label>`;
   document.querySelector('#add_chek_txt').innerHTML = textarearpta;
   document.getElementById('rptatit').style.display = "block";
   document.getElementById('add_slider').style.display = "none";
+  document.getElementById('cls_rpta_add').style.display = "block";
+
+
+
 
   document.querySelector('.cls_modal').classList.remove("modal-full-width")
   // document.getElementById("divSlider").removeChild(document.getElementById("accordionExample"));
   document.getElementById("divSlider").removeChild(document.getElementById("accordionExample"))
   document.querySelector('#cls_col').className = 'col-lg-10';
+
 })
+
+/*=============================================
+  AGREGAR MAS RESPUESTAS
+=============================================*/
+var cont_rpta = 0
+var micont_rpta = 0
+var contsl_rpta = 1;
+
+function add_rpta(e) {
+  let contenedor = document.querySelector('#add_chek_txt')
+  let p = document.createElement('div')
+  p.className = "form-floating mt-1 mb-1 animate__animated animate__bounce";
+  p.innerHTML = `
+                <textarea class="form-control texto_autorpta" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px"></textarea>
+                <label for="floatingTextarea">Autorrespuesta</label>
+                 `
+  contenedor.append(p);
+}
 
 /*===========================
   SLIDER
@@ -343,13 +366,31 @@ function myFunction_save() {
   var seltexto = document.getElementById("customRadio3");
   var selslider = document.getElementById("customRadio4");
   var rptaFinal_texto = []
+
+  var respuesta_slider_texto = []
   // SI EL TIPO DE RESPUESTA ES TEXTO
   if (seltexto.checked == true) {
-    let rpta_i = document.getElementById('txt_autorpta').value
+
+    // Obtener texto ingresado en los input de respuesta
+    document.querySelectorAll('.texto_autorpta').forEach(rpta_all_all => {
+
+      var respuestas_all = rpta_all_all.value
+
+      rpta_json = {
+        'respueta_sl_texto':respuestas_all
+      }
+      respuesta_slider_texto.push(rpta_json)
+
+    });
+
+    var rpta_i = document.querySelectorAll('.texto_autorpta');
+    console.log(rpta_i)
+
     let rpta_all = {
       'tipo': "texto",
-      'rpta': rpta_i,
+      'rpta': respuesta_slider_texto,
     }
+    
     rptaFinal_texto.push(rpta_all)
     preguntas.push({
       'preguntas_new': old_ques,
@@ -358,7 +399,6 @@ function myFunction_save() {
       'id': id,
     })
     let id_tmp = preguntas[0].id
-    console.log('id_tmp', id_tmp)
     if (est_campos == false) {
 
       const Toast = Swal.mixin({
@@ -377,25 +417,34 @@ function myFunction_save() {
         title: 'Es necesario registrar preguntas'
       })
 
-    } else if (rpta_i == '') {
+    } 
 
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      Toast.fire({
-        icon: 'error',
-        title: 'Es necesario registrar una respuesta'
-      })
 
-    } else {
+    // FALTA VALIDAR QUE LAS RESPUESTAS NO ESTEN VACIAS
+    
+    // else if (rpta_i == '') {
+
+    //   const Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 3000,
+    //     timerProgressBar: true,
+    //     didOpen: (toast) => {
+    //       toast.addEventListener('mouseenter', Swal.stopTimer)
+    //       toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //     }
+    //   })
+    //   Toast.fire({
+    //     icon: 'error',
+    //     title: 'Es necesario registrar una respuesta'
+    //   })
+
+    // } 
+    
+    
+    
+    else {
 
       agregarLS(preguntas)
 
@@ -443,11 +492,11 @@ function myFunction_save() {
                               </tr>
                             </thead>
                             <tbody class="simplebar-content-wrapper;">`;
-                              var arr = preguntas[0].preguntas_new
-                              console.log('arr :',arr)
-                              arr.forEach(element => {
-                                template_sl += `<tr><td>${element}</td></tr>`;
-                              });
+      var arr = preguntas[0].preguntas_new
+      console.log('arr :', arr)
+      arr.forEach(element => {
+        template_sl += `<tr><td>${element}</td></tr>`;
+      });
       template_sl += `
                             </tbody>
                           </table>
@@ -481,7 +530,7 @@ function myFunction_save() {
                               <tr style="text-align: justify;">
                                 <td><i class="mdi mdi-format-quote-open font-20"></i> 
                                   <b>
-                                    ${rpta_i}
+                                   RPTA
                                   </b> 
                                   <i class="mdi mdi-format-quote-close font-20"></i></td>
                               </tr>
@@ -728,10 +777,10 @@ function conversaciones_pyr() {
                                   </tr>
                                 </thead>
                                   <tbody class="simplebar-content-wrapper;">`;
-                      for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
-                        template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
-                      }
-                  template += ` </tbody>
+    for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
+      template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
+    }
+    template += ` </tbody>
                               </table>
                             </div>
                           </div>
@@ -761,29 +810,29 @@ function conversaciones_pyr() {
                                 </thead>
                                 <tbody>
                                   <tr style="text-align: justify;">`
-                    if (tp[0]['tipo'] == 'slider') {
-                      template += `<td>
+    if (tp[0]['tipo'] == 'slider') {
+      template += `<td>
                                       <section id="container-slider" class='slider_all' style='margin-top: 0px !important;'>
                                         <a href="javascript: void(0);" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
                                         <a href="javascript: void(0);" onclick="fntExecuteSlide('next',this);" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
                                         <ul id="slider"> `
-                              template += `<li style="background-image: url('https://192.168.18.23:8000/media/slider/atencion.png'); z-index:0; opacity: 1;">
+      template += `<li style="background-image: url('https://192.168.18.23:8000/media/slider/atencion.png'); z-index:0; opacity: 1;">
                                             <div class="content_slider" >
                                               <div>
                                                 <h5>titulo_imagen</h5>
                                                 <p>descripcion</p>`;
-                                      template += `<div class='btnAccion'><a href="#" class="btnSlider">ver</a></div>`
-                                  template += `</div>
+      template += `<div class='btnAccion'><a href="#" class="btnSlider">ver</a></div>`
+      template += `</div>
                                             </div>
                                           </li>
                                         </ul>
                                       </section>
                                     </td>`
-                    }
-                    if (tp[0]['tipo'] == 'texto') {
-                      template += `<td><i class="mdi mdi-format-quote-open font-20"></i> <b> ${tp[0]['rpta']} </b> <i class="mdi mdi-format-quote-close font-20"></i></td>`
-                    }
-                    template += ` </tr>
+    }
+    if (tp[0]['tipo'] == 'texto') {
+      template += `<td><i class="mdi mdi-format-quote-open font-20"></i> <b> ${tp[0]['rpta']} </b> <i class="mdi mdi-format-quote-close font-20"></i></td>`
+    }
+    template += ` </tr>
                                 </tbody>
                               </table>
                             </div>

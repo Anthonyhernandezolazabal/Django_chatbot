@@ -188,7 +188,6 @@ function getBotResponse() {
   var key_alias = div_chatbot.querySelector('#key_alias').value
   var nombre_chat = div_chatbot.querySelector('#nombre_chat').value
   var rawText = document.getElementById('textInput').value
-  console.log('rawText L',rawText)
   if (rawText != '') {
     var userHtml = '<div class="chat-bubble me"> ' + rawText + ' </div>';
     var div_p = document.querySelector("#chat2");
@@ -200,14 +199,15 @@ function getBotResponse() {
     fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
-      console.log('response desde pythooon :', response)
+      // console.log('response desde pythooon :', response)
       let decodedStr = atob(response);
-      console.log('response desde js :', decodedStr)
       const rpta_rpta = JSON.parse(decodedStr)
-      // console.log('decodedStr :', rpta_rpta)
+      console.log('decodedStr :', rpta_rpta)
       if (rpta_rpta[0]['tipo'] == 'texto') {
         document.getElementById('carga_new').style.display = "block";
-        html_all += '<div class="chat-bubble you">' + rpta_rpta[0]['rpta'] + "</div>";
+        rpta_rpta[0]['rpta'].forEach(rpta_one => {
+          html_all += '<div class="chat-bubble you">' + rpta_one['respueta_sl_texto'] + "</div>";
+        });
         setTimeout(function () {
           document.getElementById('carga_new').style.display = "none";
           var div_r = document.querySelector("#chat2");
