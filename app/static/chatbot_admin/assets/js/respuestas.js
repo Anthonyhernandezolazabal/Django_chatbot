@@ -1,7 +1,7 @@
 var url_servidor = '192.168.18.23:8000';
 var estado = false;
 let est_campos = false;
-conversaciones_pyr()
+// conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
 var id_cliente_id = JSON.parse(Ls_rpt).id_cliente;
 var id_empresa_id = JSON.parse(Ls_rpt).id_empresa;
@@ -125,7 +125,7 @@ var contsl_rpta = 1;
 function add_rpta(e) {
   let contenedor = document.querySelector('#add_chek_txt')
   let p = document.createElement('div')
-  p.className = "form-floating mt-1 mb-1 animate__animated animate__bounce";
+  p.className = "cls_add_rpta form-floating mt-1 mb-1 animate__animated animate__bounce";
   p.innerHTML = `
                 <textarea class="form-control texto_autorpta" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px"></textarea>
                 <label for="floatingTextarea">Autorrespuesta</label>
@@ -140,9 +140,33 @@ let check_inpt4 = document.querySelector("#customRadio4");
 check_inpt4.addEventListener("click", () => {
   if (estado == true) {
     document.getElementById('add_slider').style.display = "contents";
+    document.getElementById('cls_rpta_add').style.display = "block";
   } else {
-    document.getElementById('add_slider').style.display = "none";
+    document.getElementById('add_slider').style.display = "none"; 
+    document.getElementById('cls_rpta_add').style.display = "none";
   }
+
+  // console.log(document.querySelectorAll('.cls_add_rpta'))
+
+  document.querySelectorAll('.cls_add_rpta').forEach(div => {
+    div.remove() // Si han agregado mas respuestas en slider TEXTO, se eliminarán
+    console.log()
+    
+  });
+
+  document.querySelector('#div_pre_rpta').innerHTML = `
+                  <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+                    <h6 class="font-15 mt-4 mb-1 animate__animated animate__backInRight">Pre Respuesta</h6>
+                    <div class="form-floating mb-2 mt-1 animate__animated animate__backInRight">
+                        <input type="text" class="form-control pre_respuestatxt_add" id="pre_respuestatxt" placeholder="Pre respuesta">
+                        <label for="pre_respuestatxt">Pre respuesta</label>
+                    </div>
+                  </div>`;
+
+
+
+
+
   var sliderHTML = `<div class="accordion animate__animated animate__backInLeft" id="accordionExample">
                       <div id='sld01'>
                         <div class="card mb-0 clsSlider">
@@ -173,13 +197,16 @@ check_inpt4.addEventListener("click", () => {
                                     <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-12"></div>
                                     <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10 col-sm-12">
                                       <label for="example-fileinput" class="form-label">Descripción:</label>
-                                      <input type="text" class="form-control mb-2 titulo" id="validationTitulo01" placeholder="Título"
-                                        required>
-                                      <input type="text" class="form-control descripcion" id="validationDescrip01" placeholder="Descripción"
-                                        required>
-                                      <br>
+                                      <div class='row'>
+                                        <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
+                                          <input type="text" class="form-control mb-2 titulo" id="validationTitulo01" placeholder="Título" required>
+                                        </div>
+                                        <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
+                                          <input type="text" class="form-control descripcion" id="validationDescrip01" placeholder="Descripción" required>
+                                        </div>
+                                      </div>
                                       <label for="example-fileinput" class="form-label">Accion:</label>
-                                      <div class="mb-2 mt-2" id='add_input_new_action1'>
+                                      <div class="mb-2" id='add_input_new_action1'>
                                           <input class="form-control accioninicial" type="text" placeholder="Formular pregunta" id="textaction01" name="textaction01" style='margin-bottom: 15px;'>
                                       </div>
                                       <a style="cursor: pointer" onclick='add_new_accion(this)' attr_cont_total='1' class="text-primary btn_save_action"><i class="mdi mdi-plus-circle me-1"></i>Agregar otra acción</a>
@@ -245,11 +272,14 @@ document.querySelector('#add_slider').addEventListener('click', function () {
                           <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-12"></div>
                           <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10 col-sm-12">
                             <label for="example-fileinput" class="form-label">Descripción:</label>
-                            <input type="text" class="form-control mb-2 titulo" id="validationTitulo0${contsl}" placeholder="Título"
-                              required>
-                            <input type="text" class="form-control descripcion" id="validationDescrip0${contsl}" placeholder="Descripción"
-                              required>
-                              <br>
+                              <div class='row'>
+                                <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
+                                  <input type="text" class="form-control mb-2 titulo" id="validationTitulo0${contsl}" placeholder="Título" required>
+                                </div>
+                                <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
+                                  <input type="text" class="form-control descripcion" id="validationDescrip0${contsl}" placeholder="Descripción" required>
+                                </div>
+                              </div>
                               <label for="example-fileinput" class="form-label">Accion:</label>
                               <div class="mb-2" id='add_input_new_action${contsl}'>
                                 <input class="form-control accioninicial" type="text" placeholder="Formular pregunta" id="textaction0${contsl}" name="textaction0${contsl}" style='margin-bottom: 15px;'>
@@ -365,7 +395,7 @@ function myFunction_save() {
   }
   var seltexto = document.getElementById("customRadio3");
   var selslider = document.getElementById("customRadio4");
-  var rptaFinal_texto = []
+  var rptaFinal_texto
 
   var respuesta_slider_texto = []
   // SI EL TIPO DE RESPUESTA ES TEXTO
@@ -390,8 +420,13 @@ function myFunction_save() {
       'tipo': "texto",
       'rpta': respuesta_slider_texto,
     }
+
+    var rpta_ls_tipo = []
+    rpta_ls_tipo.push(rpta_all)
     
-    rptaFinal_texto.push(rpta_all)
+    rptaFinal_texto={
+      'respuesta_tipo':rpta_ls_tipo
+    }
     preguntas.push({
       'preguntas_new': old_ques,
       'respuesta_new': btoa(JSON.stringify(rptaFinal_texto)),
@@ -558,8 +593,11 @@ function myFunction_save() {
 
     let nslider = document.querySelectorAll('.clsSlider').length; //total de slider imagen
     let slidersall = document.querySelectorAll('.clsSlider') //trae toda las cabeceras
+    let pre_rpta_add = document.getElementById('pre_respuestatxt').value
+
     let respuestas = {};
-    let rptaFinal = [];
+    var rpta_slider_ls = []
+    var rptaFinal;
     let estado_aaa = false //Para validar que se han hecho registros en la respuesta slider | Es false cuando no tiene registros
 
     if (est_campos == false) { //No hay registro en PREGUNTAS
@@ -618,6 +656,7 @@ function myFunction_save() {
 
           estado_aaa = true
           let accioninicial = sl.querySelectorAll('.accioninicial')
+          
           respuestas = {
             'tipo': 'slider',
             'img': nombre_imgl,
@@ -625,18 +664,22 @@ function myFunction_save() {
             'descripcion': descripcionsl,
             'acciones': []
           }
-
-          rptaFinal.push(respuestas) //BASE 64
+          rpta_slider_ls.push(respuestas)
+          pre_respuesta = {
+            'pre_rpta':pre_rpta_add
+          }
+          rptaFinal = {
+            'respuesta_tipo':rpta_slider_ls,
+            'pre_respuesta':pre_respuesta,
+          } //BASE 64
           accioninicial.forEach(accion => {
             console.log('accioninicial :', accion.value)
             respuestas.acciones.push(accion.value);
           });
-
         }
       });
 
       if (estado_aaa == true) { // Si hay registros en las respuestas
-
         preguntas.push({
           'preguntas_new': old_ques,
           'respuesta_new': btoa(JSON.stringify(rptaFinal)),
@@ -749,8 +792,10 @@ function conversaciones_pyr() {
   let pregunta, cont = 0;
   pregunta = recuperarLS();
   pregunta.forEach(prg => {
+    
+    console.log(prg)
     var tp = JSON.parse(atob(prg[0]['respuesta_new']))
-    console.log('tp :', tp)
+
     cont++
     template = `
           <div class="card border-secondary border tmpl" id_prg='${prg[0].id}'>
@@ -777,6 +822,7 @@ function conversaciones_pyr() {
                                   </tr>
                                 </thead>
                                   <tbody class="simplebar-content-wrapper;">`;
+                                  
     for (let i = 0; i < (prg[0]['preguntas_new']).length; i++) {
       template += `<tr><td>${prg[0]['preguntas_new'][i]}</td></tr>`
     }
@@ -810,7 +856,8 @@ function conversaciones_pyr() {
                                 </thead>
                                 <tbody>
                                   <tr style="text-align: justify;">`
-    if (tp[0]['tipo'] == 'slider') {
+
+    if (tp['respuesta_slider'][0]['tipo'] == 'slider') {
       template += `<td>
                                       <section id="container-slider" class='slider_all' style='margin-top: 0px !important;'>
                                         <a href="javascript: void(0);" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
@@ -829,7 +876,8 @@ function conversaciones_pyr() {
                                       </section>
                                     </td>`
     }
-    if (tp[0]['tipo'] == 'texto') {
+    
+    if (tp['respuesta_slider'][0]['tipo'] == 'texto') {
       template += `<td><i class="mdi mdi-format-quote-open font-20"></i> <b> ${tp[0]['rpta']} </b> <i class="mdi mdi-format-quote-close font-20"></i></td>`
     }
     template += ` </tr>

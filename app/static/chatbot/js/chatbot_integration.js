@@ -179,7 +179,7 @@ function getBotResponse() {
   // var botHtml_texto;
   // var botHtml_slider;
   var html_all = '';
-
+  var html_all_pre_rpta = '';
   if (ls_LS == null) {
     user_autenticate = false
   } else {
@@ -202,10 +202,10 @@ function getBotResponse() {
       // console.log('response desde pythooon :', response)
       let decodedStr = atob(response);
       const rpta_rpta = JSON.parse(decodedStr)
-      console.log('decodedStr :', rpta_rpta)
-      if (rpta_rpta[0]['tipo'] == 'texto') {
+      console.log('decodedStr rptaa:', rpta_rpta)
+      if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'texto') {
         document.getElementById('carga_new').style.display = "block";
-        rpta_rpta[0]['rpta'].forEach(rpta_one => {
+        rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
           html_all += '<div class="chat-bubble you">' + rpta_one['respueta_sl_texto'] + "</div>";
         });
         setTimeout(function () {
@@ -217,8 +217,10 @@ function getBotResponse() {
           div_r.scrollTop = div_r.scrollHeight;
         }, 1600)
       }
-      if (rpta_rpta[0]['tipo'] == 'slider') {
+      if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'slider') {
         document.getElementById('carga_new').style.display = "block";
+
+        html_all_pre_rpta += '<div class="chat-bubble you">' + rpta_rpta['pre_respuesta']['pre_rpta'] + "</div>"
         html_all += `
             <section id="container-slider" class='slider_all'>
                 <a href="#" onclick="fntExecuteSlide('prev',this);" class="arrowPrev"><i style='color: #808080a3;' class="fas fa-chevron-circle-left"></i></a>
@@ -226,15 +228,18 @@ function getBotResponse() {
             
                 <ul id="slider">
                 `;
-        rpta_rpta.forEach(elent_rpta => {
+          
+        let opacity = false;
+        rpta_rpta['respuesta_tipo'].forEach(elent_rpta => {
           var acciones_rpta = elent_rpta['acciones'];
           // console.log(acciones_rpta)
           // console.log('elent_rpta img', elent_rpta['img'])
           if (elent_rpta['img'] != ' ') {
-            html_all += `<li style="z-index:0; opacity: 1;"><img class='img_new' src="https://192.168.18.23:8000/media/${elent_rpta['img']}"></img>`
+            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="https://192.168.18.23:8000/media/${elent_rpta['img']}"></img>`
           } else {
-            html_all += `<li style="z-index:0; opacity: 1;"><img class='img_new' src="https://192.168.18.23:8000/media/slider/ahorros.png"></img>`
+            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="https://192.168.18.23:8000/media/slider/ahorros.png"></img>`
           }
+          opacity = true;
           html_all += `
                     <div class="content_slider" >
                       <div>
@@ -260,13 +265,27 @@ function getBotResponse() {
         html_all += `
                 </ul>
             </section>`;
-        setTimeout(function () {
+        setTimeout(function () { 
+
+
+          
+          // pre respuesta
+          document.getElementById('carga_new').style.display = "none";
+          var div_r2 = document.querySelector("#chat2");
+          let r2 = document.createElement("div");
+          r2.innerHTML = html_all_pre_rpta
+          div_r2.append(r2)
+          div_r2.scrollTop = div_r2.scrollHeight;
+
+
+           // respuesta SLIDER
           document.getElementById('carga_new').style.display = "none";
           var div_r = document.querySelector("#chat2");
           let r = document.createElement("div");
           r.innerHTML = html_all
           div_r.append(r)
           div_r.scrollTop = div_r.scrollHeight;
+
         }, 1600)
       }
     }).catch(e => {
@@ -277,8 +296,6 @@ function getBotResponse() {
 }
 //-------------------------------- SLIDER HOME --------------------------------
 function fntExecuteSlide(side, objeto) {
-
-
   // let parentTarget = document.getElementById('slider');
   let slider = objeto.closest('#container-slider').querySelector('#slider');
   let elements = slider.getElementsByTagName('li');
