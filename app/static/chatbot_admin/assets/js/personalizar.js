@@ -31,9 +31,9 @@ document.querySelector('#frm_pdatos').addEventListener('click', function () {
 function myFunctionT() {
   var x = document.getElementById("frm_ptitulo").value;
   if (x != '') {
-    document.querySelector('#pr_tl2').innerText = x
+    document.querySelector('.pr_tl2').innerText = x
   } else {
-    document.querySelector('#pr_tl2').innerText = '¿Charlemos? - En línea'
+    document.querySelector('.pr_tl2').innerText = '¿Charlemos? - En línea'
   }
   document.querySelector('#xyz01').innerText = '';
 
@@ -86,8 +86,6 @@ function fn_edit_pr() {
   fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
-
-    console.log('response fn_edit_pr :', response)
 
     if (response.length > 0) {
 
@@ -201,9 +199,7 @@ function fn_guardar_pr() {
       document.querySelector('.btn_Habilitar_').style.display = 'block';
       document.querySelector("#btn_save_upadte").innerHTML = '';
 
-
     })
-
   }
 }
 /*=============================================
@@ -213,9 +209,14 @@ function chatbot_personalizado() {
   fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
-    document.querySelector('#pr_tl').innerHTML = response[0]['titulo_header'];
-    document.querySelector('#pr_tl2').innerHTML = response[0]['titulo_header'];
+
+    console.log(response[0]['titulo_cuerpo']);
+    console.log(response[0]['text_bienvenida']);
+    console.log(response[0]['botones']);
+    document.querySelector('.pr_tl').innerHTML = response[0]['titulo_header'];
+    document.querySelector('.pr_tl2').innerHTML = response[0]['titulo_header'];
     document.querySelector('#pr_frm').innerHTML = response[0]['titulo_cuerpo'];
+    return
     document.querySelector('#pr_bienv').innerHTML = response[0]['text_bienvenida'];
     document.querySelector('#pr_btn').innerHTML = response[0]['botones'];
   })

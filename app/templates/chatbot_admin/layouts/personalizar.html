@@ -7,7 +7,8 @@
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">CHATBOT</a></li>
+            <li class="breadcrumb-item animate__animated animate__bounce"><a href="javascript: void(0);">CHATBOT</a>
+            </li>
             <li class="breadcrumb-item animate__animated animate__bounce active">Personalizar</li>
           </ol>
         </div>
@@ -15,133 +16,298 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xl-4 col-lg-6">
-      <div class="card card-h-100">
-        <div class="card-body">
-          <ul class="nav nav-tabs mb-3">
-            <li class="nav-item">
-              <a href="#inici_chatbot" data-bs-toggle="tab" aria-expanded="false" id="li_cb" class="nav-link active">
-                <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                <span class="d-none d-md-block">Inicio del Chatbot</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#cuerpo_chatbot" data-bs-toggle="tab" aria-expanded="true" id="li_cb2" class="nav-link">
-                <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                <span class="d-none d-md-block">Chatear</span>
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane show active" id="inici_chatbot">
-              <div class="wrapper2_apa animate__animated animate__bounce"">
-                <div class="head-text" id='pr_tl2'>¿Charlemos? - En línea</div>
-                <!-- NOMBRE -->
-                <div class="chat-box">
-                  <div class="desc-text" id='pr_frm'>Complete el siguiente formulario para comenzar a chatear con el
-                    próximo agente
-                    disponible.
-                  </div>
-                  <div id="form_id">
-                    <div class="field">
-                      <input type="text" placeholder="Ingresa tu nombre" id="txtusuario" name="txtusuario">
-                    </div>
-                    <div class="field">
-                      <button type="button" onclick="comenzar_chat()" id='pr_btn'>Comenzar chat</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane animate__animated animate__bounce" id="cuerpo_chatbot">
-              <div class="wrapper2_apa">
-                <div class="head-text" id='pr_tl'>¿Charlemos? - En línea</div>
-                <!-- CHAT -->
-                <div class="chat-box">
-                  <div class="chat-body" style="overflow-y: auto !important;min-height: 300px !important;">
-                    <div>
-                      <div class="chat-start">Lunes, 1:27 PM</div>
-                      <div class="chat-bubble you"><i>Hola <strong>{Nombre}, </strong></i> <i id='pr_bienv'> bienvenido
-                          a nuestro sitio, si necesita ayuda,
-                          simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></div>
-                    </div>
-                  </div>
-                  <div class="chat-bar-input-block" style="float: inherit !important;">
-                    <input class="input-box" type="text" placeholder="Escribe aquí...">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <center>
+  <div class=" row">
+          <div class="col-xl-4 col-lg-6">
+            <div class="card card-h-100">
+              <div class="card-body">
+                <ul class="nav nav-tabs mb-3">
+                  <li class="nav-item">
+                    <a href="#inici_chatbot" data-bs-toggle="tab" aria-expanded="false" id="li_cb"
+                      class="nav-link active">
+                      <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Inicio del Chatbot</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#cuerpo_chatbot" data-bs-toggle="tab" aria-expanded="true" id="li_cb2" class="nav-link">
+                      <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Chatear</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane show active" id="inici_chatbot">
 
-            <button type="button" onclick="fn_edit_pr()" class="btn btn-warning mt-3 btn_Habilitar_"> <i
-                class="mdi mdi-truck-fast me-1"></i> Habilitar </button>
-          </center>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-8 col-lg-6">
-      <div class="card card-h-100">
-        <div class="card-body">
-          <ul class="nav nav-tabs mb-3">
-            <li class="nav-item">
-              <a href="#fuerahorario" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                <span class="d-none d-md-block">Personalizar</span>
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane show active" id="fuerahorario">
-              <div class="container row">
-                <div class="col-lg-12">
-                  <h4 class="mt-2 animate__animated animate__bounce">Personalizar el chatbot</h4>
-                  <p class="text-muted mb-4 animate__animated animate__swing">Rellene el siguiente formulario para personalizar su chatbot.</p>
-                  {% csrf_token %}
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label class="form-label animate__animated animate__bounce">Título de chatbot</label>
-                        <input type="text" class="form-control animate__animated animate__bounce" maxlength="25" data-toggle="maxlength" required onkeyup="myFunctionT()" placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
-                        <input type="hidden" id="id_pr_ct">
-                        <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
+
+
+
+                    <div class="chat is-visible">
+
+                      <div class="chat_header" style="display: block;">
+
+                        <div class="chat_option">
+
+                          <div class="header_img" style="margin-bottom: 8px;">
+
+                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}">
+
+                          </div>
+
+                          <span id="chat_head" style="font-weight: bold;" class="pr_tl2">Nombre Chatbot</span> <br> <span
+                            class="agent">.</span>
+                          <span class="online" style="font-weight: bold;">En Línea</span>
+                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: none;"><i
+                              class="fullscreen zmdi zmdi-window-maximize"></i></span>
+
+                        </div>
+
                       </div>
+
+                      <div class="chat_body chat_login">
+
+                        <a id="chat_third_screen" class="fab is-visible"><i class="uil-arrow-right"></i></a>
+                        <p id="pr_frm">Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.
+                        </p>
+                        <div id="form_id">
+                          <div class="field">
+                            <input type="text" placeholder="Ingresa tu nombre" id="txtusuario" name="txtusuario">
+                          </div>
+                          <p style="text-align: center;color: red;display: none" id="camp_obli">campo obli</p>
+                        </div>
+
+                      </div>
+
+
+
+
                     </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="frm_pboton" class="form-label animate__animated animate__bounce">Texto en el boton</label>
-                        <input class="form-control animate__animated animate__bounce" type="text" placeholder="Ingresa un texto al boton" id="frm_pboton" onkeyup="myFunctionBTN()" maxlength="20" data-toggle="maxlength" disabled="">
-                        <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                  <div class="tab-pane animate__animated animate__bounce" id="cuerpo_chatbot">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="chat is-visible">
+
+                      <div class="chat_header" style="display: block;">
+
+                        <div class="chat_option">
+
+                          <div class="header_img" style="margin-bottom: 8px;">
+
+                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}">
+
+                          </div>
+
+                          <span id="chat_head" style="font-weight: bold;" class="pr_tl">Nombre Chatbot</span> <br> <span
+                            class="agent">.</span>
+                          <span class="online" style="font-weight: bold;">En Línea</span>
+                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: block;"><i
+                              class="fullscreen zmdi zmdi-window-maximize"></i></span>
+
+                        </div>
+
+                      </div>
+
+                      <div id="chat_form" class="chat_converse chat_form" style="display: block;">
+
+                        <span class="chat_msg_item chat_msg_item_admin">Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href="https://bit.ly/3dbjnBg">https://bit.ly/3dbjnBg</a></span>
+
+                        <center>
+
+                          <button class="t_y_c">Aceptar</button>
+                          <button class="t_y_c">Rechazar</button>
+                        
+                        </center>
+
+
+                        <span class="chat_msg_item chat_msg_item_admin">Nos apena que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</span>
+                        <span class="chat_msg_item chat_msg_item_admin">Hola OLAZABAL , Gracias por aceptar nuestros T&C</span>
+                        <span class="chat_msg_item chat_msg_item_admin">bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</span>
+                      </div>
+
+                      <div class="fab_field">
+                        <a id="fab_camera" class="fab is-visible"><i class="mdi mdi-microphone"></i></a>
+                        <a id="fab_send" class="fab is-visible"><i class="mdi mdi-telegram"></i></a>
+                        <input type="text" id="chatSend" name="chat_message" placeholder="Escribe aquí..." class="chat_field chat_message"></div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <center>
+
+                  <button type="button" onclick="fn_edit_pr()" class="btn btn-warning mt-3 btn_Habilitar_"> <i
+                      class="mdi mdi-truck-fast me-1"></i> Habilitar </button>
+                </center>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8 col-lg-6">
+            <div class="card card-h-100">
+              <div class="card-body">
+                <ul class="nav nav-tabs mb-3">
+                  <li class="nav-item">
+                    <a href="#fuerahorario" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                      <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Personalizar</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane show active" id="fuerahorario">
+                    <div class="container row">
+                      <div class="col-lg-12">
+                        <h4 class="mt-2 animate__animated animate__bounce">Personalizar el chatbot</h4>
+                        <p class="text-muted mb-4 animate__animated animate__swing">Rellene el siguiente formulario para
+                          personalizar su chatbot.</p>
+                        {% csrf_token %}
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label animate__animated animate__bounce">Título de chatbot</label>
+                              <input type="text" class="form-control animate__animated animate__bounce" maxlength="25"
+                                data-toggle="maxlength" required onkeyup="myFunctionT()"
+                                placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+                              <input type="hidden" id="id_pr_ct">
+                              <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="frm_pboton" class="form-label animate__animated animate__bounce">Texto en el
+                                boton</label>
+                              <input class="form-control animate__animated animate__bounce" type="text"
+                                placeholder="Ingresa un texto al boton" id="frm_pboton" onkeyup="myFunctionBTN()"
+                                maxlength="20" data-toggle="maxlength" disabled="">
+                              <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-4">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Título de
+                                ingresa tus datos</label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="100" rows="3" onkeyup="myFunctionBTND()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos"
+                                disabled=""></textarea>
+                              <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="frm_pbienvenida" class="form-label animate__animated animate__bounce">Título
+                                de bienvenida<span class="text-danger">*</span></label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="225" rows="3" onkeyup="myFunctionBN()"
+                                placeholder="Ingresa un texto de bienvenida" id="frm_pbienvenida"
+                                disabled=""></textarea>
+                              <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+                          </div>
+                        </div>
+                        <center id="btn_save_upadte"></center>
                       </div>
                     </div>
                   </div>
-                  <div class="row mb-4">
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Título de ingresa tus datos</label>
-                        <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="100" rows="3" onkeyup="myFunctionBTND()" placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos" disabled=""></textarea>
-                        <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="frm_pbienvenida" class="form-label animate__animated animate__bounce">Título de bienvenida<span
-                            class="text-danger">*</span></label>
-                        <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="225" rows="3" onkeyup="myFunctionBN()" placeholder="Ingresa un texto de bienvenida" id="frm_pbienvenida" disabled=""></textarea>
-                        <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
-                      </div>
-                    </div>
-                  </div>
-                  <center id="btn_save_upadte"></center>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
-  </div>
-</div>
-{% endblock content %}
+    {% endblock content %}

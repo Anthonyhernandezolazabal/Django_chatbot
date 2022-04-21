@@ -156,7 +156,7 @@ def getchat(request):
         else:
           if user_autenticate == 'True':
             # rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
-            cda = '[{"tipo":"texto","rpta":"Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?"}]'
+            cda = '{"respuesta_tipo": [{"tipo": "texto","rpta": [{"respueta_sl_texto": "Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?"}]}]}'
             rpta1 = base64.b64encode(cda.encode('utf-8'))
             print('rptaaaaaaaaaaaaaaaaaaaa: ',rpta1)
             myuser['bol']=1
@@ -165,7 +165,7 @@ def getchat(request):
             session_cook = user
           else:
             # rpta1 = 'Disculpa no te entendí!'
-            cda = '[{"tipo":"texto","rpta":"Disculpa no te entendí!"}]'
+            cda = '{"respuesta_tipo": [{"tipo": "texto","rpta": [{"respueta_sl_texto": "Discula no entendí lo que quisiste decir"}]}]}'
             rpta1 = base64.b64encode(cda.encode('utf-8'))
           return HttpResponse(rpta1,'utf-8') 
       else:
