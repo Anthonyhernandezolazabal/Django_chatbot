@@ -389,6 +389,7 @@ a {
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+    text-align: justify;
     border-radius: 0 15px 15px 15px !important;
     /* margin-left: 60px; */
     margin-left: 20px;

@@ -15,10 +15,14 @@ class chat_user(models.Model):
     ordering = ['id'] #ordenar por ID
 
 class chatbot_style(models.Model):
-  titulo_header = models.CharField(max_length=100)
-  titulo_cuerpo = models.CharField(max_length=255)
-  botones = models.CharField(max_length=50)
-  text_bienvenida = models.CharField(max_length=120)
+  nombre_chatbot = models.CharField(max_length=100, null=True)
+  titulo_cuerpo = models.CharField(max_length=255, null=True)
+  terminos_y_condiciones = models.CharField(max_length=120, null=True)
+  terminos_y_condiciones_link = models.CharField(max_length=120, null=True)
+  terminos_y_condiciones_aceptar = models.CharField(max_length=120, null=True)
+  terminos_y_condiciones_rechazar = models.CharField(max_length=120, null=True)
+  color_header = models.CharField(max_length=120, null=True)
+  color_botones = models.CharField(max_length=120, null=True)
   id_empresa_cliente = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
   
   class Meta:

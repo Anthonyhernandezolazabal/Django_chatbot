@@ -3,50 +3,62 @@ var ls = localStorage.getItem('datos')
 var empresa_id = JSON.parse(ls).id_empresa;
 chatbot_personalizado();
 
+// inicio
 function lblbl() {
   document.querySelector('#li_cb2').classList.remove("active");
   document.querySelector('#cuerpo_chatbot').classList.remove("active");
   document.querySelector('#li_cb').classList.add("active");
   document.querySelector('#inici_chatbot').classList.add("active");
-
 }
 
-document.querySelector('#frm_pbienvenida').addEventListener('click', function () {
-  document.querySelector('#li_cb').classList.remove("active");
-  document.querySelector('#inici_chatbot').classList.remove("active");
-  document.querySelector('#li_cb2').classList.add("active");
-  document.querySelector('#cuerpo_chatbot').classList.add("active");
-})
 
 document.querySelector('#frm_ptitulo').addEventListener('click', function () {
-  lblbl();
-})
-document.querySelector('#frm_pboton').addEventListener('click', function () {
   lblbl();
 })
 document.querySelector('#frm_pdatos').addEventListener('click', function () {
   lblbl();
 })
 
+// conversacion
+function lblblconversacion(){
+  document.querySelector('#li_cb').classList.remove("active");
+  document.querySelector('#inici_chatbot').classList.remove("active");
+  document.querySelector('#li_cb2').classList.add("active");
+  document.querySelector('#cuerpo_chatbot').classList.add("active");
+}
+
+
+document.querySelector('#frm_pboton').addEventListener('click', function () {
+  lblblconversacion();
+})
+
+document.querySelector('#frm_link').addEventListener('click', function () {
+  lblblconversacion();
+})
+
+document.querySelector('#frm_t_y_c_aceptar').addEventListener('click', function () {
+  lblblconversacion();
+})
+
+document.querySelector('#frm_t_y_c_rechazar').addEventListener('click', function () {
+  lblblconversacion();
+})
+
+
+
+document.querySelector('#frm_pbienvenida').addEventListener('click', function () {
+})
+
+
+
 function myFunctionT() {
   var x = document.getElementById("frm_ptitulo").value;
   if (x != '') {
     document.querySelector('.pr_tl2').innerText = x
   } else {
-    document.querySelector('.pr_tl2').innerText = '¿Charlemos? - En línea'
+    document.querySelector('.pr_tl2').innerText = 'CHATBOT'
   }
   document.querySelector('#xyz01').innerText = '';
-
-}
-
-function myFunctionBTN() {
-  var x = document.getElementById("frm_pboton").value;
-  if (x != '') {
-    document.querySelector('#pr_btn').innerText = x
-  } else {
-    document.querySelector('#pr_btn').innerText = 'Comenzar chat'
-  }
-  document.querySelector('#xyz02').innerText = '';
 }
 
 function myFunctionBTND() {
@@ -59,15 +71,56 @@ function myFunctionBTND() {
   document.querySelector('#xyz03').innerText = '';
 }
 
-function myFunctionBN() {
-  var x = document.getElementById("frm_pbienvenida").value;
+function myFunctionBTN() {
+  var x = document.getElementById("frm_pboton").value;
+  console.log(x)
+
   if (x != '') {
-    document.querySelector('#pr_bienv').innerText = x
+    document.querySelector('.pr_terminos_condiciones').innerText = x
   } else {
-    document.querySelector('#pr_bienv').innerText = 'bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este mensaje, estamos en línea y listos para ayudar.'
+    document.querySelector('.pr_terminos_condiciones').innerText = 'Terminos y condiciones'
+  }
+  document.querySelector('#xyz02').innerText = '';
+}
+
+
+function myFunctionLink() {
+  var x = document.getElementById("frm_link").value;
+
+  if (x != '') {
+    document.querySelector('.pr_terminos_condiciones_link').innerText = x
+  } else {
+    document.querySelector('.pr_terminos_condiciones_link').innerText = 'www.url.com'
   }
   document.querySelector('#xyz04').innerText = '';
 }
+
+
+function myFunction_t_y_c_aceptar() {
+  var x = document.getElementById("frm_t_y_c_aceptar").value;
+
+  if (x != '') {
+    document.querySelector('.pr_terminos_condiciones_link_aceptar').innerText = x
+  } else {
+    document.querySelector('.pr_terminos_condiciones_link_aceptar').innerText = 'Bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.'
+  }
+  document.querySelector('#xyz05').innerText = '';
+}
+
+function myFunction_t_y_c_rechazar() {
+  var x = document.getElementById("frm_t_y_c_rechazar").value;
+
+  if (x != '') {
+    document.querySelector('.pr_terminos_condiciones_link_rechazar').innerText = x
+  } else {
+    document.querySelector('.pr_terminos_condiciones_link_rechazar').innerText = 'Nos apena que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.'
+  }
+  document.querySelector('#xyz06').innerText = '';
+}
+
+
+
+
 
 /*=============================================
 ENVIO AL APIVIEWS AL VIEWS DEL CHATBOT DATOS DE PERSONALIZACION
@@ -77,8 +130,11 @@ function fn_edit_pr() {
 
   var titulo = document.querySelector('#frm_ptitulo');
   var datos = document.querySelector('#frm_pdatos');
-  var bienvenida = document.querySelector('#frm_pbienvenida');
-  var boton = document.querySelector('#frm_pboton');
+  var terminos_y_condiciones = document.querySelector('#frm_pboton');
+  var link_terminos_y_condiciones = document.querySelector('#frm_link');
+  var aceptar_terminos_y_condiciones = document.querySelector('#frm_t_y_c_aceptar');
+  var rechazar_terminos_y_condiciones = document.querySelector('#frm_t_y_c_rechazar');
+
   var id_pr_ct = document.querySelector('#id_pr_ct');
 
   document.querySelector('.btn_Habilitar_').style.display = 'none' //Oculta el habilitar
@@ -87,16 +143,24 @@ function fn_edit_pr() {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
 
+    console.log('responseeeee :',response)
+
     if (response.length > 0) {
 
       titulo.disabled = false;
       datos.disabled = false;
-      bienvenida.disabled = false;
-      boton.disabled = false;
-      titulo.value = response[0]['titulo_header']
+      terminos_y_condiciones.disabled = false;
+      link_terminos_y_condiciones.disabled = false;
+      aceptar_terminos_y_condiciones.disabled = false;
+      rechazar_terminos_y_condiciones.disabled = false;
+      terminos_y_condiciones.value = response[0]['terminos_y_condiciones']
+      link_terminos_y_condiciones.value = response[0]['terminos_y_condiciones_link']
+      aceptar_terminos_y_condiciones.value = response[0]['terminos_y_condiciones_aceptar']
+      rechazar_terminos_y_condiciones.value = response[0]['terminos_y_condiciones_rechazar']
+      titulo.value = response[0]['nombre_chatbot']
       datos.value = response[0]['titulo_cuerpo']
-      bienvenida.value = response[0]['text_bienvenida']
-      boton.value = response[0]['botones']
+
+
       id_pr_ct.value = response[0]['id']
 
       var html_btn_edit = ``;
@@ -139,31 +203,52 @@ const csrftoken = getCookie('csrftoken');
 /* ==== POST ===== */
 function fn_guardar_pr() {
 
-  let ptitulo = document.querySelector('#frm_ptitulo').value;
-  let pboton = document.querySelector('#frm_pboton').value;
+
+  let pnombre = document.querySelector('#frm_ptitulo').value;
   let pdatos = document.querySelector('#frm_pdatos').value;
-  let pbienvenida = document.querySelector('#frm_pbienvenida').value;
-  if (ptitulo == '' || pdatos == '' || pboton == '' || pbienvenida == '') {
-    if (ptitulo == '') {
+  let pt_y_c = document.querySelector('#frm_pboton').value;
+  let pfrm_link = document.querySelector('#frm_link').value;
+  let pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
+  let frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value;
+
+  if (pnombre == '' || pdatos == '' || pt_y_c =='' || pfrm_link =='' || pfrm_t_y_c_aceptar =='' || frm_t_y_c_rechazar == '') {
+
+    if (pnombre == '') {
       document.querySelector('#xyz01').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz01').innerText = '';
     }
-    if (pboton == '') {
+
+    if (pt_y_c == '') {
       document.querySelector('#xyz02').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz02').innerText = '';
     }
+
     if (pdatos == '') {
       document.querySelector('#xyz03').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz03').innerText = '';
     }
-    if (pbienvenida == '') {
+
+    if (pfrm_link == '') {
       document.querySelector('#xyz04').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz04').innerText = '';
     }
+
+    if (pfrm_t_y_c_aceptar == '') {
+      document.querySelector('#xyz05').innerText = 'Es necesario llenar este campo';
+    } else {
+      document.querySelector('#xyz05').innerText = '';
+    }
+
+    if (frm_t_y_c_rechazar == '') {
+      document.querySelector('#xyz06').innerText = 'Es necesario llenar este campo';
+    } else {
+      document.querySelector('#xyz06').innerText = '';
+    }
+
   } else {
 
     var datos = {
@@ -210,73 +295,113 @@ function chatbot_personalizado() {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
 
-    console.log(response[0]['titulo_cuerpo']);
-    console.log(response[0]['text_bienvenida']);
-    console.log(response[0]['botones']);
-    document.querySelector('.pr_tl').innerHTML = response[0]['titulo_header'];
-    document.querySelector('.pr_tl2').innerHTML = response[0]['titulo_header'];
+    console.log(response);
+    console.log('color_botones :',response[0]['color_botones']);
+    console.log('color_header :',response[0]['color_header']);
+    console.log('id :',response[0]['id']);
+    console.log('id_empresa_cliente :',response[0]['id_empresa_cliente']);
+
+    document.querySelector('.pr_terminos_condiciones_link').innerHTML = response[0]['terminos_y_condiciones_link']
+    document.querySelector('.pr_terminos_condiciones_link').setAttribute('href',response[0]['terminos_y_condiciones_link'])
+    document.querySelector('.pr_terminos_condiciones_link_aceptar').innerHTML = response[0]['terminos_y_condiciones_aceptar']
+    document.querySelector('.pr_terminos_condiciones_link_rechazar').innerHTML = response[0]['terminos_y_condiciones_rechazar']
+    document.querySelector('.pr_terminos_condiciones').innerHTML = response[0]['terminos_y_condiciones'];
+    document.querySelector('.pr_tl').innerHTML = response[0]['nombre_chatbot'];
+    document.querySelector('.pr_tl2').innerHTML = response[0]['nombre_chatbot'];
     document.querySelector('#pr_frm').innerHTML = response[0]['titulo_cuerpo'];
-    return
-    document.querySelector('#pr_bienv').innerHTML = response[0]['text_bienvenida'];
-    document.querySelector('#pr_btn').innerHTML = response[0]['botones'];
   })
 }
 
 function fn_editar_pr() {
 
-  let ptitulo = document.querySelector('#frm_ptitulo').value;
-  let pboton = document.querySelector('#frm_pboton').value;
+  let pnombre = document.querySelector('#frm_ptitulo').value;
   let pdatos = document.querySelector('#frm_pdatos').value;
-  let pbienvenida = document.querySelector('#frm_pbienvenida').value;
+  let pt_y_c = document.querySelector('#frm_pboton').value;
+  let pfrm_link = document.querySelector('#frm_link').value;
+  let pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
+  let frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value;
 
-  if (ptitulo == '' || pdatos == '' || pboton == '' || pbienvenida == '') {
-    if (ptitulo == '') {
+
+  if (pnombre == '' || pdatos == '' || pt_y_c =='' || pfrm_link =='' || pfrm_t_y_c_aceptar =='' || frm_t_y_c_rechazar == '') {
+
+    if (pnombre == '') {
       document.querySelector('#xyz01').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz01').innerText = '';
     }
-    if (pboton == '') {
+
+    if (pt_y_c == '') {
       document.querySelector('#xyz02').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz02').innerText = '';
     }
+
     if (pdatos == '') {
       document.querySelector('#xyz03').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz03').innerText = '';
     }
-    if (pbienvenida == '') {
+
+    if (pfrm_link == '') {
       document.querySelector('#xyz04').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz04').innerText = '';
     }
+
+    if (pfrm_t_y_c_aceptar == '') {
+      document.querySelector('#xyz05').innerText = 'Es necesario llenar este campo';
+    } else {
+      document.querySelector('#xyz05').innerText = '';
+    }
+
+    if (frm_t_y_c_rechazar == '') {
+      document.querySelector('#xyz06').innerText = 'Es necesario llenar este campo';
+    } else {
+      document.querySelector('#xyz06').innerText = '';
+    }
+
+
   } else {
+
     var datos = [{
+
       'id': document.querySelector('#id_pr_ct').value,
-      'titulo_header': ptitulo,
+      'nombre_chatbot': pnombre,
       'titulo_cuerpo': pdatos,
-      'botones': pboton,
-      'text_bienvenida': pbienvenida,
+      'terminos_condiciones': pt_y_c,
+      'terminos_condiciones_link': pfrm_link,
+      't_y_c_aceptar': pfrm_t_y_c_aceptar,
+      't_y_c_rechazar': frm_t_y_c_rechazar,
       'id_empresa_cliente': empresa_id
     }]
     datos_rpta = JSON.stringify(datos)
     fetch('https://' + url_servidor + '/personalizar_edit/?datos=' + datos_rpta, {
       method: 'GET',
     }).then((data) => {
+
       document.querySelector('#frm_ptitulo').disabled = true;
       document.querySelector('#frm_pdatos').disabled = true;
-      document.querySelector('#frm_pbienvenida').disabled = true;
       document.querySelector('#frm_pboton').disabled = true;
-      document.querySelector('#id_pr_ct').disabled = true;
+      document.querySelector('#frm_link').disabled = true;
+      document.querySelector('#frm_t_y_c_aceptar').disabled = true;
+      document.querySelector('#frm_t_y_c_rechazar').disabled = true;
+      
       $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
       chatbot_personalizado();
+
+
       document.querySelector('#frm_ptitulo').value = '';
       document.querySelector('#frm_pdatos').value = '';
-      document.querySelector('#frm_pbienvenida').value = '';
       document.querySelector('#frm_pboton').value = '';
-      document.querySelector('#id_pr_ct').value = '';
+      document.querySelector('#frm_link').value = '';
+      document.querySelector('#frm_t_y_c_aceptar').value = '';
+      document.querySelector('#frm_t_y_c_rechazar').value = '';
+
+
       document.querySelector('.btn_Habilitar_').style.display = 'block';
       document.querySelector("#btn_save_upadte").innerHTML = '';
+
+
     })
   }
 

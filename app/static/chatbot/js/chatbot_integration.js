@@ -16,7 +16,6 @@ var htmlbot = `
       </div>
     </div>
 
-
     <div class="chat_body chat_login">
       <a id="chat_third_screen" class="fab is-visible chat_a_login"><i class="zmdi zmdi-arrow-right"></i></a>
       <p class='clss_p' id='cb_frm'>Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</p>
@@ -29,8 +28,6 @@ var htmlbot = `
         <input type='hidden' id='nombre_chat'>
       </div>
     </div>
-
-
 
 
     <div id="chat_form" class="chat_converse chat_form">

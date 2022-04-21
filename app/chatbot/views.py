@@ -258,13 +258,18 @@ def personalizar_edit(request):
   json_datos = request.GET.get('datos')
   arrayRecibido = json.loads(json_datos)
 
-  print('header',arrayRecibido[0]['titulo_header'])
-  print('cuerpo',arrayRecibido[0]['titulo_cuerpo'])
-  print('botones',arrayRecibido[0]['botones'])
-  print('text_bienvenida',arrayRecibido[0]['text_bienvenida'])
+  print('arrayRecibido :',arrayRecibido)
+  print('arrayRecibido json_datos :',json_datos)
 
   id_empresa = cliente.objects.get(pk=arrayRecibido[0]['id_empresa_cliente'])
-  chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(titulo_header=arrayRecibido[0]['titulo_header'],titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],botones=arrayRecibido[0]['botones'],text_bienvenida=arrayRecibido[0]['text_bienvenida'],id_empresa_cliente=id_empresa)
+  chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(
+    titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],
+    id_empresa_cliente=id_empresa,
+    nombre_chatbot=arrayRecibido[0]['nombre_chatbot'],
+    terminos_y_condiciones=arrayRecibido[0]['terminos_condiciones'],
+    terminos_y_condiciones_aceptar=arrayRecibido[0]['t_y_c_aceptar'],
+    terminos_y_condiciones_link=arrayRecibido[0]['terminos_condiciones_link'],
+    terminos_y_condiciones_rechazar=arrayRecibido[0]['t_y_c_rechazar'])
 
   return HttpResponse(str('ok'))
 
