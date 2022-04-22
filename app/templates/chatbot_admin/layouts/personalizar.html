@@ -43,7 +43,7 @@
 
                     <div class="chat is-visible">
 
-                      <div class="chat_header" style="display: block;">
+                      <div id="chat_color" class="chat_header" style="display: block;">
 
                         <div class="chat_option">
 
@@ -78,94 +78,14 @@
 
                       </div>
 
-
-
-
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                   </div>
                   <div class="tab-pane animate__animated animate__bounce" id="cuerpo_chatbot">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div class="chat is-visible">
 
-                      <div class="chat_header" style="display: block;">
+                      <div id="chat_color2" class="chat_header" style="display: block;">
 
                         <div class="chat_option">
 
@@ -189,23 +109,28 @@
 
 
                         <div class="chat_msg_item chat_msg_item_admin">
-                          <span class="pr_terminos_condiciones">Terminos y condiciones</span>: <a href="#" class="pr_terminos_condiciones_link">link</a>
+                          <span class="pr_terminos_condiciones">Terminos y condiciones</span>: <a href="#"
+                            class="pr_terminos_condiciones_link">link</a>
                           <center>
-                            <button class="t_y_c">Aceptar</button>
-                            <button class="t_y_c">Rechazar</button>
+                            <button id="t_y_c_a" class="t_y_c">Aceptar</button>
+                            <button id="t_y_c_r" class="t_y_c">Rechazar</button>
                           </center>
                         </div>
-                        <span class="chat_msg_item chat_msg_item_user">Aceptar</span>
-                        <span class="chat_msg_item chat_msg_item_admin">Hola <b>{nombre}</b> , Gracias por aceptar nuestros T&C</span>
-                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_aceptar">bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</span>
-                     
-
-                        <span class="chat_msg_item chat_msg_item_user">Rechazar</span>
-
-                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_rechazar">Nos apena que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</span>
+                        <span class="chat_msg_item chat_msg_item_user chat_rpta">Aceptar</span>
+                        <span class="chat_msg_item chat_msg_item_admin">Hola <b>{nombre}</b> , Gracias por aceptar
+                          nuestros T&C</span>
+                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_aceptar">bienvenido
+                          a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y
+                          listos para ayudar.</span>
 
 
-                      
+                        <span class="chat_msg_item chat_msg_item_user chat_rpta">Rechazar</span>
+
+                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_rechazar">Nos apena
+                          que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</span>
+
+
+
                       </div>
 
                       <div class="fab_field">
@@ -215,21 +140,6 @@
                           class="chat_field chat_message"></div>
 
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -271,16 +181,50 @@
 
                             <div class="mb-3">
                               <label class="form-label animate__animated animate__bounce">Título de chatbot</label>
-                              <input type="text" class="form-control animate__animated animate__bounce" maxlength="15" data-toggle="maxlength" required onkeyup="myFunctionT()" placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+                              <input type="text" class="form-control animate__animated animate__bounce" maxlength="15"
+                                data-toggle="maxlength" required onkeyup="myFunctionT()"
+                                placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+
                               <input type="hidden" id="id_pr_ct">
+
+                              <script>
+
+                                var Ls = localStorage.getItem('datos')
+                                var id_empresa = JSON.parse(Ls).id_empresa;
+                                document.getElementById('id_pr_ct').value=id_empresa
+
+                              </script>
+
+
+
                               <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
 
                             <div class="mb-3">
-                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Título de ingresa tus datos</label>
-                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="100" rows="3" onkeyup="myFunctionBTND()" placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos" disabled=""></textarea>
+                              <label for="frm_pdatos"
+                                class="form-label animate__animated animate__bounce">Formulario</label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="100" rows="3" onkeyup="myFunctionBTND()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos"
+                                disabled=""></textarea>
                               <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
+
+                            <div class="mb-3" style="display: none" id="c_cht">
+                              <label for="example-color" class="form-label">Color Chatbot</label>
+                              <div class="color-picker"></div>
+                            </div>
+
+                            <div class="mb-3" style="display: none" id="c_bt">
+                              <label for="example-color" class="form-label">Color botones | Acciones</label>
+                              <div class="color-picker_acciones"></div>
+                            </div>
+
+
+                            <input type="hidden" id="color_chatbot">
+                            <input type="hidden" id="color_chatbot_acciones">
+
+                            
 
                           </div>
 
@@ -288,38 +232,51 @@
                           <div class="col-md-6">
 
                             <div class="mb-3">
-                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Términos y Condiciones</label>
-                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="150" rows="3" onkeyup="myFunctionBTN()" placeholder="Términos y Condiciones" id="frm_pboton" disabled=""></textarea>
+                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Términos y
+                                Condiciones</label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="150" rows="3" onkeyup="myFunctionBTN()" placeholder="Términos y Condiciones"
+                                id="frm_pboton" disabled=""></textarea>
                               <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
 
                             <div class="mb-3">
                               <label for="frm_pboton" class="form-label animate__animated animate__bounce">Link</label>
-                              <input class="form-control animate__animated animate__bounce" type="text" style="color:#727cf5" placeholder="Link" id="frm_link" onkeyup="myFunctionLink()" maxlength="100" data-toggle="maxlength" disabled="">
+                              <input class="form-control animate__animated animate__bounce" type="text"
+                                style="color:#727cf5" placeholder="Link" id="frm_link" onkeyup="myFunctionLink()"
+                                maxlength="100" data-toggle="maxlength" disabled="">
                               <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
 
-                            
+
                             <div class="mb-3">
-                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Aceptar</label>
-                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="150" rows="3" onkeyup="myFunction_t_y_c_aceptar()" placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_aceptar" disabled=""></textarea>
+                              <label for="frm_pdatos"
+                                class="form-label animate__animated animate__bounce">Aceptar</label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_aceptar()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_aceptar"
+                                disabled=""></textarea>
                               <p id="xyz05" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
 
 
                             <div class="mb-3">
-                              <label for="frm_pdatos" class="form-label animate__animated animate__bounce">Rechazar</label>
-                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce" maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()" placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar" disabled=""></textarea>
+                              <label for="frm_pdatos"
+                                class="form-label animate__animated animate__bounce">Rechazar</label>
+                              <textarea data-toggle="maxlength" class="form-control animate__animated animate__bounce"
+                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar"
+                                disabled=""></textarea>
                               <p id="xyz06" style="color: #fa5c7c;font-weight: bold;"></p>
                             </div>
 
 
-                          
+
                           </div>
 
 
                         </div>
-                   
+
                         <center id="btn_save_upadte"></center>
                       </div>
                     </div>

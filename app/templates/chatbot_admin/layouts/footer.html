@@ -1,14 +1,29 @@
 {% load static %}
-  <!-- INTEGRACION DEL daterangepicker -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-  <script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
-  <script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/spanish.js' %}"></script>
-  <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
-  <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
-  
-  <script src="{% static 'chatbot_admin/assets/js/reportes.js' %}"></script>
-  <script src="{% static 'chatbot_admin/assets/js/personalizar.js' %}"></script>
-  <script src="{% static 'chatbot_admin/assets/js/respuestas.js' %}"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- <script id='libreria_chatbot' user='{{ id_user }}' empresa='{{ id_empresa }}' src="{% static 'chatbot/js/chatbot.js' %}" ></script> -->
-  <script src="{% static 'chatbot/js/chatbot.js' %}" ></script>
+<!-- INTEGRACION DEL daterangepicker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/daterangepicker.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'chatbot_admin/assets/plugins/daterangepicker/spanish.js' %}"></script>
+<script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+<script src="{% static 'chatbot_admin/assets/js/pickr.js' %}"></script>
+
+
+
+<script src="{% static 'chatbot_admin/assets/js/reportes.js' %}"></script>
+<script src="{% static 'chatbot_admin/assets/js/personalizar.js' %}"></script>
+<script src="{% static 'chatbot_admin/assets/js/respuestas.js' %}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script id='libreria_chatbot' user='{{ id_user }}' empresa='{{ id_empresa }}' src="{% static 'chatbot/js/chatbot.js' %}" ></script> -->
+<script src="{% static 'chatbot/js/chatbot.js' %}"></script>
+
+<!-- <script>
+  $("#colores").spectrum({
+    allowEmpty: true,
+    showInitial: true,
+    showInput: true
+  });
+</script> -->

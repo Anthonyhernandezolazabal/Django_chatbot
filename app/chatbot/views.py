@@ -236,6 +236,9 @@ class personalizarApiView(APIView):
 
   def post(self, request, format=None):
     serializer = personalizarChatSerializers(data=request.data)
+
+    print('serializeree :',serializer)
+
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -258,9 +261,6 @@ def personalizar_edit(request):
   json_datos = request.GET.get('datos')
   arrayRecibido = json.loads(json_datos)
 
-  print('arrayRecibido :',arrayRecibido)
-  print('arrayRecibido json_datos :',json_datos)
-
   id_empresa = cliente.objects.get(pk=arrayRecibido[0]['id_empresa_cliente'])
   chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(
     titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],
@@ -269,7 +269,10 @@ def personalizar_edit(request):
     terminos_y_condiciones=arrayRecibido[0]['terminos_condiciones'],
     terminos_y_condiciones_aceptar=arrayRecibido[0]['t_y_c_aceptar'],
     terminos_y_condiciones_link=arrayRecibido[0]['terminos_condiciones_link'],
-    terminos_y_condiciones_rechazar=arrayRecibido[0]['t_y_c_rechazar'])
+    terminos_y_condiciones_rechazar=arrayRecibido[0]['t_y_c_rechazar'],
+    color_header=arrayRecibido[0]['color_chatbot'],
+    color_botones=arrayRecibido[0]['color_btn_acciones'],
+    )
 
   return HttpResponse(str('ok'))
 

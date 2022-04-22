@@ -330,7 +330,7 @@ a {
 
 
 .t_y_c {
-    background: rgb(44, 59, 94) !important;
+    background: rgb(44, 59, 94);
     border-radius: 5px;
     border: none !important;
     color: white !important;
@@ -624,7 +624,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 300px) {
     .chat {
-        width: 250px;
+        width: 100%;
     }
 }
 
@@ -632,7 +632,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 480px) {
     .chat {
-        width: 350px;
+        width: 100%;
     }
 
     .chat_field {
@@ -644,7 +644,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 768px) {
     .chat {
-        width: 350px;
+        width: 100%;
     }
 
     .chat_field {
@@ -656,7 +656,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 1024px) {
     .chat {
-        width: 350px;
+        width: 100%;
     }
 
     .chat_field {

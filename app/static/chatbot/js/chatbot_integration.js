@@ -1,11 +1,12 @@
 var url_servidor = '192.168.18.23:8000';
+chatbot_personalizado();
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var estado_terminos_condiciones = false // True= Aceptar T&C | False= Rechazo T&C
 var htmlbot = `
 <div class="fabs" style='z-index: 9999999;'>
   <div class="chat is-visible">
-    <div class="chat_header">
+    <div id='color_bd_chatbot' class="chat_header">
       <div class="chat_option">
         <div class="header_img" style="margin-bottom: 8px;">
           <img class='chat_img_option' src="https://192.168.18.23:8000/static/chatbot_admin/assets/images/default.png" />
@@ -26,19 +27,30 @@ var htmlbot = `
         <p style='text-align: center;color: red;display: none;animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;' id='camp_obli'>campo obligatirio</p>
         <input type='hidden' id='key_alias'>
         <input type='hidden' id='nombre_chat'>
+
+
+        <input type='hidden' id='t_c_acept'>
+        <input type='hidden' id='t_c_rcz'>
+        <input type='hidden' id='color_chat_user'>
+        <input type='hidden' id='color_chat_acciones'>
+
+
+
       </div>
     </div>
 
-
     <div id="chat_form" class="chat_converse chat_form">
-      <span class="chat_msg_item chat_msg_item_admin">Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></span>
-            
-      <center class='t_y_c_cls'>
 
-        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c'>Aceptar</button>
-        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c'>Rechazar</button>
-      
-      </center>
+      <div class="chat_msg_item chat_msg_item_admin">
+        <span class="chatbot_terminos_condiciones">Terminos y condicioneees</span>: <a href="#" class="chatbot_terminos_condiciones_link">url</a>
+        <center class='t_y_c_cls'>
+          <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar'>Aceptar</button>
+          <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar'>Rechazar</button>
+        </center>
+      </div>
+
+      <input type='hidden' id='t_c_2'>
+      <input type='hidden' id='t_c_link_2'>
 
     </div>
       
@@ -70,7 +82,6 @@ CONFIGURACION CHATBOT
 =============================================*/
 hideChat(0);
 document.getElementById('prime').addEventListener('click', function () {
-  console.log('click')
   toggleFab();
 })
 //Toggle chat and lchats
@@ -162,7 +173,6 @@ function hideChat(hide) {
       break;
   }
 }
-
 /*=============================================
     ACEPTAR | RECHAZAR TERMINOS Y CONDICIONES
 =============================================*/
@@ -174,10 +184,13 @@ function btn_terminos_condiciones(action, ac) {
     let userHtml = '<span class=""> Aceptar </span>';
     let div_p = document.querySelector("#chat_form");
     let acept = document.createElement("div");
-    acept.className = "chat_msg_item chat_msg_item_user"; //Agrego una clase dentro del div
+    acept.className = "chat_msg_item chat_msg_item_user cls_color_user_aceptar"; //Agrego una clase dentro del div
     acept.innerHTML = userHtml
     div_p.append(acept)
     div_p.scrollTop = div_p.scrollHeight;
+    
+
+    document.querySelector('.cls_color_user_aceptar').style.background = document.querySelector('#color_chat_user').value
 
     var nombre_usuario = div_chatbot.querySelector('#txtusuario').value
     estado_terminos_condiciones = true
@@ -187,7 +200,7 @@ function btn_terminos_condiciones(action, ac) {
     <span><i>Hola <strong id='nomb_chat'>${nombre_usuario.toUpperCase()} </strong>, </i> Gracias por aceptar nuestros T&C</span>`
 
     tmp2 += `
-    <span><i  id='cb_bienv'> bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</i></span>`
+    <span><i id='cb_bienv'> bienvenido....</i></span>`
     setTimeout(() => {
 
       // TEXTO 01
@@ -206,6 +219,13 @@ function btn_terminos_condiciones(action, ac) {
       r.innerHTML = tmp2
       div_r.append(r)
       div_r.scrollTop = div_r.scrollHeight;
+
+
+      let input_get_aceptar = document.querySelector('#t_c_acept').value
+      document.querySelector('#cb_bienv').innerText= input_get_aceptar
+
+
+
       document.getElementById('textInput').value = 'Menú principal'
       getBotResponse();
       document.getElementById('textInput').value = ''
@@ -215,7 +235,7 @@ function btn_terminos_condiciones(action, ac) {
   if (action == 'Rechazar') {
     estado_terminos_condiciones = false
     document.getElementById('carga_new').style.display = "block";
-    tmp += `<span>Nos apena que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</span>`
+    tmp += `<span id='rechar_t_y_c'>Nos apena que no aceptes nuestros T&C...</span>`
     setTimeout(() => {
       document.getElementById('carga_new').style.display = "none";
       var div_r = document.querySelector("#chat_form");
@@ -224,11 +244,17 @@ function btn_terminos_condiciones(action, ac) {
       r.innerHTML = tmp
       div_r.append(r)
       div_r.scrollTop = div_r.scrollHeight;
+
+      
+      var input_get_rechazar = document.querySelector('#t_c_rcz').value
+      document.querySelector('#rechar_t_y_c').innerText= input_get_rechazar
+
+
+
     }, 1600);
     ac.closest('.t_y_c_cls').style.display = 'none'
   }
 }
-
 /*=============================================
 INICIAR CHATBOT
 =============================================*/
@@ -254,10 +280,34 @@ function getBotResponse() {
     var userHtml = '<span class="">' + rawText + '</span>';
     var div_p = document.querySelector("#chat_form");
     let p = document.createElement("div");
-    p.className = "chat_msg_item chat_msg_item_user"; //Agrego una clase dentro del div
+    p.className = "chat_msg_item chat_msg_item_user cls_color_user"; //Agrego una clase dentro del div
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
+
+    
+
+    
+
+    document.querySelectorAll('.cls_color_user').forEach(col => {
+
+      col.style.background = document.querySelector('#color_chat_user').value
+
+      
+    });
+
+
+
+    // document.querySelector('.cls_color_user_aceptar')
+
+
+
+
+
+    
+
+
+
     
     fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
@@ -346,6 +396,7 @@ function getBotResponse() {
                 r2.innerHTML = html_all_pre_rpta
                 div_r2.append(r2)
                 div_r2.scrollTop = div_r2.scrollHeight;
+
       
                  // respuesta SLIDER
                 document.getElementById('carga_new').style.display = "none";
@@ -355,6 +406,13 @@ function getBotResponse() {
                 r.innerHTML = html_all
                 div_r.append(r)
                 div_r.scrollTop = div_r.scrollHeight;
+
+                document.querySelectorAll('.btn_accion').forEach(act_sld => {
+                  console.log(act_sld)
+
+                  act_sld.style.background = document.querySelector('#color_chat_acciones').value
+                  
+                });
 
                 presionar_click();
       
@@ -394,10 +452,10 @@ function escribir(e) {
       document.getElementById('carga_new').style.display = "block";
       
       var tmp = `
-      <span>Por favor, lee y acepta los siguientes términos de uso para continuar con el uso del asistente virtual cognitivo. <a href='https://bit.ly/3dbjnBg'>https://bit.ly/3dbjnBg</a></span>
+      <span id='chatbot_terminos_condiciones2'>Por favor, lee y acepta los siguientes... </span><a href='www.link.com' id='chatbot_terminos_condiciones_link2'>www.link.com</a>
       <center class='t_y_c_cls'>
-        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c'>Aceptar</button>
-        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c'>Rechazar</button>
+        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c btn_aceptar2'>Aceptar</button>
+        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c btn_rechazar2'>Rechazar</button>
       </center>`;
       setTimeout(() => {
         document.getElementById('carga_new').style.display = "none";
@@ -407,6 +465,14 @@ function escribir(e) {
         r.innerHTML = tmp
         div_r.append(r)
         div_r.scrollTop = div_r.scrollHeight;
+
+        document.querySelector('#chatbot_terminos_condiciones2').innerText = document.getElementById('t_c_2').value
+        document.querySelector('#chatbot_terminos_condiciones_link2').innerText =document.getElementById('t_c_link_2').value
+        document.querySelector('#chatbot_terminos_condiciones_link2').setAttribute('href',document.getElementById('t_c_link_2').value)
+        document.querySelector('.btn_aceptar2').style.background = document.getElementById('color_chat_acciones').value
+        document.querySelector('.btn_rechazar2').style.background = document.getElementById('color_chat_acciones').value
+
+
       }, 1600);
     }
   }
@@ -523,4 +589,48 @@ function microfono(){
     recognition.start();
     mic.style.background = '#009805';
   })
+}
+
+/*=============================================
+CHATBOT PERSONALIZADO
+=============================================*/
+function chatbot_personalizado() {
+
+  var empresa_id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
+  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+    method: 'GET',
+  }).then(rsp => rsp.json()).then(function (response) {
+   
+    console.log('responseresponse :',response)
+    // console.log('responseresponse :',response[0]['text_bienvenida'])
+
+    document.querySelector('#chat_head').innerText = response[0]['nombre_chatbot']
+    document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
+    document.querySelector('.chatbot_terminos_condiciones').innerText = response[0]['terminos_y_condiciones']
+    document.querySelector('.chatbot_terminos_condiciones_link').innerText = response[0]['terminos_y_condiciones_link']
+    document.querySelector('.chatbot_terminos_condiciones_link').setAttribute('href',response[0]['terminos_y_condiciones_link'])
+
+    document.querySelector('#t_c_rcz').value = response[0]['terminos_y_condiciones_rechazar']
+    document.querySelector('#t_c_acept').value = response[0]['terminos_y_condiciones_aceptar']
+    document.querySelector('#color_chat_user').value = response[0]['color_header']
+    document.querySelector('#color_chat_acciones').value = response[0]['color_botones']
+
+    
+    document.querySelector('#t_c_2').value = response[0]['terminos_y_condiciones']
+    document.querySelector('#t_c_link_2').value = response[0]['terminos_y_condiciones_link']
+
+
+
+    document.querySelector('#color_bd_chatbot').style.background = response[0]['color_header']
+    document.querySelector('#prime').style.background = response[0]['color_header']
+    document.querySelector('#chat_third_screen').style.background = response[0]['color_botones']
+
+    console.log(document.querySelector('#btn_aceptar').style.background = response[0]['color_botones'])
+    console.log(document.querySelector('#btn_rechazar').style.background = response[0]['color_botones'])
+    
+  })
+
+
+
+
 }
