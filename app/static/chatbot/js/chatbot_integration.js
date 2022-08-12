@@ -1,4 +1,3 @@
-var url_servidor = '192.168.18.23:8000';
 chatbot_personalizado();
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
@@ -9,7 +8,7 @@ var htmlbot = `
     <div id='color_bd_chatbot' class="chat_header">
       <div class="chat_option">
         <div class="header_img" style="margin-bottom: 8px;">
-          <img class='chat_img_option' src="https://192.168.18.23:8000/static/chatbot_admin/assets/images/default.png" />
+          <img class='chat_img_option' src="/static/chatbot_admin/assets/images/default.png" />
         </div>
         <span id="chat_head" style="font-weight: bold;">INGyBOT</span> <br> <span class="agent">.</span>
         <span class="online" style="font-weight: bold;">En Línea</span>
@@ -148,7 +147,7 @@ function hideChat(hide) {
       if (nombre_usuario != '') {
         let fromData = new FormData;
         fromData.append('nomb', nombre_usuario);
-        fetch('https://' + url_servidor + '/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
+        fetch('/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
           method: 'GET',
         }).then(jsonRsp => {}).catch(e => {
           console.log('e :', e);
@@ -309,7 +308,7 @@ function getBotResponse() {
 
 
     
-    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
+    fetch('/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       let decodedStr = atob(response);
@@ -348,9 +347,9 @@ function getBotResponse() {
                       <div class="mySlides fade_">`
                       
                         if (elent_rpta['img'] != ' ') {
-                          html_all += `<img class="img_new" src="https://192.168.18.23:8000/media/${elent_rpta['img']}">`
+                          html_all += `<img class="img_new" src="/media/${elent_rpta['img']}">`
                         } else {
-                          html_all += `<img class="img_new" src="https://192.168.18.23:8000/media/slider/ahorros.png">`
+                          html_all += `<img class="img_new" src="/media/slider/ahorros.png">`
                         }
 
                           html_all += `
@@ -597,7 +596,7 @@ CHATBOT PERSONALIZADO
 function chatbot_personalizado() {
 
   var empresa_id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
-  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+  fetch('/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
    

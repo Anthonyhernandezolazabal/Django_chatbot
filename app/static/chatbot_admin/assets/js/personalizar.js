@@ -1,4 +1,4 @@
-var url_servidor = '192.168.18.23:8000';
+
 var ls = localStorage.getItem('datos')
 var empresa_id = JSON.parse(ls).id_empresa;
 chatbot_personalizado();
@@ -138,7 +138,7 @@ function fn_edit_pr() {
 
   document.querySelector('.btn_Habilitar_').style.display = 'none' //Oculta el habilitar
 
-  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+  fetch('/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
     console.log(response)
@@ -270,7 +270,7 @@ function fn_guardar_pr() {
       'id_empresa_cliente': empresa_id
     }
 
-    fetch('https://' + url_servidor + '/personalizar_chat/', {
+    fetch('/personalizar_chat/', {
       method: 'POST',
       body: JSON.stringify(datos),
       headers: {
@@ -305,7 +305,7 @@ function fn_guardar_pr() {
 CHATBOT PERSONALIZADO
 =============================================*/
 function chatbot_personalizado() {
-  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+  fetch('/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
     console.log(response)
@@ -403,7 +403,7 @@ function fn_editar_pr() {
       'id_empresa_cliente': empresa_id
     }]
     datos_rpta = JSON.stringify(datos)
-    fetch('https://' + url_servidor + '/personalizar_edit/?datos=' + datos_rpta, {
+    fetch('/personalizar_edit/?datos=' + datos_rpta, {
       method: 'GET',
     }).then((data) => {
 

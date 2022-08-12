@@ -1,4 +1,3 @@
-var url_servidor = '192.168.18.23:8000';
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var estado_terminos_condiciones = false // True= Aceptar T&C | False= Rechazo T&C
@@ -108,7 +107,7 @@ function comenzar_chat() {
 
     let fromData = new FormData;
     fromData.append('nomb', nombre_usuario);
-    fetch('https://' + url_servidor + '/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
+    fetch('/getnombre/?nomb=' + nombre_usuario + '&user_alias=' + key_alias, {
       method: 'GET',
     }).then(jsonRsp => {}).catch(e => {
       console.log('e :', e);
@@ -196,7 +195,7 @@ function getBotResponse() {
     p.innerHTML = userHtml
     div_p.append(p)
     div_p.scrollTop = div_p.scrollHeight;
-    fetch('https://' + url_servidor + '/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
+    fetch('/getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       // console.log('response desde pythooon :', response)
@@ -235,9 +234,9 @@ function getBotResponse() {
           // console.log(acciones_rpta)
           // console.log('elent_rpta img', elent_rpta['img'])
           if (elent_rpta['img'] != ' ') {
-            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="https://192.168.18.23:8000/media/${elent_rpta['img']}"></img>`
+            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="/media/${elent_rpta['img']}"></img>`
           } else {
-            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="https://192.168.18.23:8000/media/slider/ahorros.png"></img>`
+            html_all += `<li style="z-index:0; opacity: ${opacity==false?'1':'0'};"><img class='img_new' src="/media/slider/ahorros.png"></img>`
           }
           opacity = true;
           html_all += `
@@ -457,7 +456,7 @@ CHATBOT PERSONALIZADO
 =============================================*/
 function chatbot_personalizado() {
   var empresa_id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
-  fetch('https://' + url_servidor + '/personalizar_chat/?id_empr=' + empresa_id, {
+  fetch('/personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
     // console.log('responseresponse :',response)
