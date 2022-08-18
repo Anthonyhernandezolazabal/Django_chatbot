@@ -15,6 +15,7 @@ from django.conf import settings
 from rest_framework import status
 import base64
 from django.http import HttpRequest
+from django.core import serializers
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -196,6 +197,8 @@ def getjson(request):
     train_bot(load_conversations())
   # return render(request, 'chatbot_admin/layouts/respuestas.html')
   return render(request, 'chatbot_admin/layouts/inicio.html')
+
+
   
 '''=============================================
   RECIBIENDO RANGO DE FECHAS
@@ -293,3 +296,11 @@ class mod_slider(HttpRequest):
       # # upload = request.FILES.get('images2')
 
       return HttpResponse(str(file))
+
+
+class obtener_prg(HttpRequest):
+  def getprg(request):
+    if request.GET['prg']:
+      empr = request.GET.get('prg')
+      rpta_prg = data_set.objects.filter(pk=empr)
+      return HttpResponse(str(empr))  

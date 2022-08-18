@@ -942,27 +942,120 @@ function rpt_aut_save() {
   var id_empresa = id_empresa_id
   var id_usu = id_cliente_id
   if (preguntas.length === 0) {
-    alert('No hay respuestas automaticas registradas')
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'warning',
+      title: 'No hay respuestas registradas'
+    })
   } else if (nombre_json == '') {
-    alert('Debe asignarle un nombre')
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'warning',
+      title: 'Debe asignarle un nombre'
+    })
   } else {
+    mostrar_loader('entrenar_chatbot');
     var json_ls = JSON.stringify(preguntas);
     var nnn = nombre_json.split(" ").join("_")
+    document.getElementById('btn_sav').style.display = 'none';
+    document.getElementById('btn_loader').style.display = 'block';
     fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu, {
       method: 'GET',
     }).then(function (response) {
       eliminarLS()
-      document.getElementById('btn_sav').style.display = 'none';
-      document.getElementById('btn_loader').style.display = 'block';
       // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
       // location.replace(url_python)
       location.href = "../respuestas/?empre_id=" + id_empresa;
-
+      cerrar_loader('exito_entreno');
     }).catch(e => {
+      cerrar_loader('error_entreno');
       console.log(e);
     })
   }
 }
+
+
+function mostrar_loader(mensaje) {
+  var texto = null;
+  var mostrar = false;
+  switch (mensaje) {
+      case 'entrenar_chatbot':
+          texto = 'Entrenando ChatBot, por favor espere...';
+          mostrar = true;
+          break;
+  }
+  if (mostrar) {
+  Swal.fire({
+      title: 'Entrenando',
+      html: texto,
+      timerProgressBar: true,
+      didOpen: () => {
+          Swal.showLoading()
+              const content = Swal.getContent()
+              if (content) {
+                  const b = content.querySelector('b')
+                  b.textContent = Swal.getTimerLeft()
+              }
+      },
+  })
+  }
+}
+    function cerrar_loader(mensaje) {
+        var texto = null;
+        var mostrar = false;
+        var tipo = null;
+        switch (mensaje) {
+            case 'exito_entreno':
+                tipo = 'success';
+                texto = 'Entrenamiento exitoso';
+                mostrar = true;
+                break;
+            case 'error_entreno':
+                tipo = 'error';
+                texto = 'Ocurrió un error en el entrenamiento, por favor intente nuevamente.';
+                mostrar = true;
+                break;
+            default:
+                Swal.close();
+                break;
+        }
+
+        if (mostrar) {
+
+            Swal.fire({
+                position: 'top-center',
+                icon: tipo,
+                title: texto,
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        }
+    }
+
+
 //-------------------------------- SLIDER HOME --------------------------------
 function fntExecuteSlide(side, objeto) {
   // let parentTarget = document.getElementById('slider');
@@ -1359,3 +1452,25 @@ $('.n____ew').on('click', function () {
 //       })
 //   }
 // });
+
+/*
+=================================================================================
+=================================================================================
+              EDITAR POR PREGUNTAS ENTRENADAS
+=================================================================================
+=================================================================================
+*/
+muestrame__prg();
+function muestrame__prg(){
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  var pr__g = urlParams.get('prg');
+  var business = urlParams.get('business');
+
+  fetch('/get_prg/?prg=' + pr__g + '&empresa_id=' + business, {
+    method: 'GET',
+  }).then(function (response) {
+    console.log('VER :',response)
+  })
+
+}

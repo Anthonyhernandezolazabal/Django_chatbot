@@ -148,6 +148,9 @@ class modulo_conversacion(HttpRequest):
   def registrar_rpta(request):
     return render(request, 'chatbot_admin/layouts/registar_respuestas.html')
 
+  def get__prg(request):
+    ret
+
 """=============================================
 MÓDULO USUARIOS
 ============================================="""

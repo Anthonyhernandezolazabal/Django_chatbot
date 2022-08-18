@@ -39,11 +39,9 @@
                     <td>{{ dato.id }}</td>
                     <td>{{ dato.nombre }}</td>
                     <td>{{ dato.registrado }}</td>
-                    <td><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i>
-                      </button><button type="button" class="btn btn-warning"><i
-                          class="mdi mdi-square-edit-outline"></i></button><button type="button"
-                        class="btn btn-danger"><i class="mdi mdi-delete"></i>
-                      </button></td>
+                    <td>
+                      <button type="button" onclick="return edit__prg({{ dato.id }})" class="btn btn-info"><i class="mdi mdi-eye"></i>
+                      </button>
                   </tr>
                   {% endfor %}
                   {% else %}
@@ -60,4 +58,12 @@
     </div>
   </div>
 </div>
+<script>
+  var Ls = localStorage.getItem('datos')
+  var id_empresa = JSON.parse(Ls).id_empresa;
+  function edit__prg(id) {
+    var url_python = '{% url "registrar_rpta" %}?business=' + id_empresa + '&prg=' + id
+    location.replace(url_python)
+  }
+</script>
 {% endblock content %}
