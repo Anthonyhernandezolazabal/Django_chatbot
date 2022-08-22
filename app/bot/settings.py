@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_chatbot',
-        'USER': 'postgres',
+        'USER': 'proyectos',
         'PASSWORD': '70562134',
         'HOST': 'localhost',
         'PORT': '5432'
