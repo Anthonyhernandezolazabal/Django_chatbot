@@ -41,8 +41,13 @@
         <div>
         </div>
         <center>
-          <button onclick="rpt_aut_save()" class="btn btn-danger btn-rounded mb-3" id="btn_sav"><i class="mdi mdi-plus"></i> Guardar</button>
-          <button class="btn btn-danger btn-rounded mb-3" id="btn_loader" type="button" disabled=""
+          <input type="hidden" id="name__org" name="name__org" value="">
+          <input type="hidden" id="editar______estado">
+          <button onclick="rpt_aut_save('Registrar')" class="btn btn-outline-success mb-3" id="btn_sav" est="" ><i class="mdi mdi-plus"></i> Guardar</button>
+
+
+
+          <button class="btn btn-outline-success mb-3" id="btn_loader" type="button" disabled=""
             style="display: none">
             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             Guardando...

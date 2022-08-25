@@ -11,7 +11,22 @@
   {% include 'chatbot_admin/layouts/head.html' %}
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    @font-face {
+      font-family: font_caja_sullana;
+      src: url("{% static 'chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf' %}");
+    }
+    
+    @font-face {
+      font-family: font_caja_sullana2;
+      src: url("{% static 'chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf' %}");
+    }
 
+        
+    body{ 
+      font-family: font_caja_sullana2;
+    } 
+  </style>
 </head>
 
 <body class="show sidebar-enable"

@@ -6,7 +6,7 @@ from chatbot.models import chat_user,chatbot_style
 from chatbot_admin.models import data_set,cliente
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from chatbot.serializers import historialChatSerializers,personalizarChatSerializers
+from chatbot.serializers import historialChatSerializers,personalizarChatSerializers,datasetSerializers
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 from difflib import SequenceMatcher
@@ -16,6 +16,8 @@ from rest_framework import status
 import base64
 from django.http import HttpRequest
 from django.core import serializers
+from os import remove
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -175,30 +177,107 @@ def getchat(request):
   return HttpResponse(str('ok'))
 def getjson(request):
   if request.GET['json_rpt']:
+    estado_rpta = request.GET.get('estado')
     json_rpt = request.GET.get('json_rpt')
     json_nombre = request.GET.get('json_nombre')
     id_empresa = request.GET.get('id_empresa')
     id_user_create = request.GET.get('id_usu')
-    # CREAR EL ARCHIVO JSON
-    arrayRecibido = json.loads(json_rpt)
-    set_datosAdd = data_set(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
-    set_datosAdd.save()
-    data = {}
-    data["conversations"] = []
-    for x in range(0,len(arrayRecibido)):
-        data['conversations'].append({
-          'messages': arrayRecibido[x][0]['preguntas_new'],
-          'response': arrayRecibido[x][0]['respuesta_new'],
-        })
-    with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
-        json.dump(data, file, indent=4,ensure_ascii=False)
-    conversation_directory(id_empresa)
-    initialize(id_user_create)
-    train_bot(load_conversations())
-  # return render(request, 'chatbot_admin/layouts/respuestas.html')
+    nombre_bd = request.GET.get('nombre_bd')
+    id_registro = request.GET.get('id_registro')
+
+    if estado_rpta == "Registrar":
+      # CREAR EL ARCHIVO JSON
+      arrayRecibido = json.loads(json_rpt)
+      set_datosAdd = data_set(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
+      set_datosAdd.save()
+      data = {}
+      data["conversations"] = []
+      for x in range(0,len(arrayRecibido)):
+          data['conversations'].append({
+            'messages': arrayRecibido[x][0]['preguntas_new'],
+            'response': arrayRecibido[x][0]['respuesta_new'],
+          })
+      with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+          json.dump(data, file, indent=4,ensure_ascii=False)
+      conversation_directory(id_empresa)
+      initialize(id_user_create)
+      train_bot(load_conversations())
+
+    if estado_rpta == "Editar":
+      # 1. Eliminamos el json para reemplazar
+      with os.scandir(ruta_actual + '/empresa_'+id_empresa) as ficheros:
+          for fichero in ficheros:
+            if fichero.name == nombre_bd+'_'+id_empresa+'.json':
+              eliminar = ruta_actual + '/empresa_'+id_empresa+'/'+fichero.name
+              os.remove(eliminar)
+              print("ELIMINADO")
+
+      # 2. Eliminamos la base de datos para entrenar con los nuevos datos
+      bd_deleted = os.path.join(BASE_DIR)
+      delee = bd_deleted+"/"+"midbaprendida_"+id_user_create+".sqlite3"
+      os.remove(delee)
+      print("ELIMINADO BD")
+
+      # 3. Crea el nuevo archivo JSON
+      arrayRecibido = json.loads(json_rpt)
+      #Editamos
+      data_set.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
+      data = {}
+      data["conversations"] = []
+      for x in range(0,len(arrayRecibido)):
+          data['conversations'].append({
+            'messages': arrayRecibido[x][0]['preguntas_new'],
+            'response': arrayRecibido[x][0]['respuesta_new'],
+          })
+      with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+          json.dump(data, file, indent=4,ensure_ascii=False)
+
+      # 4. Entrena y crea la nueva base de datos
+      conversation_directory(id_empresa)
+      initialize(id_user_create)
+      train_bot(load_conversations())
+
   return render(request, 'chatbot_admin/layouts/inicio.html')
 
 
+def getjsondelet(request):
+  if request.GET['id_reg']:
+    id_reg = request.GET.get('id_reg')
+    empresa = request.GET.get('empresa')
+    nom = request.GET.get('nom')
+    id_usu = request.GET.get('id_usu')
+
+    print("ELIMIII id_reg :",id_reg)
+    print("ELIMIII empresa :",empresa)
+    print("ELIMIII  nom:",nom)
+    print("ELIMIII  id_usu:",id_usu)
+
+    # 1. Eliminamos el json 
+    with os.scandir(ruta_actual + '/empresa_'+empresa) as ficheros:
+      for fichero in ficheros:
+        if fichero.name == nom+'_'+empresa+'.json':
+          eliminar = ruta_actual + '/empresa_'+empresa+'/'+fichero.name
+          os.remove(eliminar)
+          print("Eliminado")
+
+    # 2. Eliminar el registro
+    record = data_set.objects.get(pk = id_reg)
+    record.delete()
+    print("Registro eliminado")
+ 
+    # 3. Eliminamos la base de datos para entrenar con los nuevos datos
+    bd_deleted = os.path.join(BASE_DIR)
+    delee = bd_deleted+"/"+"midbaprendida_"+id_usu+".sqlite3"
+    os.remove(delee)
+    print("Eliminado BD")
+
+    # 4. Entrena y crea la nueva base de datos
+    conversation_directory(empresa)
+    initialize(id_usu)
+    train_bot(load_conversations())
+    print("Entrenado")
+
+    return HttpResponse(str("EliminadoOk"))
   
 '''=============================================
   RECIBIENDO RANGO DE FECHAS
@@ -304,3 +383,17 @@ class obtener_prg(HttpRequest):
       empr = request.GET.get('prg')
       rpta_prg = data_set.objects.filter(pk=empr)
       return HttpResponse(str(empr))  
+
+      
+'''=============================================
+   EDITAR SET DATA
+============================================= '''
+class data__set_all(APIView):
+    def get(self, request, format=None):
+    
+      id__pregunta = request.GET.get('prg')
+      rpta_pr = data_set.objects.filter(pk=id__pregunta)
+
+      serializer_historial = datasetSerializers(rpta_pr, many=True)
+
+      return Response(serializer_historial.data)

@@ -6,11 +6,65 @@ var validar_input_respuestas_save = false; //Campo vacío
 var validar_antes_registrar = false; //No ha confirmado el registro de guardar slider
 var validar__edit__imagen = false; //Que no a dado click en el check de validar slider. Al darle en validar slider pasará a un estado true que significa que a cambiado la imágen
 var gener____al = false;
-conversaciones_pyr()
 var Ls_rpt = localStorage.getItem('datos')
 var id_cliente_id = JSON.parse(Ls_rpt).id_cliente;
 var id_empresa_id = JSON.parse(Ls_rpt).id_empresa;
+/*
+=================================================================================
+=================================================================================
+              EDITAR POR PREGUNTAS ENTRENADAS
+=================================================================================
+=================================================================================
+*/
 
+var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+var pr__g = urlParams.get('prg');
+if(pr__g != null){
+  muestrame__prg(pr__g);
+
+  $("#btn_sav").attr("onclick","rpt_aut_save('Editar')");
+  $("#editar______estado").val("Editame");
+
+}else{
+
+  $("#btn_sav").show();
+  $("#editar______estado").val("Registrame");
+
+}
+function quitarlsrepetidos(i__d){
+  let prg = recuperarLS();
+  prg.forEach(function (pre, indice) {
+    if (pre[0].id === i__d) {
+        prg.splice(indice, 1);
+    }
+  })
+  localStorage.setItem("pregunta", JSON.stringify(prg))
+}
+function muestrame__prg(p){
+  fetch('/data__set/?prg=' + p, {
+    method: 'GET',
+  }).then(rsp => rsp.json()).then(function (response) {
+    console.log("element :",response)
+    $("#rpta_json_nomb").val(response[0].nombre)
+    $("#name__org").val(response[0].nombre)
+    JSON.parse(response[0].conversacion).forEach(element => {
+        quitarlsrepetidos(element[0].id)
+        let preguuu__tas = [{
+          'preguntas_new': element[0].preguntas_new,
+          'respuesta_new': btoa(JSON.stringify(element[0].respuesta_ls)),
+          'respuesta_ls': element[0].respuesta_ls,
+          'id': element[0].id,
+        }];
+        agregarLS(preguuu__tas);
+    });
+    conversaciones_pyr()
+  })
+}
+var estado_ed_reg = $("#editar______estado").val();
+if(estado_ed_reg == "Registrame"){
+  conversaciones_pyr()
+}
 /*=============================================
 CSRF
 =============================================*/
@@ -486,8 +540,6 @@ function myFunction_save() {
           let ls = JSON.parse(localStorage.getItem("pregunta"))
           ls.forEach(function (pregunta, indice) {
             if (pregunta[0].id === obtener__id_ls) {
-              console.log("LS :",pregunta[0])
-              console.log("LS :",pregunta[0].respuesta_ls.respuesta_tipo[0].rpta)
               // console.log("LS :",ls[0][0].preguntas_new)
 
               pregunta[0].preguntas_new = old_ques;
@@ -496,9 +548,26 @@ function myFunction_save() {
               localStorage.setItem('pregunta', JSON.stringify(ls))
             }
           })
-          location.reload(); //Actualizar por el momento
-        }
 
+          let probar_div = document.querySelector(".d___v"+obtener__id_ls);
+          let __ediiit_prg = probar_div.querySelector(".sh__ow_prg")
+          let __ediiit_rpta = probar_div.querySelector(".rpt_____a")
+          $(__ediiit_prg).html("")
+          $(__ediiit_rpta).html("")
+          let l_______s2 = preguntas;
+          l_______s2[0].preguntas_new.forEach(el__ents => {
+            $(__ediiit_prg).append(
+                        `<div class="timeline-item mb-2">
+                          <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
+                          <div class="timeline-item-info">
+                            <a href="#" class="text-info fw-bold d-block">${el__ents}</a>
+                          </div>
+                        </div>`)
+          });
+          l_______s2[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(elem____ent => {
+            $(__ediiit_rpta).append(`<p class="mb-0">${elem____ent.respueta_sl_texto}</p><hr style="margin-top: 7px;margin-bottom: 7px;">`)
+          });
+        }
         $('#form-crear-rpta').trigger('reset');
         $('#full-width-modal').modal('hide');
         document.getElementById('add_chek_txt').innerHTML = "";
@@ -515,13 +584,13 @@ function myFunction_save() {
             // console.log("LS :",ls[0][0].preguntas_new)
 
             template = `
-                        <div class="col-lg-4 padre__all">
+                        <div class="col-lg-4 padre__all d___v${pregunta[0].id}">
                           <div class="card">`
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
               template += `<div class="card-body rptacls">`;
             }
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider') {
-              template += `<div class="card-body" style='height: 420px;'>`;
+              template += `<div class="card-body" style='height: 470px;'>`;
             }
             template += `
                               <div class="dropdown float-end">
@@ -529,22 +598,28 @@ function myFunction_save() {
                                   <i class="mdi mdi-dots-vertical"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                  <a href="javascript:void(0);" onclick="editar__ls('${pregunta[0].id}')" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
+                                  <a href="javascript:void(0);" onclick="editar__ls('${pregunta[0].id}',this)" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
                                   <a href="javascript:void(0);" onclick="lsdeleted(this,'${pregunta[0].id}')" class="dropdown-item">Eliminar</a>
                                 </div>
                               </div>
                               <h4 class="header-title mb-2">PREGUNTAS N° ${cont}</h4>
-                              <div data-simplebar="" style="max-height: 330px;">`
+                              <div data-simplebar="" style="max-height: 385px;">`
+
+                              if(pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
+
+                                template += `
+                                <h5 class="card-title mb-2 mt-2 pre____rpt__a">${pregunta[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+
+                              }
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
               template += ` 
-                                  <div class="timeline-alt pb-0">`
+                                  <div class="timeline-alt pb-0 sh__ow_prg">`
               pregunta[0].preguntas_new.forEach(pre__text => {
                 template += `
-                                          <div class="timeline-item mb-1">
+                                          <div class="timeline-item mb-2">
                                             <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                             <div class="timeline-item-info">
-                                              <a href="#" class="text-info fw-bold d-block">¿Pregunta?</a>
-                                              <small>${pre__text}</small>
+                                              <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
                                             </div>
                                           </div>`
               });
@@ -554,7 +629,8 @@ function myFunction_save() {
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == "slider") {
               pregunta[0].respuesta_ls.respuesta_tipo.forEach(sl__item => {
                 template += `
-                                    <div class="card d-block">`
+                                    
+                                    `
     
                 if (sl__item.img != " ") {
     
@@ -563,7 +639,7 @@ function myFunction_save() {
                 }
     
                 template += `
-                                        <div class="card-body">
+                                        <div style="margin: 15px;">
                                             <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
                                             <h6>${sl__item.descripcion}</h6>`
                 sl__item.acciones.forEach(acc => {
@@ -581,18 +657,18 @@ function myFunction_save() {
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
               template += `                   
                               <div class="list-group">
-                                  <a href="javascript:void(0);" class="list-group-item list-group-item-action active" style="height: 130px;overflow-y: auto;">
-                                      <div class="d-flex w-100 justify-content-between">
+                                  <a href="javascript:void(0);" class="list-group-item list-group-item-action active" style="height: 180px;overflow-y: auto;border-radius: 0;">
+                                      <div class="d-flex w-100 justify-content-between mb-2">
                                           <small>${pregunta[0].respuesta_ls.respuesta_tipo[0].rpta.length} respuestas</small>
-                                      </div>
-                                      <hr>`
+                                      </div> <div class="rpt_____a">`
     
               pregunta[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
     
-                template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr> `
+                template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
     
               });
               template += ` 
+                                </div>
                                   </a>
                               </div>`
             }
@@ -601,9 +677,6 @@ function myFunction_save() {
                         </div>`;
             
             $('#lista_template').append(template)
-
-            
-
           }
         })
         
@@ -621,7 +694,7 @@ function myFunction_save() {
         SLIDER
       =============================================*/
       if (selslider.checked == true) { // SI EL TIPO DE RESPUESTA ES UN SLIDER
-
+      
         if (gener____al == true) {
 
           let respuestas = {};
@@ -677,9 +750,47 @@ function myFunction_save() {
                 pregunta[0].respuesta_new = btoa(JSON.stringify(rptaFinal));
                 localStorage.setItem('pregunta', JSON.stringify(ls))
 
-
               }
             })
+
+            let l_______sldr = preguntas;
+            let probar_div = document.querySelector(".d___v"+obtener__id_ls);
+            let __ediiit_rpta = probar_div.querySelector(".rp_______ta_sld")
+            let __pre____rpt__a_rpta = probar_div.querySelector(".pre____rpt__a")
+            $(__pre____rpt__a_rpta).html(l_______sldr[0].respuesta_ls.pre_respuesta.pre_rpta)
+            
+            $(__ediiit_rpta).html("")
+            l_______sldr[0].respuesta_ls.respuesta_tipo.forEach(r__p__t__a => {
+              var tttt_plat = `
+              <div class="card d-block">`
+                if((r__p__t__a.img).length != 1){
+                  tttt_plat += `<img class="card-img-top" src="/media/${r__p__t__a.img}" alt="Card image cap"> `;
+                }
+                tttt_plat += `
+                  <div style="margin: 15px;">
+                      <h5 class="card-title mb-0">${r__p__t__a.titulo_imagen}</h5>
+                      <h6>${r__p__t__a.descripcion}</h6>`
+                      r__p__t__a.acciones.forEach(elem__en_t => {
+                        tttt_plat +=`<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${elem__en_t}</a>`
+                      });
+                      tttt_plat +=
+                      ` 
+                  </div>
+              </div>`
+              $(__ediiit_rpta).append(tttt_plat)
+            });
+
+
+
+
+
+            
+
+
+
+
+
+
           }
 
           $.NotificationApp.send("¡Aviso!", "Registrado correctamente!", "top-right", "rgba(0,0,0,0.2)", "success")
@@ -695,14 +806,14 @@ function myFunction_save() {
           var rpta__pregunta = preguntas;
           cont++
           template = `
-                    <div class="col-lg-4 padre__all">
+                    <div class="col-lg-4 padre__all d___v${rpta__pregunta[0].id}">
                       <div class="card">`
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
             console.log('aa :', rpta__pregunta[0].id)
             template += `<div class="card-body rptacls">`;
           }
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider') {
-            template += `<div class="card-body" style='height: 420px;'>`;
+            template += `<div class="card-body" style='height: 470px;'>`;
           }
           template += `
                           <div class="dropdown float-end">
@@ -710,23 +821,33 @@ function myFunction_save() {
                               <i class="mdi mdi-dots-vertical"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                              <a href="javascript:void(0);" onclick="editar__ls('${rpta__pregunta[0].id}')" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
+                              <a href="javascript:void(0);" onclick="editar__ls('${rpta__pregunta[0].id}',this)" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
                               <a href="javascript:void(0);" onclick="lsdeleted(this,'${rpta__pregunta[0].id}')" class="dropdown-item">Eliminar</a>
                             </div>
                           </div>
                           <h4 class="header-title mb-2">PREGUNTAS N° ${cont}</h4>
-                          <div data-simplebar="" style="max-height: 330px;">`
+                          <div data-simplebar="" style="max-height: 385px;">`
+
+                          if(rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
+
+                            template += `
+                            <h5 class="card-title mb-2 mt-2 pre____rpt__a">${rpta__pregunta[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+
+                          }
+
+                          template += `
+                          <div class="rp_______ta_sld">
+                          `
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
             template += ` 
-                              <div class="timeline-alt pb-0">`
+                              <div class="timeline-alt pb-0 sh__ow_prg">`
 
             rpta__pregunta[0].preguntas_new.forEach(pre__text => {
               template += `
-                                      <div class="timeline-item mb-1">
+                                      <div class="timeline-item mb-2">
                                         <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                         <div class="timeline-item-info">
-                                          <a href="#" class="text-info fw-bold d-block">¿Pregunta?</a>
-                                          <small>${pre__text}</small>
+                                          <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
                                         </div>
                                       </div>`
             });
@@ -736,7 +857,10 @@ function myFunction_save() {
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == "slider") {
             rpta__pregunta[0].respuesta_ls.respuesta_tipo.forEach(sl__item => {
               template += `
-                                <div class="card d-block">`
+                                
+                                <div class="card d-block">
+                                
+                                `
 
               if (sl__item.img != " ") {
 
@@ -745,7 +869,7 @@ function myFunction_save() {
               }
 
               template += `
-                                    <div class="card-body">
+                                    <div style="margin: 15px;">
                                         <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
                                         <h6>${sl__item.descripcion}</h6>`
               sl__item.acciones.forEach(acc => {
@@ -758,14 +882,14 @@ function myFunction_save() {
           }
           template += `
                           </div>
+                          </div>
+                          
                         </div>
                       </div>
                     </div>`;
 
           if(obtener__id_ls.length == 0){
             $('#lista_template').append(template)
-          }else{
-            location.reload(); //Actualizar por el momento
           }
           // var div_rptas = document.querySelector("#lista_template");
           // let rpt = document.createElement("div");
@@ -775,7 +899,7 @@ function myFunction_save() {
           document.querySelectorAll('.show__inp').forEach(div => {
             div.remove()
           });
-          $("#div_pre_rpta").hide()
+          $("#div_pre_rpta").html("")
         } else {
           $.NotificationApp.send("¡Aviso!", "Confirme registro de Slider", "top-right", "rgba(0,0,0,0.2)", "warning")
         }
@@ -831,19 +955,19 @@ function conversaciones_pyr() {
   let pregunta, cont = 0;
   pregunta = recuperarLS();
   pregunta.forEach(prg => {
-    // console.log('pregunta :',prg[0].respuesta_ls.respuesta_tipo[0].tipo)
     // console.log('pregunta2 :',prg[0].respuesta_ls.respuesta_tipo[0])
     // console.log('pregunta :',prg[0].respuesta_ls.respuesta_tipo[0].tipo)
     cont++
     template = `
-              <div class="col-lg-4 padre__all">
+              <div class="col-lg-4 padre__all d___v${prg[0].id}">
                 <div class="card">`
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
       console.log('aa :', prg[0].id)
       template += `<div class="card-body rptacls">`;
     }
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider') {
-      template += `<div class="card-body" style='height: 420px;'>`;
+      console.log('pregunta :',)
+      template += `<div class="card-body" style='height: 470px;'>`;
     }
     template += `
                   
@@ -852,25 +976,32 @@ function conversaciones_pyr() {
                         <i class="mdi mdi-dots-vertical"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-end">
-                        <a href="javascript:void(0);" onclick="editar__ls('${prg[0].id}')" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
+                        <a href="javascript:void(0);" onclick="editar__ls('${prg[0].id}',this)" data-bs-toggle="modal" data-bs-target="#full-width-modal" class="dropdown-item">Editar</a>
                         <a href="javascript:void(0);" onclick="lsdeleted(this,'${prg[0].id}')" class="dropdown-item">Eliminar</a>
                       </div>
                     </div>
                     <h4 class="header-title mb-2">PREGUNTAS N° ${cont}</h4>
                 
-                    <div data-simplebar="" style="max-height: 330px;">`
+                    <div data-simplebar="" style="max-height: 385px;">`
+                    
+                    if(prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
+                      template += `<h5 class="card-title mb-2 mt-2 pre____rpt__a">${prg[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+                    }
+
+                    template += `
+                    <div class="rp_______ta_sld">
+                    `
 
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
       template += ` 
-                        <div class="timeline-alt pb-0">`
+                        <div class="timeline-alt pb-0 sh__ow_prg">`
 
       prg[0].preguntas_new.forEach(pre__text => {
         template += `
-                                <div class="timeline-item mb-1">
+                                <div class="timeline-item mb-2">
                                   <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                   <div class="timeline-item-info">
-                                    <a href="#" class="text-info fw-bold d-block">¿Pregunta?</a>
-                                    <small>${pre__text}</small>
+                                    <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
                                   </div>
                                 </div>`
       });
@@ -881,13 +1012,14 @@ function conversaciones_pyr() {
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == "slider") {
       prg[0].respuesta_ls.respuesta_tipo.forEach(sl__item => {
         template += `
-                          <div class="card d-block">`
+                          <div class="card d-block">
+                          `
         if (sl__item.img != " ") {
           template += `
                             <img class="card-img-top" src="/media/${sl__item.img}" alt="Card image cap">`
         }
         template += `
-                              <div class="card-body">
+                              <div style="margin: 15px;">
                                   <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
                                   <h6>${sl__item.descripcion}</h6>`
         sl__item.acciones.forEach(acc => {
@@ -900,23 +1032,26 @@ function conversaciones_pyr() {
     }
     template += `
                     </div>
+                  </div>
                   </div>`
 
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
 
       template += `                   
                     <div class="list-group">
-                        <a href="javascript:void(0);" class="list-group-item list-group-item-action active" style="height: 130px;overflow-y: auto;">
-                            <div class="d-flex w-100 mb-1 justify-content-between">
+                        <a href="javascript:void(0);" class="list-group-item list-group-item-action active" style="height: 180px;overflow-y: auto;border-radius: 0;">
+                            <div class="d-flex w-100 mb-1 justify-content-between mb-2">
                                 <small>${prg[0].respuesta_ls.respuesta_tipo[0].rpta.length} respuestas</small>
-                            </div><hr>`
+                            </div>
+                            <div class="rpt_____a">`
       prg[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
 
-        template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr> `
+        template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
 
 
       });
       template += `
+                    </div>
                         </a>
                     </div>`
     }
@@ -936,9 +1071,14 @@ function conversaciones_pyr() {
 /*=============================================
   ENVIO AL VIEWS DE CHATBOT EL NOMBRE Y LAS RESPUESTAS AUTOMATICAS DEL LS
 =============================================*/
-function rpt_aut_save() {
+function rpt_aut_save(a) {
+  let query___String = window.location.search;
+  var url__Params = new URLSearchParams(query___String);
+  var pr____g = url__Params.get('prg');
   preguntas = recuperarLS();
   var nombre_json = document.getElementById('rpta_json_nomb').value
+  var nombre_d_db = $("#name__org").val()
+
   var id_empresa = id_empresa_id
   var id_usu = id_cliente_id
   if (preguntas.length === 0) {
@@ -981,18 +1121,20 @@ function rpt_aut_save() {
     var nnn = nombre_json.split(" ").join("_")
     document.getElementById('btn_sav').style.display = 'none';
     document.getElementById('btn_loader').style.display = 'block';
-    fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu, {
-      method: 'GET',
-    }).then(function (response) {
-      eliminarLS()
-      // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
-      // location.replace(url_python)
-      location.href = "../respuestas/?empre_id=" + id_empresa;
-      cerrar_loader('exito_entreno');
-    }).catch(e => {
-      cerrar_loader('error_entreno');
-      console.log(e);
-    })
+
+      fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&nombre_bd=' + nombre_d_db + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu + '&estado=' + a + '&id_registro=' + pr____g, {
+        method: 'GET',
+      }).then(function (response) {
+        eliminarLS()
+        // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
+        // location.replace(url_python)
+        location.href = "../respuestas/?empre_id=" + id_empresa;
+        cerrar_loader('exito_entreno');
+      }).catch(e => {
+        cerrar_loader('error_entreno');
+        console.log(e);
+      })
+
   }
 }
 
@@ -1022,38 +1164,38 @@ function mostrar_loader(mensaje) {
   })
   }
 }
-    function cerrar_loader(mensaje) {
-        var texto = null;
-        var mostrar = false;
-        var tipo = null;
-        switch (mensaje) {
-            case 'exito_entreno':
-                tipo = 'success';
-                texto = 'Entrenamiento exitoso';
-                mostrar = true;
-                break;
-            case 'error_entreno':
-                tipo = 'error';
-                texto = 'Ocurrió un error en el entrenamiento, por favor intente nuevamente.';
-                mostrar = true;
-                break;
-            default:
-                Swal.close();
-                break;
-        }
-
-        if (mostrar) {
-
-            Swal.fire({
-                position: 'top-center',
-                icon: tipo,
-                title: texto,
-                showConfirmButton: false,
-                timer: 1500
-            })
-
-        }
+function cerrar_loader(mensaje) {
+    var texto = null;
+    var mostrar = false;
+    var tipo = null;
+    switch (mensaje) {
+        case 'exito_entreno':
+            tipo = 'success';
+            texto = 'Entrenamiento exitoso';
+            mostrar = true;
+            break;
+        case 'error_entreno':
+            tipo = 'error';
+            texto = 'Ocurrió un error en el entrenamiento, por favor intente nuevamente.';
+            mostrar = true;
+            break;
+        default:
+            Swal.close();
+            break;
     }
+
+    if (mostrar) {
+
+        Swal.fire({
+            position: 'top-center',
+            icon: tipo,
+            title: texto,
+            showConfirmButton: false,
+            timer: 1500
+        })
+
+    }
+}
 
 
 //-------------------------------- SLIDER HOME --------------------------------
@@ -1140,7 +1282,8 @@ function lsdeleted(e, id) {
 /*===========================
   EDITAR CONVERSACIÓN POR LOCALSTORAGE
 =============================*/
-function editar__ls(id) {
+function editar__ls(id,t) {
+  let padre = t.closest(".d___v"+id)
   gener____al = true;
   validar__edit__imagen = true
   $("#editar______ls").val(id);
@@ -1212,6 +1355,13 @@ function editar__ls(id) {
       }
 
       if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == "slider") {
+
+
+        // padre.querySelector(".pre_respuestatxt_add").value = 
+
+        
+
+
         document.getElementById('customRadio4').click();
         document.getElementById('add_slider').style.display = "contents";
         let arrayElements = pregunta[0].preguntas_new
@@ -1373,6 +1523,10 @@ function editar__ls(id) {
         document.querySelector('.collapse_sld').className = 'collapse_sld collapse';
         $("#customRadio3").attr("disabled", true);
 
+
+        console.log("SLIDEEEEEEEEER :",)
+        document.getElementById("pre_respuestatxt").value = pregunta[0].respuesta_ls.pre_respuesta.pre_rpta
+        console.log("SLIDEEEEEEEEER2 :",)
       }
     }
   });
@@ -1397,7 +1551,7 @@ $('#modal_cerrar').on('click', function () {
     document.querySelector('.cls_modal').classList.remove("modal-full-width")
     document.getElementById("divSlider").removeChild(document.getElementById("accordionExample"))
     document.querySelector('#cls_col').className = 'col-lg-10';
-    $("#div_pre_rpta").hide();
+    $("#div_pre_rpta").html("");
     $("#editar______ls").val("")
   }
 
@@ -1453,24 +1607,5 @@ $('.n____ew').on('click', function () {
 //   }
 // });
 
-/*
-=================================================================================
-=================================================================================
-              EDITAR POR PREGUNTAS ENTRENADAS
-=================================================================================
-=================================================================================
-*/
-muestrame__prg();
-function muestrame__prg(){
-  var queryString = window.location.search;
-  var urlParams = new URLSearchParams(queryString);
-  var pr__g = urlParams.get('prg');
-  var business = urlParams.get('business');
 
-  fetch('/get_prg/?prg=' + pr__g + '&empresa_id=' + business, {
-    method: 'GET',
-  }).then(function (response) {
-    console.log('VER :',response)
-  })
 
-}

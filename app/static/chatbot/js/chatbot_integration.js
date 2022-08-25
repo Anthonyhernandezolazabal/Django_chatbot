@@ -1,4 +1,6 @@
 chatbot_personalizado();
+var URLactual = window.location.origin;
+console.log("URLactual :",URLactual)
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var estado_terminos_condiciones = false // True= Aceptar T&C | False= Rechazo T&C
@@ -8,7 +10,7 @@ var htmlbot = `
     <div id='color_bd_chatbot' class="chat_header">
       <div class="chat_option">
         <div class="header_img" style="margin-bottom: 8px;">
-          <img class='chat_img_option' src="/static/chatbot_admin/assets/images/default.png" />
+          <img class='chat_img_option' src="https://192.168.214.6:8000/static/chatbot_admin/assets/images/default.png" />
         </div>
         <span id="chat_head" style="font-weight: bold;">INGyBOT</span> <br> <span class="agent">.</span>
         <span class="online" style="font-weight: bold;">En Línea</span>
@@ -16,7 +18,7 @@ var htmlbot = `
       </div>
     </div>
 
-    <div class="chat_body chat_login">
+    <div class="chat_body chat_login" style="border-radius: 10px;">
       <a id="chat_third_screen" class="fab is-visible chat_a_login"><i class="zmdi zmdi-arrow-right"></i></a>
       <p class='clss_p' id='cb_frm'>Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</p>
       <div id="form_id">
@@ -53,7 +55,7 @@ var htmlbot = `
 
     </div>
       
-    <div>
+    <div id="d__chat" style="display: none !important" >
       <span class="" style='display: none;left: 37px;position: absolute;bottom: 60px;animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;' id='carga_new'>
       
         <div class="contenido_carga">
@@ -165,6 +167,7 @@ function hideChat(hide) {
         document.getElementById('chat_form').style.display = 'block'
         document.querySelector(".chat_login").style.display = 'none';
         document.querySelector(".chat_fullscreen_loader").style.display = 'block';
+        $("#d__chat").show();
 
       } else {
         document.getElementById('camp_obli').style.display = 'block';

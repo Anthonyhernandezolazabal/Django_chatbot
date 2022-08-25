@@ -1,0 +1,39 @@
+@font-face {
+    font-family: breeperu;
+    src: url(BreePeru_Bold.otf);
+}
+
+@font-face {
+    font-family: breeperu_boldoblique;
+    src: url(BreePeru_BoldOblique.otf);
+}
+
+@font-face {
+    font-family: breeperu_light;
+    src: url(BreePeru_Light.otf);
+}
+
+@font-face {
+    font-family: breeperu_regular;
+    src: url(BreePeru_Regular.otf);
+}
+
+@font-face {
+    font-family: amarillo;
+    src: url(Amarillo.otf);
+}
+
+@font-face {
+    font-family: berthamelanie;
+    src: url(BerthaMelanie.ttf) format('truetype');
+    ;
+}
+
+@font-face {
+    font-family: mattahary;
+    src: url(Mattahary.ttf) format('truetype');
+}
+
+body {
+    font-family: breeperu breeperu_regular mattahary;
+}
