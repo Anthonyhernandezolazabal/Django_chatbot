@@ -4,7 +4,7 @@ from chatbot_admin.models import data_set
 class historialChatSerializers(serializers.ModelSerializer):
     class Meta:
         model = chat_user
-        fields = ['id','pregunta','respuesta','key_session_alias','nombre_persona','cliente_empresa_id','registrado']
+        fields = ['id','pregunta','respuesta','key_session_alias','nombre_persona','cliente_empresa_id','registrado','nombre_persona_sin_alias','fecha_historial_chat','estado_chat']
 
 class personalizarChatSerializers(serializers.ModelSerializer):
     class Meta:

@@ -11,6 +11,9 @@ urlpatterns = [
     path('historial_fecha/',views.historialChatApiView.as_view(), name='historial_fecha'),
     path('obtener_conversacion/',views.conversacionesApiView.as_view(), name='obtener_conversacion'),
     path('personalizar_chat/',views.personalizarApiView.as_view(), name='personalizar_chat'),
+    path('delete___chat/', views.delete___chat, name='chatdeleted'),
+    path('all_chat_ver/', views.all_chat_ver, name='all_chat_ver'),
+    path('visto__chat/', views.visto__chat, name='visto__chat'),
     
     path('data__set/',views.data__set_all.as_view(), name='data__set'),
     

@@ -1,6 +1,14 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
 {% block content %}
+<style>
+.carousel-control-prev{
+  top: -99px !important;
+}
+.carousel-control-next{
+  top: -99px !important;
+}
+</style>
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
@@ -40,17 +48,20 @@
 
                               {% if datos %}
                                 {% for dato in datos %}
-                                <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}');" class="text-body">
+                                <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}','{{ dato.fecha_historial_chat }}');" class="text-body">
+                                  
                                   <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                  <button type="button" class="btn btn-danger btn-sm" onclick="delete_cha___t('{{ dato.nombre_persona }}','{{ dato.nombre_persona_sin_alias }}')" style="position: absolute;right: 0;padding: 0px;margin-top: -17px;"><i class="mdi mdi-delete"></i> </button>
+
                                     <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
-                                    <h1 class="me-2 rounded-circle" height="48">
-                                      {{ dato.nombre_persona|make_list|first|upper }}</h1>
-                                    <div class="w-100 overflow-hidden">
+                                    <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|make_list|first|upper }}</h1>
+                                    <div class="w-100 overflow-hidden" style="margin: auto;">
                                       <h5 class="mt-0 mb-0 font-14">
-                                        <span class="float-end text-muted font-12">4:30am</span>
-                                        {{ dato.nombre_persona }}
+                                        <span class="float-end text-muted font-12 f____ch" attr_hr="{{ dato.fecha_historial_chat }}">Hora</span>
+                                        {{ dato.nombre_persona_sin_alias }}
                                       </h5>
-                                      <p class="mt-1 mb-0 text-muted font-14">
+                                      <p class="mt-1 mb-0 text-muted font-14">  
+                                        <span class="w-25 float-end text-end ac___all__ch"  attr_nom__b="{{ dato.nombre_persona }}"></span>
                                         <span class="w-75">{{ dato.pregunta }}</span>
                                       </p>
                                     </div>
@@ -114,9 +125,11 @@
                 style="height: 310px; transform: translate3d(0px, 227px, 0px); display: block;"></div>
             </div>
           </ul>
+          
         </div>
       </div>
     </div>
   </div>
 </div>
+
 {% endblock content %}

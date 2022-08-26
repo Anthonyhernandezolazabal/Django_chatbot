@@ -17,6 +17,7 @@ import base64
 from django.http import HttpRequest
 from django.core import serializers
 from os import remove
+import time
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,6 +130,7 @@ def getchat(request):
     bol=myuser['bol']
     #bol getchat : 0
     nombre_nombre=myuser['nombre']+'-'+user_cook
+    nombre_sin_alias=myuser['nombre']
     #nombre_nombre getchat : olazabal-rynyshe55uhli6eaqei7k8b65bw5du
     entradatmp=myuser['entradatmp']
     #entradatmp getchat :
@@ -153,7 +155,17 @@ def getchat(request):
           user[user_cook] = myuser
           session_cook = user
           # === GUARDA LAS SESSIONES EN LA BD
-          user_chat = chat_user(pregunta=chat_input,key_session_alias=user_cook,respuesta=response,nombre_persona=nombre_nombre,cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
+          n__ow = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+          print("FECHA DE REGISTRO2 :",n__ow)
+          user_chat = chat_user(
+            pregunta=chat_input,
+            key_session_alias=user_cook,
+            respuesta=response,
+            nombre_persona=nombre_nombre,
+            nombre_persona_sin_alias=nombre_sin_alias,
+            fecha_historial_chat=n__ow,
+            estado_chat='novisto',
+            cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
           return HttpResponse(str(response))  
         else:
@@ -246,11 +258,6 @@ def getjsondelet(request):
     empresa = request.GET.get('empresa')
     nom = request.GET.get('nom')
     id_usu = request.GET.get('id_usu')
-
-    print("ELIMIII id_reg :",id_reg)
-    print("ELIMIII empresa :",empresa)
-    print("ELIMIII  nom:",nom)
-    print("ELIMIII  id_usu:",id_usu)
 
     # 1. Eliminamos el json 
     with os.scandir(ruta_actual + '/empresa_'+empresa) as ficheros:
@@ -397,3 +404,36 @@ class data__set_all(APIView):
       serializer_historial = datasetSerializers(rpta_pr, many=True)
 
       return Response(serializer_historial.data)
+      
+'''=============================================
+   ELIMINAR HISTORIAL POR CHAT
+============================================= '''
+def delete___chat(request):
+  if request.GET['id']:
+    id__his = request.GET.get('id')
+    print("id__his :",id__his)
+    # 2. Eliminar el registro
+    record = chat_user.objects.filter(nombre_persona = str(id__his))
+    record.delete()
+    print("Registro eliminado")
+
+    return HttpResponse(str("ChatEliminado")) 
+      
+def all_chat_ver(request):
+  if request.GET['id']:
+    id__his = request.GET.get('id')
+    # record = chat_user.objects.filter(nombre_persona=str(id__his)).filter(estado_chat='novisto').count()
+    record = chat_user.objects.filter(nombre_persona=str(id__his), estado_chat='novisto').count()
+
+    return HttpResponse(str(record)) 
+      
+def visto__chat(request):
+  if request.GET['alias']:
+    alias = request.GET.get('alias')
+    # record = chat_user.objects.filter(nombre_persona=str(id__his)).filter(estado_chat='novisto').count()
+    chat_user.objects.filter(nombre_persona=str(alias), estado_chat='novisto').update(estado_chat="visto")
+    print("Visto chat")
+
+    return HttpResponse(str("visto")) 
+
+    
