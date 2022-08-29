@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from chatbot.models import chat_user,chatbot_style
-from chatbot_admin.models import data_set,cliente
+from chatbot_admin.models import data_set,cliente,configuraciones
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from chatbot.serializers import historialChatSerializers,personalizarChatSerializers,datasetSerializers
@@ -436,4 +436,63 @@ def visto__chat(request):
 
     return HttpResponse(str("visto")) 
 
-    
+          
+'''=============================================
+   MÓDULO CONFIGURACIÓN
+============================================= '''
+class configuracion(APIView):      
+  def addconfig(request):
+    if request.GET['id_empr']:
+      id_empr = request.GET.get('id_empr')
+      ter_con = request.GET.get('ter_con')
+      horario__comercial = request.GET.get('horario__comercial')
+      est_inicio = request.GET.get('est_inicio')
+      est_cierre = request.GET.get('est_cierre')
+      cierre_desc = request.GET.get('cierre_desc')
+      c_nombre = request.GET.get('c_nombre')
+      email_c = request.GET.get('email_c')
+      tel_c = request.GET.get('tel_c')
+      es___tado = request.GET.get('es___tado')
+
+      if es___tado == "Registrar":
+        validar_registro = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr)).count()
+        if validar_registro == 0:
+          conf_add = configuraciones(
+            terminosycondiciones=ter_con,
+            horariocomercial=horario__comercial,
+            h_inicio=est_inicio,
+            h_cierre=est_cierre,
+            h_cierre_des=cierre_desc,
+            c_nombre=c_nombre,
+            c_email=email_c,
+            c_telefono=tel_c,
+            cliente_empresa_id=cliente.objects.get(pk=id_empr))
+          conf_add.save()
+          return HttpResponse(str("registrado")) 
+        else:
+          return HttpResponse(str("ya_existe"))
+
+      if es___tado == "Editar":
+        
+        configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr)).update(
+          terminosycondiciones=ter_con,
+          horariocomercial=horario__comercial,
+          h_inicio=est_inicio,
+          h_cierre=est_cierre,
+          h_cierre_des=cierre_desc,
+          c_nombre=c_nombre,
+          c_email=email_c,
+          c_telefono=tel_c,
+        )
+        return HttpResponse(str("editado")) 
+
+
+  def showconfig(request):
+    if request.GET['id_empr']:
+      id_empr = request.GET.get('id_empr')
+      datos = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr))
+   
+
+
+      response = serializers.serialize("json", datos)
+      return HttpResponse(response, content_type='application/json')

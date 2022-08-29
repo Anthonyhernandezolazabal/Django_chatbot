@@ -1,7 +1,7 @@
 from django.urls import path
 from .import views
 from chatbot_admin.views import LoginFormViews
-from chatbot.views import mod_slider,obtener_prg
+from chatbot.views import mod_slider,obtener_prg,configuracion
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
     path('getnombre/', views.getnombre, name='nombre'),
@@ -25,5 +25,7 @@ urlpatterns = [
 
     path('guardar_img_slider/', mod_slider.guardar_imagen_slider,name='guardar_img_slider'),
 
+    path('sav__config/',configuracion.addconfig,name='sav__config'),
+    path('mostrar_data__config/',configuracion.showconfig,name='mostrar_data__config'),
 
 ]

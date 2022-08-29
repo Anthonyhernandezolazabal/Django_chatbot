@@ -33,3 +33,19 @@ class data_set(models.Model):
     class Meta:
       db_table = 'data_set'
       ordering = ['id'] #ordenar por ID
+
+
+class configuraciones(models.Model):
+    terminosycondiciones = models.CharField(max_length=255, verbose_name='aceptar terminos y condiciones')
+    horariocomercial = models.CharField(max_length=255, verbose_name='Horario comercial')
+    h_inicio = models.CharField(max_length=255, verbose_name='hora de inicio', null=True)
+    h_cierre = models.CharField(max_length=255, verbose_name='hora de cierre', null=True)
+    h_cierre_des = models.CharField(max_length=255, verbose_name='Descripción hora cierre', null=True)
+    c_nombre = models.CharField(max_length=255, verbose_name='Campo nombre', null=True)
+    c_email = models.CharField(max_length=255, verbose_name='Campo email', null=True)
+    c_telefono = models.CharField(max_length=255, verbose_name='Campo teléfono', null=True)
+    cliente_empresa_id = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
+        
+    class Meta:
+        db_table = 'configuraciones'
+        ordering = ['id'] #ordenar por ID

@@ -3,7 +3,7 @@ from .import views
 from chatbot_admin.views import LoginFormViews
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
-from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usuarios,modulo_clientes,modulo_historial_conversacion,modulo_Personalizar
+from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usuarios,modulo_clientes,modulo_historial_conversacion,modulo_Personalizar,modulo_Configurar
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('clientes/',login_required(modulo_clientes.mod_clientes),name='clientes' ),
     path('historial/',login_required(modulo_historial_conversacion.mod_historial), name='historial'),
     path('personalizar/',login_required(modulo_Personalizar.mod_Personalizar), name='personalizar'),
+    path('configuraciones/',login_required(modulo_Configurar.mod_configurar), name='configuraciones'),
 ]

@@ -207,3 +207,9 @@ MÓDULO APARIENCIA
 class modulo_Personalizar(HttpRequest):
   def mod_Personalizar(request):
     return render(request, 'chatbot_admin/layouts/personalizar.html')
+"""=============================================
+MÓDULO CONFIRGURACIONES
+============================================="""
+class modulo_Configurar(HttpRequest):
+  def mod_configurar(request):
+    return render(request, 'chatbot_admin/layouts/configuracion.html')
