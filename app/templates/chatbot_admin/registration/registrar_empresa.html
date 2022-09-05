@@ -1,0 +1,49 @@
+{% extends "chatbot_admin/registration/confirmar_registro.html" %}
+{% block title %}Registro{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xxl-4 col-lg-5">
+        <div class="card">
+          <div class="card-body p-4">
+            <div class="text-center">
+              <h4 class="text-center text-uppercase text-success mt-3">Registrar Empresa</h4>
+              <p class="text-muted mt-3">Llena los datos para registrar tu <strong>empresa</strong> </p>
+            </div>
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+              <i class="dripicons-checkmark me-2"></i>
+              Mensaje de error
+            </div>
+            {% endif %}
+            <form action="{% url 'guardarCliente' %}" method='POST'>
+              {% csrf_token %}
+                {% if mensaje %}
+                  <div class="alert alert-success" role="alert">
+                    <i class="dripicons-checkmark me-2"></i>
+                    Cliente registrado exitosamente
+                  </div>
+                {% endif %}
+              {{ form|crispy }}
+              <div class="text-end">
+                <input type="hidden" id="cliente_id" name="cliente_id" value="{{ cliente_id }}">
+                <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var LS_s = localStorage.getItem('datos')
+  document.getElementById('id_nombreBD').value = JSON.parse(LS_s).nombrebd + '.sqlite3'
+
+</script>
+
+{% endblock %}

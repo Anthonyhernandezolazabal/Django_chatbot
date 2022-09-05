@@ -4,43 +4,34 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{% block title %} Acceso {% endblock %}</title>
+  <title>{% block title %} Acceso a la administración {% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
   <meta content="Coderthemes" name="author">
   {% include 'chatbot_admin/layouts/head.html' %}
-
 </head>
 
 <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
-
   <div class="auth-fluid">
     <div class="auth-fluid-form-box">
       <div class="align-items-center d-flex h-100">
         <div class="card-body">
-
           <!-- Logo -->
           <div class="auth-brand text-center text-lg-start">
-            <a href="index.html" class="logo-dark">
-              <span><img src="{% static 'chatbot_admin/assets/images/logo-dark.png' %}" alt="" height="18"></span>
-            </a>
-            <a href="index.html" class="logo-light">
-              <span><img src="{% static 'chatbot_admin/assets/images/logo.png' %}" alt="" height="18"></span>
+            <a href="javascript: void(0)" class="logo-dark">
+              <span><img src="{% static 'chatbot_admin/assets/images/logoLG.png' %}" alt="" height="40"></span>
             </a>
           </div>
-
           {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-success" role="alert">
-                <i class="dripicons-checkmark me-2"></i> This is a
-                {{message}}
-              </div>
-            {% endfor %}
+          {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            <i class="dripicons-checkmark me-2"></i>
+            <b>{{message}}</b>
+          </div>
+          {% endfor %}
           {% endif %}
-
           <h4 class="mt-0">Iniciar sesión</h4>
           <p class="text-muted mb-4">Ingrese su usuario y contraseña para acceder al sistema.</p>
-
           <!-- INICIAR SESION -->
           <form method="post">
             {% csrf_token %}
@@ -49,18 +40,19 @@
               <input class="form-control" type="text" name='username' id='username' required=""
                 placeholder="Ingresa tu usuario">
             </div>
-
             <div class="mb-3">
               <a href="#" class="text-muted float-end"><small>¿Olvidaste tu contraseña?</small></a>
               <label for="password" class="form-label">Contraseña</label>
               <input class="form-control" type="password" required="" name='password' id='password'
                 placeholder="Ingresa tu contraseña">
             </div>
-
             <div class="d-grid mb-0 text-center">
-              <button class="btn btn-primary" type="submit"><i class="mdi mdi-login"></i> Iniciar sesión </button>
+              <button class="btn btn-info ingresando" type="submit"><i class="mdi mdi-login"></i> Iniciar sesión </button>
+              <button class="btn btn-info ingresandolider" type="button" disabled="" style="display: none">
+                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                Ingresando...
+              </button>
             </div>
-
             <!-- social-->
             <div class="text-center mt-4">
               <p class="text-muted font-16">Inicia sesión con</p>
@@ -91,26 +83,36 @@
         </div>
       </div>
     </div>
-
     <div class="auth-fluid-right text-center">
       <div class="auth-user-testimonial">
-        <h2 class="mb-3">I love the color!</h2>
-        <p class="lead"><i class="mdi mdi-format-quote-open"></i> It's a elegent templete. I love it very much!
-          . <i class="mdi mdi-format-quote-close"></i>
+        <h2 class="mb-3">== NOMBRE DEL PRODUCTO ==</h2>
+        <p class="lead"><i class="mdi mdi-format-quote-open"></i> Experimenta en primera persona la interacción con el
+          bot, personaliza consultas, conversa y mejora la experiencia de tus clientes en tiempo real. <i
+            class="mdi mdi-format-quote-close"></i>
         </p>
         <p>
-          - Hyper Admin User
+          - Chatbot by INGyTAL
         </p>
       </div>
     </div>
   </div>
-
-
-
-
   <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
   <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
+  <script>
+    var ingresando = document.querySelector('.ingresando')
+    ingresando.addEventListener('click', () => {
 
+      var username = document.getElementById('username').value
+      var password = document.getElementById('password').value
+
+      if (username != '' && password != ''){
+        document.querySelector(".ingresandolider").style.display = "block"
+        document.querySelector(".ingresando").style.display = "none"
+      }
+
+
+    })
+  </script>
 </body>
 
 </html>

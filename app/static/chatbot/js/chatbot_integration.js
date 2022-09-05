@@ -1,92 +1,709 @@
+var URLactual = 'https://192.168.214.6:8000/';
+chatbot_personalizado();
+show____confi();
 var boddy = document.querySelector("body");
-var body = document.createElement("div");
-
+var div_chatbot = document.createElement("div");
+var habilidar_chat = false;
 var htmlbot = `
-                    
-            <div class="chat-screen" style='overflow-y: hidden;'>
-            <div class="chat-header">
-                <div class="chat-header-title">
-                Estamos en linea
-                </div>
-                <div class="chat-header-option hide">
-                <span class="dropdown custom-dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-more-horizontal">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink1"
-                    style="will-change: transform;">
-                    <a class="dropdown-item end-chat" href="javascript:void(0);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="#bc32ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-power">
-                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-                        <line x1="12" y1="2" x2="12" y2="12"></line>
-                        </svg>
-                        Chat finalizado
-                    </a>
+<div class="fabs" style='z-index: 9999999;'>
+  <div class="chat is-visible">
+    <div id='color_bd_chatbot' class="chat_header">
+      <div class="chat_option">
+        <div class="header_img" style="margin-bottom: 8px;">
+          <img class='chat_img_option' src="${URLactual}static/chatbot_admin/assets/images/default.png" />
+        </div>
+        <span id="chat_head" style="font-weight: bold;">INGyBOT</span> <br> <span class="agent">.</span>
+        <span class="online" style="font-weight: bold;">En Línea</span>
+        <span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
+      </div>
+    </div>
+
+    <div class="chat_body chat_login" style="border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
+      <a id="chat_third_screen" class="fab is-visible chat_a_login"><i class="zmdi zmdi-arrow-right"></i></a>
+      <p class='clss_p' id='cb_frm'>Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</p>
+
+      <input type='hidden' id='chatbot_terminos_condiciones'>
+      <input type='hidden' id='chatbot_terminos_condiciones_link'>
+      <input type='hidden' id='t_c_rcz'>
+      <input type='hidden' id='t_c_acept'>
+      <input type='hidden' id='all_dat_conf'>
+
+
+      <input type='hidden' id='cam_ps'>
+
+      <div id="form_id" class="id__frm_show">
+
+      </div>
+    </div>
+    <div id="chat_form" class="chat_converse chat_form">
+    
+      <div id="sh___ow__t__y__c">
+
+      </div>
+
+      <div id="sh___ow__bienvenida">
+
+      </div>
+     
+ 
+    </div>
+    <div id="d__chat" style="display: none !important" >
+      <span class="" style='display: none;left: 37px;position: absolute;bottom: 60px;animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;' id='carga_new'>
+      
+        <div class="contenido_carga">
+          <div class="point"></div>
+          <div class="point"></div>
+          <div class="point"></div>
+        </div>
+      
+      </span>
+
+      <div class="fab_field">
+  
+      </div>
+    
+    </div>
+  </div>
+  <a id="prime" class="fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
+</div>`;
+div_chatbot.innerHTML = htmlbot
+div_chatbot.setAttribute('id', 'chatboot_anthony_2020')
+boddy.append(div_chatbot);
+
+/*=============================================
+VALIDAR MÓDULO DE CONFIGURACION DEL CHATBOT
+=============================================*/
+function trae_data_conf(){
+  
+}
+
+/*=============================================
+FUNCIONAMIENTO DEL CHATBOT
+=============================================*/
+hideChat(0);
+document.getElementById('prime').addEventListener('click', function () {
+  toggleFab();
+})
+//Toggle chat and lchats
+function toggleFab() {
+  document.querySelector(".prime").classList.toggle("zmdi-comment-outline");
+  document.querySelector(".prime").classList.toggle("zmdi-close");
+  document.querySelector(".prime").classList.toggle("is-active");
+  document.querySelector(".prime").classList.toggle("is-visible");
+  document.querySelector("#prime").classList.toggle("is-float");
+  document.querySelector(".chat").classList.toggle("is-visible");
+  document.querySelectorAll('.fab').forEach(fab => {
+    fab.classList.toggle("is-visible");
+  });
+}
+document.querySelector('#chat_third_screen').addEventListener("click", function (e) {
+  hideChat(2);
+})
+document.querySelector('#chat_fullscreen_loader').addEventListener("click", function (e) {
+  document.querySelector(".fullscreen").classList.toggle("zmdi-window-maximize");
+  document.querySelector(".fullscreen").classList.toggle("zmdi-window-restore");
+  document.querySelector(".chat").classList.toggle("chat_fullscreen");
+  document.querySelectorAll('.fab').forEach(fab => {
+    fab.classList.toggle("is-hide");
+  });
+  document.querySelector(".header_img").classList.toggle("change_img");
+  document.querySelector(".chat_header").classList.toggle("chat_header2");
+  document.querySelector(".fab_field").classList.toggle("fab_field2");
+  document.querySelector(".chat_converse").classList.toggle("chat_converse2");
+});
+
+/*=============================================
+LOCALSTORAGE PARA ALIAS SESION
+=============================================*/
+function aliasLS() {
+  let num = 30
+  const characters = '1234567890abcdefghijklmnopqrstuvwxyz';
+  let codigo = '';
+  let dat__a = [];
+  const charactersLength = characters.length;
+  for (let i = 0; i < num; i++) {
+    codigo += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  let nombre_usuario = div_chatbot.querySelectorAll('.cls_campos')
+  for (let n = 0; n < nombre_usuario.length; n++) {
+    let element = nombre_usuario[n].value;
+    dat__a.push(element)
+  }
+  datosLS = {
+    codigo: codigo,
+    nombre: dat__a[0], //Obtengo solo el nombre
+  }
+  localStorage.setItem('alias_key', JSON.stringify(datosLS));
+  key_alias = codigo
+  div_chatbot.querySelector('#key_alias').value = key_alias
+  div_chatbot.querySelector('#nombre_chat').value = dat__a[0]
+  div_chatbot.querySelector('#email_chat').value = dat__a[1]
+  div_chatbot.querySelector('#phone_chat').value = dat__a[2]
+  return key_alias
+}
+
+function hideChat(hide) {
+  switch (hide) {
+    case 0:
+      document.getElementById('chat_form').style.display = 'none'; //conversaciones
+      document.querySelector(".chat_header").style.display = 'block'; //bienvenida
+      document.querySelector(".chat_fullscreen_loader").style.display = 'none'; //bienvenida
+      break;
+    case 2:
+      var campos_input = document.querySelectorAll('.cls_campos')
+      var error = false;
+      campos_input.forEach(it______em => {
+
+          let nombre_usuario = it______em.value
+
+          if(nombre_usuario.length == 0){
+
+            console.log("nombre_usuario :",nombre_usuario)
+
+            it______em.style = 'border: 1px solid #cd0008!important;';
+            error = true
+
+          }else{
+            it______em.style = '2px solid lightgrey !important;';
+          }
+
+      });
+
+      if(error == true){
+        return;
+      }
+      aliasLS()
+      var nom_usuario = document.getElementById('nombre_chat').value
+      let fromData = new FormData;
+      fromData.append('nomb', nom_usuario);
+  
+      fetch(URLactual+'getnombre/?nomb=' + nom_usuario + '&user_alias=' + key_alias, {
+        method: 'GET',
+      }).then(jsonRsp => {}).catch(e => {
+        console.log('e :', e);
+      })
+      document.querySelector(".fab_field").innerHTML =
+      `
+      <a id="fab_camera" class="fab fab_a_field"><i class="zmdi zmdi-mic"></i></a>
+      <a href="javascript: enviar_texto(this);" id="fab_send" class="fab" style='z-index: 99999;'><i class="zmdi zmdi-mail-send"></i></a>
+
+      <input type="text" id="textInput" onkeypress='return escribir(event)' name="chat_message" placeholder="Escribe algo..." class="chat_field chat_message">`;
+      document.querySelectorAll('.fab').forEach(fab => {
+        fab.classList.toggle("is-visible");
+      });
+      document.getElementById('chat_form').style.display = 'block'
+      document.querySelector(".chat_login").style.display = 'none';
+      document.querySelector(".chat_fullscreen_loader").style.display = 'block';
+      document.getElementById("d__chat").style.display = 'block';
+                  
+      var dat_______os = document.querySelector("#all_dat_conf").value;
+      validar_conf_chat(dat_______os) //Validar terminos y condiciones con bienvenida
+
+      
+
+
+ 
+ 
+
+      // CUANDO SÓLO EL NOMBRE Y EMAIL ESTÁN ACTIVO
+      // if(nom_ext.length == 0 && email_ext.length == 0){
+      //     document.getElementById("txtusuario").style = 'border: 1px solid #cd000870 !important;';
+      //     document.getElementById("txtemail").style = 'border: 1px solid #cd000870 !important;';
+      // }else if(nom_ext.length == 0 || email_ext.length == 0){
+      //   if(nom_ext.length == 0){
+      //     document.getElementById("txtusuario").style = 'border: 1px solid #cd000870 !important;';
+      //   }else{
+      //     document.getElementById("txtusuario").style = '2px solid lightgrey !important;';
+      //   }
+      //   if(email_ext.length == 0){
+      //     document.getElementById("txtemail").style = 'border: 1px solid #cd000870 !important;';
+      //   }else{
+      //     document.getElementById("txtemail").style = '2px solid lightgrey !important;';
+      //   }
+      // }else{
+      //   console.log("Registro completo")
+      // }
+  
+
+
+      break;
+  }
+}
+
+
+
+
+function presionar_click(){
+  var presionar = document.querySelectorAll('.presionar');
+  // presionar.forEach(element => {
+  //   element.click();
+  // });
+  for (let i = 0; i < presionar.length; i++) {
+    presionar[presionar.length-1].click();
+  }
+}
+
+function escribir(e) {
+  if (e.keyCode == 13) {
+
+      getBotResponse();
+      document.getElementById('textInput').value = ''
+   
+  }
+}
+/*=============================================
+CONFIGURACION SLIDER
+=============================================*/
+let slideIndex = 1;
+showSlides(slideIndex);
+function plusSlides(n,objeto) {
+  showSlides(slideIndex += n,objeto);
+}
+function showSlides(n,objeto) {
+  let slider = objeto.closest('#container-slider').querySelector('#slider');
+  let i;
+  let slides = slider.getElementsByClassName("mySlides");
+  let dots = slider.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1
+  }
+  if (n < 1) {
+    slideIndex = slides.length
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  // dots[slideIndex - 1].className += " active";
+}
+/*=============================================
+INICIAR CHATBOT
+=============================================*/
+var ls_LS = localStorage.getItem('datos')
+var user_autenticate
+
+function getBotResponse() {
+  var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
+  var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
+  
+  microfono(); 
+  var html_all = '';
+  var html_all_pre_rpta = '';
+  if (ls_LS == null) {
+    user_autenticate = false //Usuario final
+  } else {
+    user_autenticate = JSON.parse(ls_LS).user_autenticate;  //Usuario 
+  }
+  var key_alias = div_chatbot.querySelector('#key_alias').value
+  var nombre_chat = div_chatbot.querySelector('#nombre_chat').value
+  var rawText = document.getElementById('textInput').value
+
+  if (rawText.length != 0 ) {
+    var userHtml = '<span class="">' + rawText + '</span>';
+    var div_p = document.querySelector("#chat_form");
+    let p = document.createElement("div");
+    p.className = "chat_msg_item chat_msg_item_user cls_color_user"; //Agrego una clase dentro del div
+    p.innerHTML = userHtml
+    div_p.append(p)
+    div_p.scrollTop = div_p.scrollHeight;
+    document.querySelectorAll('.cls_color_user').forEach(col => {
+      col.style.background = document.querySelector('#cam_ps').value
+    });
+    fetch(URLactual+'getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
+      method: 'GET',
+    }).then(rsp => rsp.text()).then(function (response) {
+      let decodedStr = atob(response);
+      const rpta_rpta = JSON.parse(decodedStr)
+      if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'texto') {
+        document.getElementById('carga_new').style.display = "block";
+        rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
+
+          setTimeout(() => {
+            document.getElementById('carga_new').style.display = "none";
+            var div_r = document.querySelector("#chat_form");
+            let r = document.createElement("div");
+            r.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+            r.innerHTML = '<span>'+ rpta_one['respueta_sl_texto'] +'</span>'
+            div_r.append(r)
+            div_r.scrollTop = div_r.scrollHeight;
+          }, 1600);
+        });
+      }
+
+      if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'slider') {
+
+
+
+
+        document.getElementById('carga_new').style.display = "block";
+        html_all_pre_rpta += '<span>'+ rpta_rpta['pre_respuesta']['pre_rpta'] +'</span>'
+        
+        html_all += `
+                <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+                  <div class="slideshow-container">
+                    <div id="slider">`
+
+                    rpta_rpta['respuesta_tipo'].forEach(elent_rpta => {
+                      var acciones_rpta = elent_rpta['acciones'];
+                      html_all += `
+                      <div class="mySlides fade_">`
+                      
+                      if (elent_rpta['img'] != ' ') {
+                        html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover;    width: 100%;"></div>`
+                      }
+
+                      if (elent_rpta['img'] != ' ') {
+                        html_all += `<div class="pos_accion">`
+                      } else{
+                        html_all += `<div class="pos_accion" style="position:inherit !important">`
+                      }
+
+
+                        html_all += `
+                        <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
+                        <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
+                        `
+                        
+
+                        acciones_rpta.forEach(act => {
+                          if (acciones_rpta.length == 1) {
+                            html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                          } else {
+                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                          }
+                        });
+
+                        // prev.click;
+                        
+
+                        
+
+
+
+                    html_all += `
+                              </div>
+                            </div>`
+                    });
+      html_all += `
                     </div>
-                </span>
-                </div>
-
-            </div>
-            
-            <div class="chat-mail">
-                <div class="row">
-                <div class="col-md-12 text-center mb-2">
-                    <p>Hola! Complete el formulario a continuacion para comenzar a chatear con el proximo agente
-                    disponible.</p>
-                </div>
-                </div>
-                <div class="row">
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Nombre" id='txtusuario' name='txtusuario' required>
-                    <p style="text-align: center;color: red; display: none" id='alert_nom'></p>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary btn-rounded btn-block">Comenzar chat</button>
-                </div>
-                <div class="col-md-12">
-                    <div class="powered-by">@INGyTAL</div>
-                </div>
-                </div>
-
-
-            </div>
-            <div class="chat-body hide" style='overflow-y: scroll;' id="chat2">
-
-                <div id="chat">
-                <div class="chat-start">Lunes, 1:27 PM</div>
+                    <a class="prev" onclick="plusSlides(-1,this)">❮</a>
+                    <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                  </div>
+                  <br>
+                </div>`;
+              setTimeout(function () { 
                 
-                <div class="chat-bubble you">Bienvenido a nuestro sitio, si necesita ayuda, simplemente responda a este
-                    mensaje, estamos en línea y listos para ayudar.</div>
 
-                </div>
-            </div>
-            <div class="chat-input hide" id="userInput">
-                <input type="text" placeholder="Escribir algo..." id='textInput'>
-            </div>
-            </div>
-            <div class="chat-bot-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square animate">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x ">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-            </div>
-`;
-body.innerHTML = htmlbot
-boddy.append(body);
+                if(rpta_rpta['pre_respuesta']['pre_rpta'].length != 0){
+                  // pre respuesta
+                  document.getElementById('carga_new').style.display = "none";
+                  var div_r2 = document.querySelector("#chat_form");
+                  let r2 = document.createElement("div");
+                  r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+                  r2.innerHTML = html_all_pre_rpta
+                  div_r2.append(r2)
+                  div_r2.scrollTop = div_r2.scrollHeight;
+                }
+
+      
+                 // respuesta SLIDER
+                document.getElementById('carga_new').style.display = "none";
+                var div_r = document.querySelector("#chat_form");
+                let r = document.createElement("div");
+                r.className = "chat_msg_item chat_msg_item_admin2"; //Agrego una clase dentro del div
+                r.innerHTML = html_all
+                div_r.append(r)
+                div_r.scrollTop = div_r.scrollHeight;
+                presionar_click();
+
+                document.querySelectorAll('.btn_accion').forEach(act_sld => {
+
+                  act_sld.style.background = document.querySelector('#color_chat_acciones').value
+                  
+                });
+
+                
+      
+              }, 1600)
+
+      }
+    }).catch(e => {
+      //mostrar mensaje de error
+      console.log(e);
+    })
+  }
+}
+/*=============================================
+RESPUESTAS DE ACCIONES
+=============================================*/
+function accion_rpta(e) {
+
+
+    document.getElementById('textInput').value = e
+    getBotResponse();
+    document.getElementById('textInput').value = ''
+
+ 
+
+}
+
+function enviar_texto(){
+    getBotResponse();
+    document.getElementById('textInput').value = ''
+}
+
+/*=============================================
+CHAT MICROFONO
+=============================================*/
+function microfono(){
+  let mic = document.getElementById("fab_camera");
+  let texto = document.getElementById('textInput');
+  let recognition = new webkitSpeechRecognition()
+  recognition.lang = 'es-ES';
+  recognition.continuous = true; //Siga grabando
+  recognition.interimResults = false; //Si nos quedamos callado que deje de grabar
+  recognition.onresult = (event) => {
+    const results = event.results;
+    const frase = results[results.length - 1][0].transcript;
+    texto.value += frase
+    getBotResponse();
+    texto.value = ''
+    recognition.abort();
+    mic.style.background = '#ffffff';
+  }
+  document.getElementById("fab_camera").addEventListener("click", function () {
+    recognition.start();
+    mic.style.background = '#009805';
+  })
+}
+
+/*=============================================
+VALIDAR CONFIGURACIÓN AL INICIAR CHAT
+=============================================*/
+function show____confi(){
+
+  var id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
+  let tmp_bot = ``;
+
+  fetch(URLactual+'mostrar_data__config/?id_empr=' + id, {
+      method: 'GET',
+    }).then(rsp => rsp.json()).then(function (response) {
+
+   
+
+      document.getElementById("all_dat_conf").value = JSON.stringify(response[0].fields)
+
+
+      if(response[0].fields.horariocomercial == "24horas"){
+
+
+        if(response[0].fields.c_nombre == "1"){
+          tmp_bot += `
+                    <div class="field">
+                      <input type="text" placeholder="Nombre" class="cls_campos" id="txtusuario" name="txtusuario">
+                    </div>
+                    <input type='hidden' id='key_alias'>
+                    <input type='hidden' id='nombre_chat'>
+                    <input type='hidden' id='email_chat'>
+                    <input type='hidden' id='phone_chat'>`
+        }
+        if(response[0].fields.c_email == "1"){
+          tmp_bot += `
+            <div class="field">
+              <input type="email" placeholder="Correo electrónico" class="cls_campos" id="txtemail" name="txtemail">
+            </div>`
+        }
+        if(response[0].fields.c_telefono == "1"){
+          tmp_bot += `
+            <div class="field">
+              <input type="number" placeholder="Número de teléfono" class="cls_campos" id="txttelefono" name="txttelefono">
+            </div>`
+        }
+
+
+      }
+
+      // HORARIO PERSONALIZADO EN DESARROLLO
+      if(response[0].fields.horariocomercial == "personalizado"){
+        //Definiendo la hora comercial
+        let now = new Date();
+        let h_actual = now.getHours()+':'+now.getMinutes();
+        let h_in = response[0].fields.h_inicio;
+        let h_ci = response[0].fields.h_cierre;
+        // console.log("Horario comercial :",response[0].fields.horariocomercial)
+        console.log("h_actual :",h_actual)
+        console.log("h_in :",h_in)
+        console.log("h_ci :",h_ci)
+
+        // document.getElementById("cb_frm").innerHTML = response[0].fields.h_cierre_des
+      }
+      document.querySelector(".id__frm_show").innerHTML = tmp_bot
+
+      
+        
+    }) 
+}
+function validar_conf_chat(datos){
+  let d = JSON.parse(datos)
+
+  if(d.terminosycondiciones == "mostrar"){
+    console.log("Ver input :",document.getElementById('textInput'))
+    document.querySelector("#sh___ow__t__y__c").innerHTML = `
+    <div class="chat_msg_item chat_msg_item_admin">
+      <span class="chatbot_terminos_condiciones">${document.getElementById('chatbot_terminos_condiciones').value}</span>: <a href="${document.getElementById('chatbot_terminos_condiciones_link').value}" class="chatbot_terminos_condiciones_link">${document.getElementById('chatbot_terminos_condiciones_link').value}</a>
+      <center class='t_y_c_cls'>
+        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar' style='background: ${document.querySelector('#cam_ps').value}'>Aceptar</button>
+        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
+      </center>
+    </div>`
+
+  }else{
+
+    //Mensaje de bienvenida
+    let d__bienvenida = JSON.parse(d.texto_bienvenida)
+    if(d__bienvenida[0].tipo == "texto"){
+      d__bienvenida[0].rptas.forEach(el__ement => {
+        let bo__ddy = document.querySelector("#sh___ow__bienvenida");
+        let div___chatbot = document.createElement("div");
+        div___chatbot.innerHTML = `
+        <div class="chat_msg_item chat_msg_item_admin">
+          ${el__ement}
+        </div>`
+        bo__ddy.append(div___chatbot);
+      });
+    }
+
+    if(d__bienvenida[0].tipo == "slider"){
+      console.log("d__bienvenida[0] :",(d__bienvenida[0].rptas).length)
+      let html_all = "";
+
+
+
+
+
+
+
+
+      html_all += `
+      <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+        <div class="slideshow-container">
+          <div id="slider">`
+
+          d__bienvenida[0].rptas.forEach(elent_rpta => {
+
+            var acciones_rpta = elent_rpta['acciones'];
+            html_all += `
+            <div class="mySlides fade_">`
+            
+              if (elent_rpta['img'] != '') {
+                html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
+              }
+
+              if (elent_rpta['img'] != '') {
+                html_all += `<div class="pos_accion">`
+              } else{
+                html_all += `<div class="pos_accion" style="position:inherit !important">`
+              }
+
+
+              html_all += `
+              <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
+              <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
+              `
+
+              acciones_rpta.forEach(act => {
+                if (acciones_rpta.length == 1) {
+                  html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                } else {
+                  html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                }
+              });
+
+              // prev.click;
+
+            html_all += `
+                      </div>
+                    </div>`
+            });
+
+
+            html_all += `
+                      </div>
+                      <a class="prev" onclick="plusSlides(-1,this)">❮</a>
+                      <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                    </div>
+                    <br>
+                  </div>`;
+
+                  let div___r2 = document.querySelector("#chat_form");
+                  let r2 = document.createElement("div");
+                  r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+                  r2.innerHTML = '<span>'+ d__bienvenida[0].pre_rpta +'</span>'
+                  div___r2.append(r2)
+
+                 // respuesta SLIDER
+                 let div_r = document.querySelector("#chat_form");
+                 let r = document.createElement("div");
+                 r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
+                 r.innerHTML = html_all
+                 div_r.append(r)
+                 presionar_click();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+    }
+
+
+  }
+}
+
+/*=============================================
+CHATBOT PERSONALIZADO
+=============================================*/
+function chatbot_personalizado() {
+
+  var empresa_id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
+
+  fetch(URLactual+'personalizar_chat/?id_empr=' + empresa_id, {
+    method: 'GET',
+  }).then(rsp => rsp.json()).then(function (response) {
+    document.querySelector('#chat_head').innerText = response[0]['nombre_chatbot']
+    document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
+    document.getElementById('chatbot_terminos_condiciones').value = response[0]['terminos_y_condiciones']
+    document.getElementById('chatbot_terminos_condiciones_link').value = response[0]['terminos_y_condiciones_link']
+    document.getElementById('t_c_rcz').value = response[0]['terminos_y_condiciones_rechazar']
+    document.querySelector('#t_c_acept').value = response[0]['terminos_y_condiciones_aceptar']
+
+
+    document.querySelector('#color_bd_chatbot').style.background = response[0]['color_header']
+    document.querySelector('#prime').style.background = response[0]['color_header']
+    document.querySelector('#chat_third_screen').style.background = response[0]['color_botones']
+    
+    document.querySelector('#cam_ps').value = response[0]['color_botones']
+
+    
+  })
+
+
+
+
+}

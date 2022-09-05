@@ -1,0 +1,152 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+            <li class="breadcrumb-item active">Configuraciones</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Configuraciones</h4>
+      </div>
+    </div>
+  </div>
+
+    <form method="post" id="save___config">
+        
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h6 class="card-header">Términos y condiciones</h6>
+                    <div class="card-body">
+                        <div class="form-check form-checkbox-info mb-2">
+                            <input type="checkbox" class="form-check-input" id="chktyc">
+                            <label class="form-check-label" for="chktyc">Términos y condiciones al iniciar conversación</label>
+                            <code><p class="card-text mt-2"><i class="mdi mdi-transfer-right"></i>  Si aún no has configurado los términos y condiciones puedes hacerlo dandole click <b><a target="_blank" href="{% url 'personalizar' %}">aquí</a></b> </p></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <h6 class="card-header">Horario comercial</h6>
+                    <div class="card-body">
+                        <center>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="chk_personalizado" name="customRadio1" class="form-check-input" required>
+                                    <label class="form-check-label" for="chk_personalizado">Personalizado</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="chk_all" name="customRadio1" class="form-check-input" required>
+                                    <label class="form-check-label" for="chk_all">24 horas</label>
+                                </div>
+                        </center>
+
+                        <div id="show__desc">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <h6 class="card-header">Campos</h6>
+                    <div class="card-body">
+                        <div class="form-check mb-1">
+                            <input type="checkbox" class="form-check-input" id="chk_nombre" checked required disabled>
+                            <label class="form-check-label" for="chk_nombre">Ingresa tu nombre (por defecto)</label>
+                        </div>
+                        <div class="form-check form-checkbox-success mb-1">
+                            <input type="checkbox" class="form-check-input" id="chk_email">
+                            <label class="form-check-label" for="chk_email">Ingresa tu correo electrónico</label>
+                        </div>
+                        <div class="form-check form-checkbox-info mb-1">
+                            <input type="checkbox" class="form-check-input" id="chk_telefono">
+                            <label class="form-check-label" for="chk_telefono">Ingresa tu teléfono</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="ccc_ini">
+            <input type="hidden" id="ccc_cie">
+            <input type="hidden" id="ccc_cie_des">
+            <input type="hidden" id="estado_register">
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h6 class="card-header">Inicio de Chat</h6>
+                    <div class="card-body">
+                        <div class="form-check form-checkbox-info mb-2">
+                            <input type="checkbox" class="form-check-input" id="chk_tex_bienv" checked disabled>
+                            <label class="form-check-label" for="chk_tex_bienv">Agregar bienvendia</label>
+                        </div>
+                        <div class="mt-2">
+                            <center id="show__t_b">
+
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="t__b__txt" name="customRadio" class="form-check-input" required>
+                                    <label class="form-check-label" for="t__b__txt">Texto</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="t__b__sldr" name="customRadio" class="form-check-input" required>
+                                    <label class="form-check-label" for="t__b__sldr">Slider</label>
+                                </div>
+
+                            </center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" id="show___t___b__txt__sld">
+              
+            </div>
+        </div>
+
+        <center><button type="submit" class="btn btn-outline-info mt-4">Guardar</button></center>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+</div>
+{% endblock content %}

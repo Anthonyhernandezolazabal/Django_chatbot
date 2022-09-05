@@ -1,7 +1,5 @@
 {% load static %}
 <div class="leftside-menu">
-
-  <!-- LOGO -->
   <a href="{% url 'home' %}" class="logo text-center logo-light">
     <span class="logo-lg">
       <img src="{% static 'chatbot_admin/assets/images/logo.png' %}" alt="" height="16">
@@ -10,8 +8,6 @@
       <img src="{% static 'chatbot_admin/assets/images/logo_sm.png' %}" alt="" height="16">
     </span>
   </a>
-
-  <!-- LOGO -->
   <a href="{% url 'home' %}" class="logo text-center logo-dark">
     <span class="logo-lg">
       <img src="{% static 'chatbot_admin/assets/images/logo-dark.png' %}" alt="" height="16">
@@ -20,76 +16,80 @@
       <img src="{% static 'chatbot_admin/assets/images/logo_sm_dark.png' %}" alt="" height="16">
     </span>
   </a>
-
   <div class="h-100" id="leftside-menu-container" data-simplebar="">
-
-    <!--- Sidemenu -->
     <ul class="side-nav">
-
       <li class="side-nav-title side-nav-item">Navigation</li>
-
-      <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
-          <i class="uil-user-circle"></i>
-          <span> Empresa </span>
-        </a>
-      </li>
-
       <li class="side-nav-item">
         <a href="#" class="side-nav-link">
           <i class="uil-user-circle"></i>
           <span> Perfil </span>
         </a>
       </li>
-
-      <li class="side-nav-item">
-        <a href="empresa" class="side-nav-link">
+      <li class="side-nav-item" id="li_Clientes" style="display: none">
+        <a href="{% url 'clientes' %}" class="side-nav-link">
           <i class="uil-store"></i>
           <span> Clientes </span>
         </a>
       </li>
-      <li class="side-nav-item">
-        <a href="usuarios" class="side-nav-link">
+      <li class="side-nav-item" id="li_Usuarios" style="display: none">
+        <a href="{% url 'usuarios' %}" class="side-nav-link">
           <i class="uil-users-alt"></i>
           <span> Usuarios </span>
         </a>
       </li>
       <li class="side-nav-title side-nav-item">CHATBOT</li>
-      <!-- <li class="side-nav-item">
-        <a href="apps-chat.html" class="side-nav-link">
+      <li class="side-nav-item">
+        <a href="{% url 'configuraciones' %}" class="side-nav-link">
           <i class="dripicons-gear noti-icon"></i>
-          <span> Configuración </span>
+          <span> Configuraciones </span>
         </a>
-      </li> -->
+      </li>
       <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
+        <a href="{% url 'personalizar' %}" class="side-nav-link">
           <i class="uil-palette"></i>
-          <span> Apariencia </span>
+          <span> Personalizar </span>
         </a>
       </li>
       <li class="side-nav-item">
-        <a href="conversacion" class="side-nav-link">
+        <!-- <a href="{% url 'respuestas' %}" class="side-nav-link"> -->
+        <a href="#" onclick="return fn_id_respuestas()" class="side-nav-link">
           <i class="uil-comments-alt"></i>
-          <span> Conversación </span>
+          <span> Respuestas </span>
         </a>
       </li>
       <li class="side-nav-item">
-        <a href="entrenamiento" class="side-nav-link">
-          <i class="uil-comment-alt-dots"></i>
-          <span> Entrenamiento </span>
-        </a>
-      </li>
-      <li class="side-nav-item">
-        <a href="{% url 'test_chatbot' %}" class="side-nav-link">
+        <a href="#" onclick="return fn_test_chatbot()" class="side-nav-link">
           <i class="uil-robot"></i>
           <span> Probar chatbot </span>
         </a>
       </li>
+      <li class="side-nav-title side-nav-item">Reportes</li>
+      <li class="side-nav-item">
+        <a href="#" onclick="return fn_id_historial()" id="capturalink" class="side-nav-link">
+          <i class="mdi mdi-wechat"></i>
+          <span> Historial </span>
+        </a>
+      </li>
     </ul>
-
     <div class="clearfix"></div>
-
   </div>
-  <!-- Sidebar -left -->
-
 </div>
+<script>
+  var Ls = localStorage.getItem('datos')
+  var id_empresa = JSON.parse(Ls).id_empresa;
+  var id_cliente = JSON.parse(Ls).id_cliente;
+
+  function fn_id_historial() {
+    var url_python = '{% url "historial" %}?id_empresa=' + id_empresa
+    location.replace(url_python)
+  }
+
+  function fn_id_respuestas() {
+    var url_python = '{% url "respuestas" %}?empre_id=' + id_empresa
+    location.replace(url_python)
+  }
+  function fn_test_chatbot() {
+    var url_python = '{% url "test_chatbot" %}?emp=' + id_empresa + '&us=' + id_cliente
+    location.replace(url_python)
+  }
+</script>

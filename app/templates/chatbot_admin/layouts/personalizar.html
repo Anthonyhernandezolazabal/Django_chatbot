@@ -1,0 +1,290 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a>
+            </li>
+            <li class="breadcrumb-item active">Personalizar</li>
+          </ol>
+        </div>
+        <h4 class="page-title"">Personalizar chatbot</h4>
+      </div>
+    </div>
+  </div>
+  <div class=" row">
+          <div class="col-xl-4 col-lg-6">
+            <div class="card border-info border card-h-100">
+              <div class="card-body">
+                <ul class="nav nav-tabs mb-3">
+                  <li class="nav-item">
+                    <a href="#inici_chatbot" data-bs-toggle="tab" aria-expanded="false" id="li_cb"
+                      class="nav-link active">
+                      <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Inicio del Chatbot</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#cuerpo_chatbot" data-bs-toggle="tab" aria-expanded="true" id="li_cb2" class="nav-link">
+                      <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Chatear</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane show active" id="inici_chatbot">
+
+
+
+
+                    <div class="chat is-visible">
+
+                      <div id="chat_color" class="chat_header" style="display: block;">
+
+                        <div class="chat_option">
+
+                          <div class="header_img" style="margin-bottom: 8px;">
+
+                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}">
+
+                          </div>
+
+                          <span id="chat_head" style="font-weight: bold;" class="pr_tl2">Nombre Chatbot</span> <br>
+                          <span class="agent">.</span>
+                          <span class="online" style="font-weight: bold;">En Línea</span>
+                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: none;"><i
+                              class="fullscreen zmdi zmdi-window-maximize"></i></span>
+
+                        </div>
+
+                      </div>
+
+                      <div class="chat_body chat_login">
+
+                        <a id="chat_third_screen" class="fab is-visible"><i class="uil-arrow-right"></i></a>
+                        <p id="pr_frm">Complete el siguiente formulario para comenzar a chatear con el próximo agente
+                          disponible.
+                        </p>
+                        <div id="form_id">
+                          <div class="field">
+                            <input type="text" placeholder="Ingresa tu nombre" id="txtusuario" name="txtusuario">
+                          </div>
+                          <p style="text-align: center;color: red;display: none" id="camp_obli">campo obli</p>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="tab-pane" id="cuerpo_chatbot">
+
+                    <div class="chat is-visible">
+
+                      <div id="chat_color2" class="chat_header" style="display: block;">
+
+                        <div class="chat_option">
+
+                          <div class="header_img" style="margin-bottom: 8px;">
+
+                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}">
+
+                          </div>
+
+                          <span id="chat_head" style="font-weight: bold;" class="pr_tl">Nombre Chatbot</span> <br> <span
+                            class="agent">.</span>
+                          <span class="online" style="font-weight: bold;">En Línea</span>
+                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: block;"><i
+                              class="fullscreen zmdi zmdi-window-maximize"></i></span>
+
+                        </div>
+
+                      </div>
+
+                      <div id="chat_form" class="chat_converse chat_form" style="display: block;">
+
+
+                        <div class="chat_msg_item chat_msg_item_admin">
+                          <span class="pr_terminos_condiciones">Terminos y condiciones</span>: <a href="#"
+                            class="pr_terminos_condiciones_link">link</a>
+                          <center>
+                            <button id="t_y_c_a" class="t_y_c">Aceptar</button>
+                            <button id="t_y_c_r" class="t_y_c">Rechazar</button>
+                          </center>
+                        </div>
+                        <span class="chat_msg_item chat_msg_item_user chat_rpta">Aceptar</span>
+                        <span class="chat_msg_item chat_msg_item_admin">Hola <b>{nombre}</b> , Gracias por aceptar
+                          nuestros T&C</span>
+                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_aceptar">bienvenido
+                          a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y
+                          listos para ayudar.</span>
+
+
+                        <span class="chat_msg_item chat_msg_item_user chat_rpta">Rechazar</span>
+
+                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_rechazar">Nos apena
+                          que no aceptes nuestros T&C. Lamentablemente no podemos brindarte ayuda por este medio.</span>
+
+
+
+                      </div>
+
+                      <div class="fab_field">
+                        <a id="fab_camera" class="fab is-visible"><i class="mdi mdi-microphone"></i></a>
+                        <a id="fab_send" class="fab is-visible"><i class="mdi mdi-telegram"></i></a>
+                        <input type="text" id="chatSend" name="chat_message" placeholder="Escribe aquí..."
+                          class="chat_field chat_message"></div>
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+                <center>
+
+                  <button type="button" onclick="fn_edit_pr()" class="btn btn-outline-warning mt-3 btn_Habilitar_"> <i
+                      class="uil uil-edit-alt me-1"></i> Habilitar edición </button>
+                </center>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8 col-lg-6">
+            <div class="card border-info border card-h-100">
+              <div class="card-body">
+                <ul class="nav nav-tabs mb-3">
+                  <li class="nav-item">
+                    <a href="#fuerahorario" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                      <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                      <span class="d-none d-md-block">Personalizar</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane show active" id="fuerahorario">
+                    <div class="container row">
+                      <div class="col-lg-12">
+                        <h4 class="mt-2">Personalizar el chatbot</h4>
+                        <p class="text-muted mb-4">Rellene el siguiente formulario para
+                          personalizar su chatbot.</p>
+                        {% csrf_token %}
+
+
+
+                        <div class="row">
+
+                          <div class="col-md-6">
+
+                            <div class="mb-3">
+                              <label class="form-label">Título de chatbot</label>
+                              <input type="text" class="form-control" maxlength="15"
+                                data-toggle="maxlength" required onkeyup="myFunctionT()"
+                                placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+
+                              <input type="hidden" id="id_pr_ct">
+
+                              <script>
+
+                                var Ls = localStorage.getItem('datos')
+                                var id_empresa = JSON.parse(Ls).id_empresa;
+                                document.getElementById('id_pr_ct').value=id_empresa
+
+                              </script>
+
+
+
+                              <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+                            <div class="mb-3">
+                              <label for="frm_pdatos"
+                                class="form-label">Formulario</label>
+                              <textarea data-toggle="maxlength" class="form-control"
+                                maxlength="100" rows="3" onkeyup="myFunctionBTND()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos"
+                                disabled=""></textarea>
+                              <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+                            <div class="mb-3" style="display: none" id="c_cht">
+                              <label for="example-color" class="form-label">Color Chatbot</label>
+                              <div class="color-picker"></div>
+                            </div>
+
+                            <div class="mb-3" style="display: none" id="c_bt">
+                              <label for="example-color" class="form-label">Color botones | Acciones</label>
+                              <div class="color-picker_acciones"></div>
+                            </div>
+
+
+                            <input type="hidden" id="color_chatbot">
+                            <input type="hidden" id="color_chatbot_acciones">
+
+                            
+
+                          </div>
+
+
+                          <div class="col-md-6">
+
+                            <div class="mb-3">
+                              <label for="frm_pdatos" class="form-label">Términos y
+                                Condiciones</label>
+                              <textarea data-toggle="maxlength" class="form-control"
+                                maxlength="150" rows="3" onkeyup="myFunctionBTN()" placeholder="Términos y Condiciones"
+                                id="frm_pboton" disabled=""></textarea>
+                              <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+                            <div class="mb-3">
+                              <label for="frm_pboton" class="form-label">Link</label>
+                              <input class="form-control" type="text"
+                                style="color:#727cf5" placeholder="Link" id="frm_link" onkeyup="myFunctionLink()"
+                                maxlength="100" data-toggle="maxlength" disabled="">
+                              <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+
+                            <div class="mb-3">
+                              <label for="frm_pdatos"
+                                class="form-label">Aceptar</label>
+                              <textarea data-toggle="maxlength" class="form-control"
+                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_aceptar()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_aceptar"
+                                disabled=""></textarea>
+                              <p id="xyz05" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+
+                            <div class="mb-3">
+                              <label for="frm_pdatos"
+                                class="form-label">Rechazar</label>
+                              <textarea data-toggle="maxlength" class="form-control"
+                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()"
+                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar"
+                                disabled=""></textarea>
+                              <p id="xyz06" style="color: #fa5c7c;font-weight: bold;"></p>
+                            </div>
+
+
+
+                          </div>
+
+
+                        </div>
+
+                        <center id="btn_save_upadte"></center>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    {% endblock content %}

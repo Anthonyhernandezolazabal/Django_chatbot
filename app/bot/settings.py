@@ -14,7 +14,8 @@ SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -27,11 +28,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'corsheaders',
     'chatbot',
     'chatbot_admin',
     'crispy_forms',
     'profile_user',
+
+    'django_extensions',
     
 ]
 
@@ -46,11 +50,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:8000',
-# )
-
-CORS_ORIGIN_ALLOW_ALL=True
 
 ROOT_URLCONF = 'bot.urls'
 
@@ -78,19 +77,14 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_chatboot',
-        'USER': 'root',
-        'PASSWORD': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'db_chatbot',
+        'USER': 'postgres',
+        'PASSWORD': '70562134',
         'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
-            'charset': 'utf8mb4'
-        }
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -140,3 +134,10 @@ LOGIN_REDIRECT_URL = 'login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'profile_user.UserProfile'
+
+
+#URL PARA ACCEDER A LAS IMAGENES SUBIDAS
+MEDIA_URL = '/media/'
+
+#RUTAS DONDE SE VAN ALMACENAR LAS IMAGENES
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

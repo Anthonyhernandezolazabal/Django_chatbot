@@ -1,0 +1,205 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+
+
+.swal2-confirm {
+  background-color: #39afd1 !important;
+}
+
+</style>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">CHATBOT</a></li>
+            <li class="breadcrumb-item active">Respuestas</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Respuestas automaticas registradas</h4>
+        <br><br>
+        {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+          <i class="dripicons-checkmark me-2"></i> Registrado correctamente!
+        </div>
+        {% endif %}
+        <center><a href="javascript: void(0);" onclick="new__prg()" class="btn btn-danger btn-rounded mb-3 animate__animated animate__backInDown"><i
+              class="mdi mdi-plus"></i> Registrar respuestas automaticas</a></center>
+        <div class="col-xl-12 col-lg-6">
+          <div class="card card-h-100">
+            <div class="card-body">
+              <table id="#" class="table table-striped dt-responsive nowrap w-100">
+                <thead class='table-light'>
+                  <tr>
+                    <th>#</th>
+                    <th>Respuestas automaticas</th>
+                    <th>Registrado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if datos %}
+                  {% for dato in datos %}
+                  <tr>
+                    <td>{{ dato.id }}</td>
+                    <td>{{ dato.nombre }}</td>
+                    <td>{{ dato.registrado }}</td>
+                    <td>
+                      <button type="button" onclick="return edit__prg({{ dato.id }})" class="btn btn-info"><i class="mdi mdi-eye"></i>
+                      </button>
+                      <button type="button" onclick="return deleted_all__({{ dato.id }},{{ dato.id_cliente_id }},'{{ dato.nombre }}')" class="btn btn-danger"><i class="mdi mdi-delete"></i>
+                      </button>
+                    </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <th colspan="5" scope="rowgroup" class="text-center">No hay registros</th>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var Ls = localStorage.getItem('datos')
+  var id_cliente_id = JSON.parse(Ls).id_cliente;
+
+  function edit__prg(id) {
+    localStorage.removeItem('pregunta')
+    var url_python = '{% url "registrar_rpta" %}?prg=' + id
+    location.replace(url_python)
+  }
+  function new__prg() {
+    localStorage.removeItem('pregunta')
+    var url_python = "{% url 'registrar_rpta' %}";
+    location.replace(url_python)
+  }
+
+  function deleted_all__(id,us,nom){
+    Swal.fire({
+      title: '<strong>Eliminar <u>'+nom+'</u></strong>',
+      icon: 'info',
+      html:
+        'una vez <b>eliminado</b>, ' +
+        'no podrás revertir esta acción',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="dripicons-thumbs-up"></i>',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText:
+        '<i class="dripicons-thumbs-down"></i>',
+      cancelButtonAriaLabel: 'Thumbs down'
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+
+          Swal.fire({
+            title: 'Entrenando',
+            html: 'Entrenando ChatBot, por favor espere...',
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+                const content = Swal.getContent()
+                if (content) {
+                  const b = content.querySelector('b')
+                  b.textContent = Swal.getTimerLeft()
+                }
+            },
+          })
+
+          fetch('/getjsondelet/?id_reg=' + id + '&empresa=' + us + '&nom=' + nom + '&id_usu=' + id_cliente_id, { 
+            method: 'GET',
+          }).then(rsp => rsp.text()).then(function (response) {
+
+            if(response == "EliminadoOk"){
+              Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Eliminado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+              }).then((result) => {
+                location.reload();
+              })
+            }
+
+          }).catch(e => {
+            cerrar_loader('error_deleted');
+            console.log(e);
+          })
+
+        }
+      })
+  }
+
+
+function mostrar_loader() {
+  let timerInterval
+    Swal.fire({
+      title: 'Auto close alert!',
+      html: 'I will close in <b></b> milliseconds.',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer().querySelector('b')
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft()
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
+    })
+}
+
+
+function cerrar_loader(mensaje) {
+    var texto = null;
+    var mostrar = false;
+    var tipo = null;
+    switch (mensaje) {
+        case 'exito_deleted':
+            tipo = 'success';
+            texto = 'Eliminado';
+            mostrar = true;
+            break;
+        case 'error_deleted':
+            tipo = 'error';
+            texto = 'Ocurrió un error, por favor intente nuevamente.';
+            mostrar = true;
+            break;
+        default:
+            Swal.close();
+            break;
+    }
+
+    if (mostrar) {
+
+        Swal.fire({
+            position: 'top-center',
+            icon: tipo,
+            title: texto,
+            showConfirmButton: false,
+            timer: 1500
+        })
+
+    }
+}
+</script>
+{% endblock content %}

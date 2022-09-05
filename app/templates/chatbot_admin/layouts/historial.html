@@ -1,0 +1,135 @@
+{% extends "chatbot_admin/layouts/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+.carousel-control-prev{
+  top: -99px !important;
+}
+.carousel-control-next{
+  top: -99px !important;
+}
+</style>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">REPORTES</a></li>
+            <li class="breadcrumb-item active">Historial</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Historial de conversaciones</h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xxl-4 col-xl-6 order-xl-1">
+      <div class="card">
+        <div class="card-body p-0">
+          <ul class="nav nav-tabs nav-bordered">
+            <li class="nav-item" style="width: 100%;margin: 3px 15px 8px 15px;">
+              Historial de <input type="text" name="dates" class="form-control pull-right">
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane show active p-3" id="newpost">
+              <div class="row">
+                <div class="col">
+                  <div data-simplebar="init" style="max-height: 482px">
+                    <div class="simplebar-wrapper" style="margin: 0px;">
+                      <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                      </div>
+                      <div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                          <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                            <div class="simplebar-content" style="padding: 0px;" id="tmp_api">
+
+                              {% if datos %}
+                                {% for dato in datos %}
+                                <a href="javascript:ver_conversacion('{{ dato.nombre_persona }}','{{ dato.fecha_historial_chat }}');" class="text-body">
+                                  
+                                  <div class="d-flex align-items-start bg-light mt-1 p-2">
+                                  <button type="button" class="btn btn-danger btn-sm" onclick="delete_cha___t('{{ dato.nombre_persona }}','{{ dato.nombre_persona_sin_alias }}')" style="position: absolute;right: 0;padding: 0px;margin-top: -17px;"><i class="mdi mdi-delete"></i> </button>
+
+                                    <!-- <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|truncatechars:1 }}</h1> -->
+                                    <h1 class="me-2 rounded-circle" height="48">{{ dato.nombre_persona|make_list|first|upper }}</h1>
+                                    <div class="w-100 overflow-hidden" style="margin: auto;">
+                                      <h5 class="mt-0 mb-0 font-14">
+                                        <span class="float-end text-muted font-12 f____ch" attr_hr="{{ dato.fecha_historial_chat }}">Hora</span>
+                                        {{ dato.nombre_persona_sin_alias }}
+                                      </h5>
+                                      <p class="mt-1 mb-0 text-muted font-14">  
+                                        <span class="w-25 float-end text-end ac___all__ch"  attr_nom__b="{{ dato.nombre_persona }}"></span>
+                                        <span class="w-75">{{ dato.pregunta }}</span>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </a>
+                                {% endfor %}
+                              {% else %}
+                              <div class="tab-pane show active" id="additional-content-preview">
+                                <div class="alert alert-warning mb-0" role="alert">
+                                  <h4 class="alert-heading"><i class="dripicons-warning me-2"></i> Oh no!</h4>
+                                  <p style="text-align: right;">Aún no tienes historial de conversaciones.</p>
+                                  <hr>
+                                  <p class="mb-0">Toda interacción que se tenga con el chatbot aparecerá aquí!.</p>
+                                </div>
+                              </div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="simplebar-placeholder" style="width: 237px; height: 810px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                      <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                      <div class="simplebar-scrollbar"
+                        style="height: 373px; transform: translate3d(0px, 176px, 0px); display: block;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-8 col-xl-12 order-xl-2" id="card_conver" style="display: none;">
+      <div class="card">
+        <div class="card-body">
+          <ul class="conversation-list" data-simplebar="init" style="max-height: 537px">
+            <div class="simplebar-wrapper" style="margin: 0px -15px;">
+              <div class="simplebar-height-auto-observer-wrapper">
+                <div class="simplebar-height-auto-observer"></div>
+              </div>
+              <div class="simplebar-mask">
+                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                  <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                    <div class="simplebar-content" style="padding: 0px 15px;" id="conv_hist">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="simplebar-placeholder" style="width: 546px; height: 930px;"></div>
+            </div>
+            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+              <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+            </div>
+            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+              <div class="simplebar-scrollbar"
+                style="height: 310px; transform: translate3d(0px, 227px, 0px); display: block;"></div>
+            </div>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

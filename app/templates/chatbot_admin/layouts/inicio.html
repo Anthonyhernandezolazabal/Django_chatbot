@@ -1,49 +1,144 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
-
 {% block content %}
-
 <div class="container-fluid">
-  <!-- start page title -->
   <div class="row">
     <div class="col-12">
       <div class="page-title-box">
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-            <li class="breadcrumb-item active">Starter</li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Navegación</a></li>
+            <li class="breadcrumb-item active">Inicio</li>
           </ol>
         </div>
         <h4 class="page-title">Plantilla principal</h4>
-
-        
-
-
         {% if mensaje %}
         <div class="alert alert-success" role="alert">
           <i class="dripicons-checkmark me-2"></i>
           <b class="text-uppercase">Te has registrado exitosamente</b>
         </div>
         {% endif %}
-
         {% if username_user %}
-
-          <h1>{{ username_user|upper }} - Bienvenido</h1>
-
+        <h1><b>{{ username_user|upper }}</b> - Bienvenido</h1>
         {% else %}
-
-          <h1 class='username_user_ls'></h1>
-
+        <h1><b id="username_user_i"></b> - Bienvenido</h1>
         {% endif %}
-          
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-10">
+              <div class="text-center">
+                <img src="{% static 'chatbot_admin/assets/images/maintenance.svg' %}" height="140"
+                  alt="File not found Image">
+                <h3 class="mt-4">Activa el Chatbot en tu sitio web</h3>
+              </div>
+              <div class="row">
 
-       
-        
+
+                <div class="col-md-6">
+                  <div class="mt-3 ps-1 pe-1">
+                    <h2 class="text-uppercase">CSS</h2>
+                    <p style="margin-bottom: 60px;">
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Copie y pegue la hoja de estilo </font>
+                      </font><code>&lt;link&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">antes del </font>
+                      </font><code>&lt;head&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> para cargar nuestro CSS.
+                        </font>
+                      </font>
+                    </p>
+                    <p class="text-muted font-14 mb-3 board">
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span
+                          class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span
+                          class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span
+                          class="s">"https://chatbot.demoregistro.xyz/static/chatbot/css/style_chatbot.css"</span> <span
+                          class="p">&gt;</span>
+                      </code>
+                      <br>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mt-3 ps-1 pe-1">
+                    <h2 class="text-uppercase">JS</h2>
+                    <p>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Muchos de nuestros componentes requieren el uso de
+                          JavaScript para funcionar </font>
+                      </font>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> . </font>
+                        <font style="vertical-align: inherit;">Coloque </font>
+                      </font><strong>
+                        <font style="vertical-align: inherit;">
+                          <font style="vertical-align: inherit;">una de las siguientes </font>
+                        </font><code>&lt;script&gt;</code>
+                      </strong>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> cerca del final de sus páginas, justo antes de la
+                          etiqueta de cierre </font>
+                      </font><code>&lt;/body&gt;</code>
+                      <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;"> para habilitarlas.</font>
+                      </font>
+                    </p>
+                    <p class="text-muted font-14 mb-3 board">
+                      <br>
+                      <code class="language-html" data-lang="html"><span class="p">&lt;</span><span
+                          class="nt">script</span> <span class="na">id</span><span class="o">=</span><span
+                          class="s">"libreria_chatbot"</span> <span class="na">user</span><span class="o">=</span><span
+                          class="s" id="id_user">"{{ id_user }}"</span> <span class="na">empresa</span><span
+                          class="o">=</span><span class="s" id="id_empr">"{{ id_empresa }}"</span> <span
+                          class="na">src</span><span class="o">=</span><span
+                          class="s">"https://chatbot.demoregistro.xyz/static/chatbot/js/chatbot_integration.js"</span><span
+                          class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+                      </code>
+                    </p>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <script>
+    var Ls = localStorage.getItem('datos')
+    var id_cliente = JSON.parse(Ls).id_cliente;
+    var id_empresa = JSON.parse(Ls).id_empresa;
+    var username_user_i = JSON.parse(Ls).username;
+    /*=============================================
+    GENERANDO LINK
+    =============================================*/
+    document.querySelector('#id_user').innerHTML = '"' + id_cliente + '"'
+    document.querySelector('#id_empr').innerHTML = '"' + id_empresa + '"'
+    document.querySelector('#username_user_i').innerHTML = username_user_i.toUpperCase() 
 
-</div>
+    // EMPRESA REGISTRADA
+    var id_new_logueo = document.getElementById('empresa_logueado').value;
+    if (id_new_logueo != '') {
+      document.querySelector('#id_empr').innerHTML = '"' + id_new_logueo + '"'
+    }
 
-{% endblock content %}
+    if (id_empresa == '') {
+      /* SOBREESCRIBIR UN VALOR DE LA VARIABLE DEL LS */
+      datos = JSON.parse(Ls);
+      datos.id_empresa = id_new_logueo
+      localStorage.setItem('datos',JSON.stringify(datos))
+    }
+
+    // 
+    // id_new_logueo.setAttribute('id_cliente02',document.querySelector('#id_empr').value);
+  </script>
+  {% endblock content %}
