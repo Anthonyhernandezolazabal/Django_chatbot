@@ -74,11 +74,23 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# Desarrollo
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_chatbot',
+#         'USER': 'postgres',
+#         'PASSWORD': '70562134',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
+# Produccion
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_chatbot',
+        'NAME': 'proyectos',
         'USER': 'postgres',
         'PASSWORD': '70562134',
         'HOST': 'localhost',
