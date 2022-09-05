@@ -7,6 +7,8 @@ class chat_user(models.Model):
   respuesta = models.TextField(verbose_name='Respuesta', default=None, null=True)
   key_session_alias = models.CharField(max_length=255,verbose_name='Alias usuario', default=None, null=True)
   nombre_persona = models.CharField(max_length=50,verbose_name='Nombre de la persona', null=True)
+  email_persona = models.CharField(max_length=100,verbose_name='Correo electrónico de la persona', null=True)
+  telefono_persona = models.CharField(max_length=100,verbose_name='Teléfono de la persona', null=True)
   nombre_persona_sin_alias = models.CharField(max_length=50,verbose_name='Nombre de la persona alias', null=True)
   cliente_empresa_id = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
   fecha_historial_chat = models.CharField(max_length=255,verbose_name='Fecha de historial', null=True)

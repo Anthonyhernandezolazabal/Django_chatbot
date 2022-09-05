@@ -1,8 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic');
-@import url('https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css');
+@import url("https://192.168.214.6:8000/static/chatbot/css/docs__fonts.css");
 
-
+@font-face {
+    font-family: font_caja_sullana;
+    src: url("https://192.168.214.6:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
+  }
+  
+  @font-face {
+    font-family: font_caja_sullana2;
+    src: url("https://192.168.214.6:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
+  }
 
 .fabs {
     bottom: 0;
@@ -94,7 +100,7 @@
     width: 400px;
     font-size: 12px;
     line-height: 22px;
-    font-family: 'Roboto';
+    font-family: 'font_caja_sullana2';
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     /* font-smoothing: antialiased; */
@@ -116,7 +122,7 @@
 .chat_header {
     /* margin: 10px; */
     font-size: 13px;
-    font-family: 'Roboto';
+    font-family: 'font_caja_sullana2';
     font-weight: 500;
     color: #f3f3f3 !important;
     height: 70px;
@@ -241,7 +247,7 @@
     position: relative;
     margin: 5px 0 5px 0;
     width: 50%;
-    font-family: 'Roboto';
+    font-family: 'font_caja_sullana2';
     font-size: 12px;
     line-height: 30px;
     font-weight: 500;
@@ -403,7 +409,7 @@
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
-    text-align: justify;
+    /* text-align: justify; */
     border-radius: 0 15px 15px 15px !important;
     /* margin-left: 60px; */
     /* margin-left: 20px; */
@@ -837,7 +843,7 @@ img {
     width: 100% !important;
     margin-bottom: 20px;
     /* margin-top: 20px !important; */
-    /* margin-top: -20px !important; */
+    margin-top: -20px !important;
 }
 
 #form_id .field:last-child {
@@ -854,9 +860,26 @@ img {
     font-size: 13px !important;
     animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;
 }
-
-
-
+#form_id .field #txtemail {
+    width: 80% !important;
+    height: 80% !important;
+    padding-left: 20px !important;
+    border: 2px solid lightgrey !important;
+    outline: none !important;
+    /* border-radius: 25px !important; */
+    font-size: 13px !important;
+    animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;
+}
+#form_id .field #txttelefono {
+    width: 80% !important;
+    height: 80% !important;
+    padding-left: 20px !important;
+    border: 2px solid lightgrey !important;
+    outline: none !important;
+    /* border-radius: 25px !important; */
+    font-size: 13px !important;
+    animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;
+}
 
 
 

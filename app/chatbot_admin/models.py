@@ -44,6 +44,7 @@ class configuraciones(models.Model):
     c_nombre = models.CharField(max_length=255, verbose_name='Campo nombre', null=True)
     c_email = models.CharField(max_length=255, verbose_name='Campo email', null=True)
     c_telefono = models.CharField(max_length=255, verbose_name='Campo teléfono', null=True)
+    texto_bienvenida = models.TextField(verbose_name='Texto de bienvenida', null=True)
     cliente_empresa_id = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
         
     class Meta:

@@ -453,6 +453,7 @@ class configuracion(APIView):
       email_c = request.GET.get('email_c')
       tel_c = request.GET.get('tel_c')
       es___tado = request.GET.get('es___tado')
+      t_bienvenida = request.GET.get('bienvenida')
 
       if es___tado == "Registrar":
         validar_registro = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr)).count()
@@ -466,6 +467,7 @@ class configuracion(APIView):
             c_nombre=c_nombre,
             c_email=email_c,
             c_telefono=tel_c,
+            texto_bienvenida=t_bienvenida,
             cliente_empresa_id=cliente.objects.get(pk=id_empr))
           conf_add.save()
           return HttpResponse(str("registrado")) 
@@ -483,6 +485,7 @@ class configuracion(APIView):
           c_nombre=c_nombre,
           c_email=email_c,
           c_telefono=tel_c,
+          texto_bienvenida=t_bienvenida,
         )
         return HttpResponse(str("editado")) 
 

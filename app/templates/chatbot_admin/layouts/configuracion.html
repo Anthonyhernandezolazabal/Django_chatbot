@@ -31,9 +31,6 @@
                             <code><p class="card-text mt-2"><i class="mdi mdi-transfer-right"></i>  Si aún no has configurado los términos y condiciones puedes hacerlo dandole click <b><a target="_blank" href="{% url 'personalizar' %}">aquí</a></b> </p></code>
                         </div>
                     </div>
-                    <div class="card-footer text-muted">
-                        <h4 class="card-title text-success"><i class="mdi mdi-code-tags-check"></i> realizado</h4>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -55,9 +52,6 @@
                             
                         </div>
                     </div>
-                    <div class="card-footer text-muted">
-                        <h4 class="card-title text-success"><i class="mdi mdi-code-tags-check"></i> realizado</h4>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -77,16 +71,44 @@
                             <label class="form-check-label" for="chk_telefono">Ingresa tu teléfono</label>
                         </div>
                     </div>
-                    <div class="card-footer text-muted">
-                        <h4 class="card-title text-success"><i class="mdi mdi-code-tags-check"></i> realizado</h4>
-                    </div>
                 </div>
             </div>
             <input type="hidden" id="ccc_ini">
             <input type="hidden" id="ccc_cie">
             <input type="hidden" id="ccc_cie_des">
             <input type="hidden" id="estado_register">
+        </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h6 class="card-header">Inicio de Chat</h6>
+                    <div class="card-body">
+                        <div class="form-check form-checkbox-info mb-2">
+                            <input type="checkbox" class="form-check-input" id="chk_tex_bienv" checked disabled>
+                            <label class="form-check-label" for="chk_tex_bienv">Agregar bienvendia</label>
+                        </div>
+                        <div class="mt-2">
+                            <center id="show__t_b">
+
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="t__b__txt" name="customRadio" class="form-check-input" required>
+                                    <label class="form-check-label" for="t__b__txt">Texto</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="t__b__sldr" name="customRadio" class="form-check-input" required>
+                                    <label class="form-check-label" for="t__b__sldr">Slider</label>
+                                </div>
+
+                            </center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" id="show___t___b__txt__sld">
+              
+            </div>
         </div>
 
         <center><button type="submit" class="btn btn-outline-info mt-4">Guardar</button></center>
