@@ -90,8 +90,8 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'proyectos',
-        'USER': 'postgres',
+        'NAME': 'db_chatbot',
+        'USER': 'proyectos',
         'PASSWORD': '70562134',
         'HOST': 'localhost',
         'PORT': '5432'
