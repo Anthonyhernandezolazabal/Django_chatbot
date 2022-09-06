@@ -1,4 +1,8 @@
-var URLactual = 'https://192.168.214.6:8000/';
+//Desarrollo
+// var URLactual = 'https://192.168.214.6:8000/';
+//Desarrollo
+var URLactual = '35.222.244.103:8000';
+
 chatbot_personalizado();
 show____confi();
 var boddy = document.querySelector("body");
