@@ -10,7 +10,7 @@ $('input[name="dates"]').daterangepicker({
       applyLabel: 'Aplicar',
       cancelLabel: 'Cancelar',
     }
-  },
+},
   function (start, end, label) {
     let desde = start.format('YYYY-MM-DD');
     let hasta = end.format('YYYY-MM-DD');
@@ -19,16 +19,13 @@ $('input[name="dates"]').daterangepicker({
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
       var total_datos = response;
-      console.log("RESPUESTA CHAT: ",total_datos)
       var template = ``;
       if (total_datos.length == 0) {
-        console.log('response :', total_datos.length)
         template += `<h1>SIN RESULTADOS</h1>`
         document.querySelector("#tmp_api").innerHTML = template;
       } else {
         for (let i = 0; i < total_datos.length; i++) {
           let f_h = total_datos[i].registrado
-          console.log('response :', total_datos[i])
           template += `
             <a href="javascript:ver_conversacion('${total_datos[i].nombre_persona}','${total_datos[i].fecha_historial_chat}');" class="text-body cls_attr">
                 <div class="d-flex align-items-start bg-light mt-1 p-2">
@@ -159,15 +156,12 @@ function ver_conversacion(alias_nom,fecha) {
                 <div style="margin: 15px;">
                     <h5 class="card-title mb-0" style="text-align: left;">${firstElement.titulo_imagen}</h5>
                     <h6 style="text-align: left;">${firstElement.descripcion}</h6>`
-
                     firstElement.acciones.forEach(r__ow => {
                         template += `<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${r__ow}</a>`
                     });
-
                     template += `
                     
                 </div>
-                  
                 </div>`
                 let total__sl = r______pt.respuesta_tipo
                 for (let n = 1; n < total__sl.length; n++) {
@@ -178,8 +172,6 @@ function ver_conversacion(alias_nom,fecha) {
                   if((element.img).length != 1){
                     template += `<img class="d-block img-fluid" src="/media/${element.img}" alt="Second slide">`
                   }
-
-
                   template += `
                   <div style="margin: 15px;">
                       <h5 class="card-title mb-0" style="text-align: left;">${element.titulo_imagen}</h5>
@@ -193,15 +185,11 @@ function ver_conversacion(alias_nom,fecha) {
                       template += `
                   </div>
                   </div>`
-                    
                 }
-             
-
 
         template += `
 
                 </div>`
-
                 if(arrayElements.length !=1 ){
                   template += `
                   <a class="carousel-control-prev" href="#${alias_nom}-${micont}" role="button" data-bs-slide="prev">
@@ -212,34 +200,13 @@ function ver_conversacion(alias_nom,fecha) {
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </a>
-                  
                   `
                 }
 
 template += `
               </div>
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </li>
-        
-        
-        
-        
         `;
       }
 
@@ -336,4 +303,118 @@ function delete_cha___t(id,nom){
     }
   })
 }
+/*=============================================
+GENERAR REPORTES POR DATOS DINÁMICOS RECIBIDOS EN EL CHAT
+=============================================*/
 
+$('input[name="datos_dinamicos"]').daterangepicker({
+    locale: {
+      format: 'YYYY/MM/DD',
+      applyLabel: 'Generar',
+      cancelLabel: 'Cancelar',
+    }
+},
+  function (start, end, label) {
+    let desd__e = start.format('YYYY-MM-DD');
+    let hast__a = end.format('YYYY-MM-DD');
+    console.log("response desd__e :",desd__e);
+    console.log("response hast__a :",hast__a);
+
+    let id__empresa = empresa_id
+    fetch('/historial_fecha/?desde=' + desd__e + '&hasta=' + hast__a + '&id_empresa=' + id__empresa + '', {
+      method: 'GET',
+    }).then(rsp => rsp.json()).then(function (response) {
+      let show__rpt_rt2 = "";
+      let contall = 0;
+
+      response.forEach(it__ => {
+      contall++
+      console.log("response dinamicos :",it__);
+
+      show__rpt_rt2 +=  `
+      
+        <tr>
+            <td>${contall}</td>`
+
+            if(it__.email_persona == "null" && it__.telefono_persona == "null"){
+              console.log("IF 1")
+              show__rpt_rt2 +=  `<td><span class="badge bg-primary">Nombre</span></td>`
+            }else
+            if(it__.email_persona == "null" && it__.telefono_persona != "null"){
+              console.log("IF 2")
+              show__rpt_rt2 +=  `
+              <td>
+                <span class="badge bg-primary">Nombre</span> 
+                <span class="badge bg-info">Teléfono</span>
+              </td>`
+            }else
+            if(it__.telefono_persona == "null" && it__.email_persona != "null"){
+              console.log("IF 3")
+              show__rpt_rt2 +=  `
+              <td>
+                <span class="badge bg-primary">Nombre</span> 
+                <span class="badge bg-success">Correo electrónico</span>
+              </td>`
+            }else{
+              console.log("IF 4")
+              show__rpt_rt2 +=  `
+              <td>
+                <span class="badge bg-primary">Nombre</span> 
+                <span class="badge bg-success">Correo electrónico</span> 
+                <span class="badge bg-info">Teléfono</span>
+              </td>`
+            }
+
+
+            
+
+            show__rpt_rt2 +=  `
+            <td>${it__.nombre_persona_sin_alias}</td>`
+
+            if(it__.email_persona != "null"){
+
+              show__rpt_rt2 +=  `<td>${it__.email_persona}</td>`
+
+            }else{
+
+              show__rpt_rt2 +=  `<td> - </td>`
+
+            }
+
+            if(it__.telefono_persona != "null"){
+
+              show__rpt_rt2 +=  `<td>${it__.telefono_persona}</td>`
+
+            }else{
+
+              show__rpt_rt2 +=  `<td> - </td>`
+
+            }
+
+            
+
+
+            show__rpt_rt2 +=  `
+        </tr>
+      
+      `;
+
+      $("#show__rpt_rt2").html(show__rpt_rt2)
+
+
+
+
+        
+      });
+
+
+
+
+
+
+    })
+
+
+
+
+})

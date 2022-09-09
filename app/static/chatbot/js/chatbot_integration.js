@@ -1,8 +1,8 @@
 //Desarrollo
-// var URLactual = 'https://192.168.214.6:8000/';
+var URLactual = 'https://192.168.100.10:8000/';
 //Desarrollo
-var URLactual = 'https://35.222.244.103:8000/';
-
+// var URLactual = 'https://35.222.244.103:8000/';
+var aceptar_terminos = false; //Aún no acepta T&C
 chatbot_personalizado();
 show____confi();
 var boddy = document.querySelector("body");
@@ -137,6 +137,8 @@ function aliasLS() {
   datosLS = {
     codigo: codigo,
     nombre: dat__a[0], //Obtengo solo el nombre
+    email: dat__a[1], //Obtengo solo el email
+    telefono: dat__a[2], //Obtengo solo el telefono
   }
   localStorage.setItem('alias_key', JSON.stringify(datosLS));
   key_alias = codigo
@@ -181,8 +183,28 @@ function hideChat(hide) {
       var nom_usuario = document.getElementById('nombre_chat').value
       let fromData = new FormData;
       fromData.append('nomb', nom_usuario);
+
+    
+      var dat__a_ = [];
+      let nombre_usuario_ = div_chatbot.querySelectorAll('.cls_campos')
+      for (let n = 0; n < nombre_usuario_.length; n++) {
+        let element = nombre_usuario_[n].value;
+        dat__a_.push(element)
+      }
+
+      if(dat__a_[1] != undefined){
+        email = dat__a_[1];
+      }else{
+        email = null;
+      }
+
+      if(dat__a_[2] != undefined){
+        phone = dat__a_[1];
+      }else{
+        phone = null;
+      }
   
-      fetch(URLactual+'getnombre/?nomb=' + nom_usuario + '&user_alias=' + key_alias, {
+      fetch(URLactual+'getnombre/?nomb=' + nom_usuario + '&user_alias=' + key_alias + '&email=' + email + '&phone=' + phone, {
         method: 'GET',
       }).then(jsonRsp => {}).catch(e => {
         console.log('e :', e);
@@ -192,7 +214,7 @@ function hideChat(hide) {
       <a id="fab_camera" class="fab fab_a_field"><i class="zmdi zmdi-mic"></i></a>
       <a href="javascript: enviar_texto(this);" id="fab_send" class="fab" style='z-index: 99999;'><i class="zmdi zmdi-mail-send"></i></a>
 
-      <input type="text" id="textInput" onkeypress='return escribir(event)' name="chat_message" placeholder="Escribe algo..." class="chat_field chat_message">`;
+      <input type="text" id="textInput" onkeypress='return escribir(event,this)' name="chat_message" placeholder="Escribe algo..." class="chat_field chat_message">`;
       document.querySelectorAll('.fab').forEach(fab => {
         fab.classList.toggle("is-visible");
       });
@@ -203,9 +225,6 @@ function hideChat(hide) {
                   
       var dat_______os = document.querySelector("#all_dat_conf").value;
       validar_conf_chat(dat_______os) //Validar terminos y condiciones con bienvenida
-
-      
-
 
  
  
@@ -228,9 +247,6 @@ function hideChat(hide) {
       // }else{
       //   console.log("Registro completo")
       // }
-  
-
-
       break;
   }
 }
@@ -248,14 +264,57 @@ function presionar_click(){
   }
 }
 
-function escribir(e) {
-  if (e.keyCode == 13) {
 
-      getBotResponse();
-      document.getElementById('textInput').value = ''
-   
-  }
+
+/*=============================================
+EMPEZAR A CHATEAR
+=============================================*/
+function escribir(e,t) {
+
+    if (e.keyCode == 13) {
+      let inp___ = document.getElementById('textInput').value;
+      if(aceptar_terminos == true){
+        getBotResponse();
+        document.getElementById('textInput').value = ''
+      }else{
+
+        //Eliminar todo los T&C
+        document.querySelectorAll(".t_y_c_cls").forEach(element => {
+          element.innerHTML = "";
+        });
+        let user___Html = '<span class="">' + inp___ + '</span>';
+        let div_p__ = document.querySelector("#chat_form");
+        let p = document.createElement("div");
+        p.className = "chat_msg_item chat_msg_item_user cls_color_user"; //Agrego una clase dentro del div
+        p.innerHTML = user___Html
+        div_p__.append(p)
+        document.querySelectorAll('.cls_color_user').forEach(col__ => {
+          col__.style.background = document.querySelector('#cam_ps').value
+        });
+
+
+        document.getElementById('textInput').value = ''
+        document.getElementById('carga_new').style.display = "block";
+        setTimeout(function () {
+          document.getElementById('carga_new').style.display = "none";
+          let div___r3_ = document.querySelector("#chat_form");
+          let r3__ = document.createElement("div");
+          r3__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+          r3__.innerHTML = `
+          <span class="chatbot_terminos_condiciones">${document.getElementById('chatbot_terminos_condiciones').value}</span>: <a href="${document.getElementById('chatbot_terminos_condiciones_link').value}" class="chatbot_terminos_condiciones_link">${document.getElementById('chatbot_terminos_condiciones_link').value}</a>
+          <center class='t_y_c_cls'>
+            <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar' style='background: ${document.querySelector('#cam_ps').value}'>Aceptar</button>
+            <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
+          </center>`
+          div___r3_.append(r3__)
+        },3000)
+      }
+    }
 }
+
+
+
+
 /*=============================================
 CONFIGURACION SLIDER
 =============================================*/
@@ -289,7 +348,7 @@ INICIAR CHATBOT
 =============================================*/
 var ls_LS = localStorage.getItem('datos')
 var user_autenticate
-
+var aprendiendo = 0;
 function getBotResponse() {
   var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
   var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
@@ -317,11 +376,56 @@ function getBotResponse() {
     document.querySelectorAll('.cls_color_user').forEach(col => {
       col.style.background = document.querySelector('#cam_ps').value
     });
-    fetch(URLactual+'getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat, {
+      var dat__a__ = [];
+      let nombre_usuario_ = div_chatbot.querySelectorAll('.cls_campos')
+      for (let n = 0; n < nombre_usuario_.length; n++) {
+        let element = nombre_usuario_[n].value;
+        dat__a__.push(element)
+      }
+
+      if(dat__a__[1] != undefined){
+        email = dat__a__[1];
+      }else{
+        email = "null";
+      }
+
+      if(dat__a__[2] != undefined){
+        phone = dat__a__[2];
+      }else{
+        phone = "null";
+      }
+
+
+    fetch(URLactual+'getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat + '&email_chat=' + email + '&phone_chat=' + phone, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       let decodedStr = atob(response);
       const rpta_rpta = JSON.parse(decodedStr)
+
+      let rpta1="Creo que no te entiendo, aquí te presento unas opciones que te pueden interesar";
+      
+
+      if(rpta_rpta['respuesta_tipo'][0]['tipo'] == 'no-entendi'){
+        document.getElementById('carga_new').style.display = "block";
+
+        rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
+          setTimeout(() => {
+            document.getElementById('carga_new').style.display = "none";
+            let div_r_null = document.querySelector("#chat_form");
+            let r_n = document.createElement("div");
+            r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+            r_n.innerHTML = '<span>' +rpta1+ '</span>'
+            div_r_null.append(r_n)
+            div_r_null.scrollTop = div_r_null.scrollHeight;
+          }, 1600);
+          let dat_____os = document.querySelector("#all_dat_conf").value;
+          let d = JSON.parse(dat_____os)
+          mostrar_texto_personalizado_fn(d,"slider");
+        });
+      }
+
+
+
       if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'texto') {
         document.getElementById('carga_new').style.display = "block";
         rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
@@ -339,9 +443,6 @@ function getBotResponse() {
       }
 
       if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'slider') {
-
-
-
 
         document.getElementById('carga_new').style.display = "block";
         html_all_pre_rpta += '<span>'+ rpta_rpta['pre_respuesta']['pre_rpta'] +'</span>'
@@ -371,22 +472,13 @@ function getBotResponse() {
                         <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
                         <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
                         `
-                        
-
                         acciones_rpta.forEach(act => {
                           if (acciones_rpta.length == 1) {
-                            html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                            html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
                           } else {
-                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" >${act}</button>`
+                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
                           }
                         });
-
-                        // prev.click;
-                        
-
-                        
-
-
 
                     html_all += `
                               </div>
@@ -400,7 +492,6 @@ function getBotResponse() {
                   <br>
                 </div>`;
               setTimeout(function () { 
-                
 
                 if(rpta_rpta['pre_respuesta']['pre_rpta'].length != 0){
                   // pre respuesta
@@ -429,7 +520,6 @@ function getBotResponse() {
                   act_sld.style.background = document.querySelector('#color_chat_acciones').value
                   
                 });
-
                 
       
               }, 1600)
@@ -554,16 +644,23 @@ function show____confi(){
 function validar_conf_chat(datos){
   let d = JSON.parse(datos)
 
+  //MOSTRAR TERMINOS Y CONDICIONES
   if(d.terminosycondiciones == "mostrar"){
-    console.log("Ver input :",document.getElementById('textInput'))
-    document.querySelector("#sh___ow__t__y__c").innerHTML = `
-    <div class="chat_msg_item chat_msg_item_admin">
-      <span class="chatbot_terminos_condiciones">${document.getElementById('chatbot_terminos_condiciones').value}</span>: <a href="${document.getElementById('chatbot_terminos_condiciones_link').value}" class="chatbot_terminos_condiciones_link">${document.getElementById('chatbot_terminos_condiciones_link').value}</a>
-      <center class='t_y_c_cls'>
-        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar' style='background: ${document.querySelector('#cam_ps').value}'>Aceptar</button>
-        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
-      </center>
-    </div>`
+    document.getElementById('carga_new').style.display = "block";
+    
+    setTimeout(function () {
+      document.getElementById('carga_new').style.display = "none";
+      // console.log("Ver input :",document.getElementById('textInput'))
+      document.querySelector("#sh___ow__t__y__c").innerHTML = `
+      <div class="chat_msg_item chat_msg_item_admin">
+        <span class="chatbot_terminos_condiciones">${document.getElementById('chatbot_terminos_condiciones').value}</span>: <a href="${document.getElementById('chatbot_terminos_condiciones_link').value}" class="chatbot_terminos_condiciones_link">${document.getElementById('chatbot_terminos_condiciones_link').value}</a>
+        <center class='t_y_c_cls'>
+          <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar' style='background: ${document.querySelector('#cam_ps').value}'>Aceptar</button>
+          <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
+        </center>
+      </div>`
+    },3000)
+
 
   }else{
 
@@ -582,104 +679,167 @@ function validar_conf_chat(datos){
     }
 
     if(d__bienvenida[0].tipo == "slider"){
-      console.log("d__bienvenida[0] :",(d__bienvenida[0].rptas).length)
-      let html_all = "";
-
-
-
-
-
-
-
-
-      html_all += `
-      <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
-        <div class="slideshow-container">
-          <div id="slider">`
-
-          d__bienvenida[0].rptas.forEach(elent_rpta => {
-
-            var acciones_rpta = elent_rpta['acciones'];
-            html_all += `
-            <div class="mySlides fade_">`
-            
-              if (elent_rpta['img'] != '') {
-                html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
-              }
-
-              if (elent_rpta['img'] != '') {
-                html_all += `<div class="pos_accion">`
-              } else{
-                html_all += `<div class="pos_accion" style="position:inherit !important">`
-              }
-
-
-              html_all += `
-              <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
-              <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
-              `
-
-              acciones_rpta.forEach(act => {
-                if (acciones_rpta.length == 1) {
-                  html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" >${act}</button>`
-                } else {
-                  html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" >${act}</button>`
-                }
-              });
-
-              // prev.click;
-
-            html_all += `
-                      </div>
-                    </div>`
-            });
-
-
-            html_all += `
-                      </div>
-                      <a class="prev" onclick="plusSlides(-1,this)">❮</a>
-                      <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
-                    </div>
-                    <br>
-                  </div>`;
-
-                  let div___r2 = document.querySelector("#chat_form");
-                  let r2 = document.createElement("div");
-                  r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-                  r2.innerHTML = '<span>'+ d__bienvenida[0].pre_rpta +'</span>'
-                  div___r2.append(r2)
-
-                 // respuesta SLIDER
-                 let div_r = document.querySelector("#chat_form");
-                 let r = document.createElement("div");
-                 r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
-                 r.innerHTML = html_all
-                 div_r.append(r)
-                 presionar_click();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
+      mostrar_texto_personalizado_fn(d,"todo")
     }
 
 
   }
 }
+function btn_terminos_condiciones(action, ac) {
+  console.log("Términos y condiciones :",action)
+  let dat__ = JSON.parse(document.querySelector("#all_dat_conf").value)
+  console.log("Términos y condiciones2 :",dat__)
+  if(action == "Aceptar"){
+    aceptar_terminos = true; //Aceptar T&C
 
+    // document.getElementById('t_c_rcz').value
+    
+    document.getElementById('carga_new').style.display = "block";
+    
+    setTimeout(function () {
+      document.getElementById('carga_new').style.display = "none";
+      let div___r2_ = document.querySelector("#chat_form");
+      let r2__ = document.createElement("div");
+      r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+      r2__.innerHTML = '<span>'+ document.querySelector('#t_c_acept').value +'</span>'
+      div___r2_.append(r2__)
+    },3000)
+
+    setTimeout(function () {
+      mostrar_texto_personalizado_fn(dat__,"todo")
+    },4000)
+
+
+  }
+  if(action == "Rechazar"){
+    aceptar_terminos = false; //Rechaza aceptar T&C
+    document.getElementById('carga_new').style.display = "block";
+    setTimeout(function () {
+      document.getElementById('carga_new').style.display = "none";
+      let div___r2_ = document.querySelector("#chat_form");
+      let r2__ = document.createElement("div");
+      r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+      r2__.innerHTML = '<span>'+ document.getElementById('t_c_rcz').value +'</span>'
+      div___r2_.append(r2__)
+
+
+      let div___r3_ = document.querySelector("#chat_form");
+      let r3__ = document.createElement("div");
+      r3__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+      r3__.innerHTML = `
+      <span class="chatbot_terminos_condiciones">${document.getElementById('chatbot_terminos_condiciones').value}</span>: <a href="${document.getElementById('chatbot_terminos_condiciones_link').value}" class="chatbot_terminos_condiciones_link">${document.getElementById('chatbot_terminos_condiciones_link').value}</a>
+      <center class='t_y_c_cls'>
+        <button onclick='javascript: btn_terminos_condiciones("Aceptar",this);' class='terminos_condiciones t_y_c aceptar_t_y_C' id='btn_aceptar' style='background: ${document.querySelector('#cam_ps').value}'>Aceptar</button>
+        <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
+      </center>`
+      div___r3_.append(r3__)
+    },3000)
+  }
+
+  ac.closest('.t_y_c_cls').innerHTML = ""
+
+}
+
+/*=============================================
+Esta funcion lo uso para mostrar los textos de bienvenida sea por terminos y condiciones o no
+=============================================*/
+function mostrar_texto_personalizado_fn(data,muestrame){
+
+  let fn__d__bienvenida = JSON.parse(data.texto_bienvenida)
+
+  let html_all = "";
+
+  html_all += `
+  <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+    <div class="slideshow-container">
+      <div id="slider">`
+
+      fn__d__bienvenida[0].rptas.forEach(elent_rpta => {
+
+        var acciones_rpta = elent_rpta['acciones'];
+        html_all += `
+        <div class="mySlides fade_">`
+        
+          if (elent_rpta['img'] != '') {
+            html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
+          }
+
+          if (elent_rpta['img'] != '') {
+            html_all += `<div class="pos_accion">`
+          } else{
+            html_all += `<div class="pos_accion" style="position:inherit !important">`
+          }
+
+
+          html_all += `
+          <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
+          <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
+          `
+
+          acciones_rpta.forEach(act => {
+            if (acciones_rpta.length == 1) {
+              html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+            } else {
+              html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+            }
+          });
+
+          // prev.click;
+
+        html_all += `
+                  </div>
+                </div>`
+        });
+
+        html_all += `
+                  </div>
+                  <a class="prev" onclick="plusSlides(-1,this)">❮</a>
+                  <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                </div>
+                <br>
+              </div>`;
+
+              document.getElementById('carga_new').style.display = "block";
+
+              setTimeout(function () {
+
+                document.getElementById('carga_new').style.display = "none";
+
+                if(muestrame == "todo"){
+
+                  let div___r2 = document.querySelector("#chat_form");
+                  let r2 = document.createElement("div");
+                  r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+                  r2.innerHTML = '<span>'+ fn__d__bienvenida[0].pre_rpta +'</span>'
+                  div___r2.append(r2)
+
+                        
+                  // respuesta SLIDER
+                  let div_r = document.querySelector("#chat_form");
+                  let r = document.createElement("div");
+                  r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
+                  r.innerHTML = html_all
+                  div_r.append(r)
+                  presionar_click();
+
+                }
+
+                if(muestrame == "slider"){
+                        
+                  // respuesta SLIDER
+                  let div_r = document.querySelector("#chat_form");
+                  let r = document.createElement("div");
+                  r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
+                  r.innerHTML = html_all
+                  div_r.append(r)
+                  presionar_click();
+
+                }
+
+
+              },3000)
+
+}
 /*=============================================
 CHATBOT PERSONALIZADO
 =============================================*/

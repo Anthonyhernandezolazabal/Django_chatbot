@@ -19,4 +19,5 @@ urlpatterns = [
     path('historial/',login_required(modulo_historial_conversacion.mod_historial), name='historial'),
     path('personalizar/',login_required(modulo_Personalizar.mod_Personalizar), name='personalizar'),
     path('configuraciones/',login_required(modulo_Configurar.mod_configurar), name='configuraciones'),
+    path('datos-por-historial/',login_required(modulo_historial_conversacion.vista_rpt), name='datos-por-historial'),
 ]

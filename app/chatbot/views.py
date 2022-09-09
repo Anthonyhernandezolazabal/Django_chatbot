@@ -119,6 +119,8 @@ def getchat(request):
     entradatmp=''
 
     nombre_chat = request.GET.get('nombre_chat')
+    email_chat = request.GET.get('email_chat')
+    phone_chat = request.GET.get('phone_chat')
     #nombre_chat getchat : anthony
     user_cook = request.GET.get('user_alias')
     #user_cook getchat : rynyshe55uhli6eaqei7k8b65bw5du
@@ -165,24 +167,26 @@ def getchat(request):
             nombre_persona_sin_alias=nombre_sin_alias,
             fecha_historial_chat=n__ow,
             estado_chat='novisto',
+            email_persona=email_chat,
+            telefono_persona=phone_chat,
             cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
           return HttpResponse(str(response))  
         else:
-          if user_autenticate == 'True':
-            # rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
-            cda = '{"respuesta_tipo": [{"tipo": "texto","rpta": [{"respueta_sl_texto": "Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?"}]}]}'
-            rpta1 = base64.b64encode(cda.encode('utf-8'))
-            print('rptaaaaaaaaaaaaaaaaaaaa: ',rpta1)
-            myuser['bol']=1
-            myuser['entradatmp']=chat_input
-            user[user_cook] = myuser
-            session_cook = user
-          else:
+          # if user_autenticate == 'True':
+          #   # rpta1 = "Discula no entendí lo que quisiste decir, aún estoy aprendiendo \n ¿Qué debería haber dicho?"
+          #   cda = '{"respuesta_tipo": [{"tipo": "texto","rpta": [{"respueta_sl_texto": "Discula no entendí lo que quisiste decir, aún estoy aprendiendo ¿Qué debería haber dicho?"}]}]}'
+          #   rpta1 = base64.b64encode(cda.encode('utf-8'))
+          #   print('rptaaaaaaaaaaaaaaaaaaaa: ',rpta1)
+          #   myuser['bol']=1
+          #   myuser['entradatmp']=chat_input
+          #   user[user_cook] = myuser
+          #   session_cook = user
+          # else:
             # rpta1 = 'Disculpa no te entendí!'
-            cda = '{"respuesta_tipo": [{"tipo": "texto","rpta": [{"respueta_sl_texto": "Discula no entendí lo que quisiste decir"}]}]}'
+            cda = '{"respuesta_tipo": [{"tipo": "no-entendi","rpta": [{"respueta_sl_texto": "null"}]}]}'
             rpta1 = base64.b64encode(cda.encode('utf-8'))
-          return HttpResponse(rpta1,'utf-8') 
+            return HttpResponse(rpta1,'utf-8') 
       else:
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))
@@ -295,7 +299,7 @@ class historialChatApiView(APIView):
     hasta = request.GET.get('hasta')
     id_empresa = request.GET.get('id_empresa')
     #POSTGRESQL
-    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
+    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
     serializer_historial = historialChatSerializers(rpta, many=True)
     return Response(serializer_historial.data)
 '''=============================================
