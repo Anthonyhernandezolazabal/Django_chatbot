@@ -20,3 +20,6 @@ recursosCajaSullana
 
 app/media/
 app/bot/__pycache__/*
+
+app/cert.crt
+app/cert.key
