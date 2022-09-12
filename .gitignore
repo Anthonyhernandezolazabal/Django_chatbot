@@ -1,12 +1,12 @@
 env/*
 app/chatbot/__pycache__/*
-app/chatbot/migrations
+app/chatbot/migrations/*
 
 app/chatbot_admin/__pycache__/*
-app/chatbot_admin/migrations
+app/chatbot_admin/migrations/*
 
 app/profile_user/__pycache__/*
-app/profile_user/migrations
+app/profile_user/migrations/*
 
 notes.txt
 
