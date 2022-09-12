@@ -1,5 +1,5 @@
 //Desarrollo
-var URLactual = 'https://192.168.214.7:8000/';
+var URLactual = 'https://35.222.244.103:8000/';
 //Desarrollo
 // var URLactual = 'https://35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
