@@ -1,7 +1,6 @@
 import os
 import json
 from django.shortcuts import render
-from django.http import HttpResponse
 from chatbot.models import chat_user,chatbot_style
 from chatbot_admin.models import data_set,cliente,configuraciones
 from rest_framework.views import APIView
@@ -14,11 +13,13 @@ from pathlib import Path
 from django.conf import settings
 from rest_framework import status
 import base64
-from django.http import HttpRequest
+from django.http import HttpRequest,HttpResponse
 from django.core import serializers
 from os import remove
 import time
-
+import csv
+import xlwt
+import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -349,25 +350,45 @@ class personalizarApiView(APIView):
 
   #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 def personalizar_edit(request):
 
-  json_datos = request.GET.get('datos')
-  arrayRecibido = json.loads(json_datos)
 
-  id_empresa = cliente.objects.get(pk=arrayRecibido[0]['id_empresa_cliente'])
-  chatbot_style.objects.filter(pk=arrayRecibido[0]['id']).update(
-    titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],
-    id_empresa_cliente=id_empresa,
-    nombre_chatbot=arrayRecibido[0]['nombre_chatbot'],
-    terminos_y_condiciones=arrayRecibido[0]['terminos_condiciones'],
-    terminos_y_condiciones_aceptar=arrayRecibido[0]['t_y_c_aceptar'],
-    terminos_y_condiciones_link=arrayRecibido[0]['terminos_condiciones_link'],
-    terminos_y_condiciones_rechazar=arrayRecibido[0]['t_y_c_rechazar'],
-    color_header=arrayRecibido[0]['color_chatbot'],
-    color_botones=arrayRecibido[0]['color_btn_acciones'],
-    )
+    try:
+        json_datos = request.GET.get('datos')
+        arrayRecibido = json.loads(json_datos)
 
-  return HttpResponse(str('ok'))
+        if arrayRecibido[0]['tipo_color_header']=="paleta":
+          rpta_chatbot_color = "#"+arrayRecibido[0]['rpta_color_header']
+        if arrayRecibido[0]['tipo_color_header']=="personalizado":
+          rpta_chatbot_color = arrayRecibido[0]['rpta_color_header'].replace('*','#')
+          
+
+        if arrayRecibido[0]['tipo_color_botones']=="paleta":
+          rpta_botones_color = "#"+arrayRecibido[0]['rpta_color_botones']
+        if arrayRecibido[0]['tipo_color_botones']=="personalizado":
+          rpta_botones_color = arrayRecibido[0]['rpta_color_botones'].replace('*','#')
+
+
+        id_empresa = cliente.objects.get(pk=arrayRecibido[0]['id_empresa_cliente'])
+        chatbot_style.objects.filter(id_empresa_cliente=id_empresa).update(
+          titulo_cuerpo=arrayRecibido[0]['titulo_cuerpo'],
+          nombre_chatbot=arrayRecibido[0]['nombre_chatbot'],
+          terminos_y_condiciones=arrayRecibido[0]['terminos_condiciones'],
+          terminos_y_condiciones_aceptar=arrayRecibido[0]['t_y_c_aceptar'],
+          terminos_y_condiciones_link=arrayRecibido[0]['terminos_condiciones_link'],
+          terminos_y_condiciones_rechazar=arrayRecibido[0]['t_y_c_rechazar'],
+          tipo_color_header=arrayRecibido[0]['tipo_color_header'],
+          rpta_color_header=rpta_chatbot_color,
+          tipo_color_botones=arrayRecibido[0]['tipo_color_botones'],
+          rpta_color_botones=rpta_botones_color,
+          )
+        rpta = str("ok")
+    except Exception as inst:
+      rpta = str("nook")
+
+    return HttpResponse(rpta)
+
 
 
 from django.core.files.storage import FileSystemStorage
@@ -386,6 +407,24 @@ class mod_slider(HttpRequest):
       # # upload = request.FILES.get('images2')
 
       return HttpResponse(str(file))
+
+  def guardarlogochatbot(request):
+    if request.method == 'POST':
+      try:
+          upload = request.FILES['file']
+          fss = FileSystemStorage()
+          file = fss.save('logo_chatbot/' + upload.name, upload)
+          empresa_id = request.POST.get('empresa_id')
+          #ACTUALIZAMOS
+          id_empresa = cliente.objects.get(pk=empresa_id)
+          chatbot_style.objects.filter(id_empresa_cliente=id_empresa).update(
+            foto_logo=file,
+          )
+          rpta = str("ok")
+      except Exception as inst:
+          rpta = str("nook")
+
+      return HttpResponse(rpta)
 
 
 class obtener_prg(HttpRequest):
@@ -503,3 +542,70 @@ class configuracion(APIView):
 
       response = serializers.serialize("json", datos)
       return HttpResponse(response, content_type='application/json')
+
+'''=============================================
+   REPORTES DE EXPORTAR
+============================================= '''
+
+class r_exportar(HttpRequest):
+
+  # FORMATO CSV
+  def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename=Expenses' + \
+      str(datetime.datetime.now())+'.csv'
+
+    writer=csv.writer(response)
+    # writer.writerow(['#','Campos requeridos','Nombre','Correo Electrónico','Teléfono'])
+    writer.writerow(['nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat'])
+
+    expenses=chat_user.objects.filter()
+
+    print("RPTAAAA  :",expenses)
+
+    for expense in expenses:
+        writer.writerow([expense.nombre_persona,expense.email_persona,expense.telefono_persona,expense.nombre_persona_sin_alias,expense.estado_chat])
+
+    return response
+
+
+  # FORMATO XLS -> pip install xlwt
+  def export_excel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition']='attachment; filename=Expenses' + \
+      str(datetime.datetime.now())+'.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Expenses')
+    row_num = 0
+
+    font_style=xlwt.XFStyle()
+    font_style.font.bold = True
+
+    colums = ['nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat']
+
+    for col_num in range(len(colums)):
+      ws.write(row_num, col_num, colums[col_num],font_style)
+
+    font_style = xlwt.XFStyle()
+
+    # rows = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id=5 AND registrado BETWEEN SYMMETRIC '2022-09-10' AND '2022-09-09'")
+
+    rows = chat_user.objects.filter().values_list('nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat')
+
+    for row in rows:
+      row_num+=1
+
+      for col_num in range(len(row)):
+        ws.write(row_num, col_num, str(row[col_num]),font_style)
+    wb.save(response)
+
+    return response
+
+
+
+
+
+
+
+    

@@ -1,7 +1,7 @@
 from django.urls import path
 from .import views
 from chatbot_admin.views import LoginFormViews
-from chatbot.views import mod_slider,obtener_prg,configuracion
+from chatbot.views import mod_slider,obtener_prg,configuracion,r_exportar
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
     path('getnombre/', views.getnombre, name='nombre'),
@@ -24,8 +24,14 @@ urlpatterns = [
     path('get_prg/',obtener_prg.getprg,name='get_prg'),
 
     path('guardar_img_slider/', mod_slider.guardar_imagen_slider,name='guardar_img_slider'),
+    path('guardar_logo_chatbot/', mod_slider.guardarlogochatbot,name='guardar_logo_chatbot'),
 
     path('sav__config/',configuracion.addconfig,name='sav__config'),
     path('mostrar_data__config/',configuracion.showconfig,name='mostrar_data__config'),
+
+
+
+    path('export_csv/',r_exportar.export_csv,name='export_csv'),
+    path('export_excel/',r_exportar.export_excel,name='export_excel'),
 
 ]

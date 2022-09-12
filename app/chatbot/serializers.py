@@ -9,7 +9,7 @@ class historialChatSerializers(serializers.ModelSerializer):
 class personalizarChatSerializers(serializers.ModelSerializer):
     class Meta:
         model = chatbot_style
-        fields = ['id','nombre_chatbot','titulo_cuerpo','terminos_y_condiciones','terminos_y_condiciones_link','terminos_y_condiciones_aceptar','terminos_y_condiciones_rechazar','color_header','color_botones','id_empresa_cliente']
+        fields = ['id','foto_logo','nombre_chatbot','titulo_cuerpo','terminos_y_condiciones','terminos_y_condiciones_link','terminos_y_condiciones_aceptar','terminos_y_condiciones_rechazar','tipo_color_header','rpta_color_header','tipo_color_botones','rpta_color_botones','id_empresa_cliente']
 
 class datasetSerializers(serializers.ModelSerializer):
     class Meta:

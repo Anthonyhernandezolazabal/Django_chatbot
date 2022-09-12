@@ -174,7 +174,7 @@
     width: 50px;
     float: left;
     margin: 0px 10px 0px 10px;
-    border: 4px solid rgba(0, 0, 0, 0.21);
+    border: 1px solid rgba(0, 0, 0, 0.21);
 }
 
 .change_img img {

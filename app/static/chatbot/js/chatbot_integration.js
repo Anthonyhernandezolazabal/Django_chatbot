@@ -1,5 +1,5 @@
 //Desarrollo
-var URLactual = 'https://192.168.100.10:8000/';
+var URLactual = 'https://192.168.214.7:8000/';
 //Desarrollo
 // var URLactual = 'https://35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
@@ -165,7 +165,6 @@ function hideChat(hide) {
 
           if(nombre_usuario.length == 0){
 
-            console.log("nombre_usuario :",nombre_usuario)
 
             it______em.style = 'border: 1px solid #cd0008!important;';
             error = true
@@ -307,7 +306,7 @@ function escribir(e,t) {
             <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
           </center>`
           div___r3_.append(r3__)
-        },3000)
+        },2000)
       }
     }
 }
@@ -659,7 +658,7 @@ function validar_conf_chat(datos){
           <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
         </center>
       </div>`
-    },3000)
+    },2000)
 
 
   }else{
@@ -703,7 +702,7 @@ function btn_terminos_condiciones(action, ac) {
       r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
       r2__.innerHTML = '<span>'+ document.querySelector('#t_c_acept').value +'</span>'
       div___r2_.append(r2__)
-    },3000)
+    },2000)
 
     setTimeout(function () {
       mostrar_texto_personalizado_fn(dat__,"todo")
@@ -733,7 +732,7 @@ function btn_terminos_condiciones(action, ac) {
         <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
       </center>`
       div___r3_.append(r3__)
-    },3000)
+    },2000)
   }
 
   ac.closest('.t_y_c_cls').innerHTML = ""
@@ -837,7 +836,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
                 }
 
 
-              },3000)
+              },2000)
 
 }
 /*=============================================
@@ -850,19 +849,21 @@ function chatbot_personalizado() {
   fetch(URLactual+'personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
+    console.log("A VER TODO :",response)
+
+    if(response[0]['foto_logo'] != null){
+      document.querySelector('.chat_img_option').setAttribute("src", URLactual+"media/"+response[0]['foto_logo'])
+    }
     document.querySelector('#chat_head').innerText = response[0]['nombre_chatbot']
     document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
     document.getElementById('chatbot_terminos_condiciones').value = response[0]['terminos_y_condiciones']
     document.getElementById('chatbot_terminos_condiciones_link').value = response[0]['terminos_y_condiciones_link']
     document.getElementById('t_c_rcz').value = response[0]['terminos_y_condiciones_rechazar']
     document.querySelector('#t_c_acept').value = response[0]['terminos_y_condiciones_aceptar']
-
-
-    document.querySelector('#color_bd_chatbot').style.background = response[0]['color_header']
-    document.querySelector('#prime').style.background = response[0]['color_header']
-    document.querySelector('#chat_third_screen').style.background = response[0]['color_botones']
-    
-    document.querySelector('#cam_ps').value = response[0]['color_botones']
+    document.querySelector('#color_bd_chatbot').style.background = response[0]['rpta_color_header']
+    document.querySelector('#prime').style.background = response[0]['rpta_color_header']
+    document.querySelector('#chat_third_screen').style.background = response[0]['rpta_color_botones']
+    document.querySelector('#cam_ps').value = response[0]['rpta_color_botones']
 
     
   })

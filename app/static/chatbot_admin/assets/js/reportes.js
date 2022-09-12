@@ -15,7 +15,7 @@ $('input[name="dates"]').daterangepicker({
     let desde = start.format('YYYY-MM-DD');
     let hasta = end.format('YYYY-MM-DD');
     let id_empresa = empresa_id
-    fetch('/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa + '', {
+    fetch('/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa , {
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
       var total_datos = response;
@@ -306,7 +306,7 @@ function delete_cha___t(id,nom){
 /*=============================================
 GENERAR REPORTES POR DATOS DINÁMICOS RECIBIDOS EN EL CHAT
 =============================================*/
-
+var contador = 0;
 $('input[name="datos_dinamicos"]').daterangepicker({
     locale: {
       format: 'YYYY/MM/DD',
@@ -324,97 +324,122 @@ $('input[name="datos_dinamicos"]').daterangepicker({
     fetch('/historial_fecha/?desde=' + desd__e + '&hasta=' + hast__a + '&id_empresa=' + id__empresa + '', {
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
-      let show__rpt_rt2 = "";
-      let contall = 0;
-
-      response.forEach(it__ => {
-      contall++
-      console.log("response dinamicos :",it__);
-
-      show__rpt_rt2 +=  `
-      
-        <tr>
-            <td>${contall}</td>`
-
-            if(it__.email_persona == "null" && it__.telefono_persona == "null"){
-              console.log("IF 1")
-              show__rpt_rt2 +=  `<td><span class="badge bg-primary">Nombre</span></td>`
-            }else
-            if(it__.email_persona == "null" && it__.telefono_persona != "null"){
-              console.log("IF 2")
+      if(response.length != 0){
+        let show__rpt_rt2 = "";
+        let contall = 0;
+        response.forEach(it__ => {
+        contall++
+        show__rpt_rt2 +=  `
+          <tr>
+              <td>${contall}</td>`
+              if(it__.email_persona == "null" && it__.telefono_persona == "null"){
+                console.log("IF 1")
+                show__rpt_rt2 +=  `<td><span class="badge bg-primary">Nombre</span></td>`
+              }else
+              if(it__.email_persona == "null" && it__.telefono_persona != "null"){
+                console.log("IF 2")
+                show__rpt_rt2 +=  `
+                <td>
+                  <span class="badge bg-primary">Nombre</span> 
+                  <span class="badge bg-info">Teléfono</span>
+                </td>`
+              }else
+              if(it__.telefono_persona == "null" && it__.email_persona != "null"){
+                console.log("IF 3")
+                show__rpt_rt2 +=  `
+                <td>
+                  <span class="badge bg-primary">Nombre</span> 
+                  <span class="badge bg-success">Correo electrónico</span>
+                </td>`
+              }else{
+                console.log("IF 4")
+                show__rpt_rt2 +=  `
+                <td>
+                  <span class="badge bg-primary">Nombre</span> 
+                  <span class="badge bg-success">Correo electrónico</span> 
+                  <span class="badge bg-info">Teléfono</span>
+                </td>`
+              }
               show__rpt_rt2 +=  `
-              <td>
-                <span class="badge bg-primary">Nombre</span> 
-                <span class="badge bg-info">Teléfono</span>
-              </td>`
-            }else
-            if(it__.telefono_persona == "null" && it__.email_persona != "null"){
-              console.log("IF 3")
+              <td>${it__.nombre_persona_sin_alias}</td>`
+              if(it__.email_persona != "null"){
+  
+                show__rpt_rt2 +=  `<td>${it__.email_persona}</td>`
+  
+              }else{
+  
+                show__rpt_rt2 +=  `<td> - </td>`
+  
+              }
+              if(it__.telefono_persona != "null"){
+  
+                show__rpt_rt2 +=  `<td>${it__.telefono_persona}</td>`
+  
+              }else{
+  
+                show__rpt_rt2 +=  `<td> - </td>`
+  
+              }
               show__rpt_rt2 +=  `
-              <td>
-                <span class="badge bg-primary">Nombre</span> 
-                <span class="badge bg-success">Correo electrónico</span>
-              </td>`
-            }else{
-              console.log("IF 4")
-              show__rpt_rt2 +=  `
-              <td>
-                <span class="badge bg-primary">Nombre</span> 
-                <span class="badge bg-success">Correo electrónico</span> 
-                <span class="badge bg-info">Teléfono</span>
-              </td>`
-            }
-
-
-            
-
-            show__rpt_rt2 +=  `
-            <td>${it__.nombre_persona_sin_alias}</td>`
-
-            if(it__.email_persona != "null"){
-
-              show__rpt_rt2 +=  `<td>${it__.email_persona}</td>`
-
-            }else{
-
-              show__rpt_rt2 +=  `<td> - </td>`
-
-            }
-
-            if(it__.telefono_persona != "null"){
-
-              show__rpt_rt2 +=  `<td>${it__.telefono_persona}</td>`
-
-            }else{
-
-              show__rpt_rt2 +=  `<td> - </td>`
-
-            }
-
-            
-
-
-            show__rpt_rt2 +=  `
-        </tr>
-      
-      `;
-
-      $("#show__rpt_rt2").html(show__rpt_rt2)
-
-
-
-
+          </tr>
+        `;
+        contador++
+          $("#show__rpt_rt2").html(show__rpt_rt2)
+        });
+        $("#data__tables").DataTable({
+          // paging: false,
+          searching: false,   
+          language: {
+                  "lengthMenu": "Mostrar _MENU_ registros",
+                  "zeroRecords": "No se encontraron resultados",
+                  "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sSearch": "Buscar:",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast":"Último",
+                      "sNext":"Siguiente",
+                      "sPrevious": "Anterior"
+            },
+            "sProcessing":"Procesando...",
+              },
+          //para usar los botones  
+          responsive: "true",
+          dom: 'Bfrtilp',       
+          buttons:[ 
+          {
+            extend:    'excelHtml5',
+            text:      '<i class="mdi mdi-microsoft-excel"></i> ',
+            titleAttr: 'Exportar a Excel',
+            className: 'btn btn-success',
+            title: 'Exportando_excel_desde_'+desd__e+'_hasta_'+hast__a
+          },
+          {
+            extend:    'pdfHtml5',
+            text:      '<i class="mdi mdi-file-pdf-outline"></i> ',
+            titleAttr: 'Exportar a PDF',
+            className: 'btn btn-danger',
+            title: 'Exportando_pdf_desde_'+desd__e+'_hasta_'+hast__a
+          },
+          {
+            extend:    'print',
+            text:      '<i class="dripicons-print"></i> ',
+            titleAttr: 'Imprimir',
+            className: 'btn btn-info',
+            title: 'Exportando_print_desde_'+desd__e+'_hasta_'+hast__a
+          },
+          ],   
+        }); 
         
-      });
-
-
-
-
-
+      }else{
+        $("#show__rpt_rt2").html(`<h1>SIN RESULTADOS</h1>`)
+      }
 
     })
 
-
-
-
 })
+
+/*=============================================
+EXPORTAR EXCEL
+=============================================*/

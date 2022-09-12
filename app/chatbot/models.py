@@ -20,14 +20,17 @@ class chat_user(models.Model):
     ordering = ['id'] #ordenar por ID
 
 class chatbot_style(models.Model):
-  nombre_chatbot = models.CharField(max_length=100, null=True)
+  foto_logo = models.TextField(verbose_name='foto logo para chatbot', default=None, null=True)
+  nombre_chatbot = models.CharField(max_length=20, null=True)
   titulo_cuerpo = models.CharField(max_length=255, null=True)
   terminos_y_condiciones = models.CharField(max_length=120, null=True)
-  terminos_y_condiciones_link = models.CharField(max_length=120, null=True)
-  terminos_y_condiciones_aceptar = models.CharField(max_length=120, null=True)
-  terminos_y_condiciones_rechazar = models.CharField(max_length=120, null=True)
-  color_header = models.CharField(max_length=120, null=True)
-  color_botones = models.CharField(max_length=120, null=True)
+  terminos_y_condiciones_link = models.CharField(max_length=150, null=True)
+  terminos_y_condiciones_aceptar = models.CharField(max_length=150, null=True)
+  terminos_y_condiciones_rechazar = models.CharField(max_length=150, null=True)
+  tipo_color_header = models.TextField(verbose_name='Tipo color del chatbot', null=True)
+  rpta_color_header = models.TextField(verbose_name='Respuesta color del chatbot', null=True)
+  tipo_color_botones = models.TextField(verbose_name='Tipo color de botones de chatbot', null=True)
+  rpta_color_botones = models.TextField(verbose_name='Respuesta color de botones de chatbot', null=True)
   id_empresa_cliente = models.ForeignKey(cliente,on_delete=models.SET_NULL, blank=True, null=True)
   
   class Meta:

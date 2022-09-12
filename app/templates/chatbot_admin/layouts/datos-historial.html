@@ -24,8 +24,6 @@
                     <div class="card-body">
                         <h5 class="card-title">Reporte por fechas</h5>
                             <input type="text" name="datos_dinamicos" class="form-control pull-right mb-2">
-                            <button type="button" class="btn btn-success"><i class="mdi mdi-microsoft-excel" style="font-size: 20px;"></i> </button>
-                            <button type="button" class="btn btn-primary ml-2"><i class="mdi mdi-file-pdf-outline" style="font-size: 20px;"></i> </button>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col-->
@@ -37,7 +35,7 @@
         
         <div class="col-xl-12">
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
                  
                     <table class="table table-hover table-centered mb-0">
@@ -58,7 +56,30 @@
 
 
                 </div>
-            </div>
+            </div> -->
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Stripped Table</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="data__tables" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Campos requeridos</th>
+                                    <th>Nombre</th>
+                                    <th>Correo Electrónico</th>
+                                    <th>Teléfono</th>
+                                </tr>
+                            </thead>
+                            <tbody id="show__rpt_rt2">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
 
 

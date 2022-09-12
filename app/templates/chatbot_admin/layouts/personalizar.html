@@ -1,6 +1,10 @@
 {% extends "chatbot_admin/layouts/base.html" %}
 {% load static %}
 {% block content %}
+<link href="{% static '/chatbot_admin/assets/css/style_apariencia.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
@@ -38,9 +42,6 @@
                 <div class="tab-content">
                   <div class="tab-pane show active" id="inici_chatbot">
 
-
-
-
                     <div class="chat is-visible">
 
                       <div id="chat_color" class="chat_header" style="display: block;">
@@ -49,15 +50,14 @@
 
                           <div class="header_img" style="margin-bottom: 8px;">
 
-                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}">
+                            <img src="{% static 'chatbot_admin/assets/images/default.png' %}" class="reem_img_logo">
 
                           </div>
 
                           <span id="chat_head" style="font-weight: bold;" class="pr_tl2">Nombre Chatbot</span> <br>
                           <span class="agent">.</span>
                           <span class="online" style="font-weight: bold;">En Línea</span>
-                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: none;"><i
-                              class="fullscreen zmdi zmdi-window-maximize"></i></span>
+                          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader" style="display: none;"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
 
                         </div>
 
@@ -109,7 +109,7 @@
 
 
                         <div class="chat_msg_item chat_msg_item_admin">
-                          <span class="pr_terminos_condiciones">Terminos y condiciones</span>: <a href="#"
+                          <span class="pr_terminos_condiciones">Términos y condiciones</span>: <a href="#"
                             class="pr_terminos_condiciones_link">link</a>
                           <center>
                             <button id="t_y_c_a" class="t_y_c">Aceptar</button>
@@ -119,9 +119,7 @@
                         <span class="chat_msg_item chat_msg_item_user chat_rpta">Aceptar</span>
                         <span class="chat_msg_item chat_msg_item_admin">Hola <b>{nombre}</b> , Gracias por aceptar
                           nuestros T&C</span>
-                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_aceptar">bienvenido
-                          a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y
-                          listos para ayudar.</span>
+                        <span class="chat_msg_item chat_msg_item_admin pr_terminos_condiciones_link_aceptar">bienvenido a nuestro sitio, si necesita ayuda,simplemente responda a este mensaje, estamos en línea y listos para ayudar.</span>
 
 
                         <span class="chat_msg_item chat_msg_item_user chat_rpta">Rechazar</span>
@@ -136,8 +134,7 @@
                       <div class="fab_field">
                         <a id="fab_camera" class="fab is-visible"><i class="mdi mdi-microphone"></i></a>
                         <a id="fab_send" class="fab is-visible"><i class="mdi mdi-telegram"></i></a>
-                        <input type="text" id="chatSend" name="chat_message" placeholder="Escribe aquí..."
-                          class="chat_field chat_message"></div>
+                        <input type="text" id="chatSend" name="chat_message" placeholder="Escribe aquí..." class="chat_field chat_message"></div>
 
                     </div>
 
@@ -146,9 +143,7 @@
                   </div>
                 </div>
                 <center>
-
-                  <button type="button" onclick="fn_edit_pr()" class="btn btn-outline-warning mt-3 btn_Habilitar_"> <i
-                      class="uil uil-edit-alt me-1"></i> Habilitar edición </button>
+                  <button type="button" class="btn btn-outline-warning mt-3" data-bs-toggle="modal" data-bs-target="#centermodal"> <i class="uil uil-robot me-1"></i> Cambiar logo del chatbot </button>
                 </center>
               </div>
             </div>
@@ -174,110 +169,132 @@
                         {% csrf_token %}
 
 
+                        <form enctype="multipart/form-data" class="all__div" method="POST" >
 
-                        <div class="row">
+                          <div class="row">
 
-                          <div class="col-md-6">
+                            <div class="col-md-6">
 
-                            <div class="mb-3">
-                              <label class="form-label">Título de chatbot</label>
-                              <input type="text" class="form-control" maxlength="15"
-                                data-toggle="maxlength" required onkeyup="myFunctionT()"
-                                placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo" disabled="">
+                              <div class="mb-3">
+                                <label class="form-label">Nombre de chatbot</label>
+                                <input type="text" class="form-control" maxlength="15" data-toggle="maxlength" required onkeyup="myFunctionT()" placeholder="Ingresa un título a tu chatbot" id="frm_ptitulo">
 
-                              <input type="hidden" id="id_pr_ct">
+                                <input type="hidden" id="id_pr_ct">
 
-                              <script>
+                                <script>
 
-                                var Ls = localStorage.getItem('datos')
-                                var id_empresa = JSON.parse(Ls).id_empresa;
-                                document.getElementById('id_pr_ct').value=id_empresa
+                                  var Ls = localStorage.getItem('datos')
+                                  var id_empresa = JSON.parse(Ls).id_empresa;
+                                  document.getElementById('id_pr_ct').value=id_empresa
 
-                              </script>
-
+                                </script>
 
 
-                              <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
+
+                                <p id="xyz01" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="frm_pdatos"
+                                  class="form-label">Formulario</label>
+                                <textarea data-toggle="maxlength" class="form-control" maxlength="100" rows="3" onkeyup="myFunctionBTND()" placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos"></textarea>
+                                <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+
+                              <div class="row mb-3">
+
+                                <div class="col-sm-6">
+
+                                  <div class="mb-2">
+                                      <label for="color_chatbot" class="form-label">Color chatbot</label>
+                                      <input type="hidden" id="val_rpta_color_chatbot" value="#727cf5">
+                                      <input type="hidden" id="val_rpta_color_chatbot_per" value="">
+                                      <select class="form-select" id="color_chatbot" name="color_chatbot">
+                                          <option disabled selected value="-1">Selecciona una opción</option>
+                                          <option value="paleta">Paleta de colores</option>
+                                          <option value="personalizado">Personalizado</option>
+                                      </select>
+                                  </div>
+
+                                  <div class="mb-3 val_seleccion_c">
+                                      
+                                  </div>
+
+
+                                </div>
+
+
+
+                                <div class="col-sm-6">
+
+                                  <div class="mb-2">
+                                      <label for="color_chatbot_acciones" class="form-label">Color botones | Acciones</label>
+                                      <input type="hidden" id="val_rpta_color_chatbot_acciones" value="#727cf5">
+                                      <input type="hidden" id="val_rpta_color_chatbot_acciones_per" value="">
+                                      <select class="form-select" id="color_chatbot_acciones" name="color_chatbot_acciones">
+                                          <option disabled selected value="-1">Selecciona una opción</option>
+                                          <option value="paleta">Paleta de colores</option>
+                                          <option value="personalizado">Personalizado</option>
+                                      </select>
+                                  </div>
+
+                                  <div class="mb-3 val_seleccion_c_p">
+                                      
+                                  </div>
+
+                                  <!-- <div class="mb-3">
+                                      <input class="form-control" id="color_chatbot_acciones" type="color" name="color_chatbot_acciones" value="#727cf5">
+                                  </div> -->
+
+                                </div>
+                              </div>
+                              
+
                             </div>
 
-                            <div class="mb-3">
-                              <label for="frm_pdatos"
-                                class="form-label">Formulario</label>
-                              <textarea data-toggle="maxlength" class="form-control"
-                                maxlength="100" rows="3" onkeyup="myFunctionBTND()"
-                                placeholder="Ingresa un texto al completar sus datos" id="frm_pdatos"
-                                disabled=""></textarea>
-                              <p id="xyz03" style="color: #fa5c7c;font-weight: bold;"></p>
+
+                            <div class="col-md-6">
+
+                              <div class="mb-3">
+                                <label for="frm_pdatos" class="form-label">Términos y
+                                  Condiciones</label>
+                                <textarea data-toggle="maxlength" class="form-control"
+                                  maxlength="150" rows="3" onkeyup="myFunctionBTN()" placeholder="Términos y Condiciones" id="frm_pboton"></textarea>
+                                <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="frm_pboton" class="form-label">Link</label>
+                                <input class="form-control" type="text" style="color:#727cf5" placeholder="Link" id="frm_link" onkeyup="myFunctionLink()" maxlength="100" data-toggle="maxlength">
+                                <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+
+                              <div class="mb-3">
+                                <label for="frm_pdatos" class="form-label">Aceptar</label>
+                                <textarea data-toggle="maxlength" class="form-control" maxlength="150" rows="3" onkeyup="myFunction_t_y_c_aceptar()" placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_aceptar"></textarea>
+                                <p id="xyz05" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+
+                              <div class="mb-3">
+                                <label for="frm_pdatos" class="form-label">Rechazar</label>
+                                <textarea data-toggle="maxlength" class="form-control" maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()" placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar"></textarea>
+                                <p id="xyz06" style="color: #fa5c7c;font-weight: bold;"></p>
+                              </div>
+
+
+
                             </div>
 
-                            <div class="mb-3" style="display: none" id="c_cht">
-                              <label for="example-color" class="form-label">Color Chatbot</label>
-                              <div class="color-picker"></div>
-                            </div>
-
-                            <div class="mb-3" style="display: none" id="c_bt">
-                              <label for="example-color" class="form-label">Color botones | Acciones</label>
-                              <div class="color-picker_acciones"></div>
-                            </div>
-
-
-                            <input type="hidden" id="color_chatbot">
-                            <input type="hidden" id="color_chatbot_acciones">
-
-                            
 
                           </div>
 
+                          <center id="btn_save_upadte"></center>
 
-                          <div class="col-md-6">
+                        </form>
 
-                            <div class="mb-3">
-                              <label for="frm_pdatos" class="form-label">Términos y
-                                Condiciones</label>
-                              <textarea data-toggle="maxlength" class="form-control"
-                                maxlength="150" rows="3" onkeyup="myFunctionBTN()" placeholder="Términos y Condiciones"
-                                id="frm_pboton" disabled=""></textarea>
-                              <p id="xyz02" style="color: #fa5c7c;font-weight: bold;"></p>
-                            </div>
-
-                            <div class="mb-3">
-                              <label for="frm_pboton" class="form-label">Link</label>
-                              <input class="form-control" type="text"
-                                style="color:#727cf5" placeholder="Link" id="frm_link" onkeyup="myFunctionLink()"
-                                maxlength="100" data-toggle="maxlength" disabled="">
-                              <p id="xyz04" style="color: #fa5c7c;font-weight: bold;"></p>
-                            </div>
-
-
-                            <div class="mb-3">
-                              <label for="frm_pdatos"
-                                class="form-label">Aceptar</label>
-                              <textarea data-toggle="maxlength" class="form-control"
-                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_aceptar()"
-                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_aceptar"
-                                disabled=""></textarea>
-                              <p id="xyz05" style="color: #fa5c7c;font-weight: bold;"></p>
-                            </div>
-
-
-                            <div class="mb-3">
-                              <label for="frm_pdatos"
-                                class="form-label">Rechazar</label>
-                              <textarea data-toggle="maxlength" class="form-control"
-                                maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()"
-                                placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar"
-                                disabled=""></textarea>
-                              <p id="xyz06" style="color: #fa5c7c;font-weight: bold;"></p>
-                            </div>
-
-
-
-                          </div>
-
-
-                        </div>
-
-                        <center id="btn_save_upadte"></center>
                       </div>
                     </div>
                   </div>
@@ -287,4 +304,65 @@
           </div>
       </div>
     </div>
+
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myCenterModalLabel">Actualizar logo</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body cls_all_logo">
+                <center>
+                  <img src="/static/chatbot_admin/assets/images/default.png" class="previsualizar img-responsive avatar-lg rounded-circle">
+
+                  <div class="row g-2 mt-1 mb-2">
+                      <div class="col-sm-12">
+                          <label class="form-label">Subir foto</label>
+                          <input class="form-control imagen_logo" type="file" id="img__logo">
+                          <input type="hidden" id="logo_old__img" name="logo_old__img">
+                      </div>
+                  </div>
+                  <button type="button" class="btn btn-success" onclick="add_logo_chatbot(this)"><i class="mdi mdi-thumb-up-outline"></i> </button>
+
+                </center>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <script>
+
+      document.querySelector(".imagen_logo").addEventListener("change",function(){
+        var imagen = this.files[0];
+        console.log("ABC :",imagen)
+        if (imagen["type"] != "image/jpeg" && imagen["type"] != "image/png" && imagen["type"] != "image/gif") {
+            document.querySelector(".imagen_logo").value = "";
+            Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'Error al subir la imagen',
+                text: "¡La imagen debe estar en formato JPG o PNG!",
+                showConfirmButton: false,
+                timer: 1800
+            })
+        
+        }else {
+            var datosImagen = new FileReader;
+            datosImagen.readAsDataURL(imagen);
+            $(datosImagen).on("load", function (event) {
+
+                var rutaImagen = event.target.result;
+                console.log(rutaImagen);
+
+                $(".previsualizar").attr("src", rutaImagen);
+
+            })
+        }
+
+      })
+            
+     
+    </script>
     {% endblock content %}
