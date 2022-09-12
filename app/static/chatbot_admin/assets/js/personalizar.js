@@ -59,7 +59,6 @@ function chatbot_personalizado() {
       }
 
 
-
       if(response[0].tipo_color_header == "paleta"){
         $(".val_seleccion_c").html(`<input class="form-control" id="color_chatbot_personalizado" type="color" name="color_chatbot_personalizado" value="${response[0].rpta_color_header}">
         <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
@@ -100,6 +99,8 @@ function chatbot_personalizado() {
         $(".reem_img_logo").attr('src',"/media/"+response[0]['foto_logo'])
         $("#logo_old__img").val(response[0]['foto_logo'])
       }
+
+      $("#cam____logo").html(`<button type="button" class="btn btn-outline-warning mt-3" data-bs-toggle="modal" data-bs-target="#centermodal"> <i class="uil uil-robot me-1"></i> Cambiar logo del chatbot </button>`)
 
       $("#btn_save_upadte").html(`<button type="button" class="btn btn-outline-info" onclick="fn_editar_pr()"> <i class="uil uil-edit-alt me-1"></i> Guardar </button>`)
     }else{
