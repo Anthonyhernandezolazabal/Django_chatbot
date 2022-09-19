@@ -306,7 +306,7 @@ function escribir(e,t) {
             <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
           </center>`
           div___r3_.append(r3__)
-        },2000)
+        },1500)
       }
     }
 }
@@ -402,25 +402,45 @@ function getBotResponse() {
       const rpta_rpta = JSON.parse(decodedStr)
 
       let rpta1="Creo que no te entiendo, aquí te presento unas opciones que te pueden interesar";
-      
+      let rpta2="Creo que no te entiendo, estoy aprendiendo cada día en darte una respuesta que se acerte a tus requerimientos";
 
       if(rpta_rpta['respuesta_tipo'][0]['tipo'] == 'no-entendi'){
+        let dat_____os = document.querySelector("#all_dat_conf").value;
+        console.log("DATAS: ",JSON.parse(JSON.parse(dat_____os).texto_bienvenida)[0].tipo)
         document.getElementById('carga_new').style.display = "block";
 
-        rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
+        if(JSON.parse(JSON.parse(dat_____os).texto_bienvenida)[0].tipo == "slider"){
+
+          rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
+            setTimeout(() => {
+              document.getElementById('carga_new').style.display = "none";
+              let div_r_null = document.querySelector("#chat_form");
+              let r_n = document.createElement("div");
+              r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+              r_n.innerHTML = '<span>' +rpta1+ '</span>'
+              div_r_null.append(r_n)
+  
+              
+              let d = JSON.parse(dat_____os)
+              mostrar_texto_personalizado_fn(d,"slider");
+              div_r_null.scrollTop = div_r_null.scrollHeight;
+            }, 1600);
+          });
+
+        }
+        if(JSON.parse(JSON.parse(dat_____os).texto_bienvenida)[0].tipo == "texto"){
           setTimeout(() => {
             document.getElementById('carga_new').style.display = "none";
             let div_r_null = document.querySelector("#chat_form");
             let r_n = document.createElement("div");
             r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-            r_n.innerHTML = '<span>' +rpta1+ '</span>'
+            r_n.innerHTML = '<span>' +rpta2+ '</span>'
             div_r_null.append(r_n)
             div_r_null.scrollTop = div_r_null.scrollHeight;
           }, 1600);
-          let dat_____os = document.querySelector("#all_dat_conf").value;
-          let d = JSON.parse(dat_____os)
-          mostrar_texto_personalizado_fn(d,"slider");
-        });
+
+
+        }
       }
 
 
@@ -658,7 +678,7 @@ function validar_conf_chat(datos){
           <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
         </center>
       </div>`
-    },2000)
+    },1500)
 
 
   }else{
@@ -702,7 +722,7 @@ function btn_terminos_condiciones(action, ac) {
       r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
       r2__.innerHTML = '<span>'+ document.querySelector('#t_c_acept').value +'</span>'
       div___r2_.append(r2__)
-    },2000)
+    },1500)
 
     setTimeout(function () {
       mostrar_texto_personalizado_fn(dat__,"todo")
@@ -732,7 +752,7 @@ function btn_terminos_condiciones(action, ac) {
         <button onclick='javascript: btn_terminos_condiciones("Rechazar",this);' class='terminos_condiciones t_y_c rechazar_t_y_C' id='btn_rechazar' style='background: ${document.querySelector('#cam_ps').value}'>Rechazar</button>
       </center>`
       div___r3_.append(r3__)
-    },2000)
+    },1500)
   }
 
   ac.closest('.t_y_c_cls').innerHTML = ""
@@ -746,97 +766,127 @@ function mostrar_texto_personalizado_fn(data,muestrame){
 
   let fn__d__bienvenida = JSON.parse(data.texto_bienvenida)
 
-  let html_all = "";
+  if (fn__d__bienvenida[0].tipo == "slider"){
+    let html_all = "";
 
-  html_all += `
-  <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
-    <div class="slideshow-container">
-      <div id="slider">`
-
-      fn__d__bienvenida[0].rptas.forEach(elent_rpta => {
-
-        var acciones_rpta = elent_rpta['acciones'];
-        html_all += `
-        <div class="mySlides fade_">`
+    html_all += `
+    <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+      <div class="slideshow-container">
+        <div id="slider">`
+  
         
-          if (elent_rpta['img'] != '') {
-            html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
-          }
-
-          if (elent_rpta['img'] != '') {
-            html_all += `<div class="pos_accion">`
-          } else{
-            html_all += `<div class="pos_accion" style="position:inherit !important">`
-          }
-
-
+  
+        fn__d__bienvenida[0].rptas.forEach(elent_rpta => {
+  
+  
+          var acciones_rpta = elent_rpta['acciones'];
+          console.log("SOLUCION :",elent_rpta)
+  
+  
           html_all += `
-          <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
-          <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
-          `
-
-          acciones_rpta.forEach(act => {
-            if (acciones_rpta.length == 1) {
-              html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
-            } else {
-              html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+          <div class="mySlides fade_">`
+          
+            if (elent_rpta['img'] != '') {
+              html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
             }
+  
+            if (elent_rpta['img'] != '') {
+              html_all += `<div class="pos_accion">`
+            } else{
+              html_all += `<div class="pos_accion" style="position:inherit !important">`
+            }
+  
+  
+            html_all += `
+            <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
+            <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
+            `
+  
+            acciones_rpta.forEach(act => {
+              if (acciones_rpta.length == 1) {
+                html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+              } else {
+                html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+              }
+            });
+  
+            // prev.click;
+  
+          html_all += `
+                    </div>
+                  </div>`
           });
-
-          // prev.click;
-
-        html_all += `
+  
+          html_all += `
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1,this)">❮</a>
+                    <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
                   </div>
-                </div>`
-        });
+                  <br>
+                </div>`;
+  
+                document.getElementById('carga_new').style.display = "block";
+  
+                setTimeout(function () {
+  
+                  document.getElementById('carga_new').style.display = "none";
+  
+                  if(muestrame == "todo"){
+  
+                    let div___r2 = document.querySelector("#chat_form");
+                    let r2 = document.createElement("div");
+                    r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+                    r2.innerHTML = '<span>'+ fn__d__bienvenida[0].pre_rpta +'</span>'
+                    div___r2.append(r2)
+  
+                          
+                    // respuesta SLIDER
+                    let div_r = document.querySelector("#chat_form");
+                    let r = document.createElement("div");
+                    r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
+                    r.innerHTML = html_all
+                    div_r.append(r)
+                    presionar_click();
+  
+                  }
+  
+                  if(muestrame == "slider"){
 
-        html_all += `
-                  </div>
-                  <a class="prev" onclick="plusSlides(-1,this)">❮</a>
-                  <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
-                </div>
-                <br>
-              </div>`;
+                    document.getElementById('carga_new').style.display = "none";
+                          
+                    // respuesta SLIDER
+                    let div_r = document.querySelector("#chat_form");
+                    let r = document.createElement("div");
+                    r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
+                    r.innerHTML = html_all
+                    div_r.append(r)
+                    presionar_click();
+  
+                  }
+  
+  
+                },1500)
+  }
+  if (fn__d__bienvenida[0].tipo == "texto"){
+    console.log("SOLUCION2 :",fn__d__bienvenida[0])
 
-              document.getElementById('carga_new').style.display = "block";
+    fn__d__bienvenida[0].rptas.forEach(it__ => {
+    document.getElementById('carga_new').style.display = "block";
+    setTimeout(function () {
 
-              setTimeout(function () {
-
-                document.getElementById('carga_new').style.display = "none";
-
-                if(muestrame == "todo"){
-
-                  let div___r2 = document.querySelector("#chat_form");
-                  let r2 = document.createElement("div");
-                  r2.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-                  r2.innerHTML = '<span>'+ fn__d__bienvenida[0].pre_rpta +'</span>'
-                  div___r2.append(r2)
-
-                        
-                  // respuesta SLIDER
-                  let div_r = document.querySelector("#chat_form");
-                  let r = document.createElement("div");
-                  r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
-                  r.innerHTML = html_all
-                  div_r.append(r)
-                  presionar_click();
-
-                }
-
-                if(muestrame == "slider"){
-                        
-                  // respuesta SLIDER
-                  let div_r = document.querySelector("#chat_form");
-                  let r = document.createElement("div");
-                  r.className = "chat_msg_item chat_msg_item_admin_2"; //Agrego una clase dentro del div
-                  r.innerHTML = html_all
-                  div_r.append(r)
-                  presionar_click();
-
-                }
+      document.getElementById('carga_new').style.display = "none";
+      let div___r2_ = document.querySelector("#chat_form");
+      let r2__ = document.createElement("div");
+      r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+      r2__.innerHTML = '<span>'+ it__ +'</span>'
+      div___r2_.append(r2__)
+    
+    },1500)
+      
+    });
 
 
-              },2000)
+  }
 
 }
 /*=============================================

@@ -97,6 +97,7 @@ function chatbot_personalizado() {
 
       if(response[0]['foto_logo'] != null){
         $(".reem_img_logo").attr('src',"/media/"+response[0]['foto_logo'])
+        $(".previsualizar").attr('src',"/media/"+response[0]['foto_logo'])
         $("#logo_old__img").val(response[0]['foto_logo'])
       }
 
@@ -479,6 +480,7 @@ function add_logo_chatbot(n){
   formData.append('file', img_lg);
   formData.append('empresa_id', empresa_id);
   // formData.append('logo_old', logo_old__img); OBTENGO EL NOMBRE PARA ELIMINAR
+  $(".sav_lo_ed").html(`<button class="btn btn-success" type="button" disabled> <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Guardando... </button>`)
   fetch('/guardar_logo_chatbot/', {
     method: 'POST',
     body: formData,
@@ -490,9 +492,12 @@ function add_logo_chatbot(n){
     if(response == "ok"){
       chatbot_personalizado();
       $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+      $(".sav_lo_ed").html(`<button type="button" class="btn btn-success" onclick="add_logo_chatbot(this)"> <i class="mdi mdi-thumb-up-outline"></i> </button> `)
+  
     }
     if(response == "nook"){
       $.NotificationApp.send("Error!", "Vuelva a intentarlo", "top-right", "rgba(0,0,0,0.2)", "error")
+      $(".sav_lo_ed").html(`<button type="button" class="btn btn-success" onclick="add_logo_chatbot(this)"> <i class="mdi mdi-thumb-up-outline"></i> </button> `)
     }
 
   })

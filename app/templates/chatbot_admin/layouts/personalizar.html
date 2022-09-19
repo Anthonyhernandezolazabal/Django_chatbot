@@ -315,7 +315,7 @@
             </div>
             <div class="modal-body cls_all_logo">
                 <center>
-                  <img src="/static/chatbot_admin/assets/images/default.png" class="previsualizar img-responsive avatar-lg rounded-circle">
+                  <img src="/static/chatbot_admin/assets/images/default.png" class="previsualizar img-responsive rounded-circle" style="width: 90px;height: auto;">
 
                   <div class="row g-2 mt-1 mb-2">
                       <div class="col-sm-12">
@@ -324,8 +324,14 @@
                           <input type="hidden" id="logo_old__img" name="logo_old__img">
                       </div>
                   </div>
-                  <button type="button" class="btn btn-success" onclick="add_logo_chatbot(this)"><i class="mdi mdi-thumb-up-outline"></i> </button>
+                  <div class="sav_lo_ed">
+                    <button type="button" class="btn btn-success" onclick="add_logo_chatbot(this)"> <i class="mdi mdi-thumb-up-outline"></i> </button> 
+                    <!-- <button class="btn btn-success" type="button" disabled> 
+                      <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> 
+                      Guardando... 
+                    </button> -->
 
+                  </div>
                 </center>
             </div>
         </div><!-- /.modal-content -->
@@ -349,6 +355,9 @@
             })
         
         }else {
+
+           $(".previsualizar").attr("src", "/static/chatbot_admin/assets/images/load.gif");
+
             var datosImagen = new FileReader;
             datosImagen.readAsDataURL(imagen);
             $(datosImagen).on("load", function (event) {
