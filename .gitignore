@@ -8,6 +8,9 @@ app/chatbot_admin/migrations/*
 app/profile_user/__pycache__/*
 app/profile_user/migrations/*
 
+app/api/__pycache__/*
+app/api/migrations/*
+
 notes.txt
 
 app/*.sqlite3

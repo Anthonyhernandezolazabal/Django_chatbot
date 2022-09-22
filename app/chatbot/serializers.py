@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from chatbot.models import chat_user,chatbot_style
-from chatbot_admin.models import data_set
+from chatbot_admin.models import data_set,configuraciones,cliente
 class historialChatSerializers(serializers.ModelSerializer):
     class Meta:
         model = chat_user
@@ -15,3 +15,20 @@ class datasetSerializers(serializers.ModelSerializer):
     class Meta:
         model = data_set
         fields = ['id','nombre','conversacion','id_cliente','registrado']
+
+# class ConfiguracionesSerializer(serializers.ModelSerializer):
+#     # nombre_cliente_empresa = serializers.CharField(read_only=True, source="cliente_empresa_id.nombre")
+#     def validate_cliente_empresa_id(self, value):
+#         existe = configuraciones.objects.filter(cliente_empresa_id=value).exists()
+#         # existe = configuraciones.objects.filter(cliente_empresa_id__iexact=value).exists() //comparar entre mayusculas y minusculas
+
+#         if existe:
+#             raise serializers.ValidationError("Ya fue registrado")
+#         return value
+#     class Meta:
+#         model = configuraciones
+#         fields = '__all__' #todo los datos
+      
+
+   
+       

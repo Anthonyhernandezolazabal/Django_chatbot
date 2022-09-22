@@ -1,89 +1,183 @@
-var Ls = localStorage.getItem('datos')
-var id_empresa = JSON.parse(Ls).id_empresa;
-console.log("empresa id :",id_empresa)
 var validar_rg_slider = false;
 var confirmar_slider_registro = false;
+function add__edit__img_save_sldr(e){
+    $("#img__shw__").html("")
+    $(e).hide();
+    $(e.closest(".ee____i").querySelector('.sh_____ow_slr')).show();
+  }
+
+/*===========================
+  AGREGAR NUEVA TIPO SLIDER
+=============================*/
+function add_new_sldr_accion(e) {
+    let a__a = e.closest('.add_input_new_action_sldr')
+    let htmlacc = `
+    <div class="row delacc__slider" style='margin-right: 15px;margin-bottom: 15px;'>
+      <div class="col-11 animate__animated animate__bounce">
+        <input class="form-control accioninicial__sld1" required type="text" placeholder="Formular pregunta">
+      </div>
+      <div class="col-1 animate__animated animate__bounce">
+        <button type="button" onclick="deleteaccion__slider(this)" class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
+      </div>
+    </div>`;
+    let t__his = a__a.querySelector("#padre__add_new_action_sldr");
+    $(t__his).append(htmlacc);
+  }
+  
+/*===========================
+  ELIMINAR ACCION DE SLIDER
+=============================*/
+function deleteaccion__slider(sl) {
+    sl.closest('.delacc__slider').remove();
+  
+}
+
+/*=============================================
+  AGREGAR MAS RPTA TIPO TEXTO 
+=============================================*/
+function add_rpta_txt(){
+    $("#add_show__rpta_txt").append(`
+        <div class="row eliminarrptatext">
+            <div class="col-xl-11 col-lg-11 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-floating mt-2">
+                <textarea class="form-control tipo_texto______t__y__c" placeholder="Leave a comment here" style="height: 70px;"></textarea>
+                    <label for="">Respuesta tipo texto</label>
+                </div>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-6 col-sm-6 col-xs-12" style="margin: auto;">
+                <button type="button" class="btn btn-danger" onclick="deletedrp__ta(this)"><i class="mdi mdi-window-close"></i> </button>
+            </div>
+        </div>`)
+}
+/*=============================================
+  ELIMINAR RESPUESTAS
+=============================================*/
+function deletedrp__ta(e) {
+    e.closest('.eliminarrptatext').remove();
+}
+function quitar____slider(e) {
+  confirmar_slider_registro = true;
+  Swal.fire({
+    title: '¿Eliminar?',
+    text: "No podrá revetir esta acción!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminar!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      e.closest('.show__sli__der').remove()
+      con__sld--
+      $.NotificationApp.send("¡Aviso!", "Eliminado!", "top-right", "rgba(0,0,0,0.2)", "error")
+    }
+  })
+}
+  
+/*===========================
+  VALIDAR AGREGAR SLIDER
+=============================*/
+function show_add_slider__s(n) {
+    let card = n.closest('.cls____Slider') //Todo el card del slider
+    let tit = card.querySelector('.titulo_sldr').value;
+    let des = card.querySelector('.descripcion_sldr').value;
+    let acci = card.querySelectorAll('.accioninicial__sld1');
+    acci.forEach(ac___val => {
+        let va__l = ac___val.value
+
+        if(va__l == "" || tit == "" || des == ""){
+            validar_rg_slider = false;
+            $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "warning")
+        }else{
+            validar_rg_slider = true;
+            $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "success")
+        }
+        
+    });
+    if(validar_rg_slider == true){
+        card.querySelector('.collapse___sld').classList.remove("show")
+        const fileInput = card.querySelectorAll('.im__g')
+        let img_nom = fileInput[0]['files'][0]
+        /*=============================================
+          ===== GUARDAR IMAGEN EN EL SERVIDOR =====
+          Nota: Al enviar la imagen al servidor, ésta le asigna un alias al nombre por si es imagen repetida.
+          Es nombre asigando se devuelve como response para ponerlo en un input hidden dicho nombre
+          Al momento de GUARDAR , va tomar el nombre que se ha recibido para guardarlo en RESPUESTA en la funcion myFunction_save();
+        =============================================*/
+        if (img_nom != undefined) {
+            var img_lg = fileInput[0]['files'][0];
+            const formData = new FormData();
+            formData.append('file', img_lg);
+            fetch('/guardar_img_slider/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            }
+            }).then(rsp => rsp.text()).then(function (response) {
+                card.querySelector('#nombre_imagen___bk').value = response
+                
+                validar_rg_slider = false;
+                confirmar_slider_registro = true;
+            })
+            $.NotificationApp.send("¡Aviso!", "Registrado con imágen", "top-right", "rgba(0,0,0,0.2)", "success")
+        } else {
+            validar_rg_slider = false;
+            confirmar_slider_registro = true;
+            $.NotificationApp.send("¡Aviso!", "Registrado sin imágen", "top-right", "rgba(0,0,0,0.2)", "success")
+        }
+    }else{
+        validar_rg_slider = false;
+        $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "warning")
+    }
+}
+$(document).ready(function() {
+var Ls = localStorage.getItem('datos')
+var id_empresa = JSON.parse(Ls).id_empresa;
 show____confi(id_empresa)
-/*=============================================
-  HORARIO PERSONALIZADO
-=============================================*/
-$(document).on("click","#chk_personalizado",function (e) {
-    let tttt = document.getElementById("chk_personalizado")
-    if(tttt.checked) {
-        $("#show__desc").html(
-       `
-                        <hr>
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="time_inicio" class="form-label">Inicio</label>
-                                    <input class="form-control" id="time_inicio" type="time" name="time_inicio" value="${ $("#ccc_ini").val()}" required>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="time_cierre" class="form-label">Cierre</label>
-                                    <input class="form-control" id="time_cierre" type="time" name="time_cierre"  value="${ $("#ccc_cie").val()}" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <textarea class="form-control" id="txt_des_cierre" required placeholder="Ejm. Estamos fuera de servicio" rows="3">${ $("#ccc_cie_des").val()}</textarea>
-                                </div>
-                            </div>
-                        </div>`
-                        )
-    }
-})
-/*=============================================
-  HORARIO 24 HORAS
-=============================================*/
-$(document).on("click","#chk_all",function (e) {
-    $("#show__desc").html("")
-    let tttt = document.getElementById("chk_all")
-    if(tttt.checked) {
-        $("#show__desc").html(`<center><p class="h5 mt-4 text-success"><i class="mdi mdi-source-branch-check"></i> <b>Chatbot estará activo las 24 horas</b> </p></center>`)
-    }
-})
 /*=============================================
   MOSTRAR CONFIGURACIONES
 =============================================*/
 function show____confi(id){
-    fetch('/mostrar_data__config/?id_empr=' + id, {
+
+    fetch('/api/all/?id_empresa=' + id, {
         method: 'GET',
       }).then(rsp => rsp.json()).then(function (response) {
 
-        if (response.length == 1) {
-            $("#estado_register").val("Editar")
+        console.log("RESPUESTA SERVERs :",response)
+        
 
-            if (response[0].fields.terminosycondiciones == "mostrar") {
+        if (response.id != "sindatos") {
+            $("#estado_register").val("Editar")
+            $("#id_registroconf").val(response[0].id)
+
+            if (response[0].terminosycondiciones == "mostrar") {
               $("#chktyc").prop('checked', true)
             }
-            if (response[0].fields.c_email == "1") {
+            if (response[0].c_email == "1") {
               $("#chk_email").prop('checked', true)
             }
-            if (response[0].fields.c_telefono == "1") {
+            if (response[0].c_telefono == "1") {
               $("#chk_telefono").prop('checked', true)
             }
-            if (response[0].fields.horariocomercial == "personalizado") {
+            if (response[0].horariocomercial == "personalizado") {
             
               document.getElementById('chk_personalizado').click();
-              $("#time_inicio").val(response[0].fields.h_inicio)
-              $("#time_cierre").val(response[0].fields.h_cierre)
-              $("#txt_des_cierre").val(response[0].fields.h_cierre_des)
+              $("#time_inicio").val(response[0].h_inicio)
+              
+              $("#time_cierre").val(response[0].h_cierre)
+              $("#txt_des_cierre").val(response[0].h_cierre_des)
   
-              $("#ccc_ini").val(response[0].fields.h_inicio)
-              $("#ccc_cie").val(response[0].fields.h_cierre)
-              $("#ccc_cie_des").val(response[0].fields.h_cierre_des)
+              $("#ccc_ini").val(response[0].h_inicio)
+              $("#ccc_cie").val(response[0].h_cierre)
+              $("#ccc_cie_des").val(response[0].h_cierre_des)
             }
-            if (response[0].fields.horariocomercial == "24horas") {
-              document.getElementById('chk_all').click();
+            if (response[0].horariocomercial == "24horas") {
+                $("#chk_all").click();
             }
-            let aver = JSON.parse(response[0].fields.texto_bienvenida)
+            let aver = JSON.parse(response[0].texto_bienvenida)
             if(aver[0].tipo == "texto"){
-                document.getElementById('t__b__txt').click();
+                $("#t__b__txt").click();
                 $(".tyc_tp").val(aver[0].rptas[0])
                 let a__b = aver[0].rptas
 
@@ -108,8 +202,7 @@ function show____confi(id){
 
             }
             if(aver[0].tipo == "slider"){
-
-                document.getElementById('t__b__sldr').click();
+                $( "#t__b__sldr" ).click();
                 $("#txt_sld_pre_text").val(aver[0].pre_rpta)
                 $(".ttt_sld1").val(aver[0].rptas[0].titulo_imagen)
                 $(".ddd_sld1").val(aver[0].rptas[0].descripcion)
@@ -232,6 +325,50 @@ ht_____ml += `
 }
 
 /*=============================================
+  HORARIO PERSONALIZADO
+=============================================*/
+$(document).on("click","#chk_personalizado",function (e) {
+    let tttt = document.getElementById("chk_personalizado")
+    if(tttt.checked) {
+        $("#show__desc").html(
+       `
+                        <hr>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="time_inicio" class="form-label">Inicio</label>
+                                    <input class="form-control" id="time_inicio" type="time" name="time_inicio" value="${ $("#ccc_ini").val()}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="time_cierre" class="form-label">Cierre</label>
+                                    <input class="form-control" id="time_cierre" type="time" name="time_cierre"  value="${ $("#ccc_cie").val()}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="txt_des_cierre" required placeholder="Ejm. Estamos fuera de servicio" rows="3">${ $("#ccc_cie_des").val()}</textarea>
+                                </div>
+                            </div>
+                        </div>`
+                        )
+    }
+})
+/*=============================================
+  HORARIO 24 HORAS
+=============================================*/
+$(document).on("click","#chk_all",function (e) {
+    $("#show__desc").html("")
+    let tttt = document.getElementById("chk_all")
+    if(tttt.checked) {
+        $("#show__desc").html(`<center><p class="h5 mt-4 text-success"><i class="mdi mdi-source-branch-check"></i> <b>Chatbot estará activo las 24 horas</b> </p></center>`)
+    }
+})
+
+/*=============================================
   TEXTO 
 =============================================*/
 $(document).on("click","#t__b__txt",function (e) {
@@ -274,7 +411,7 @@ $(document).on("click","#t__b__sldr",function (e) {
                     <textarea class="form-control" required placeholder="Leave a comment here" id="txt_sld_pre_text" style="height: 80px"></textarea>
                     <label for="txt_sld_pre_text">Entrada</label>
                 </div>
-                <a style="cursor:pointer" onclick="add___slider()"  class="text-info mt-2"><i class="mdi mdi-plus-circle me-1"></i>Agregar un slider</a>
+                <a style="cursor:pointer" class="add___slider text-info mt-2"><i class="mdi mdi-plus-circle me-1"></i>Agregar un slider</a>
 
 
                 <div class="accordion custom-accordion" id="custom-accordion-one">
@@ -332,43 +469,14 @@ $(document).on("click","#t__b__sldr",function (e) {
         $("#show___t___b__txt__sld").html(html___sldr)
     }
 })
-
-/*===========================
-  AGREGAR NUEVA TIPO SLIDER
-=============================*/
-function add_new_sldr_accion(e) {
-    let a__a = e.closest('.add_input_new_action_sldr')
-    let htmlacc = `
-    <div class="row delacc__slider" style='margin-right: 15px;margin-bottom: 15px;'>
-      <div class="col-11 animate__animated animate__bounce">
-        <input class="form-control accioninicial__sld1" required type="text" placeholder="Formular pregunta">
-      </div>
-      <div class="col-1 animate__animated animate__bounce">
-        <button type="button" onclick="deleteaccion__slider(this)" class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
-      </div>
-    </div>`;
-    let t__his = a__a.querySelector("#padre__add_new_action_sldr");
-    $(t__his).append(htmlacc);
-  }
-
   
-function add__edit__img_save_sldr(e){
-    $("#img__shw__").html("")
-    $(e).hide();
-    $(e.closest(".ee____i").querySelector('.sh_____ow_slr')).show();
-  }
-/*===========================
-  ELIMINAR ACCION DE SLIDER
-=============================*/
-function deleteaccion__slider(sl) {
-    sl.closest('.delacc__slider').remove();
-  }
+
 /*===========================
   AGREGAR NUEVA IMAGEN A SLIDER
 =============================*/
 var con__t = 0
 var con__sld = 1
-function add___slider(){
+$(document).on("click",".add___slider",function(e) {
     confirmar_slider_registro = false;   
     con__t++
     con__sld++
@@ -420,116 +528,31 @@ function add___slider(){
         </div>
     </div>`
     $("#add_ne__w_sld").append(ht__ml)
-}
-
-
-/*=============================================
-  AGREGAR MAS RPTA TIPO TEXTO 
-=============================================*/
-function add_rpta_txt(){
-    $("#add_show__rpta_txt").append(`
-        <div class="row eliminarrptatext">
-            <div class="col-xl-11 col-lg-11 col-md-6 col-sm-6 col-xs-12">
-                <div class="form-floating mt-2">
-                <textarea class="form-control tipo_texto______t__y__c" placeholder="Leave a comment here" style="height: 70px;"></textarea>
-                    <label for="">Respuesta tipo texto</label>
-                </div>
-            </div>
-            <div class="col-xl-1 col-lg-1 col-md-6 col-sm-6 col-xs-12" style="margin: auto;">
-                <button type="button" class="btn btn-danger" onclick="deletedrp__ta(this)"><i class="mdi mdi-window-close"></i> </button>
-            </div>
-        </div>`)
-}
-/*=============================================
-  ELIMINAR RESPUESTAS
-=============================================*/
-function deletedrp__ta(e) {
-    e.closest('.eliminarrptatext').remove();
-}
-
-function quitar____slider(e) {
     
-  confirmar_slider_registro = true;
-  Swal.fire({
-    title: '¿Eliminar?',
-    text: "No podrá revetir esta acción!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, eliminar!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      e.closest('.show__sli__der').remove()
-      con__sld--
-      $.NotificationApp.send("¡Aviso!", "Eliminado!", "top-right", "rgba(0,0,0,0.2)", "error")
-    }
-  })
-}
-/*===========================
-  VALIDAR AGREGAR SLIDER
-=============================*/
-function show_add_slider__s(n) {
-    let card = n.closest('.cls____Slider') //Todo el card del slider
-    let tit = card.querySelector('.titulo_sldr').value;
-    let des = card.querySelector('.descripcion_sldr').value;
-    let acci = card.querySelectorAll('.accioninicial__sld1');
-    acci.forEach(ac___val => {
-        let va__l = ac___val.value
-
-        if(va__l == "" || tit == "" || des == ""){
-            validar_rg_slider = false;
-            $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "warning")
-        }else{
-            validar_rg_slider = true;
-            $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "success")
+})
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
-        
-    });
-    if(validar_rg_slider == true){
-        card.querySelector('.collapse___sld').classList.remove("show")
-        const fileInput = card.querySelectorAll('.im__g')
-        let img_nom = fileInput[0]['files'][0]
-        /*=============================================
-          ===== GUARDAR IMAGEN EN EL SERVIDOR =====
-          Nota: Al enviar la imagen al servidor, ésta le asigna un alias al nombre por si es imagen repetida.
-          Es nombre asigando se devuelve como response para ponerlo en un input hidden dicho nombre
-          Al momento de GUARDAR , va tomar el nombre que se ha recibido para guardarlo en RESPUESTA en la funcion myFunction_save();
-        =============================================*/
-        if (img_nom != undefined) {
-            var img_lg = fileInput[0]['files'][0];
-            const formData = new FormData();
-            formData.append('file', img_lg);
-            fetch('/guardar_img_slider/', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-            }
-            }).then(rsp => rsp.text()).then(function (response) {
-                card.querySelector('#nombre_imagen___bk').value = response
-                
-                validar_rg_slider = false;
-                confirmar_slider_registro = true;
-            })
-            $.NotificationApp.send("¡Aviso!", "Registrado con imágen", "top-right", "rgba(0,0,0,0.2)", "success")
-        } else {
-            validar_rg_slider = false;
-            confirmar_slider_registro = true;
-            $.NotificationApp.send("¡Aviso!", "Registrado sin imágen", "top-right", "rgba(0,0,0,0.2)", "success")
-        }
-    }else{
-        validar_rg_slider = false;
-        $.NotificationApp.send("¡Aviso!", "Hay campos obligatorios", "top-right", "rgba(0,0,0,0.2)", "warning")
+      }
     }
-}
-
+    return cookieValue;
+  }
 $('#save___config').submit(e=>{
+    
     var per = document.getElementById("chktyc")
     let c_pers = document.getElementById("chk_personalizado")
     let c_all = document.getElementById("chk_all")
     let es___tado = $("#estado_register").val();
     var array_datos__all = [];
+ 
     // VALIDAR TEXTO DE BIENVENIDA
     var tip_text = document.getElementById("t__b__txt")
     var tip_sld = document.getElementById("t__b__sldr")
@@ -569,11 +592,7 @@ $('#save___config').submit(e=>{
         tel_c = "0"
     }
 
-
-
     if(tip_text.checked){
-        console.log("Horario comercial tipo texto:",horario__comercial)
-
         text_tipo = "texto"
         my__dat__ = {
             'tipo':text_tipo,
@@ -583,30 +602,56 @@ $('#save___config').submit(e=>{
         document.querySelectorAll(".tipo_texto______t__y__c").forEach(it_em => {
             array_datos__all[0].rptas.push(it_em.value)
         });
-
-
-        fetch('/sav__config/?id_empr=' + id_empresa + '&es___tado=' + es___tado + '&ter_con=' + ter_con + '&horario__comercial=' + horario__comercial + '&est_inicio=' + est_inicio + '&est_cierre=' + est_cierre + '&cierre_desc=' + cierre_desc + '&c_nombre=' + c_nombre + '&email_c=' + email_c + '&tel_c=' + tel_c + '&bienvenida=' + JSON.stringify(array_datos__all), {
-            method: 'GET',
-          }).then(rsp => rsp.text()).then(function (response) {
-              console.log("response :",response)
-              if(response == "registrado"){
-                  $.NotificationApp.send("¡Aviso!", "Se guardaron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-              }else
-              if(response == "ya_existe"){
-                  $.NotificationApp.send("¡Aviso!", "Error de servidor. Ya existe en la BD", "top-right", "rgba(0,0,0,0.2)", "error")
-              }else
-              if(response == "editado"){
-                  $.NotificationApp.send("¡Aviso!", "Se guardaron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-              }else{
-                  $.NotificationApp.send("¡Aviso!", "Error de servidor. Inténtelo mas tarde", "top-right", "rgba(0,0,0,0.2)", "error")
-              }
-          }) 
-
-
-
+        let save_data = {
+            "terminosycondiciones": ter_con,
+            "horariocomercial": horario__comercial,
+            "h_inicio": est_inicio,
+            "h_cierre": est_cierre,
+            "h_cierre_des": cierre_desc,
+            "c_nombre": c_nombre,
+            "c_email": email_c,
+            "c_telefono": tel_c,
+            "texto_bienvenida": JSON.stringify(array_datos__all),
+            "cliente_empresa_id": id_empresa
+        }
+        if(es___tado == "Registrar"){
+            fetch('/api/create/', {
+                method: 'POST',
+                body: JSON.stringify(save_data),
+                headers: {
+                "Content-Type": "application/json",
+                'X-CSRFToken': getCookie('csrftoken')
+                }
+            })          
+            .then(rsp => rsp.json()).then(function (response) {
+                if(response.status == 201){
+                    $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+                }else{
+                    $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
+                }
+            }) 
+        }
+        if(es___tado == "Editar"){
+            let id_registro = $("#id_registroconf").val();
+            fetch('/api/update/'+id_registro+'/', {
+                method: 'POST',
+                body: JSON.stringify(save_data),
+                headers: {
+                "Content-Type": "application/json",
+                'X-CSRFToken': getCookie('csrftoken')
+                }
+            }).then(function (response) {
+                if(response.status == 201){
+                    $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+                }else{
+                    $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
+                }
+            })
+        }
     }
+
+
     if(tip_sld.checked){
-        console.log("Horario comercial tipo slider:",horario__comercial)
 
         if(confirmar_slider_registro == true)
         {
@@ -642,35 +687,64 @@ $('#save___config').submit(e=>{
             });
             console.log(array_datos__all)
 
+            let save_data_sld = {
+                "terminosycondiciones": ter_con,
+                "horariocomercial": horario__comercial,
+                "h_inicio": est_inicio,
+                "h_cierre": est_cierre,
+                "h_cierre_des": cierre_desc,
+                "c_nombre": c_nombre,
+                "c_email": email_c,
+                "c_telefono": tel_c,
+                "texto_bienvenida": JSON.stringify(array_datos__all),
+                "cliente_empresa_id": id_empresa
+            }
+            if(es___tado == "Registrar"){
+                fetch('/api/create/', {
+                    method: 'POST',
+                    body: JSON.stringify(save_data_sld),
+                    headers: {
+                        "Content-Type": "application/json",
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                    })          
+                    .then(rsp => rsp.json()).then(function (response) {
+                        if(response.status == 201){
+                            $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+                        }else{
+                            $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
+                        }
+                    
+                        
+                }) 
+            }
+            if(es___tado == "Editar"){
 
-            fetch('/sav__config/?id_empr=' + id_empresa + '&es___tado=' + es___tado + '&ter_con=' + ter_con + '&horario__comercial=' + horario__comercial + '&est_inicio=' + est_inicio + '&est_cierre=' + est_cierre + '&cierre_desc=' + cierre_desc + '&c_nombre=' + c_nombre + '&email_c=' + email_c + '&tel_c=' + tel_c + '&bienvenida=' + JSON.stringify(array_datos__all), {
-                method: 'GET',
-              }).then(rsp => rsp.text()).then(function (response) {
-                  console.log("response :",response)
-                  if(response == "registrado"){
-                      $.NotificationApp.send("¡Aviso!", "Se guardaron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-                  }else
-                  if(response == "ya_existe"){
-                      $.NotificationApp.send("¡Aviso!", "Error de servidor. Ya existe en la BD", "top-right", "rgba(0,0,0,0.2)", "error")
-                  }else
-                  if(response == "editado"){
-                      $.NotificationApp.send("¡Aviso!", "Se guardaron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-                  }else{
-                      $.NotificationApp.send("¡Aviso!", "Error de servidor. Inténtelo mas tarde", "top-right", "rgba(0,0,0,0.2)", "error")
-                  }
-              }) 
+                let id_registro = $("#id_registroconf").val();
+                fetch('/api/update/'+id_registro+'/', {
+                    method: 'POST',
+                    body: JSON.stringify(save_data_sld),
+                    headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRFToken': getCookie('csrftoken')
+                    }
+                }).then(function (response) {
+                    console.log(" hola ",response)
+                    if(response.status == 201){
+                        $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+                    }else{
+                        $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
+                    }
+                })
+            }
 
         }else{
             $.NotificationApp.send("¡Aviso!", "Confirme registro de Slider", "top-right", "rgba(0,0,0,0.2)", "warning")
         }
 
     }
-
-
-
     e.preventDefault();
 
- 
-
-
+})
+  
 })

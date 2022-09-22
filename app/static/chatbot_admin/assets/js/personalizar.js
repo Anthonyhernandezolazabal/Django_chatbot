@@ -325,14 +325,6 @@ function fn_guardar_pr() {
     })
   }
 }
-//Busca en toda la cadena un caracter en especifico
-function replaceStr(str, find, replace) {
-  for (var i = 0; i < find.length; i++) {
-      str = str.replace(new RegExp(find[i], 'gi'), replace[i]);
-  }
-  return str;
-}
-
 
 function fn_editar_pr() {
 
@@ -352,13 +344,13 @@ function fn_editar_pr() {
   if(color_chatbot == "paleta"){
     rpta_color_chatbot = document.querySelector('#color_chatbot_paleta').value.slice(1); //quito el primer #
   }else{
-    rpta_color_chatbot = replaceStr(document.querySelector('#color_chatbot_paleta').value, "#", '*');
+    rpta_color_chatbot = replaceAll(document.querySelector('#color_chatbot_paleta').value, "#", '*');
   }
 
   if(color_btn_acciones == "paleta"){
     rpta_color_btn_acciones = document.querySelector('#color_chatbot_personalizado').value.slice(1); //quito el primer #
   }else{
-    rpta_color_btn_acciones = replaceStr(document.querySelector('#color_chatbot_personalizado').value, "#", '*');
+    rpta_color_btn_acciones = replaceAll(document.querySelector('#color_chatbot_personalizado').value, "#", '*');
   }
 
 

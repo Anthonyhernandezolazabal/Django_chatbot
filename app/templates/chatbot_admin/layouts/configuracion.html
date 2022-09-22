@@ -2,33 +2,33 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="page-title-box">
-        <div class="page-title-right">
-          <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-            <li class="breadcrumb-item active">Configuraciones</li>
-          </ol>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                        <li class="breadcrumb-item active">Configuraciones</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Configuraciones</h4>
+            </div>
         </div>
-        <h4 class="page-title">Configuraciones</h4>
-      </div>
     </div>
-  </div>
-
     <form method="post" id="save___config">
-        
-
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
                     <h6 class="card-header">Términos y condiciones</h6>
+                    <input type="hidden" name="id_registroconf" id="id_registroconf" value="">
                     <div class="card-body">
                         <div class="form-check form-checkbox-info mb-2">
                             <input type="checkbox" class="form-check-input" id="chktyc">
                             <label class="form-check-label" for="chktyc">Términos y condiciones al iniciar conversación</label>
-                            <code><p class="card-text mt-2"><i class="mdi mdi-transfer-right"></i>  Si aún no has configurado los términos y condiciones puedes hacerlo dandole click <b><a target="_blank" href="{% url 'personalizar' %}">aquí</a></b> </p></code>
+                            <code>
+                                <p class="card-text mt-2"><i class="mdi mdi-transfer-right"></i> Si aún no has configurado los términos y condiciones puedes hacerlo dandole click <b><a target="_blank" href="{% url 'personalizar' %}">aquí</a></b> </p>
+                            </code>
                         </div>
                     </div>
                 </div>
@@ -38,18 +38,19 @@
                     <h6 class="card-header">Horario comercial</h6>
                     <div class="card-body">
                         <center>
-                                <div class="form-check form-check-inline">
-                                    <input type="radio" id="chk_personalizado" name="customRadio1" class="form-check-input" required>
-                                    <label class="form-check-label" for="chk_personalizado">Personalizado</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="radio" id="chk_all" name="customRadio1" class="form-check-input" required>
-                                    <label class="form-check-label" for="chk_all">24 horas</label>
-                                </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="chk_personalizado" name="customRadio1" class="form-check-input"
+                                    required>
+                                <label class="form-check-label" for="chk_personalizado">Personalizado</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="chk_all" name="customRadio1" class="form-check-input" required>
+                                <label class="form-check-label" for="chk_all">24 horas</label>
+                            </div>
                         </center>
 
                         <div id="show__desc">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -92,14 +93,15 @@
                             <center id="show__t_b">
 
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" id="t__b__txt" name="customRadio" class="form-check-input" required>
+                                    <input type="radio" id="t__b__txt" name="customRadio" class="form-check-input"
+                                        required>
                                     <label class="form-check-label" for="t__b__txt">Texto</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" id="t__b__sldr" name="customRadio" class="form-check-input" required>
+                                    <input type="radio" id="t__b__sldr" name="customRadio" class="form-check-input"
+                                        required>
                                     <label class="form-check-label" for="t__b__sldr">Slider</label>
                                 </div>
-
                             </center>
                         </div>
 
@@ -107,7 +109,7 @@
                 </div>
             </div>
             <div class="col-md-8" id="show___t___b__txt__sld">
-              
+
             </div>
         </div>
 
@@ -115,38 +117,6 @@
 
     </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
- 
 </div>
+<script src="{% static 'chatbot_admin/assets/js/configuraciones.js' %}"></script>
 {% endblock content %}

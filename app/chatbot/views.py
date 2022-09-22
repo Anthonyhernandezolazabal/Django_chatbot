@@ -4,7 +4,8 @@ from django.shortcuts import render
 from chatbot.models import chat_user,chatbot_style
 from chatbot_admin.models import data_set,cliente,configuraciones
 from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.response import Response 
+from rest_framework.decorators import api_view
 from chatbot.serializers import historialChatSerializers,personalizarChatSerializers,datasetSerializers
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
@@ -479,70 +480,6 @@ def visto__chat(request):
 
     return HttpResponse(str("visto")) 
 
-          
-'''=============================================
-   MÓDULO CONFIGURACIÓN
-============================================= '''
-class configuracion(APIView):      
-  def addconfig(request):
-    if request.GET['id_empr']:
-      id_empr = request.GET.get('id_empr')
-      ter_con = request.GET.get('ter_con')
-      horario__comercial = request.GET.get('horario__comercial')
-      est_inicio = request.GET.get('est_inicio')
-      est_cierre = request.GET.get('est_cierre')
-      cierre_desc = request.GET.get('cierre_desc')
-      c_nombre = request.GET.get('c_nombre')
-      email_c = request.GET.get('email_c')
-      tel_c = request.GET.get('tel_c')
-      es___tado = request.GET.get('es___tado')
-      t_bienvenida = request.GET.get('bienvenida')
-
-      if es___tado == "Registrar":
-        validar_registro = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr)).count()
-        if validar_registro == 0:
-          conf_add = configuraciones(
-            terminosycondiciones=ter_con,
-            horariocomercial=horario__comercial,
-            h_inicio=est_inicio,
-            h_cierre=est_cierre,
-            h_cierre_des=cierre_desc,
-            c_nombre=c_nombre,
-            c_email=email_c,
-            c_telefono=tel_c,
-            texto_bienvenida=t_bienvenida,
-            cliente_empresa_id=cliente.objects.get(pk=id_empr))
-          conf_add.save()
-          return HttpResponse(str("registrado")) 
-        else:
-          return HttpResponse(str("ya_existe"))
-
-      if es___tado == "Editar":
-        
-        configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr)).update(
-          terminosycondiciones=ter_con,
-          horariocomercial=horario__comercial,
-          h_inicio=est_inicio,
-          h_cierre=est_cierre,
-          h_cierre_des=cierre_desc,
-          c_nombre=c_nombre,
-          c_email=email_c,
-          c_telefono=tel_c,
-          texto_bienvenida=t_bienvenida,
-        )
-        return HttpResponse(str("editado")) 
-
-
-  def showconfig(request):
-    if request.GET['id_empr']:
-      id_empr = request.GET.get('id_empr')
-      datos = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empr))
-   
-
-
-      response = serializers.serialize("json", datos)
-      return HttpResponse(response, content_type='application/json')
-
 '''=============================================
    REPORTES DE EXPORTAR
 ============================================= '''
@@ -605,7 +542,38 @@ class r_exportar(HttpRequest):
 
 
 
+'''=============================================
+   API CONFIGURACIONES
+============================================= '''
+# from rest_framework import viewsets
+# from .serializers import ConfiguracionesSerializer
+# class ConfiguracionesViewSet(viewsets.ModelViewSet):
+#   queryset = configuraciones.objects.all()
+#   serializer_class = ConfiguracionesSerializer
+#   def get_queryset(self):
+#     Configuraciones = configuraciones.objects.all()
+#     id_empresa = self.request.GET.get('id')
+#     print("MY IDDDD:",id_empresa)
+#     if id_empresa:
+#       Configuraciones = configuraciones.objects.filter(cliente_empresa_id=cliente.objects.get(pk=id_empresa))
+#     return Configuraciones
 
+#   def create(self, request):
+#     serializer = self.serializer_class(data=request.data)
+#     print("recibiendo_datos123 post :",serializer)
+#     if serializer.is_valid():
+#       serializer.save()
+#       return Response({"message": "Configuración realizada correctamente"}, status=status.HTTP_201_CREATED)
+
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#   def update(self, request, pk):
+
+#     serializer = self.serializer_class(data=request.data)
+
+#     print("recibiendo_datos123 :",serializer)
+
+#     return Response({"message": "Haciendo un put correctamente"}, status=status.HTTP_201_CREATED)
 
 
     
