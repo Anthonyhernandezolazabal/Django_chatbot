@@ -49,6 +49,7 @@
                     <td>{{ dato.registrado }}</td>
                     <td>
                       <button type="button" onclick="return edit__prg({{ dato.id }})" class="btn btn-info"><i class="mdi mdi-eye"></i>
+                        <input type="hidden" id="fecha_registro" value="{{ dato.registrado }}">
                       </button>
                       <button type="button" onclick="return deleted_all__({{ dato.id }},{{ dato.id_cliente_id }},'{{ dato.nombre }}')" class="btn btn-danger"><i class="mdi mdi-delete"></i>
                       </button>
@@ -76,6 +77,8 @@
     localStorage.removeItem('pregunta')
     var url_python = '{% url "registrar_rpta" %}?prg=' + id
     location.replace(url_python)
+
+
   }
   function new__prg() {
     localStorage.removeItem('pregunta')
@@ -200,6 +203,17 @@ function cerrar_loader(mensaje) {
         })
 
     }
+}
+
+fecha_detalle();
+function fecha_detalle(){
+  let dat = document.querySelectorAll("#fecha_registro")
+  dat.forEach(element => {
+    
+    var hoy = new Date(element.value);
+    console.log(hoy);
+    
+  });
 }
 </script>
 {% endblock content %}

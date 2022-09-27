@@ -21,7 +21,7 @@
           </ol>
         </div>
         <h4 class="page-title">REGISTRAR RESPUESTAS</h4>
-        <button type="button" class="btn btn-info animate__animated animate__backInUp n____ew" data-bs-toggle="modal" data-bs-target="#full-width-modal"><span>Agregar respuestas automáticas <i class="mdi mdi-plus-circle me-1"></i></span> </button>
+        <button type="button" class="cambiar_estado btn btn-info animate__animated animate__backInUp n____ew" data-bs-toggle="modal" data-bs-target="#full-width-modal"><span>Agregar respuestas automáticas <i class="mdi mdi-plus-circle me-1"></i></span> </button>
         <br><br>
         <div class="row">
           <center>
@@ -123,4 +123,10 @@
     </div>
   </form>
 </div>
+<script>
+  $(".cambiar_estado").on("click", function () {
+    $("#editar______ls").val("")
+    
+  })
+</script>
 {% endblock content %}

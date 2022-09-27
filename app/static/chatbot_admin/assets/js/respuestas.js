@@ -20,6 +20,8 @@ var id_empresa_id = JSON.parse(Ls_rpt).id_empresa;
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 var pr__g = urlParams.get('prg');
+
+
 if(pr__g != null){
   muestrame__prg(pr__g);
 
@@ -41,26 +43,9 @@ function quitarlsrepetidos(i__d){
   })
   localStorage.setItem("pregunta", JSON.stringify(prg))
 }
-function muestrame__prg(p){
-  fetch('/data__set/?prg=' + p, {
-    method: 'GET',
-  }).then(rsp => rsp.json()).then(function (response) {
-    console.log("element :",response)
-    $("#rpta_json_nomb").val(response[0].nombre)
-    $("#name__org").val(response[0].nombre)
-    JSON.parse(response[0].conversacion).forEach(element => {
-        quitarlsrepetidos(element[0].id)
-        let preguuu__tas = [{
-          'preguntas_new': element[0].preguntas_new,
-          'respuesta_new': btoa(JSON.stringify(element[0].respuesta_ls)),
-          'respuesta_ls': element[0].respuesta_ls,
-          'id': element[0].id,
-        }];
-        agregarLS(preguuu__tas);
-    });
-    conversaciones_pyr()
-  })
-}
+
+
+
 var estado_ed_reg = $("#editar______estado").val();
 if(estado_ed_reg == "Registrame"){
   conversaciones_pyr()
@@ -494,7 +479,7 @@ function myFunction_save() {
     if (valinput == '') {
       validar_input_pregunta_save = false;
     } else {
-      old_ques.push(valinput);
+      old_ques.push(encodeURIComponent(valinput));
       validar_input_pregunta_save = true;
     }
   });
@@ -511,7 +496,7 @@ function myFunction_save() {
         } else {
           validar_input_respuestas_save = true
           rpta_json = {
-            'respueta_sl_texto': respuestas_all
+            'respueta_sl_texto': encodeURIComponent(respuestas_all)
           }
           respuesta_slider_texto.push(rpta_json)
         }
@@ -560,12 +545,12 @@ function myFunction_save() {
                         `<div class="timeline-item mb-2">
                           <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                           <div class="timeline-item-info">
-                            <a href="#" class="text-info fw-bold d-block">${el__ents}</a>
+                            <a href="#" class="text-info fw-bold d-block">${decodeURIComponent(el__ents)}</a>
                           </div>
                         </div>`)
           });
           l_______s2[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(elem____ent => {
-            $(__ediiit_rpta).append(`<p class="mb-0">${elem____ent.respueta_sl_texto}</p><hr style="margin-top: 7px;margin-bottom: 7px;">`)
+            $(__ediiit_rpta).append(`<p class="mb-0">${decodeURIComponent(elem____ent.respueta_sl_texto)}</p><hr style="margin-top: 7px;margin-bottom: 7px;">`)
           });
         }
         $('#form-crear-rpta').trigger('reset');
@@ -608,7 +593,7 @@ function myFunction_save() {
                               if(pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
 
                                 template += `
-                                <h5 class="card-title mb-2 mt-2 pre____rpt__a">${pregunta[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+                                <h5 class="card-title mb-2 mt-2 pre____rpt__a">${decodeURIComponent(pregunta[0].respuesta_ls.pre_respuesta.pre_rpta)}</h5>`
 
                               }
             if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
@@ -619,7 +604,7 @@ function myFunction_save() {
                                           <div class="timeline-item mb-2">
                                             <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                             <div class="timeline-item-info">
-                                              <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
+                                              <a href="#" class="text-info fw-bold d-block">${decodeURIComponent(pre__text)}</a>
                                             </div>
                                           </div>`
               });
@@ -640,8 +625,8 @@ function myFunction_save() {
     
                 template += `
                                         <div style="margin: 15px;">
-                                            <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
-                                            <h6>${sl__item.descripcion}</h6>`
+                                            <h5 class="card-title mb-0">${decodeURIComponent(sl__item.titulo_imagen)}</h5>
+                                            <h6>${decodeURIComponent(sl__item.descripcion)}</h6>`
                 sl__item.acciones.forEach(acc => {
                   template += `<a href="javascript: void(0);" style='width: 100%;' class="btn btn-primary mb-3">${acc}</a>`
                 });
@@ -664,7 +649,7 @@ function myFunction_save() {
     
               pregunta[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
     
-                template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+                template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
     
               });
               template += ` 
@@ -689,7 +674,6 @@ function myFunction_save() {
       }
 
     } else
-
       /*=============================================
         SLIDER
       =============================================*/
@@ -714,20 +698,21 @@ function myFunction_save() {
             respuestas = {
               'tipo': 'slider',
               'img': nombre_imgl,
-              'titulo_imagen': titulosl,
-              'descripcion': descripcionsl,
+              'titulo_imagen': encodeURIComponent(titulosl),
+              'descripcion': encodeURIComponent(descripcionsl),
               'acciones': []
             }
             rpta_slider_ls.push(respuestas)
             pre_respuesta = {
-              'pre_rpta': pre_rpta_add
+              'pre_rpta': encodeURIComponent(pre_rpta_add)
             }
             rptaFinal = {
               'respuesta_tipo': rpta_slider_ls,
               'pre_respuesta': pre_respuesta,
             } //BASE 64
             accioninicial.forEach(accion => {
-              respuestas.acciones.push(accion.value);
+              console.log("accion :",accion)
+              respuestas.acciones.push(encodeURIComponent(accion.value));
             });
           })
           preguntas.push({
@@ -809,7 +794,7 @@ function myFunction_save() {
                     <div class="col-lg-4 padre__all d___v${rpta__pregunta[0].id}">
                       <div class="card">`
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
-            console.log('aa :', rpta__pregunta[0].id)
+            // console.log('aa :', rpta__pregunta[0].id)
             template += `<div class="card-body rptacls">`;
           }
           if (rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider') {
@@ -831,7 +816,7 @@ function myFunction_save() {
                           if(rpta__pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
 
                             template += `
-                            <h5 class="card-title mb-2 mt-2 pre____rpt__a">${rpta__pregunta[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+                            <h5 class="card-title mb-2 mt-2 pre____rpt__a">${decodeURIComponent(rpta__pregunta[0].respuesta_ls.pre_respuesta.pre_rpta)}</h5>`
 
                           }
 
@@ -847,7 +832,7 @@ function myFunction_save() {
                                       <div class="timeline-item mb-2">
                                         <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                         <div class="timeline-item-info">
-                                          <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
+                                          <a href="#" class="text-info fw-bold d-block">${decodeURIComponent(pre__text)}</a>
                                         </div>
                                       </div>`
             });
@@ -870,10 +855,10 @@ function myFunction_save() {
 
               template += `
                                     <div style="margin: 15px;">
-                                        <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
-                                        <h6>${sl__item.descripcion}</h6>`
+                                        <h5 class="card-title mb-0">${decodeURIComponent(sl__item.titulo_imagen)}</h5>
+                                        <h6>${decodeURIComponent(sl__item.descripcion)}</h6>`
               sl__item.acciones.forEach(acc => {
-                template += `<a href="javascript: void(0);" style='width: 100%;' class="btn btn-primary mb-3">${acc}</a>`
+                template += `<a href="javascript: void(0);" style='width: 100%;' class="btn btn-primary mb-3">${decodeURIComponent(acc)}</a>`
               });
               template += `
                                     </div>
@@ -954,19 +939,18 @@ function agregarLS(preguntas) {
 function conversaciones_pyr() {
   let pregunta, cont = 0;
   pregunta = recuperarLS();
+  console.log('pregunta :',pregunta)
   pregunta.forEach(prg => {
-    // console.log('pregunta2 :',prg[0].respuesta_ls.respuesta_tipo[0])
     // console.log('pregunta :',prg[0].respuesta_ls.respuesta_tipo[0].tipo)
     cont++
     template = `
               <div class="col-lg-4 padre__all d___v${prg[0].id}">
                 <div class="card">`
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
-      console.log('aa :', prg[0].id)
+      // console.log('aa :', prg[0].id)
       template += `<div class="card-body rptacls">`;
     }
     if (prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider') {
-      console.log('pregunta :',)
       template += `<div class="card-body" style='height: 470px;'>`;
     }
     template += `
@@ -985,7 +969,7 @@ function conversaciones_pyr() {
                     <div data-simplebar="" style="max-height: 385px;">`
                     
                     if(prg[0].respuesta_ls.respuesta_tipo[0].tipo == 'slider'){
-                      template += `<h5 class="card-title mb-2 mt-2 pre____rpt__a">${prg[0].respuesta_ls.pre_respuesta.pre_rpta}</h5>`
+                      template += `<h5 class="card-title mb-2 mt-2 pre____rpt__a">${decodeURIComponent(prg[0].respuesta_ls.pre_respuesta.pre_rpta)}</h5>`
                     }
 
                     template += `
@@ -1001,7 +985,7 @@ function conversaciones_pyr() {
                                 <div class="timeline-item mb-2">
                                   <i class="dripicons-question bg-info-lighten text-info timeline-icon"></i>
                                   <div class="timeline-item-info">
-                                    <a href="#" class="text-info fw-bold d-block">${pre__text}</a>
+                                    <a href="#" class="text-info fw-bold d-block">${decodeURIComponent(pre__text)}</a>
                                   </div>
                                 </div>`
       });
@@ -1020,10 +1004,10 @@ function conversaciones_pyr() {
         }
         template += `
                               <div style="margin: 15px;">
-                                  <h5 class="card-title mb-0">${sl__item.titulo_imagen}</h5>
-                                  <h6>${sl__item.descripcion}</h6>`
+                                  <h5 class="card-title mb-0">${decodeURIComponent(sl__item.titulo_imagen)}</h5>
+                                  <h6>${decodeURIComponent(sl__item.descripcion)}</h6>`
         sl__item.acciones.forEach(acc => {
-          template += `<a href="javascript: void(0);" style='width: 100%;' class="btn btn-primary mb-1">${acc}</a>`
+          template += `<a href="javascript: void(0);" style='width: 100%;' class="btn btn-primary mb-1">${decodeURIComponent(acc)}</a>`
         });
         template += `
                               </div>
@@ -1046,7 +1030,7 @@ function conversaciones_pyr() {
                             <div class="rpt_____a">`
       prg[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
 
-        template += `<p class="mb-0">${rr_r.respueta_sl_texto}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+        template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
 
 
       });
@@ -1122,13 +1106,14 @@ function rpt_aut_save(a) {
     document.getElementById('btn_sav').style.display = 'none';
     document.getElementById('btn_loader').style.display = 'block';
 
+
       fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&nombre_bd=' + nombre_d_db + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu + '&estado=' + a + '&id_registro=' + pr____g, {
         method: 'GET',
       }).then(function (response) {
         eliminarLS()
         // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
         // location.replace(url_python)
-        location.href = "../respuestas/?empre_id=" + id_empresa;
+        location.href = "../respuestas/?i=" + (randomCoding().toString() + id_empresa +  randomCoding().toString())
         cerrar_loader('exito_entreno');
       }).catch(e => {
         cerrar_loader('error_entreno');
@@ -1294,7 +1279,8 @@ function editar__ls(id,t) {
 
       if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
         document.getElementById('customRadio3').click();
-        $('.uniq_prg').val(pregunta[0].preguntas_new[0]) //Obtengo el primer val
+
+        $('.uniq_prg').val(decodeURIComponent(pregunta[0].preguntas_new[0])) //Obtengo el primer val
 
         //PREGUNTAS
         let ing__text = pregunta[0].preguntas_new
@@ -1307,7 +1293,7 @@ function editar__ls(id,t) {
             <div class="mb-2 mt-2" id='add_input_new'>
               <div class='row'>
                 <div class='col-11 animate__animated animate__bounce'>
-                  <input class="form-control inputaddpregunta" type="text" placeholder="Formular pregunta" value="${element}">
+                  <input class="form-control inputaddpregunta" type="text" placeholder="Formular pregunta" value="${decodeURIComponent(element)}">
                 </div>
                 <div class='col-1 animate__animated animate__bounce'>
                   <button type="button" style='margin-left:-15px' id='btn_del' onclick='del_btn(this)' class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
@@ -1324,7 +1310,7 @@ function editar__ls(id,t) {
           });
         }
 
-        $('.rpta__edit').val(pregunta[0].respuesta_ls.respuesta_tipo[0].rpta[0].respueta_sl_texto) //Obtengo el primer val
+        $('.rpta__edit').val(decodeURIComponent(pregunta[0].respuesta_ls.respuesta_tipo[0].rpta[0].respueta_sl_texto)) //Obtengo el primer val
         //RESPUESTAS 
         let total = pregunta[0].respuesta_ls.respuesta_tipo[0].rpta;
         for (i = 1; i < total.length; i++) {
@@ -1335,7 +1321,7 @@ function editar__ls(id,t) {
           <div class="row eliminarrptatext">
             <div class="col-xl-11 col-lg-11 col-md-6 col-sm-6 col-xs-12">
               <div class="form-floating">
-                <textarea class="form-control texto_autorpta" placeholder="Respuesta" id="floatingTextarea" style="height: 100px">${total[i].respueta_sl_texto}</textarea>
+                <textarea class="form-control texto_autorpta" placeholder="Respuesta" id="floatingTextarea" style="height: 100px">${decodeURIComponent(total[i].respueta_sl_texto)}</textarea>
                 <label for="floatingTextarea">Autorrespuesta</label>
               </div>
             </div>
@@ -1348,8 +1334,6 @@ function editar__ls(id,t) {
 
         $("#customRadio4").attr("disabled", true);
         // $("#customRadio4").attr("disabled", true);
-
-
 
 
       }
@@ -1609,3 +1593,100 @@ $('.n____ew').on('click', function () {
 
 
 
+function muestrame__prg(p){
+  fetch('/data__set/?prg=' + p, {
+    method: 'GET',
+  }).then(rsp => rsp.json()).then(function (response) {
+    $("#rpta_json_nomb").val(response[0].nombre)
+    $("#name__org").val(response[0].nombre)
+    JSON.parse(response[0].conversacion).forEach(element => 
+      {
+        let old__ques = []
+        let rpta__ls_tipo = []
+        let respuesta__slider_texto = []
+        let rpta__slider_ls = []
+        let preguuu__taas = []
+        quitarlsrepetidos(element[0].id)
+        // console.log("elementelementelementelement :",element)
+        
+
+        if(element[0].respuesta_ls.respuesta_tipo[0].tipo == "texto")
+        {
+          // console.log("elementelementelementelement :",element)
+          
+          element[0].preguntas_new.forEach(ordenar => {
+            old__ques.push(encodeURIComponent(ordenar))
+          });
+          element[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(r__ow => {
+            rpta_json = {
+              'respueta_sl_texto': encodeURIComponent(r__ow.respueta_sl_texto)
+            }
+            respuesta__slider_texto.push(rpta_json)
+          });
+          let rpta_all = {
+            'tipo': "texto",
+            'rpta': respuesta__slider_texto,
+          }
+          rpta__ls_tipo.push(rpta_all)
+          rptaFinal_texto = {
+            'respuesta_tipo': rpta__ls_tipo
+          }
+          preguuu__taas = [{
+            'preguntas_new': old__ques,
+            'respuesta_new': btoa(JSON.stringify(rptaFinal_texto)),
+            'respuesta_ls': rptaFinal_texto,
+            'id': element[0].id,
+          }];
+        }
+
+        if(element[0].respuesta_ls.respuesta_tipo[0].tipo == "slider")
+        {
+
+
+          element[0].preguntas_new.forEach(ordenar => {
+            old__ques.push(encodeURIComponent(ordenar))
+          });
+
+
+          respuestas = {
+            'tipo': 'slider',
+            'img': element[0].respuesta_ls.respuesta_tipo[0].img,
+            'titulo_imagen': encodeURIComponent(element[0].respuesta_ls.respuesta_tipo[0].titulo_imagen),
+            'descripcion': encodeURIComponent(element[0].respuesta_ls.respuesta_tipo[0].descripcion),
+            'acciones': []
+          }
+          rpta__slider_ls.push(respuestas)
+
+
+          pre_respuesta = {
+            'pre_rpta': encodeURIComponent(element[0].respuesta_ls.pre_respuesta.pre_rpta)
+          }
+       
+          
+          rptaFinal = {
+            'respuesta_tipo': rpta__slider_ls,
+            'pre_respuesta': pre_respuesta,
+          }
+
+          element[0].respuesta_ls.respuesta_tipo[0].acciones.forEach(accio__n => {
+            console.log("accion :",accio__n)
+            respuestas.acciones.push(encodeURIComponent(accio__n));
+          });
+
+          preguuu__taas = [{
+            'preguntas_new': old__ques,
+            'respuesta_new': btoa(JSON.stringify(rptaFinal)),
+            'respuesta_ls': rptaFinal,
+            'id': element[0].id,
+          }]
+          console.log("elemenst :",element[0].respuesta_ls.respuesta_tipo[0].acciones)
+          console.log("elemenst222 :",preguuu__tas)
+        
+        }
+
+
+        agregarLS(preguuu__taas);
+      });
+    conversaciones_pyr()
+  })
+}

@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serlializers import ItemSerializer
 from rest_framework import serializers
 from rest_framework import status
-from chatbot_admin.models import configuraciones,cliente
+from chatbot_admin.models import configuraciones,cliente,datasetpreguntas
+from .serlializers import ItemSerializer,ItemprgtSerializer
 from django.shortcuts import render, get_object_or_404
 # Create your views here.
 @api_view(['GET'])
@@ -19,8 +19,9 @@ def ApiOverview(request):
     }
   
     return Response(api_urls)
-
-
+'''=============================================
+   API CONFIGURACIONES
+============================================= '''
 @api_view(['POST'])
 def add_items(request):
     item = ItemSerializer(data=request.data)
@@ -74,3 +75,9 @@ def delete_items(request, pk):
     item = get_object_or_404(configuraciones, pk=pk)
     item.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
+
+
+
+
+
+

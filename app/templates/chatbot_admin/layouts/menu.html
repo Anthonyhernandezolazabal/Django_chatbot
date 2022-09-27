@@ -85,13 +85,26 @@
   var id_empresa = JSON.parse(Ls).id_empresa;
   var id_cliente = JSON.parse(Ls).id_cliente;
 
+
+
+  function randomCoding(){
+    // Crea una matriz de 26 letras
+    var arr = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+    var idvalue ='';
+    let n = 5; // Este valor se puede cambiar, correspondiente a cuantas letras se generan, cámbialo según tus necesidades
+    for (let i = 0; i < n; i++) {
+      idvalue+=arr[Math.floor(Math.random()*36)];
+    }
+    return idvalue;
+  }
+
   function fn_id_historial() {
-    var url_python = '{% url "historial" %}?id_empresa=' + id_empresa
+    var url_python = '{% url "historial" %}?id_empresa=' + (randomCoding().toString() + id_empresa +  randomCoding().toString())
     location.replace(url_python)
   }
 
   function fn_id_respuestas() {
-    var url_python = '{% url "respuestas" %}?empre_id=' + id_empresa
+    var url_python = '{% url "respuestas" %}?i=' + (randomCoding().toString() + id_empresa +  randomCoding().toString())
     location.replace(url_python)
   }
   function fn_test_chatbot() {

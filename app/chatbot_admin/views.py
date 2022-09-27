@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
 from django.contrib import messages
 from chatbot.views import initialize,conversation_directory,load_conversations,train_bot
-from chatbot_admin.models import cliente,data_set
+from chatbot_admin.models import cliente,datasetpreguntas
 from django.http import HttpRequest
 from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
@@ -136,9 +136,10 @@ MÓDULO RESPUESTAS
 ============================================="""
 class modulo_conversacion(HttpRequest):
   def respuestas(request):
-    if request.GET['empre_id']:
-      empre_id=request.GET.get('empre_id')
-      jsondata = data_set.objects.filter(id_cliente=empre_id)
+    if request.GET['i']:
+      empre_id=request.GET.get('i')
+      empresa_id_encode = empre_id[5:-5]
+      jsondata = datasetpreguntas.objects.filter(id_cliente=empresa_id_encode)
       context = {
         'datos':jsondata
       }
@@ -147,9 +148,6 @@ class modulo_conversacion(HttpRequest):
       return render(request, 'chatbot_admin/layouts/404.html')
   def registrar_rpta(request):
     return render(request, 'chatbot_admin/layouts/registar_respuestas.html')
-
-  def get__prg(request):
-    ret
 
 """=============================================
 MÓDULO USUARIOS
@@ -180,6 +178,9 @@ class modulo_historial_conversacion(HttpRequest):
   def mod_historial(request):
     if request.GET['id_empresa']:
       empre_id=request.GET.get('id_empresa')
+      print("RESPUESTACOD :",empre_id)
+      empresa_id_encode = empre_id[5:-5]
+      print("RESPUESTAENCOD :",empresa_id_encode)
       #CAPTURANDO EL ALIAS
       user_alias = request.session.session_key
       hoy = datetime.datetime.utcnow().strftime("%Y-%m-%d")
@@ -188,12 +189,12 @@ class modulo_historial_conversacion(HttpRequest):
       hasta = tomorrow.strftime("%Y-%m-%d")
 
       try:
-        obj_idcl = cliente.objects.get(pk=empre_id)
+        obj_idcl = cliente.objects.get(pk=empresa_id_encode)
       except cliente.DoesNotExist:
         return render(request, 'chatbot_admin/layouts/404.html')
 
       #POSTGRESQL
-      jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,email_persona,telefono_persona,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empre_id)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
+      jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,email_persona,telefono_persona,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empresa_id_encode)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
       context = {
         'datos':jsondata_h
       }

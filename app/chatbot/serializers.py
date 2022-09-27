@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from chatbot.models import chat_user,chatbot_style
-from chatbot_admin.models import data_set,configuraciones,cliente
+from chatbot_admin.models import datasetpreguntas,configuraciones,cliente
 class historialChatSerializers(serializers.ModelSerializer):
     class Meta:
         model = chat_user
@@ -13,7 +13,7 @@ class personalizarChatSerializers(serializers.ModelSerializer):
 
 class datasetSerializers(serializers.ModelSerializer):
     class Meta:
-        model = data_set
+        model = datasetpreguntas
         fields = ['id','nombre','conversacion','id_cliente','registrado']
 
 # class ConfiguracionesSerializer(serializers.ModelSerializer):

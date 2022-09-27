@@ -2,7 +2,7 @@ import os
 import json
 from django.shortcuts import render
 from chatbot.models import chat_user,chatbot_style
-from chatbot_admin.models import data_set,cliente,configuraciones
+from chatbot_admin.models import datasetpreguntas,cliente,configuraciones
 from rest_framework.views import APIView
 from rest_framework.response import Response 
 from rest_framework.decorators import api_view
@@ -19,7 +19,7 @@ from django.core import serializers
 from os import remove
 import time
 import csv
-import xlwt
+# import xlwt
 import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -193,6 +193,62 @@ def getchat(request):
         rpta_final = "Espero haber atendido tus dudas"
         return HttpResponse(str(rpta_final))
   return HttpResponse(str('ok'))
+
+# def getjson(request):
+#   if request.GET['json_rpt']:
+#     estado_rpta = request.GET.get('estado')
+#     json_rpt = request.GET.get('json_rpt')
+#     json_nombre = request.GET.get('json_nombre')
+#     id_empresa = request.GET.get('id_empresa')
+#     id_user_create = request.GET.get('id_usu')
+#     nombre_bd = request.GET.get('nombre_bd')
+#     id_registro = request.GET.get('id_registro')
+#     arrayRecibido = json.loads(json_rpt)
+
+#     print("estado_rpta:",estado_rpta)
+#     print("json_rpt:",json_rpt)
+#     print("json_nombrewww:",json_nombre)
+#     print("id_empresa:",id_empresa)
+#     print("id_user_create:",id_user_create)
+#     print("nombre_bd:",nombre_bd)
+#     print("id_registro:",id_registro)
+#     print("arrayRecibidoarrayRecibido:",arrayRecibido)
+
+#     # 1. Eliminamos el json para reemplazar
+#     # with os.scandir(ruta_actual + '/empresa_'+id_empresa) as ficheros:
+#     #     for fichero in ficheros:
+#     #       if fichero.name == nombre_bd+'_'+id_empresa+'.json':
+#     #         eliminar = ruta_actual + '/empresa_'+id_empresa+'/'+fichero.name
+#     #         os.remove(eliminar)
+#     #         print("ELIMINADO")
+
+#     # # 2. Eliminamos la base de datos para entrenar con los nuevos datos
+#     # bd_deleted = os.path.join(BASE_DIR)
+#     # delee = bd_deleted+"/"+"midbaprendida_"+id_user_create+".sqlite3"
+#     # os.remove(delee)
+#     # print("ELIMINADO BD")
+
+#     # # 3. Crea el nuevo archivo JSON
+#     # arrayRecibido = json.loads(json_rpt)
+#     # #Editamos
+#     # datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
+#     # data = {}
+#     # data["conversations"] = []
+#     # for x in range(0,len(arrayRecibido)):
+#     #     data['conversations'].append({
+#     #       'messages': arrayRecibido[x][0]['preguntas_new'],
+#     #       'response': arrayRecibido[x][0]['respuesta_new'],
+#     #     })
+#     # with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+#     #     json.dump(data, file, indent=4,ensure_ascii=False)
+
+#     # # 4. Entrena y crea la nueva base de datos
+#     # conversation_directory(id_empresa)
+#     # initialize(id_user_create)
+#     # train_bot(load_conversations())
+
+#   return render(request, 'chatbot_admin/layouts/inicio.html')
+
 def getjson(request):
   if request.GET['json_rpt']:
     estado_rpta = request.GET.get('estado')
@@ -206,7 +262,7 @@ def getjson(request):
     if estado_rpta == "Registrar":
       # CREAR EL ARCHIVO JSON
       arrayRecibido = json.loads(json_rpt)
-      set_datosAdd = data_set(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
+      set_datosAdd = datasetpreguntas(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
       set_datosAdd.save()
       data = {}
       data["conversations"] = []
@@ -239,7 +295,7 @@ def getjson(request):
       # 3. Crea el nuevo archivo JSON
       arrayRecibido = json.loads(json_rpt)
       #Editamos
-      data_set.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
+      datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
       data = {}
       data["conversations"] = []
       for x in range(0,len(arrayRecibido)):
@@ -274,7 +330,7 @@ def getjsondelet(request):
           print("Eliminado")
 
     # 2. Eliminar el registro
-    record = data_set.objects.get(pk = id_reg)
+    record = datasetpreguntas.objects.get(pk = id_reg)
     record.delete()
     print("Registro eliminado")
  
@@ -432,7 +488,7 @@ class obtener_prg(HttpRequest):
   def getprg(request):
     if request.GET['prg']:
       empr = request.GET.get('prg')
-      rpta_prg = data_set.objects.filter(pk=empr)
+      rpta_prg = datasetpreguntas.objects.filter(pk=empr)
       return HttpResponse(str(empr))  
 
       
@@ -443,7 +499,7 @@ class data__set_all(APIView):
     def get(self, request, format=None):
     
       id__pregunta = request.GET.get('prg')
-      rpta_pr = data_set.objects.filter(pk=id__pregunta)
+      rpta_pr = datasetpreguntas.objects.filter(pk=id__pregunta)
 
       serializer_historial = datasetSerializers(rpta_pr, many=True)
 
@@ -507,37 +563,37 @@ class r_exportar(HttpRequest):
 
 
   # FORMATO XLS -> pip install xlwt
-  def export_excel(request):
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition']='attachment; filename=Expenses' + \
-      str(datetime.datetime.now())+'.xls'
+  # def export_excel(request):
+  #   response = HttpResponse(content_type='application/ms-excel')
+  #   response['Content-Disposition']='attachment; filename=Expenses' + \
+  #     str(datetime.datetime.now())+'.xls'
 
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Expenses')
-    row_num = 0
+  #   wb = xlwt.Workbook(encoding='utf-8')
+  #   ws = wb.add_sheet('Expenses')
+  #   row_num = 0
 
-    font_style=xlwt.XFStyle()
-    font_style.font.bold = True
+  #   font_style=xlwt.XFStyle()
+  #   font_style.font.bold = True
 
-    colums = ['nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat']
+  #   colums = ['nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat']
 
-    for col_num in range(len(colums)):
-      ws.write(row_num, col_num, colums[col_num],font_style)
+  #   for col_num in range(len(colums)):
+  #     ws.write(row_num, col_num, colums[col_num],font_style)
 
-    font_style = xlwt.XFStyle()
+  #   font_style = xlwt.XFStyle()
 
-    # rows = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id=5 AND registrado BETWEEN SYMMETRIC '2022-09-10' AND '2022-09-09'")
+  #   # rows = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id=5 AND registrado BETWEEN SYMMETRIC '2022-09-10' AND '2022-09-09'")
 
-    rows = chat_user.objects.filter().values_list('nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat')
+  #   rows = chat_user.objects.filter().values_list('nombre_persona','email_persona','telefono_persona','nombre_persona_sin_alias','estado_chat')
 
-    for row in rows:
-      row_num+=1
+  #   for row in rows:
+  #     row_num+=1
 
-      for col_num in range(len(row)):
-        ws.write(row_num, col_num, str(row[col_num]),font_style)
-    wb.save(response)
+  #     for col_num in range(len(row)):
+  #       ws.write(row_num, col_num, str(row[col_num]),font_style)
+  #   wb.save(response)
 
-    return response
+  #   return response
 
 
 

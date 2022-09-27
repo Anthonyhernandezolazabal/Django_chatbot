@@ -338,40 +338,38 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-    <script>
+<script src="{% static 'chatbot_admin/assets/js/personalizar.js' %}"></script>
+<script>
+  document.querySelector(".imagen_logo").addEventListener("change",function(){
+    var imagen = this.files[0];
+    console.log("ABC :",imagen)
+    if (imagen["type"] != "image/jpeg" && imagen["type"] != "image/png" && imagen["type"] != "image/gif") {
+        document.querySelector(".imagen_logo").value = "";
+        Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: 'Error al subir la imagen',
+            text: "¡La imagen debe estar en formato JPG o PNG!",
+            showConfirmButton: false,
+            timer: 1800
+        })
+    
+    }else {
 
-      document.querySelector(".imagen_logo").addEventListener("change",function(){
-        var imagen = this.files[0];
-        console.log("ABC :",imagen)
-        if (imagen["type"] != "image/jpeg" && imagen["type"] != "image/png" && imagen["type"] != "image/gif") {
-            document.querySelector(".imagen_logo").value = "";
-            Swal.fire({
-                position: 'top-center',
-                icon: 'error',
-                title: 'Error al subir la imagen',
-                text: "¡La imagen debe estar en formato JPG o PNG!",
-                showConfirmButton: false,
-                timer: 1800
-            })
-        
-        }else {
+        $(".previsualizar").attr("src", "/static/chatbot_admin/assets/images/load.gif");
 
-           $(".previsualizar").attr("src", "/static/chatbot_admin/assets/images/load.gif");
+        var datosImagen = new FileReader;
+        datosImagen.readAsDataURL(imagen);
+        $(datosImagen).on("load", function (event) {
 
-            var datosImagen = new FileReader;
-            datosImagen.readAsDataURL(imagen);
-            $(datosImagen).on("load", function (event) {
+            var rutaImagen = event.target.result;
+            console.log(rutaImagen);
 
-                var rutaImagen = event.target.result;
-                console.log(rutaImagen);
+            $(".previsualizar").attr("src", rutaImagen);
 
-                $(".previsualizar").attr("src", rutaImagen);
+        })
+    }
 
-            })
-        }
-
-      })
-            
-     
-    </script>
+  })
+</script>
     {% endblock content %}
