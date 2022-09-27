@@ -742,7 +742,7 @@ function myFunction_save() {
             let probar_div = document.querySelector(".d___v"+obtener__id_ls);
             let __ediiit_rpta = probar_div.querySelector(".rp_______ta_sld")
             let __pre____rpt__a_rpta = probar_div.querySelector(".pre____rpt__a")
-            $(__pre____rpt__a_rpta).html(l_______sldr[0].respuesta_ls.pre_respuesta.pre_rpta)
+            $(__pre____rpt__a_rpta).html(decodeURIComponent(l_______sldr[0].respuesta_ls.pre_respuesta.pre_rpta))
             
             $(__ediiit_rpta).html("")
             l_______sldr[0].respuesta_ls.respuesta_tipo.forEach(r__p__t__a => {
@@ -753,10 +753,10 @@ function myFunction_save() {
                 }
                 tttt_plat += `
                   <div style="margin: 15px;">
-                      <h5 class="card-title mb-0">${r__p__t__a.titulo_imagen}</h5>
-                      <h6>${r__p__t__a.descripcion}</h6>`
+                      <h5 class="card-title mb-0">${decodeURIComponent(r__p__t__a.titulo_imagen)}</h5>
+                      <h6>${decodeURIComponent(r__p__t__a.descripcion)}</h6>`
                       r__p__t__a.acciones.forEach(elem__en_t => {
-                        tttt_plat +=`<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${elem__en_t}</a>`
+                        tttt_plat +=`<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${decodeURIComponent(elem__en_t)}</a>`
                       });
                       tttt_plat +=
                       ` 
@@ -764,13 +764,6 @@ function myFunction_save() {
               </div>`
               $(__ediiit_rpta).append(tttt_plat)
             });
-
-
-
-
-
-            
-
 
 
 
@@ -939,7 +932,7 @@ function agregarLS(preguntas) {
 function conversaciones_pyr() {
   let pregunta, cont = 0;
   pregunta = recuperarLS();
-  console.log('pregunta :',pregunta)
+  // console.log('pregunta :',pregunta)
   pregunta.forEach(prg => {
     // console.log('pregunta :',prg[0].respuesta_ls.respuesta_tipo[0].tipo)
     cont++
@@ -1105,6 +1098,9 @@ function rpt_aut_save(a) {
     var nnn = nombre_json.split(" ").join("_")
     document.getElementById('btn_sav').style.display = 'none';
     document.getElementById('btn_loader').style.display = 'block';
+
+    console.log("ENVIANDO DATOS:",preguntas)
+    console.log("ENVIANDO a:",a)
 
 
       fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&nombre_bd=' + nombre_d_db + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu + '&estado=' + a + '&id_registro=' + pr____g, {
@@ -1280,6 +1276,7 @@ function editar__ls(id,t) {
       if (pregunta[0].respuesta_ls.respuesta_tipo[0].tipo == 'texto') {
         document.getElementById('customRadio3').click();
 
+
         $('.uniq_prg').val(decodeURIComponent(pregunta[0].preguntas_new[0])) //Obtengo el primer val
 
         //PREGUNTAS
@@ -1343,14 +1340,12 @@ function editar__ls(id,t) {
 
         // padre.querySelector(".pre_respuestatxt_add").value = 
 
-        
-
 
         document.getElementById('customRadio4').click();
         document.getElementById('add_slider').style.display = "contents";
         let arrayElements = pregunta[0].preguntas_new
         const firstElement = arrayElements.find(element => element != undefined);
-        $('.uniq_prg').val(firstElement) //Obtengo el primer val
+        $('.uniq_prg').val(decodeURIComponent(firstElement)) //Obtengo el primer val
         let total__sl = pregunta[0].preguntas_new;
         for (let e = 1; e < total__sl.length; e++) {
           const element__sl = total__sl[e];
@@ -1361,7 +1356,7 @@ function editar__ls(id,t) {
             <div class="mb-2 mt-2" id='add_input_new'>
               <div class='row'>
                 <div class='col-11 animate__animated animate__bounce'>
-                  <input class="form-control inputaddpregunta" type="text" placeholder="Formular pregunta" value="${element__sl}">
+                  <input class="form-control inputaddpregunta" type="text" placeholder="Formular pregunta" value="${decodeURIComponent(element__sl)}">
                 </div>
                 <div class='col-1 animate__animated animate__bounce'>
                   <button type="button" style='margin-left:-15px' id='btn_del' onclick='del_btn(this)' class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
@@ -1373,8 +1368,8 @@ function editar__ls(id,t) {
 
         //Primer Slider
         var slrptaaa = pregunta[0].respuesta_ls.respuesta_tipo[0];
-        $(".titulo").val(slrptaaa.titulo_imagen)
-        $(".descripcion").val(slrptaaa.descripcion)
+        $(".titulo").val(decodeURIComponent(slrptaaa.titulo_imagen))
+        $(".descripcion").val(decodeURIComponent(slrptaaa.descripcion))
         $('#nombre_imagen_bk').val(slrptaaa.img)
         if (slrptaaa.img != "") {
           $("#show__img").html(`<img src="/media/${slrptaaa.img}" alt="image" class="img-fluid mb-1" style="width: auto;height: auto;">`)
@@ -1384,13 +1379,14 @@ function editar__ls(id,t) {
         }
 
         let aaa__c = slrptaaa.acciones;
-        $('.accioninicial__s1').val(slrptaaa.acciones[0])
+        console.log("AAAAAAAAAAAAAAAAAAA :",pregunta[0])
+        $('.accioninicial__s1').val(decodeURIComponent(slrptaaa.acciones[0]))
         for (let i = 1; i < aaa__c.length; i++) {
           const elem___ent = aaa__c[i];
           let htmlacc = `
           <div class="row delaccslider" style='margin-right: 15px;margin-bottom: 15px;'>
             <div class="col-11 animate__animated animate__bounce">
-              <input class="form-control accioninicial" type="text" value="${elem___ent}" placeholder="Formular pregunta">
+              <input class="form-control accioninicial" type="text" value="${decodeURIComponent(elem___ent)}" placeholder="Formular pregunta">
             </div>
             <div class="col-1 animate__animated animate__bounce">
               <button type="button" onclick="deleteaccionslider(this)" class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
@@ -1452,15 +1448,15 @@ function editar__ls(id,t) {
                       <label for="example-fileinput" class="form-label">Descripción:</label>
                         <div class='row'>
                           <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
-                            <input type="text" class="form-control mb-2 titulo" placeholder="Título" required value="${e__l.titulo_imagen}">
+                            <input type="text" class="form-control mb-2 titulo" placeholder="Título" required value="${decodeURIComponent(e__l.titulo_imagen)}">
                           </div>
                           <div class='col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12'>
-                            <input type="text" class="form-control descripcion" placeholder="Descripción" required value="${e__l.descripcion}">
+                            <input type="text" class="form-control descripcion" placeholder="Descripción" required value="${decodeURIComponent(e__l.descripcion)}">
                           </div>
                         </div>
                         <label for="example-fileinput" class="form-label">Accion:</label>
                         <div class="mb-2">
-                        <input class="form-control accioninicial" value="${e__l.acciones[0]}" type="text" placeholder="Formular pregunta" style='margin-bottom: 15px;'>
+                        <input class="form-control accioninicial" value="${decodeURIComponent(e__l.acciones[0])}" type="text" placeholder="Formular pregunta" style='margin-bottom: 15px;'>
 
             
                           <div id="padre__add_new_action">`
@@ -1471,7 +1467,7 @@ function editar__ls(id,t) {
             html___bot += `
                             <div class="row delaccslider" style="margin-right: 15px;margin-bottom: 15px;">
                               <div class="col-11 animate__animated animate__bounce">
-                                <input class="form-control accioninicial" type="text" value="${elemen__t}" placeholder="Formular pregunta">
+                                <input class="form-control accioninicial" type="text" value="${decodeURIComponent(elemen__t)}" placeholder="Formular pregunta">
                               </div>
                               <div class="col-1 animate__animated animate__bounce">
                                 <button type="button" onclick="deleteaccionslider(this)" class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>
@@ -1509,7 +1505,7 @@ function editar__ls(id,t) {
 
 
         console.log("SLIDEEEEEEEEER :",)
-        document.getElementById("pre_respuestatxt").value = pregunta[0].respuesta_ls.pre_respuesta.pre_rpta
+        document.getElementById("pre_respuestatxt").value = decodeURIComponent(pregunta[0].respuesta_ls.pre_respuesta.pre_rpta)
         console.log("SLIDEEEEEEEEER2 :",)
       }
     }
@@ -1601,18 +1597,17 @@ function muestrame__prg(p){
     $("#name__org").val(response[0].nombre)
     JSON.parse(response[0].conversacion).forEach(element => 
       {
+
         let old__ques = []
         let rpta__ls_tipo = []
         let respuesta__slider_texto = []
         let rpta__slider_ls = []
         let preguuu__taas = []
         quitarlsrepetidos(element[0].id)
-        // console.log("elementelementelementelement :",element)
         
 
         if(element[0].respuesta_ls.respuesta_tipo[0].tipo == "texto")
         {
-          // console.log("elementelementelementelement :",element)
           
           element[0].preguntas_new.forEach(ordenar => {
             old__ques.push(encodeURIComponent(ordenar))
@@ -1637,41 +1632,49 @@ function muestrame__prg(p){
             'respuesta_ls': rptaFinal_texto,
             'id': element[0].id,
           }];
+
+
+          agregarLS(preguuu__taas);
         }
 
         if(element[0].respuesta_ls.respuesta_tipo[0].tipo == "slider")
         {
-
 
           element[0].preguntas_new.forEach(ordenar => {
             old__ques.push(encodeURIComponent(ordenar))
           });
 
 
-          respuestas = {
-            'tipo': 'slider',
-            'img': element[0].respuesta_ls.respuesta_tipo[0].img,
-            'titulo_imagen': encodeURIComponent(element[0].respuesta_ls.respuesta_tipo[0].titulo_imagen),
-            'descripcion': encodeURIComponent(element[0].respuesta_ls.respuesta_tipo[0].descripcion),
-            'acciones': []
-          }
-          rpta__slider_ls.push(respuestas)
+          element[0].respuesta_ls.respuesta_tipo.forEach(ele___ment => {
 
+            respuestas = {
+              'tipo': 'slider',
+              'img': ele___ment.img,
+              'titulo_imagen': encodeURIComponent(ele___ment.titulo_imagen),
+              'descripcion': encodeURIComponent(ele___ment.descripcion),
+              'acciones': []
+            }
+            rpta__slider_ls.push(respuestas)
+
+            ele___ment.acciones.forEach(roo__w => {
+              respuestas.acciones.push(encodeURIComponent(roo__w));
+            });
+            
+          });
+
+
+          console.log("elementelementelementelement :",rpta__slider_ls)
 
           pre_respuesta = {
             'pre_rpta': encodeURIComponent(element[0].respuesta_ls.pre_respuesta.pre_rpta)
           }
-       
           
           rptaFinal = {
             'respuesta_tipo': rpta__slider_ls,
             'pre_respuesta': pre_respuesta,
           }
 
-          element[0].respuesta_ls.respuesta_tipo[0].acciones.forEach(accio__n => {
-            console.log("accion :",accio__n)
-            respuestas.acciones.push(encodeURIComponent(accio__n));
-          });
+        
 
           preguuu__taas = [{
             'preguntas_new': old__ques,
@@ -1680,12 +1683,11 @@ function muestrame__prg(p){
             'id': element[0].id,
           }]
           console.log("elemenst :",element[0].respuesta_ls.respuesta_tipo[0].acciones)
-          console.log("elemenst222 :",preguuu__tas)
+
+
+          agregarLS(preguuu__taas);
         
         }
-
-
-        agregarLS(preguuu__taas);
       });
     conversaciones_pyr()
   })
