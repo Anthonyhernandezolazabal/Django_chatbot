@@ -454,7 +454,7 @@ function getBotResponse() {
             var div_r = document.querySelector("#chat_form");
             let r = document.createElement("div");
             r.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-            r.innerHTML = '<span>'+ rpta_one['respueta_sl_texto'] +'</span>'
+            r.innerHTML = '<span>'+ decodeURIComponent(rpta_one['respueta_sl_texto']) +'</span>'
             div_r.append(r)
             div_r.scrollTop = div_r.scrollHeight;
           }, 1600);
@@ -488,8 +488,8 @@ function getBotResponse() {
 
 
                         html_all += `
-                        <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
-                        <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
+                        <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${decodeURIComponent(elent_rpta['titulo_imagen'])}</h5>
+                        <h6 style="margin: 0;font-size: 14px;">${decodeURIComponent(elent_rpta['descripcion'])}</h6>
                         `
                         acciones_rpta.forEach(act => {
                           if (acciones_rpta.length == 1) {
