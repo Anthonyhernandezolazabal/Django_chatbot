@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['34.171.4.227']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -129,6 +129,7 @@ USE_I18N = True
 
 USE_TZ = True
 APPEND_SLASH=False
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
