@@ -103,7 +103,7 @@ function ver_conversacion(alias_nom,fecha) {
                   <div class="ctext-wrap" style='background-color: #2C3B5E !important;color: #fff;'>
                       <i>ChatBot</i>
                       <p>
-                        ${item_rpta.respueta_sl_texto}
+                        ${decodeURIComponent(item_rpta.respueta_sl_texto)}
                       </p>
                   </div>
               </div>
@@ -126,7 +126,7 @@ function ver_conversacion(alias_nom,fecha) {
                   <div class="ctext-wrap" style='background-color: #2C3B5E !important;color: #fff;'>
                       <i>ChatBot</i>
                       <p>
-                        ${r______pt.pre_respuesta.pre_rpta}
+                        ${decodeURIComponent(r______pt.pre_respuesta.pre_rpta)}
                       </p>
                   </div>
               </div>
@@ -154,10 +154,10 @@ function ver_conversacion(alias_nom,fecha) {
                 template += `
 
                 <div style="margin: 15px;">
-                    <h5 class="card-title mb-0" style="text-align: left;">${firstElement.titulo_imagen}</h5>
-                    <h6 style="text-align: left;">${firstElement.descripcion}</h6>`
+                    <h5 class="card-title mb-0" style="text-align: left;">${decodeURIComponent(firstElement.titulo_imagen)}</h5>
+                    <h6 style="text-align: left;">${decodeURIComponent(firstElement.descripcion)}</h6>`
                     firstElement.acciones.forEach(r__ow => {
-                        template += `<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${r__ow}</a>`
+                        template += `<a href="javascript: void(0);" style="width: 100%;" class="btn btn-primary mb-1">${decodeURIComponent(r__ow)}</a>`
                     });
                     template += `
                     
