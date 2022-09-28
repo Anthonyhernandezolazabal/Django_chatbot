@@ -602,9 +602,11 @@ function show____confi(){
   var id = document.querySelector("#libreria_chatbot").getAttribute("empresa")
   let tmp_bot = ``;
 
-  fetch(URLactual+'mostrar_data__config/?id_empr=' + id, {
+  fetch(URLactual+'api/all/?id_empresa=' + id, {
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
+
+      console.log("RESPUESTA :",response)
 
    
 
