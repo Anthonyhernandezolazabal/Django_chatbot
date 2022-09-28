@@ -606,17 +606,17 @@ function show____confi(){
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
 
-      console.log("RESPUESTA :",response)
+      console.log("RESPUESTA :",response[0])
 
    
 
-      document.getElementById("all_dat_conf").value = JSON.stringify(response[0].fields)
+      document.getElementById("all_dat_conf").value = JSON.stringify(response[0])
 
 
-      if(response[0].fields.horariocomercial == "24horas"){
+      if(response[0].horariocomercial == "24horas"){
 
 
-        if(response[0].fields.c_nombre == "1"){
+        if(response[0].c_nombre == "1"){
           tmp_bot += `
                     <div class="field">
                       <input type="text" placeholder="Nombre" class="cls_campos" id="txtusuario" name="txtusuario">
@@ -626,13 +626,13 @@ function show____confi(){
                     <input type='hidden' id='email_chat'>
                     <input type='hidden' id='phone_chat'>`
         }
-        if(response[0].fields.c_email == "1"){
+        if(response[0].c_email == "1"){
           tmp_bot += `
             <div class="field">
               <input type="email" placeholder="Correo electrónico" class="cls_campos" id="txtemail" name="txtemail">
             </div>`
         }
-        if(response[0].fields.c_telefono == "1"){
+        if(response[0].c_telefono == "1"){
           tmp_bot += `
             <div class="field">
               <input type="number" placeholder="Número de teléfono" class="cls_campos" id="txttelefono" name="txttelefono">
@@ -643,7 +643,7 @@ function show____confi(){
       }
 
       // HORARIO PERSONALIZADO EN DESARROLLO
-      if(response[0].fields.horariocomercial == "personalizado"){
+      if(response[0].horariocomercial == "personalizado"){
         //Definiendo la hora comercial
         let now = new Date();
         let h_actual = now.getHours()+':'+now.getMinutes();
