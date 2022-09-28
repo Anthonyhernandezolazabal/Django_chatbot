@@ -6,67 +6,41 @@ chatbot_personalizado();
 CHATBOT PERSONALIZADO
 =============================================*/
 function chatbot_personalizado() {
-  fetch('/personalizar_chat/?id_empr=' + empresa_id, {
+  fetch('/api/all_style/?id_empresa=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
-    // 0 = No tiene registros
-    // 1 = Tiene registros
-
-    if(response.length != 0){
-      //Editar
+    if(response.id == "sindatos"){
+      //Registrar nuevo
+      $("#btn_save_upadte").html(`<button type="button" class="btn btn-outline-success" onclick="fn_guardar_pr()"> <i class="mdi mdi-cookie-check me-1"></i> Guardar </button>`)
+    }else{
+      
+      $("#obtener_id_editar_styke").val(response[0]['id']);
       $("#frm_ptitulo").val(response[0]['nombre_chatbot']);
       $("#frm_pdatos").val(response[0]['titulo_cuerpo']);
       $("#frm_pboton").val(response[0]['terminos_y_condiciones']);
       $("#frm_link").val(response[0]['terminos_y_condiciones_link']);
       $("#frm_t_y_c_aceptar").val(response[0]['terminos_y_condiciones_aceptar']);
       $("#frm_t_y_c_rechazar").val(response[0]['terminos_y_condiciones_rechazar']);
-      $("#color_chatbot").val(response[0]['tipo_color_botones']);
-      $("#color_chatbot_acciones").val(response[0]['tipo_color_header']);
+      $("#color_chatbot").val(response[0]['tipo_color_header']);
+      $("#color_chatbot_acciones").val(response[0]['tipo_color_botones']);
 
-      console.log("traer datos del estilo :",response[0]);
 
       if(response[0].tipo_color_header == "paleta"){
-        $("#val_rpta_color_chatbot").val(response[0]['rpta_color_header']);
+        $(".val_seleccion_c").html(`<input class="form-control" id="color_chatbot_general" type="color" name="color_chatbot_general" value="${response[0].rpta_color_header}">`);
       }
-
-      if(response[0].tipo_color_header == "personalizado"){
-        $("#val_rpta_color_chatbot_per").val(response[0]['rpta_color_header']);
+      if (response[0].tipo_color_header == "personalizado") {
+        $(".val_seleccion_c").html(`<textarea class="form-control" name="color_chatbot_general" id="color_chatbot_general" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)" value="${response[0].rpta_color_header}">${response[0].rpta_color_header}</textarea>`);
       }
 
 
       if(response[0].tipo_color_botones == "paleta"){
-        $("#val_rpta_color_chatbot_acciones").val(response[0]['rpta_color_botones']);
-      }
-
-      if(response[0].tipo_color_botones == "personalizado"){
-        $("#val_rpta_color_chatbot_acciones_per").val(response[0]['rpta_color_botones']);
-
-      }
-
-
-
-
-
-
-      if(response[0].tipo_color_botones == "paleta"){
-        $(".val_seleccion_c_p").html(`<input class="form-control" id="color_chatbot_paleta" type="color" name="color_chatbot_paleta" value="${response[0].rpta_color_botones}">
-        <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>
+        $(".val_seleccion_c_p").html(`<input class="form-control" id="color_chatbot_botones" type="color" name="color_chatbot_botones" value="${response[0].rpta_color_botones}">
         `);
       }
       if (response[0].tipo_color_botones == "personalizado") {
-        $(".val_seleccion_c_p").html(`<textarea class="form-control" name="color_chatbot_paleta" value="${response[0].rpta_color_botones}" id="color_chatbot_paleta" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${response[0].rpta_color_botones}</textarea>
-        <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
+        $(".val_seleccion_c_p").html(`<textarea class="form-control" name="color_chatbot_botones" value="${response[0].rpta_color_botones}" id="color_chatbot_botones" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${response[0].rpta_color_botones}</textarea>`);
       }
 
-
-      if(response[0].tipo_color_header == "paleta"){
-        $(".val_seleccion_c").html(`<input class="form-control" id="color_chatbot_personalizado" type="color" name="color_chatbot_personalizado" value="${response[0].rpta_color_header}">
-        <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
-      }
-      if (response[0].tipo_color_header == "personalizado") {
-        $(".val_seleccion_c").html(`<textarea class="form-control" name="color_chatbot_personalizado" id="color_chatbot_personalizado" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)" value="${response[0].rpta_color_header}">${response[0].rpta_color_header}</textarea>
-        <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
-      }
 
       document.querySelector('.pr_terminos_condiciones_link').innerHTML = response[0]['terminos_y_condiciones_link']
       document.querySelector('.pr_terminos_condiciones_link').setAttribute('href',response[0]['terminos_y_condiciones_link'])
@@ -76,21 +50,17 @@ function chatbot_personalizado() {
       document.querySelector('.pr_tl').innerHTML = response[0]['nombre_chatbot'];
       document.querySelector('.pr_tl2').innerHTML = response[0]['nombre_chatbot'];
       document.querySelector('#pr_frm').innerHTML = response[0]['titulo_cuerpo'];
-  
-  
-  
+
       document.querySelector('#chat_color').style.background = response[0]['rpta_color_header'];
       document.querySelector('#chat_color2').style.background = response[0]['rpta_color_header']; 
-  
-  
-  
-  
+
+
       document.querySelector('#chat_third_screen').style.background = response[0]['rpta_color_botones'];
       document.querySelector('#t_y_c_a').style.background = response[0]['rpta_color_botones'];
       document.querySelector('#t_y_c_r').style.background = response[0]['rpta_color_botones'];
-  
-  
-  
+
+
+
       document.querySelectorAll('.chat_rpta').forEach(rpta => {
         rpta.style.background = response[0]['rpta_color_header'];
       });
@@ -101,18 +71,12 @@ function chatbot_personalizado() {
         $("#logo_old__img").val(response[0]['foto_logo'])
       }
 
+
       $("#cam____logo").html(`<button type="button" class="btn btn-outline-warning mt-3" data-bs-toggle="modal" data-bs-target="#centermodal"> <i class="uil uil-robot me-1"></i> Cambiar logo del chatbot </button>`)
 
       $("#btn_save_upadte").html(`<button type="button" class="btn btn-outline-info" onclick="fn_editar_pr()"> <i class="uil uil-edit-alt me-1"></i> Guardar </button>`)
-    }else{
-      //Registrar nuevo
-      $("#btn_save_upadte").html(`<button type="button" class="btn btn-outline-success" onclick="fn_guardar_pr()"> <i class="mdi mdi-cookie-check me-1"></i> Guardar </button>`)
+
     }
-
-
-
-
-
   })
 }
 
@@ -230,39 +194,50 @@ function fn_guardar_pr() {
 
   let pnombre = document.querySelector('#frm_ptitulo').value;
   let pdatos = document.querySelector('#frm_pdatos').value;
-  let pt_y_c = document.querySelector('#frm_pboton').value;
-  let pfrm_link = document.querySelector('#frm_link').value;
-  let pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
-  let frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value;
+  let pt_y_c
+  let pfrm_link
+  let pfrm_t_y_c_aceptar 
+  let frm_t_y_c_rechazar
+
+  if (document.querySelector('#frm_pboton').value == "")
+  {
+    pt_y_c = null;
+  }else{
+    pt_y_c = document.querySelector('#frm_pboton').value;
+  }
+  
+  if (document.querySelector('#frm_link').value == "")
+  {
+    pfrm_link = null;
+  }else{
+    pfrm_link = document.querySelector('#frm_link').value;
+  }
+  
+  if (document.querySelector('#frm_t_y_c_aceptar').value == "")
+  {
+    pfrm_t_y_c_aceptar = null;
+  }else{
+    pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
+  }
+  
+  if (document.querySelector('#frm_t_y_c_rechazar').value == "")
+  {
+    frm_t_y_c_rechazar = null;
+  }else{
+    frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value;
+  }
+
   let color_chatbot = document.querySelector('#color_chatbot').value;
   let color_btn_acciones = document.querySelector('#color_chatbot_acciones').value;
-  let rpta_color_chatbot;
-  let rpta_color_btn_acciones;
+  let rpta_color_chatbot = document.querySelector('#color_chatbot_general').value;
+  let rpta_color_btn_acciones = document.querySelector('#color_chatbot_botones').value;
 
-  if(color_chatbot == "paleta"){
-    rpta_color_chatbot = document.querySelector('#color_chatbot_paleta').value;
-  }else{
-    rpta_color_chatbot = document.querySelector('#color_chatbot_paleta').value;
-  }
-
-  if(color_btn_acciones == "paleta"){
-    rpta_color_btn_acciones = document.querySelector('#color_chatbot_personalizado').value;
-  }else{
-    rpta_color_btn_acciones = document.querySelector('#color_chatbot_personalizado').value;
-  }
-
-  if (pnombre == '' || pdatos == '' || pt_y_c =='' || pfrm_link =='' || pfrm_t_y_c_aceptar =='' || frm_t_y_c_rechazar == '') {
+  if (pnombre == '' || pdatos == '' || rpta_color_chatbot == '' || rpta_color_btn_acciones == '') {
 
     if (pnombre == '') {
       document.querySelector('#xyz01').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz01').innerText = '';
-    }
-
-    if (pt_y_c == '') {
-      document.querySelector('#xyz02').innerText = 'Es necesario llenar este campo';
-    } else {
-      document.querySelector('#xyz02').innerText = '';
     }
 
     if (pdatos == '') {
@@ -271,22 +246,16 @@ function fn_guardar_pr() {
       document.querySelector('#xyz03').innerText = '';
     }
 
-    if (pfrm_link == '') {
-      document.querySelector('#xyz04').innerText = 'Es necesario llenar este campo';
+    if (rpta_color_chatbot == '') {
+      document.querySelector('#xyzcc').innerText = 'Es necesario llenar este campo';
     } else {
-      document.querySelector('#xyz04').innerText = '';
+      document.querySelector('#xyzcc').innerText = '';
     }
 
-    if (pfrm_t_y_c_aceptar == '') {
-      document.querySelector('#xyz05').innerText = 'Es necesario llenar este campo';
+    if (rpta_color_btn_acciones == '') {
+      document.querySelector('#xyzcb').innerText = 'Es necesario llenar este campo';
     } else {
-      document.querySelector('#xyz05').innerText = '';
-    }
-
-    if (frm_t_y_c_rechazar == '') {
-      document.querySelector('#xyz06').innerText = 'Es necesario llenar este campo';
-    } else {
-      document.querySelector('#xyz06').innerText = '';
+      document.querySelector('#xyzcb').innerText = '';
     }
 
   } else {
@@ -306,7 +275,8 @@ function fn_guardar_pr() {
       'id_empresa_cliente': empresa_id
     }
 
-    fetch('/personalizar_chat/', {
+
+    fetch('/api/create_style/', {
       method: 'POST',
       body: JSON.stringify(datos),
       headers: {
@@ -314,8 +284,9 @@ function fn_guardar_pr() {
         'X-CSRFToken': getCookie('csrftoken')
       }
     }).then(rsp => rsp.json()).then(function (response) {
+      console.log(response)
 
-      if(response){
+      if(response.message == "Registrado"){
         chatbot_personalizado();
         $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
       }else{
@@ -330,42 +301,50 @@ function fn_editar_pr() {
 
   let pnombre = document.querySelector('#frm_ptitulo').value;
   let pdatos = document.querySelector('#frm_pdatos').value;
-  let pt_y_c = document.querySelector('#frm_pboton').value;
-  let pfrm_link = document.querySelector('#frm_link').value;
-  let pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
-  let frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value.replace("&", "y");
+  let pt_y_c
+  let pfrm_link
+  let pfrm_t_y_c_aceptar 
+  let frm_t_y_c_rechazar
+
+  if (document.querySelector('#frm_pboton').value == "")
+  {
+    pt_y_c = null;
+  }else{
+    pt_y_c = document.querySelector('#frm_pboton').value;
+  }
+  
+  if (document.querySelector('#frm_link').value == "")
+  {
+    pfrm_link = null;
+  }else{
+    pfrm_link = document.querySelector('#frm_link').value;
+  }
+  
+  if (document.querySelector('#frm_t_y_c_aceptar').value == "")
+  {
+    pfrm_t_y_c_aceptar = null;
+  }else{
+    pfrm_t_y_c_aceptar = document.querySelector('#frm_t_y_c_aceptar').value;
+  }
+  
+  if (document.querySelector('#frm_t_y_c_rechazar').value == "")
+  {
+    frm_t_y_c_rechazar = null;
+  }else{
+    frm_t_y_c_rechazar = document.querySelector('#frm_t_y_c_rechazar').value;
+  }
+
   let color_chatbot = document.querySelector('#color_chatbot').value;
   let color_btn_acciones = document.querySelector('#color_chatbot_acciones').value;
-  let rpta_color_chatbot;
-  let rpta_color_btn_acciones;
+  let rpta_color_chatbot = document.querySelector('#color_chatbot_general').value;
+  let rpta_color_btn_acciones = document.querySelector('#color_chatbot_botones').value;
 
-
-
-  if(color_chatbot == "paleta"){
-    rpta_color_chatbot = document.querySelector('#color_chatbot_paleta').value.slice(1); //quito el primer #
-  }else{
-    rpta_color_chatbot = replaceAll(document.querySelector('#color_chatbot_paleta').value, "#", '*');
-  }
-
-  if(color_btn_acciones == "paleta"){
-    rpta_color_btn_acciones = document.querySelector('#color_chatbot_personalizado').value.slice(1); //quito el primer #
-  }else{
-    rpta_color_btn_acciones = replaceAll(document.querySelector('#color_chatbot_personalizado').value, "#", '*');
-  }
-
-
-  if (pnombre == '' || pdatos == '' || pt_y_c =='' || pfrm_link =='' || pfrm_t_y_c_aceptar =='' || frm_t_y_c_rechazar == '') {
+  if (pnombre == '' || pdatos == '' || rpta_color_chatbot == '' || rpta_color_btn_acciones == '') {
 
     if (pnombre == '') {
       document.querySelector('#xyz01').innerText = 'Es necesario llenar este campo';
     } else {
       document.querySelector('#xyz01').innerText = '';
-    }
-
-    if (pt_y_c == '') {
-      document.querySelector('#xyz02').innerText = 'Es necesario llenar este campo';
-    } else {
-      document.querySelector('#xyz02').innerText = '';
     }
 
     if (pdatos == '') {
@@ -374,64 +353,61 @@ function fn_editar_pr() {
       document.querySelector('#xyz03').innerText = '';
     }
 
-    if (pfrm_link == '') {
-      document.querySelector('#xyz04').innerText = 'Es necesario llenar este campo';
+    if (rpta_color_chatbot == '') {
+      document.querySelector('#xyzcc').innerText = 'Es necesario llenar este campo';
     } else {
-      document.querySelector('#xyz04').innerText = '';
+      document.querySelector('#xyzcc').innerText = '';
     }
 
-    if (pfrm_t_y_c_aceptar == '') {
-      document.querySelector('#xyz05').innerText = 'Es necesario llenar este campo';
+    if (rpta_color_btn_acciones == '') {
+      document.querySelector('#xyzcb').innerText = 'Es necesario llenar este campo';
     } else {
-      document.querySelector('#xyz05').innerText = '';
-    }
-
-    if (frm_t_y_c_rechazar == '') {
-      document.querySelector('#xyz06').innerText = 'Es necesario llenar este campo';
-    } else {
-      document.querySelector('#xyz06').innerText = '';
+      document.querySelector('#xyzcb').innerText = '';
     }
 
   } else {
-
-    let d_edit = [{
+    let id_registro = $("#obtener_id_editar_styke").val();
+    var edit_data = {
       'id': document.querySelector('#id_pr_ct').value,
       'nombre_chatbot': pnombre,
       'titulo_cuerpo': pdatos,
-      'terminos_condiciones': pt_y_c,
-      'terminos_condiciones_link': pfrm_link,
-      't_y_c_aceptar': pfrm_t_y_c_aceptar,
-      't_y_c_rechazar': frm_t_y_c_rechazar,
+      'terminos_y_condiciones': pt_y_c,
+      'terminos_y_condiciones_link': pfrm_link,
+      'terminos_y_condiciones_aceptar': pfrm_t_y_c_aceptar,
+      'terminos_y_condiciones_rechazar': frm_t_y_c_rechazar,
       'tipo_color_header':color_chatbot,
-      'rpta_color_header':rpta_color_chatbot, 
+      'rpta_color_header':rpta_color_chatbot,
       'tipo_color_botones':color_btn_acciones,
       'rpta_color_botones':rpta_color_btn_acciones,
       'id_empresa_cliente': empresa_id
-    }]
+    }
 
-
-    datos_rpta = JSON.stringify(d_edit)
-    // datos_rpta = btoa(JSON.stringify(d_edit)) //ENVIAR BASE64
-
-    fetch('/personalizar_edit/?datos=' + datos_rpta, {
-      method: 'GET',
-    }).then(rsp => rsp.text()).then(function (response) {
-      if(response == "ok"){
-        chatbot_personalizado();
-        $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-      }
-      if(response == "nook"){
-        $.NotificationApp.send("Error!", "Verifique que el registro esté bien realizado", "top-right", "rgba(0,0,0,0.2)", "error")
-      }
-      console.log("RESPUESTA SERVER :",response)
-    }).catch(e => {
-      //mostrar mensaje de error
-      console.log(e);
+    fetch('/api/update_style/'+id_registro+'/', {
+        method: 'POST',
+        body: JSON.stringify(edit_data),
+        headers: {
+        "Content-Type": "application/json",
+        'X-CSRFToken': getCookie('csrftoken')
+        }
+    }).then(function (response) {
+        if(response.status == 201){
+            $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+            chatbot_personalizado()
+        }else{
+            $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
+        }
     })
+
+   
   }
-
-
 }
+
+
+
+
+
+
+
 /*=============================================
 COLOR PERSONALIZADO
 =============================================*/
@@ -439,13 +415,11 @@ $("#color_chatbot").on("change", function () {
   let seleccion = $(this).val();
   
   if(seleccion == "paleta"){
-    $(".val_seleccion_c").html(`<input class="form-control" id="color_chatbot_paleta" type="color" name="color_chatbot_paleta" value="${$("#val_rpta_color_chatbot").val()}">
-    <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>
+    $(".val_seleccion_c").html(`<input class="form-control" id="color_chatbot_general" type="color" name="color_chatbot_general" value="${$("#val_rpta_color_chatbot").val()}">
     `);
   }
   if(seleccion == "personalizado"){
-    $(".val_seleccion_c").html(`<textarea class="form-control" name="color_chatbot_paleta" id="color_chatbot_paleta" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${$("#val_rpta_color_chatbot_per").val()}</textarea>
-    <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
+    $(".val_seleccion_c").html(`<textarea class="form-control" name="color_chatbot_general" id="color_chatbot_general" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${$("#val_rpta_color_chatbot_per").val()}</textarea>`);
   }
 })
 
@@ -455,12 +429,10 @@ $("#color_chatbot_acciones").on("change", function () {
   
 
   if(seleccion == "paleta"){
-    $(".val_seleccion_c_p").html(`<input class="form-control" id="color_chatbot_personalizado" type="color" name="color_chatbot_personalizado" value="${$("#val_rpta_color_chatbot_acciones").val()}">
-    <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
+    $(".val_seleccion_c_p").html(`<input class="form-control" id="color_chatbot_botones" type="color" name="color_chatbot_botones" value="${$("#val_rpta_color_chatbot_acciones").val()}">`);
   }
   if(seleccion == "personalizado"){
-    $(".val_seleccion_c_p").html(`<textarea class="form-control" name="color_chatbot_personalizado" id="color_chatbot_personalizado" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${$("#val_rpta_color_chatbot_acciones_per").val()}</textarea>
-    <center><button type="button" class="btn btn-outline-dark mt-2 mb-1 btn-sm"><i class="mdi mdi-eye"></i> </button></center>`);
+    $(".val_seleccion_c_p").html(`<textarea class="form-control" name="color_chatbot_botones" id="color_chatbot_botones" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">${$("#val_rpta_color_chatbot_acciones_per").val()}</textarea>`);
   }
 })
 

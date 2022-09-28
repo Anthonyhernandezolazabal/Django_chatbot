@@ -211,14 +211,15 @@
                                       <input type="hidden" id="val_rpta_color_chatbot" value="#727cf5">
                                       <input type="hidden" id="val_rpta_color_chatbot_per" value="">
                                       <select class="form-select" id="color_chatbot" name="color_chatbot">
-                                          <option disabled selected value="-1">Selecciona una opción</option>
+                                          <option disabled value="-1">Selecciona una opción</option>
                                           <option value="paleta">Paleta de colores</option>
-                                          <option value="personalizado">Personalizado</option>
+                                          <option value="personalizado" selected>Personalizado</option>
                                       </select>
+                                      <p id="xyzcc" style="color: #fa5c7c;font-weight: bold;"></p>
                                   </div>
 
                                   <div class="mb-3 val_seleccion_c">
-                                      
+                                    <textarea class="form-control" name="color_chatbot_general" id="color_chatbot_general" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">-webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)</textarea>
                                   </div>
 
 
@@ -233,14 +234,15 @@
                                       <input type="hidden" id="val_rpta_color_chatbot_acciones" value="#727cf5">
                                       <input type="hidden" id="val_rpta_color_chatbot_acciones_per" value="">
                                       <select class="form-select" id="color_chatbot_acciones" name="color_chatbot_acciones">
-                                          <option disabled selected value="-1">Selecciona una opción</option>
+                                          <option disabled value="-1">Selecciona una opción</option>
                                           <option value="paleta">Paleta de colores</option>
-                                          <option value="personalizado">Personalizado</option>
+                                          <option value="personalizado" selected>Personalizado</option>
                                       </select>
+                                      <p id="xyzcb" style="color: #fa5c7c;font-weight: bold;"></p>
                                   </div>
 
                                   <div class="mb-3 val_seleccion_c_p">
-                                      
+                                    <textarea class="form-control" name="color_chatbot_botones" id="color_chatbot_botones" rows="5" placeholder="Ejemplo: -webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)">-webkit-linear-gradient(right, #2c3b5ee0, #68b4cf)</textarea>
                                   </div>
 
                                   <!-- <div class="mb-3">
@@ -283,6 +285,8 @@
                                 <textarea data-toggle="maxlength" class="form-control" maxlength="150" rows="3" onkeyup="myFunction_t_y_c_rechazar()" placeholder="Ingresa un texto al completar sus datos" id="frm_t_y_c_rechazar"></textarea>
                                 <p id="xyz06" style="color: #fa5c7c;font-weight: bold;"></p>
                               </div>
+
+                              <input type="hidden" id="obtener_id_editar_styke">
 
 
 

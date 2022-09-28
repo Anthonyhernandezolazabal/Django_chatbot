@@ -13,3 +13,9 @@ class ItemprgtSerializer(serializers.ModelSerializer):
         model = datasetpreguntas
         fields = '__all__' #todo los datos
         # fields = ['id','nombre','conversacion','id_cliente','registrado']
+
+class ItemstyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = chatbot_style
+        fields = '__all__' #todo los datos
+        # fields = ['id','nombre','conversacion','id_cliente','registrado']
