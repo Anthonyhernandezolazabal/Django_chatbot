@@ -464,7 +464,7 @@ function getBotResponse() {
       if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'slider') {
 
         document.getElementById('carga_new').style.display = "block";
-        html_all_pre_rpta += '<span>'+ rpta_rpta['pre_respuesta']['pre_rpta'] +'</span>'
+        html_all_pre_rpta += '<span>'+ decodeURIComponent(rpta_rpta['pre_respuesta']['pre_rpta']) +'</span>'
         
         html_all += `
                 <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
@@ -493,9 +493,9 @@ function getBotResponse() {
                         `
                         acciones_rpta.forEach(act => {
                           if (acciones_rpta.length == 1) {
-                            html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+                            html_all += `<button class="btn_accion" onclick="accion_rpta('${decodeURIComponent(elent_rpta['titulo_imagen'])}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
                           } else {
-                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${decodeURIComponent(act)} de ${decodeURIComponent(elent_rpta['titulo_imagen'])}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
                           }
                         });
 
