@@ -606,7 +606,12 @@ function show____confi(){
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
 
-      console.log("RESPUESTA :",response[0])
+      console.log("RESPUESTA :",response[0].terminosycondiciones)
+      if (response[0].terminosycondiciones == "no_mostrar"){
+        aceptar_terminos = true
+      }else{
+        aceptar_terminos = false
+      }
 
    
 
