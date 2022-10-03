@@ -1,15 +1,15 @@
 @font-face {
     font-family: Material-Design-Iconic-Font;
-    src: url(https://zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.woff2?v=2.2.0) format('woff2'), url(https://zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.woff?v=2.2.0) format('woff'), url(https://zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.ttf?v=2.2.0) format('truetype')
+    src: url(//zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.woff2?v=2.2.0) format('woff2'), url(//zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.woff?v=2.2.0) format('woff'), url(//zavoloklom.github.io/material-design-iconic-font/fonts/Material-Design-Iconic-Font.ttf?v=2.2.0) format('truetype')
 }
 @font-face {
     font-family: font_caja_sullana;
-    src: url("https://192.168.18.44:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
+    src: url("//ariadna.gq:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
   }
   
   @font-face {
     font-family: font_caja_sullana2;
-    src: url("https://192.168.18.44:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
+    src: url("//ariadna.gq:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
   }
 
 

@@ -1,7 +1,7 @@
 //Desarrollo
-var URLactual = 'https://192.168.18.44:8000/';
+var URLactual = '//ariadna.gq:8000/';
 //Desarrollo
-// var URLactual = 'https://35.222.244.103:8000/';
+// var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
 chatbot_personalizado();
 show____confi();
