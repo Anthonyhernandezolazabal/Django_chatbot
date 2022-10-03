@@ -13,6 +13,7 @@ from chatbot_admin.forms import ClientRegisterForm
 from profile_user.models import UserProfile
 from chatbot.models import chat_user
 from pathlib import Path
+from django.views.generic import TemplateView
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -64,16 +65,18 @@ class LoginFormViews(LoginView):
 MODULO PRUEBAR CHATBOT
 ============================================="""
 def test_chatbot(request):
-    if request.GET['emp']:
-      empre_id=request.GET.get('emp')
-      us_id=request.GET.get('us')
+    if request.GET['e']:
+      empre_id=request.GET.get('e')
+      empre__id = empre_id[5:-5]
 
-      print('empre_idempre_id :',empre_id)
-      print('us_idus_idus_id :',us_id)
+
+      us_id=request.GET.get('u')
+      us__id = us_id[5:-5]
+
 
       params= { 
-              'id_empresa_py':empre_id,
-              'id_usuario_py':us_id
+              'id_empresa_py':empre__id,
+              'id_usuario_py':us__id
               }
 
       return render(request, 'chatbot_admin/layouts/test_chatbot.html',params)
@@ -100,11 +103,18 @@ def register_view(request):
 REGISTRAR NUEVA EMPRESA 
 ============================================="""
 class FormularioCliente(HttpRequest):
+
   def ir_registrar_empresa(request):
-    if request.GET['id']:
-      cliente_id=request.GET.get('id')
+    if request.GET['i']:
+      cliente_id=request.GET.get('i')
+      cliente___id = cliente_id[5:-5]
       clt = ClientRegisterForm()
-      return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt,'cliente_id':cliente_id})
+      return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt,'cliente_id':cliente___id})
+  
+  
+  
+  
+  
   def procesar_formulario(request):
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
@@ -176,8 +186,8 @@ MÓDULO HISTORIAL
 ============================================="""
 class modulo_historial_conversacion(HttpRequest):
   def mod_historial(request):
-    if request.GET['id_empresa']:
-      empre_id=request.GET.get('id_empresa')
+    if request.GET['i']:
+      empre_id=request.GET.get('i')
       print("RESPUESTACOD :",empre_id)
       empresa_id_encode = empre_id[5:-5]
       print("RESPUESTAENCOD :",empresa_id_encode)
@@ -231,3 +241,9 @@ MÓDULO CONFIRGURACIONES
 class modulo_Configurar(HttpRequest):
   def mod_configurar(request):
     return render(request, 'chatbot_admin/layouts/configuracion.html')
+
+"""=============================================
+ERROR 404
+============================================="""
+class Error404View(TemplateView):
+  template_name = 'chatbot_admin/layouts/404.html'

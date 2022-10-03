@@ -64,6 +64,7 @@ function getCookie(name) {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
+      
     }
   }
   return cookieValue;
@@ -496,7 +497,7 @@ function myFunction_save() {
         } else {
           validar_input_respuestas_save = true
           rpta_json = {
-            'respueta_sl_texto': encodeURIComponent(respuestas_all)
+            'respueta_sl_texto': JSON.stringify(encodeURIComponent(respuestas_all))
           }
           respuesta_slider_texto.push(rpta_json)
         }
@@ -649,7 +650,7 @@ function myFunction_save() {
     
               pregunta[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
     
-                template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+                template += `<p class="mb-0">${JSON.parse(decodeURIComponent(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
     
               });
               template += ` 
@@ -1023,7 +1024,7 @@ function conversaciones_pyr() {
                             <div class="rpt_____a">`
       prg[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
 
-        template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+        template += `<p class="mb-0">${decodeURIComponent(JSON.parse(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
 
 
       });

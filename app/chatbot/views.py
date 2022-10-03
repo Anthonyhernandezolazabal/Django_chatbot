@@ -262,7 +262,7 @@ def getjson(request):
 
     if estado_rpta == "Registrar":
       # CREAR EL ARCHIVO JSON
-      arrayRecibido = json.loads(json_rpt)
+      # arrayRecibido = json.loads(json_rpt)
       arrayRecibido = json.loads(json_rpt, strict=False)
       print("nombre_bdarrayRecibido:",arrayRecibido)
       set_datosAdd = datasetpreguntas(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))

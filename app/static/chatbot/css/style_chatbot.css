@@ -1,13 +1,13 @@
-@import url("http://34.171.4.227:8000/static/chatbot/css/docs__fonts.css");
+@import url("https://192.168.18.44:8000/static/chatbot/css/docs__fonts.css");
 
 @font-face {
     font-family: font_caja_sullana;
-    src: url("http://34.171.4.227:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
+    src: url("https://192.168.18.44:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
   }
   
   @font-face {
     font-family: font_caja_sullana2;
-    src: url("http://34.171.4.227:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
+    src: url("https://192.168.18.44:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
   }
 
 .fabs {

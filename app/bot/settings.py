@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['34.171.4.227']
+ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -76,28 +76,28 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # Desarrollo
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'db_chatbot',
-#         'USER': 'postgres',
-#         'PASSWORD': '70562134',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
-# Produccion
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_chatbot',
-        'USER': 'proyectos',
+        'USER': 'postgres',
         'PASSWORD': '70562134',
         'HOST': 'localhost',
         'PORT': '5432'
     }
 }
+
+# Produccion
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_chatbot',
+#         'USER': 'proyectos',
+#         'PASSWORD': '70562134',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -134,8 +134,6 @@ APPEND_SLASH=False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 LOGIN_URL = 'login'
 
@@ -150,8 +148,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'profile_user.UserProfile'
 
 
-#URL PARA ACCEDER A LAS IMAGENES SUBIDAS
-MEDIA_URL = '/media/'
+STATIC_URL = 'static/'
+MEDIA_URL = '/media/'   #URL PARA ACCEDER A LAS IMAGENES SUBIDAS
 
-#RUTAS DONDE SE VAN ALMACENAR LAS IMAGENES
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if DEBUG:
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #RUTAS DONDE SE VAN ALMACENAR LAS IMAGENES

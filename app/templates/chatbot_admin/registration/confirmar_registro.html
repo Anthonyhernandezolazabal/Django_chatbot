@@ -33,8 +33,9 @@
                 IMPORTANTE</h4>
                 <img src="{% static 'chatbot_admin/assets/images/Chatbot2.png' %}" height="230" alt="File not found Image">
               <p class="text-muted mt-3">Para poder continuar, es necesario registrar tu empresa</p>
-              <a class="btn btn-success mt-3" href="#" onclick="return fn_id_user()"><i class="dripicons-exit me-2"></i>
-                ir a Registrar</a>
+              <input type="hidden" value='{{ validar_cliente }}'>
+              <a class="btn btn-outline-info mt-3" href="#" onclick="return fn_id_user()"><i class="dripicons-exit me-2"></i>
+                ir a registrar</a>
             </div>
           </div>
         </div>
@@ -43,11 +44,24 @@
   </div>
 </div>
 <script>
+
+function randomCoding_intro(){
+    // Crea una matriz de 26 letras
+    var arr = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+    var idvalue ='';
+    let n = 5; // Este valor se puede cambiar, correspondiente a cuantas letras se generan, cámbialo según tus necesidades
+    for (let i = 0; i < n; i++) {
+      idvalue+=arr[Math.floor(Math.random()*36)];
+    }
+    return idvalue;
+  }
+
+
   var Ls = localStorage.getItem('datos')
   var id_cliente = JSON.parse(Ls).id_cliente;
 
   function fn_id_user(){
-    var url_python = '{% url "ir_registrar_empr" %}?id='+id_cliente
+    var url_python = '{% url "register-company" %}?i='+ (randomCoding_intro().toString() + id_cliente +  randomCoding_intro().toString())
     location.replace(url_python)
   }
 

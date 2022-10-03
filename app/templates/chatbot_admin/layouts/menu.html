@@ -99,7 +99,7 @@
   }
 
   function fn_id_historial() {
-    var url_python = '{% url "historial" %}?id_empresa=' + (randomCoding().toString() + id_empresa +  randomCoding().toString())
+    var url_python = '{% url "historial" %}?i=' + (randomCoding().toString() + id_empresa +  randomCoding().toString())
     location.replace(url_python)
   }
 
@@ -108,7 +108,7 @@
     location.replace(url_python)
   }
   function fn_test_chatbot() {
-    var url_python = '{% url "test_chatbot" %}?emp=' + id_empresa + '&us=' + id_cliente
+    var url_python = '{% url "test_chatbot" %}?e=' + (randomCoding().toString() + id_empresa +  randomCoding().toString()) + '&u=' + (randomCoding().toString() + id_cliente +  randomCoding().toString())
     location.replace(url_python)
   }
 </script>
