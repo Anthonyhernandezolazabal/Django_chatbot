@@ -247,3 +247,10 @@ ERROR 404
 ============================================="""
 class Error404View(TemplateView):
   template_name = 'chatbot_admin/layouts/404.html'
+
+"""=============================================
+MÓDULO PROFILE
+============================================="""
+class modulo_profile(HttpRequest):
+  def profile_view(request):
+    return render(request, 'chatbot_admin/layouts/profile.html')

@@ -11,6 +11,7 @@ app/profile_user/migrations/*
 
 app/api/__pycache__/*
 app/api/migrations/*
+configuracion_servidor.txt
 
 notes.txt
 

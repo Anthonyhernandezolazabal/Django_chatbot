@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(=
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 
 
 # Application definition
@@ -76,28 +76,28 @@ WSGI_APPLICATION = 'bot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # Desarrollo
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'db_chatbot',
-#         'USER': 'postgres',
-#         'PASSWORD': '70562134',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
-# Produccion
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_chatbot',
-        'USER': 'proyectos',
+        'USER': 'postgres',
         'PASSWORD': '70562134',
         'HOST': 'localhost',
         'PORT': '5432'
     }
 }
+
+# Produccion
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_chatbot',
+#         'USER': 'proyectos',
+#         'PASSWORD': '70562134',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

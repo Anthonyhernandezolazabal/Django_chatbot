@@ -411,8 +411,16 @@ class personalizarApiView(APIView):
   #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def personalizar_edit(request):
+'''=============================================
+   ERROR 404
+============================================= '''
+def error404(request,exception):
+  return render(request, 'chatbot_admin/layouts/404.html')
 
+
+
+
+def personalizar_edit(request):
 
     try:
         json_datos = request.GET.get('datos')
