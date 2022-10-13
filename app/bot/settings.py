@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'db_chatbot',
         'USER': 'proyectos',
         'PASSWORD': '70562134',
-        'HOST': 'localhost',
+        'HOST': '34.71.90.164',
         'PORT': '5432'
     }
 }
