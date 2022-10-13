@@ -1,6 +1,6 @@
 //Desarrollo
-// var URLactual = '//ariadna.gq/';
 var URLactual = '//ariadna.gq/';
+// var URLactual = '//192.168.18.44:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C

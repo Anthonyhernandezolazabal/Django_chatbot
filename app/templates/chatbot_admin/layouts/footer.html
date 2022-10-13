@@ -1,4 +1,20 @@
 {% load static %}
+
+
+<script>
+  var verificarsession = localStorage.getItem('datos');
+  var id_empresa = JSON.parse(Ls).id_empresa;
+  document.querySelector(".username_user_ls").innerText = JSON.parse(Ls).username
+  if(id_empresa == ""){
+    var url_python = '{% url "logout" %}'
+    location.replace(url_python)
+    localStorage.removeItem('datos')
+  }
+  console.log("verificarsession :",verificarsession)
+  console.log("id_empresa :",id_empresa)
+</script>
+
+
 <script src="{% static 'chatbot_admin/assets/js/vendor.min.js' %}"></script>
 <script src="{% static 'chatbot_admin/assets/js/app.min.js' %}"></script>
 
