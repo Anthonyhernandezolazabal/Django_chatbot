@@ -53,12 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = [
-    'http://google.com',
-    'http://hostname.example.com',
-    'http://localhost:8000',
-    'http://127.0.0.1:9000'
-]
+CORS_ORIGIN_WHITELIST = ["*"]
 
 ROOT_URLCONF = 'bot.urls'
 
