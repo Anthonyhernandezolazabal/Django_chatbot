@@ -624,9 +624,14 @@ $('#save___config').submit(e=>{
                 }
             })          
             .then(rsp => rsp.json()).then(function (response) {
-                if(response.status == 201){
+                console.log("RESPUESTA SERVERs 2:",response[0])
+                if(response.message == "Registrado"){
                     $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
-                }else{
+                }else
+                if(response[0] == "This data already exists"){
+                    $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
+                }
+                else{
                     $.NotificationApp.send("Error!", "Ocurrió un error al registrar!", "top-right", "rgba(0,0,0,0.2)", "error")
                 }
             }) 
@@ -641,6 +646,7 @@ $('#save___config').submit(e=>{
                 'X-CSRFToken': getCookie('csrftoken')
                 }
             }).then(function (response) {
+                console.log("response :",response)
                 if(response.status == 201){
                     $.NotificationApp.send("Registrado!", "Se registraron los cambios", "top-right", "rgba(0,0,0,0.2)", "success")
                 }else{

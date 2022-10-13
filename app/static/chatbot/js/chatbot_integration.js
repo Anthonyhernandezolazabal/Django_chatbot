@@ -1,5 +1,6 @@
 //Desarrollo
-var URLactual = '//ariadna.gq:8000/';
+// var URLactual = '//ariadna.gq/';
+var URLactual = '//ariadna.gq/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
@@ -80,7 +81,6 @@ VALIDAR MÓDULO DE CONFIGURACION DEL CHATBOT
 function trae_data_conf(){
   
 }
-
 /*=============================================
 FUNCIONAMIENTO DEL CHATBOT
 =============================================*/
@@ -224,8 +224,6 @@ function hideChat(hide) {
                   
       var dat_______os = document.querySelector("#all_dat_conf").value;
       validar_conf_chat(dat_______os) //Validar terminos y condiciones con bienvenida
-
- 
  
 
       // CUANDO SÓLO EL NOMBRE Y EMAIL ESTÁN ACTIVO
@@ -251,8 +249,6 @@ function hideChat(hide) {
 }
 
 
-
-
 function presionar_click(){
   var presionar = document.querySelectorAll('.presionar');
   // presionar.forEach(element => {
@@ -262,8 +258,6 @@ function presionar_click(){
     presionar[presionar.length-1].click();
   }
 }
-
-
 
 /*=============================================
 EMPEZAR A CHATEAR
@@ -276,7 +270,6 @@ function escribir(e,t) {
         getBotResponse();
         document.getElementById('textInput').value = ''
       }else{
-
         //Eliminar todo los T&C
         document.querySelectorAll(".t_y_c_cls").forEach(element => {
           element.innerHTML = "";
@@ -290,8 +283,6 @@ function escribir(e,t) {
         document.querySelectorAll('.cls_color_user').forEach(col__ => {
           col__.style.background = document.querySelector('#cam_ps').value
         });
-
-
         document.getElementById('textInput').value = ''
         document.getElementById('carga_new').style.display = "block";
         setTimeout(function () {
