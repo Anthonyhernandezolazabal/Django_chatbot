@@ -7,7 +7,14 @@ from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usu
 from django.conf.urls import handler404
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
+
+    path('logins',views.login_request,name='logins'),
+
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
+    path('logouts/',views.logout_request, name='logouts'),
+
+
+
     path('registro/',views.register_view,name='registro'),
     path('inicio/',login_required(views.Home),name='home'),
     path('test_chatbot/',login_required(views.test_chatbot),name='test_chatbot'),

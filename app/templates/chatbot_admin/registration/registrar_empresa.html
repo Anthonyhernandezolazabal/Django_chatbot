@@ -15,7 +15,7 @@
             {% if form.errors %}
             <div class="alert alert-danger" role="alert">
               <i class="dripicons-checkmark me-2"></i>
-              Mensaje de error
+              Ocurrió un error al registrar
             </div>
             {% endif %}
             <form action="{% url 'guardarCliente' %}" method='POST'>
@@ -28,7 +28,7 @@
                 {% endif %}
               {{ form|crispy }}
               <div class="text-end d-grid">
-                <input type="hidden" id="cliente_id" name="cliente_id" value="{{ cliente_id }}">
+                <input type="hidden" id="cliente_id" name="cliente_id" value="">
                 <button type="submit" class="btn btn-outline-success mt-2"><i class="mdi mdi-content-save"></i> Guardar</button>
               </div>
             </form>
@@ -41,8 +41,28 @@
 
 <script>
 
+
+function randomCoding_intro(){
+    // Crea una matriz de 26 letras
+    var arr = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+    var idvalue ='';
+    let n = 5; // Este valor se puede cambiar, correspondiente a cuantas letras se generan, cámbialo según tus necesidades
+    for (let i = 0; i < n; i++) {
+      idvalue+=arr[Math.floor(Math.random()*36)];
+    }
+    return idvalue;
+}
+
+$("#cliente_id").val(randomCoding_intro().toString() + {{ cliente_id }} +  randomCoding_intro().toString())
+
   var LS_s = localStorage.getItem('datos')
-  document.getElementById('id_nombreBD').value = JSON.parse(LS_s).nombrebd + '.sqlite3'
+
+  if(JSON.parse(LS_s).nombrebd != ""){
+    document.getElementById('id_nombreBD').value = JSON.parse(LS_s).nombrebd + '.sqlite3'
+  }else{
+    localStorage.removeItem('pregunta')
+    window.location.href = '{% url "logout" %}'
+  }
 
 </script>
 

@@ -61,8 +61,14 @@ function randomCoding_intro(){
   var id_cliente = JSON.parse(Ls).id_cliente;
 
   function fn_id_user(){
-    var url_python = '{% url "register-company" %}?i='+ (randomCoding_intro().toString() + id_cliente +  randomCoding_intro().toString())
+    let val = '{{validate}}'
+    if ( val == "True"){
+      var url_python = '{% url "register-company" %}?i='+ (randomCoding_intro().toString() + id_cliente +  randomCoding_intro().toString())
+    }else {
+      var url_python = '{% url "logout" %}'
+    }
     location.replace(url_python)
+    
   }
 
 

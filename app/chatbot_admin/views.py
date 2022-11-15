@@ -14,6 +14,9 @@ from profile_user.models import UserProfile
 from chatbot.models import chat_user
 from pathlib import Path
 from django.views.generic import TemplateView
+from django.contrib.auth import login, logout,authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
@@ -25,6 +28,18 @@ VISTA INICIO
 @ login_required ( login_url= 'home' )
 def Home(request):
   return render(request, 'chatbot_admin/layouts/inicio.html')
+
+def logout_request(request):
+  logout(request)
+  messages.info("Saliste exitosamente")
+  return redirect("login")
+
+
+def login_request(request):
+  form = AuthenticationForm()
+  return render(request, 'chatbot_admin/layouts/login.html',{"form":form})
+
+
 
 """=============================================
 INICIAR SESION
@@ -44,9 +59,13 @@ class LoginFormViews(LoginView):
         tipo_usu = user.is_superuser
         # Si no tiene empresa registrada
         if id_clt is None:
+
+          #creamos sesion para validar la primera página
+          validar = request.session["reg_empresa"] = True #Pendiete a registrar empresa
+
           #INICIAR BOT
           t = initialize(id_user_login)
-          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt,'user_autenticate':user_autenticate}
+          params = {"id_user": id_user_login,"username_user": username_user_login,'nombreBD': t,'form':clt,'user_autenticate':user_autenticate,'validate':validar}
           return render(request,"chatbot_admin/registration/confirmar_registro.html",params)
         # Tiene empresa registrada
         else:
@@ -106,11 +125,19 @@ class FormularioCliente(HttpRequest):
 
   def ir_registrar_empresa(request):
     if request.GET['i']:
-      cliente_id=request.GET.get('i')
-      cliente___id = cliente_id[5:-5]
-      clt = ClientRegisterForm()
-      return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt,'cliente_id':cliente___id})
-  
+
+
+      print("veeeeeeer :",request.session["reg_empresa"])
+
+      if request.session["reg_empresa"] is True:
+        cliente_id=request.GET.get('i')
+        cliente___id = cliente_id[5:-5]
+        clt = ClientRegisterForm()
+        return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt,'cliente_id':cliente___id})
+      else:
+        request.session["reg_empresa"] = False
+        return render(request, "chatbot_admin/registration/login.html")
+    
   
   
   
@@ -118,8 +145,9 @@ class FormularioCliente(HttpRequest):
   def procesar_formulario(request):
     if request.method == 'POST':
       clt = ClientRegisterForm(request.POST)
-      id_user_login = request.POST.get('cliente_id')
-      if clt .is_valid():
+      id__login = request.POST.get('cliente_id')
+      id_user_login = id__login[5:-5]
+      if clt.is_valid():
         s = clt.save()
         clt = ClientRegisterForm()
         id_empresa = cliente.objects.get(pk=s.id)
@@ -136,10 +164,14 @@ class FormularioCliente(HttpRequest):
             conversation_directory(empre_id)
             initialize(id_user_login)
             train_bot(load_conversations())
+          
+        request.session["reg_empresa"] = False
         return render(request, "chatbot_admin/layouts/inicio.html", {'mensaje':'ok','id_empresa':empre_id})
     else:
+      
+      request.session["reg_empresa"] = False
       clt = ClientRegisterForm()
-    return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt})
+      return render(request, "chatbot_admin/registration/registrar_empresa.html", {'form':clt})
 
 """=============================================
 MÓDULO RESPUESTAS

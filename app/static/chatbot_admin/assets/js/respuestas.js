@@ -1023,8 +1023,9 @@ function conversaciones_pyr() {
                             </div>
                             <div class="rpt_____a">`
       prg[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
-
-        template += `<p class="mb-0">${decodeURIComponent(JSON.parse(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+        console.log()
+        // template += `<p class="mb-0">${decodeURIComponent(JSON.parse(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+        template += `<p class="mb-0">${JSON.parse(decodeURIComponent(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
 
 
       });
