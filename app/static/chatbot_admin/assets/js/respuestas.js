@@ -497,7 +497,8 @@ function myFunction_save() {
         } else {
           validar_input_respuestas_save = true
           rpta_json = {
-            'respueta_sl_texto': JSON.stringify(encodeURIComponent(respuestas_all))
+            // 'respueta_sl_texto': JSON.stringify(encodeURIComponent(respuestas_all))
+            'respueta_sl_texto': encodeURIComponent(respuestas_all)
           }
           respuesta_slider_texto.push(rpta_json)
         }
@@ -650,8 +651,8 @@ function myFunction_save() {
     
               pregunta[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
     
-                template += `<p class="mb-0">${JSON.parse(decodeURIComponent(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
-    
+                // template += `<p class="mb-0">${JSON.parse(decodeURIComponent(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+                template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
               });
               template += ` 
                                 </div>
@@ -1023,9 +1024,9 @@ function conversaciones_pyr() {
                             </div>
                             <div class="rpt_____a">`
       prg[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(rr_r => {
-        console.log()
+        console.log("aaaaaaaaaaaaaa :",)
         // template += `<p class="mb-0">${decodeURIComponent(JSON.parse(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
-        template += `<p class="mb-0">${JSON.parse(decodeURIComponent(rr_r.respueta_sl_texto))}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
+        template += `<p class="mb-0">${decodeURIComponent(rr_r.respueta_sl_texto)}</p> <hr style="margin-top: 7px;margin-bottom: 7px;"> `
 
 
       });
@@ -1101,10 +1102,9 @@ function rpt_aut_save(a) {
     document.getElementById('btn_sav').style.display = 'none';
     document.getElementById('btn_loader').style.display = 'block';
 
-    console.log("ENVIANDO DATOS:",preguntas)
-    console.log("ENVIANDO a:",a)
-
-
+    console.log("ENVIANDO DATOS:",json_ls)
+    console.log("ENVIANDO a:",preguntas)
+    
       fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&nombre_bd=' + nombre_d_db + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu + '&estado=' + a + '&id_registro=' + pr____g, {
         method: 'GET',
       }).then(function (response) {
@@ -1615,6 +1615,7 @@ function muestrame__prg(p){
             old__ques.push(encodeURIComponent(ordenar))
           });
           element[0].respuesta_ls.respuesta_tipo[0].rpta.forEach(r__ow => {
+            console.log("OBTENIENDOLO :",r__ow)
             rpta_json = {
               'respueta_sl_texto': encodeURIComponent(r__ow.respueta_sl_texto)
             }
