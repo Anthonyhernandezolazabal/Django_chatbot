@@ -5,11 +5,13 @@
 @font-face {
     font-family: font_caja_sullana;
     src: url("https://ariadna.gq/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf");
+    /* src: url("https://192.168.214.5:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Bold.otf"); */
   }
   
   @font-face {
     font-family: font_caja_sullana2;
     src: url("https://ariadna.gq/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf");
+    /* src: url("https://192.168.214.5:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf"); */
   }
 
 

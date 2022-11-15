@@ -1,6 +1,6 @@
 //Desarrollo
 var URLactual = '//ariadna.gq/';
-// var URLactual = '//192.168.18.44:8000/';
+// var URLactual = '//192.168.214.5:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
@@ -339,7 +339,7 @@ INICIAR CHATBOT
 var ls_LS = localStorage.getItem('datos')
 var user_autenticate
 var aprendiendo = 0;
-function getBotResponse() {
+function getBotResponse(a,b,c) {
   var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
   var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
   
@@ -353,7 +353,17 @@ function getBotResponse() {
   }
   var key_alias = div_chatbot.querySelector('#key_alias').value
   var nombre_chat = div_chatbot.querySelector('#nombre_chat').value
-  var rawText = document.getElementById('textInput').value
+
+  if(c == "act"){
+
+    ielegir = a
+    
+  }else{
+    ielegir = document.getElementById('textInput').value
+  }
+
+
+  var rawText = ielegir
 
   if (rawText.length != 0 ) {
     var userHtml = '<span class="">' + rawText + '</span>';
@@ -385,8 +395,14 @@ function getBotResponse() {
         phone = "null";
       }
 
+    if(c == "act"){
 
-    fetch(URLactual+'getchat/?msg=' + rawText + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat + '&email_chat=' + email + '&phone_chat=' + phone, {
+      elegir = b
+      
+    }else{
+      elegir = rawText
+    }
+    fetch(URLactual+'getchat/?msg=' + elegir + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat + '&email_chat=' + email + '&phone_chat=' + phone, {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       let decodedStr = atob(response);
@@ -458,7 +474,7 @@ function getBotResponse() {
         html_all_pre_rpta += '<span>'+ decodeURIComponent(rpta_rpta['pre_respuesta']['pre_rpta']) +'</span>'
         
         html_all += `
-                <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+                <div style="padding: 0px 10px 0px 20px;" id="container-slider">
                   <div class="slideshow-container">
                     <div id="slider">`
 
@@ -484,9 +500,12 @@ function getBotResponse() {
                         `
                         acciones_rpta.forEach(act => {
                           if (acciones_rpta.length == 1) {
-                            html_all += `<button class="btn_accion" onclick="accion_rpta('${decodeURIComponent(elent_rpta['titulo_imagen'])}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
+                            // html_all += `<button class="btn_accion" onclick="accion_rpta('${decodeURIComponent(elent_rpta['titulo_imagen'])}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
+                            html_all += `<button class="btn_accion" onclick="accion_rpta('${decodeURIComponent(act)}','${decodeURIComponent(act)} ${decodeURIComponent(elent_rpta['titulo_imagen'])}','act')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
                           } else {
-                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${decodeURIComponent(act)} de ${decodeURIComponent(elent_rpta['titulo_imagen'])}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
+                            html_all += `<button class="btn_accion"  onclick="accion_rpta('${decodeURIComponent(act)}','${decodeURIComponent(act)} ${decodeURIComponent(elent_rpta['titulo_imagen'])}','act')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${decodeURIComponent(act)}</button>`
+                          
+
                           }
                         });
 
@@ -544,10 +563,14 @@ function getBotResponse() {
 /*=============================================
 RESPUESTAS DE ACCIONES
 =============================================*/
-function accion_rpta(e) {
+function accion_rpta(a,b,c) {
+  console.log("para input :",a)
+  console.log("completo :",b)
+  console.log("tipo :",c)
 
+  
 
-    document.getElementById('textInput').value = e
+    document.getElementById('textInput').value = a
     getBotResponse();
     document.getElementById('textInput').value = ''
 
@@ -768,7 +791,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
     let html_all = "";
 
     html_all += `
-    <div style="padding: 0px 10px 0px 20px;margin-bottom: 90px;" id="container-slider">
+    <div style="padding: 0px 10px 0px 20px;" id="container-slider">
       <div class="slideshow-container">
         <div id="slider">`
   
@@ -802,9 +825,9 @@ function mostrar_texto_personalizado_fn(data,muestrame){
   
             acciones_rpta.forEach(act => {
               if (acciones_rpta.length == 1) {
-                html_all += `<button class="btn_accion" onclick="accion_rpta('${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+                html_all += `<button class="btn_accion" onclick="accion_rpta('${act}','${act} ${elent_rpta['titulo_imagen']}','act')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
               } else {
-                html_all += `<button class="btn_accion"  onclick="accion_rpta('${act} de ${elent_rpta['titulo_imagen']}')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
+                html_all += `<button class="btn_accion"  onclick="accion_rpta('${act}','${act} ${elent_rpta['titulo_imagen']}','act')" style="background-color: ${document.querySelector('#cam_ps').value} !important">${act}</button>`
               }
             });
   
