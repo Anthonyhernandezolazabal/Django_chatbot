@@ -468,7 +468,7 @@ function getBotResponse() {
                       <div class="mySlides fade_">`
                       
                       if (elent_rpta['img'] != ' ') {
-                        html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover;    width: 100%;"></div>`
+                        html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${URLactual}media/${elent_rpta['img']}');background-position: center center;background-size: cover;    width: 100%;"></div>`
                       }
 
                       if (elent_rpta['img'] != ' ') {
@@ -785,7 +785,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
           <div class="mySlides fade_">`
           
             if (elent_rpta['img'] != '') {
-              html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${URLactual}media/${elent_rpta['img']});background-position: center center;background-size: cover"></div>`
+              html_all += `<div class="img_new" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${URLactual}media/${elent_rpta['img']}');background-position: center center;background-size: cover"></div>`
             }
   
             if (elent_rpta['img'] != '') {
