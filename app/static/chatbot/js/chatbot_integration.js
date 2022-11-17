@@ -18,6 +18,7 @@ var htmlbot = `
           <img class='chat__bot_img_option' src="${URLactual}static/chatbot_admin/assets/images/default.png" />
         </div>
         <span id="chat_head" style="font-weight: bold;">INGyBOT</span> <br> <span class="agent">.</span>
+        <i class="prime zmdi zmdi-close closestchatbot"></i>
         <span class="online" style="font-weight: bold;">En Línea</span>
         <span id="chat_fullscreen_loader" class="chat_fullscreen___loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
       </div>
@@ -69,7 +70,7 @@ var htmlbot = `
     
     </div>
   </div>
-  <a id="prime" class="bot__fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
+  <a id="prime" style="display:none" class="bot__fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
 </div>`;
 div_chatbot.innerHTML = htmlbot
 div_chatbot.setAttribute('id', 'chatboot_anthony_2020')
@@ -90,16 +91,31 @@ document.getElementById('prime').addEventListener('click', function () {
 })
 //Toggle chat and lchats
 function toggleFab() {
-  document.querySelector(".prime").classList.toggle("zmdi-comment-outline");
+  document.querySelector(".prime").classList.toggle("zmdi-close");
   document.querySelector(".prime").classList.toggle("zmdi-close");
   document.querySelector(".prime").classList.toggle("is-active");
   document.querySelector(".prime").classList.toggle("is-visible");
   document.querySelector("#prime").classList.toggle("is-float");
+
   document.querySelector(".chat__bot").classList.toggle("is-visible");
-  document.querySelectorAll('.bot__fab').forEach(fab => {
-    fab.classList.toggle("is-visible");
-  });
+  document.querySelector("#prime").style.display = "none";
+
+  // document.querySelectorAll('.bot__fab').forEach(fab => {
+  //   fab.classList.toggle("is-visible");
+  // });
 }
+
+//Cerrar1
+document.querySelector('.closestchatbot').addEventListener("click", function (e) {
+  document.querySelector(".chat__bot").classList.toggle("is-visible");
+
+  
+  document.querySelector("#prime").style.display = "block";
+
+
+})
+
+
 document.querySelector('#chat_third_screen').addEventListener("click", function (e) {
   hideChat(2);
 })
@@ -413,7 +429,6 @@ function getBotResponse(a,b,c) {
 
       if(rpta_rpta['respuesta_tipo'][0]['tipo'] == 'no-entendi'){
         let dat_____os = document.querySelector("#all_dat_conf").value;
-        console.log("DATAS: ",JSON.parse(JSON.parse(dat_____os).texto_bienvenida)[0].tipo)
         document.getElementById('carga_new').style.display = "block";
 
         if(JSON.parse(JSON.parse(dat_____os).texto_bienvenida)[0].tipo == "slider"){
@@ -564,18 +579,9 @@ function getBotResponse(a,b,c) {
 RESPUESTAS DE ACCIONES
 =============================================*/
 function accion_rpta(a,b,c) {
-  console.log("para input :",a)
-  console.log("completo :",b)
-  console.log("tipo :",c)
-
-  
-
     document.getElementById('textInput').value = a
     getBotResponse();
     document.getElementById('textInput').value = ''
-
- 
-
 }
 
 function enviar_texto(){
@@ -620,7 +626,6 @@ function show____confi(){
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
 
-      console.log("RESPUESTA :",response[0].terminosycondiciones)
       if (response[0].terminosycondiciones == "no_mostrar"){
         aceptar_terminos = true
       }else{
@@ -669,9 +674,7 @@ function show____confi(){
         let h_in = response[0].fields.h_inicio;
         let h_ci = response[0].fields.h_cierre;
         // console.log("Horario comercial :",response[0].fields.horariocomercial)
-        console.log("h_actual :",h_actual)
-        console.log("h_in :",h_in)
-        console.log("h_ci :",h_ci)
+
 
         // document.getElementById("cb_frm").innerHTML = response[0].fields.h_cierre_des
       }
@@ -726,9 +729,7 @@ function validar_conf_chat(datos){
   }
 }
 function btn_terminos_condiciones(action, ac) {
-  console.log("Términos y condiciones :",action)
   let dat__ = JSON.parse(document.querySelector("#all_dat_conf").value)
-  console.log("Términos y condiciones2 :",dat__)
   if(action == "Aceptar"){
     aceptar_terminos = true; //Aceptar T&C
 
@@ -920,7 +921,6 @@ function chatbot_personalizado() {
   fetch(URLactual+'personalizar_chat/?id_empr=' + empresa_id, {
     method: 'GET',
   }).then(rsp => rsp.json()).then(function (response) {
-    console.log("A VER TODO :",response)
 
     if(response[0]['foto_logo'] != null){
       document.querySelector('.chat__bot_img_option').setAttribute("src", URLactual+"media/"+response[0]['foto_logo'])
@@ -934,6 +934,7 @@ function chatbot_personalizado() {
     document.querySelector('#color_bd_chatbot').style.background = response[0]['rpta_color_header']
     document.querySelector('#prime').style.background = response[0]['rpta_color_header']
     document.querySelector('#chat_third_screen').style.background = response[0]['rpta_color_botones']
+    document.querySelector('.closestchatbot').style.background = response[0]['rpta_color_botones']
     document.querySelector('#cam_ps').value = response[0]['rpta_color_botones']
 
     
