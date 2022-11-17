@@ -13,7 +13,7 @@
     /* src: url("https://192.168.214.5:8000/static/chatbot_admin/assets/fuentes/fonts_caja_sullana/BreePeru_Light.otf"); */
   }
 
-.fabs {
+.fabs_bot {
     bottom: 0;
     position: fixed;
     margin: 1em;
@@ -21,7 +21,7 @@
     z-index: 998;
 }
 
-.fab {
+.bot__fab {
     display: block;
     width: 56px;
     height: 56px;
@@ -39,7 +39,7 @@
     background: #42a5f5;
 }
 
-.fab>i {
+.bot__fab>i {
     font-size: 2em;
     line-height: 55px;
     -webkit-transition: all .2s ease-out;
@@ -47,7 +47,7 @@
     transition: all .2s ease-in-out;
 }
 
-.fab:not(:last-child) {
+.bot__fab:not(:last-child) {
     width: 0;
     height: 0;
     margin: 20px auto 0;
@@ -56,47 +56,46 @@
     line-height: 40px;
 }
 
-.fab:not(:last-child)>i {
+.bot__fab:not(:last-child)>i {
     font-size: 1.4em;
     line-height: 40px;
 }
 
-.fab:not(:last-child).is-visible {
-    /* width: 40px; */
-    /* height: 40px; */
+.bot__fab:not(:last-child).is-visible {
+    width: 40px;
+    height: 40px;
     margin: 15px auto 10;
     opacity: 1;
     visibility: visible;
 }
 
-.fab:nth-last-child(1) {
+.bot__fab:nth-last-child(1) {
     -webkit-transition-delay: 25ms;
     transition-delay: 25ms;
 }
 
-.fab:not(:last-child):nth-last-child(2) {
+.bot__fab:not(:last-child):nth-last-child(2) {
     -webkit-transition-delay: 20ms;
     transition-delay: 20ms;
 }
 
-.fab:not(:last-child):nth-last-child(3) {
+.bot__fab:not(:last-child):nth-last-child(3) {
     -webkit-transition-delay: 40ms !important;
     transition-delay: 40ms;
 }
 
-.fab:not(:last-child):nth-last-child(4) {
+.bot__fab:not(:last-child):nth-last-child(4) {
     -webkit-transition-delay: 60ms;
     transition-delay: 60ms;
 }
 
-.fab:not(:last-child):nth-last-child(5) {
+.bot__fab:not(:last-child):nth-last-child(5) {
     -webkit-transition-delay: 80ms;
     transition-delay: 80ms;
 }
 
 /*Chatbox*/
-
-.chat {
+.chat__bot {
     position: fixed;
     right: 85px;
     bottom: 20px;
@@ -122,7 +121,7 @@
     top: 0px;
 }
 
-.chat_header {
+.chat_header__bot {
     /* margin: 10px; */
     font-size: 13px;
     font-family: 'font_caja_sullana2';
@@ -142,11 +141,11 @@
     border-top-right-radius: 0px;
 }
 
-.chat_header .span {
+.chat_header__bot .span {
     float: right;
 }
 
-.chat_fullscreen_loader {
+.chat_fullscreen___loader {
     display: none;
     float: right;
     cursor: pointer;
@@ -157,17 +156,17 @@
     margin: -10px 10px;
 }
 
-.chat.is-visible {
+.chat__bot.is-visible {
     opacity: 1;
     -webkit-animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
     animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
 }
 
-.is-hide {
+.is__bot_hide {
     opacity: 0
 }
 
-.chat_option {
+.chat__bot_option {
     float: left;
     font-size: 15px;
     list-style: none;
@@ -181,7 +180,7 @@
 }
 
 
-.chat_option .chat_img_option {
+.chat__bot_option .chat__bot_img_option {
     border-radius: 50%;
     width: 50px;
     float: left;
@@ -189,14 +188,14 @@
     border: 1px solid rgba(0, 0, 0, 0.21);
 }
 
-.change_img .chat_img_option {
+.change_img .chat__bot_img_option {
     /* width: 35px;
     margin: 10px 20px 0px 20px; */
     width: 50px;
     margin: 5px 20px 0px 20px;
 }
 
-.chat_option .agent {
+.chat__bot_option .agent {
     font-size: 10px;
     background: #64D841;
     color: #64D841 !important;
@@ -204,7 +203,7 @@
     padding: 0px 5px;
 }
 
-.chat_option .online {
+.chat__bot_option .online {
     font-size: 11px;
     font-weight: bold;
 }
@@ -310,7 +309,7 @@
     background: rgba(0, 0, 0, 0);
 }
 
-.fab_field .fab {
+.fab_field .bot__fab {
     width: 35px;
     height: 35px;
     box-shadow: none;
@@ -318,13 +317,13 @@
     margin: 0;
 }
 
-.fab_field .fab>i {
+.fab_field .bot__fab>i {
     font-size: 2.2em;
     /* line-height: 35px; */
     color: #bbb !important;
 }
 
-.fab_field .fab>i:hover {
+.fab_field .bot__fab>i:hover {
     color: #42a5f5 !important;
 }
 
@@ -353,7 +352,7 @@
     height: 84vh;
 }
 
-.chat .chat_converse .chat_msg_item {
+.chat__bot .chat_converse .chat_msg_item {
     position: relative;
     margin: 8px 0 5px 0;
     padding: 8px 10px;
@@ -392,29 +391,29 @@
     color: black !important;
 }
 
-.chat .chat_converse .chat_msg_item .chat_avatar {
+.chat__bot .chat_converse .chat_msg_item .chat_avatar {
     position: absolute;
     top: 0;
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_admin .chat_avatar {
+.chat__bot .chat_converse .chat_msg_item.chat_msg_item_admin .chat_avatar {
     left: -52px;
     background: rgba(0, 0, 0, 0.03);
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_user .chat_avatar {
+.chat__bot .chat_converse .chat_msg_item.chat_msg_item_user .chat_avatar {
     right: -52px;
     background: rgba(0, 0, 0, 0.6);
 }
 
-.chat .chat_converse .chat_msg_item .chat_img_option {
+.chat__bot .chat_converse .chat_msg_item .chat__bot_img_option {
     width: 40px;
     height: 40px;
     text-align: center;
     border-radius: 50%;
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+.chat__bot .chat_converse .chat_msg_item.chat_msg_item_admin {
     /* text-align: justify; */
     border-radius: 0 15px 15px 15px !important;
     /* margin-left: 60px; */
@@ -425,7 +424,7 @@
     color: #666 !important;
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_user {
+.chat__bot .chat_converse .chat_msg_item.chat_msg_item_user {
     border-radius: 15px 0px 15px 15px !important;
     /* margin-right: 20px; */
     margin-right: 25px;
@@ -435,7 +434,7 @@
     color: #eceff1 !important;
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_admin:before {
+.chat__bot .chat_converse .chat_msg_item.chat_msg_item_admin:before {
     content: '';
     position: absolute;
     top: 15px;
@@ -573,7 +572,7 @@ strong.chat_time {
 /* SMARTPHONES PORTRAIT */
 
 @media only screen and (min-width: 300px) {
-    .chat {
+    .chat__bot {
         width: 250px;
     }
 }
@@ -581,7 +580,7 @@ strong.chat_time {
 /* SMARTPHONES LANDSCAPE */
 
 @media only screen and (min-width: 480px) {
-    .chat {
+    .chat__bot {
         width: 350px;
     }
 
@@ -593,7 +592,7 @@ strong.chat_time {
 /* TABLETS PORTRAIT */
 
 @media only screen and (min-width: 768px) {
-    .chat {
+    .chat__bot {
         width: 370px;
     }
 
@@ -605,7 +604,7 @@ strong.chat_time {
 /* TABLET LANDSCAPE / DESKTOP */
 
 @media only screen and (min-width: 1024px) {
-    .chat {
+    .chat__bot {
         width: 370px;
     }
 
@@ -618,14 +617,14 @@ strong.chat_time {
 
 
 
-.blue .fab {
+.blue .bot__fab {
     background: #42a5f5;
     color: #fff !important;
 }
 
 
 
-.blue .chat {
+.blue .chat__bot {
     background: #42a5f5;
     color: #999 !important;
 }
@@ -886,20 +885,6 @@ img {
     font-size: 13px !important;
     animation: 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s 1 normal none running zoomIn;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

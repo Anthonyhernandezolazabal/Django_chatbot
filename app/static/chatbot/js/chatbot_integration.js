@@ -10,21 +10,21 @@ var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var habilidar_chat = false;
 var htmlbot = `
-<div class="fabs" style='z-index: 9999999;'>
-  <div class="chat is-visible">
-    <div id='color_bd_chatbot' class="chat_header">
-      <div class="chat_option">
+<div class="fabs_bot" style='z-index: 9999999;'>
+  <div class="chat__bot is-visible">
+    <div id='color_bd_chatbot' class="chat_header__bot">
+      <div class="chat__bot_option">
         <div class="header_img" style="margin-bottom: 8px;">
-          <img class='chat_img_option' src="${URLactual}static/chatbot_admin/assets/images/default.png" />
+          <img class='chat__bot_img_option' src="${URLactual}static/chatbot_admin/assets/images/default.png" />
         </div>
         <span id="chat_head" style="font-weight: bold;">INGyBOT</span> <br> <span class="agent">.</span>
         <span class="online" style="font-weight: bold;">En Línea</span>
-        <span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
+        <span id="chat_fullscreen_loader" class="chat_fullscreen___loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
       </div>
     </div>
 
     <div class="chat_body chat_login" style="border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;">
-      <a id="chat_third_screen" class="fab is-visible chat_a_login"><i class="zmdi zmdi-arrow-right"></i></a>
+      <a id="chat_third_screen" class="bot__fab is-visible chat_a_login"><i class="zmdi zmdi-arrow-right"></i></a>
       <p class='clss_p' id='cb_frm'>Complete el siguiente formulario para comenzar a chatear con el próximo agente disponible.</p>
 
       <input type='hidden' id='chatbot_terminos_condiciones'>
@@ -69,7 +69,7 @@ var htmlbot = `
     
     </div>
   </div>
-  <a id="prime" class="fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
+  <a id="prime" class="bot__fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
 </div>`;
 div_chatbot.innerHTML = htmlbot
 div_chatbot.setAttribute('id', 'chatboot_anthony_2020')
@@ -95,8 +95,8 @@ function toggleFab() {
   document.querySelector(".prime").classList.toggle("is-active");
   document.querySelector(".prime").classList.toggle("is-visible");
   document.querySelector("#prime").classList.toggle("is-float");
-  document.querySelector(".chat").classList.toggle("is-visible");
-  document.querySelectorAll('.fab').forEach(fab => {
+  document.querySelector(".chat__bot").classList.toggle("is-visible");
+  document.querySelectorAll('.bot__fab').forEach(fab => {
     fab.classList.toggle("is-visible");
   });
 }
@@ -106,12 +106,12 @@ document.querySelector('#chat_third_screen').addEventListener("click", function 
 document.querySelector('#chat_fullscreen_loader').addEventListener("click", function (e) {
   document.querySelector(".fullscreen").classList.toggle("zmdi-window-maximize");
   document.querySelector(".fullscreen").classList.toggle("zmdi-window-restore");
-  document.querySelector(".chat").classList.toggle("chat_fullscreen");
-  document.querySelectorAll('.fab').forEach(fab => {
-    fab.classList.toggle("is-hide");
+  document.querySelector(".chat__bot").classList.toggle("chat_fullscreen");
+  document.querySelectorAll('.bot__fab').forEach(fab => {
+    fab.classList.toggle("is__bot_hide");
   });
   document.querySelector(".header_img").classList.toggle("change_img");
-  document.querySelector(".chat_header").classList.toggle("chat_header2");
+  document.querySelector(".chat_header__bot").classList.toggle("chat_header2");
   document.querySelector(".fab_field").classList.toggle("fab_field2");
   document.querySelector(".chat_converse").classList.toggle("chat_converse2");
 });
@@ -153,8 +153,8 @@ function hideChat(hide) {
   switch (hide) {
     case 0:
       document.getElementById('chat_form').style.display = 'none'; //conversaciones
-      document.querySelector(".chat_header").style.display = 'block'; //bienvenida
-      document.querySelector(".chat_fullscreen_loader").style.display = 'none'; //bienvenida
+      document.querySelector(".chat_header__bot").style.display = 'block'; //bienvenida
+      document.querySelector(".chat_fullscreen___loader").style.display = 'none'; //bienvenida
       break;
     case 2:
       var campos_input = document.querySelectorAll('.cls_campos')
@@ -210,16 +210,16 @@ function hideChat(hide) {
       })
       document.querySelector(".fab_field").innerHTML =
       `
-      <a id="fab_camera" class="fab fab_a_field"><i class="zmdi zmdi-mic"></i></a>
-      <a href="javascript: enviar_texto(this);" id="fab_send" class="fab" style='z-index: 99999;'><i class="zmdi zmdi-mail-send"></i></a>
+      <a id="fab_camera" class="bot__fab fab_a_field"><i class="zmdi zmdi-mic"></i></a>
+      <a href="javascript: enviar_texto(this);" id="fab_send" class="bot__fab" style='z-index: 99999;'><i class="zmdi zmdi-mail-send"></i></a>
 
       <input type="text" id="textInput" onkeypress='return escribir(event,this)' name="chat_message" placeholder="Escribe algo..." class="chat_field chat_message">`;
-      document.querySelectorAll('.fab').forEach(fab => {
+      document.querySelectorAll('.bot__fab').forEach(fab => {
         fab.classList.toggle("is-visible");
       });
       document.getElementById('chat_form').style.display = 'block'
       document.querySelector(".chat_login").style.display = 'none';
-      document.querySelector(".chat_fullscreen_loader").style.display = 'block';
+      document.querySelector(".chat_fullscreen___loader").style.display = 'block';
       document.getElementById("d__chat").style.display = 'block';
                   
       var dat_______os = document.querySelector("#all_dat_conf").value;
@@ -923,7 +923,7 @@ function chatbot_personalizado() {
     console.log("A VER TODO :",response)
 
     if(response[0]['foto_logo'] != null){
-      document.querySelector('.chat_img_option').setAttribute("src", URLactual+"media/"+response[0]['foto_logo'])
+      document.querySelector('.chat__bot_img_option').setAttribute("src", URLactual+"media/"+response[0]['foto_logo'])
     }
     document.querySelector('#chat_head').innerText = response[0]['nombre_chatbot']
     document.querySelector('#cb_frm').innerText = response[0]['titulo_cuerpo']
