@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Oops!!</title>
+    
+    <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 13px;
+                margin: 15%;
+            }
+
+            .warning {
+                /* border: 1px solid; */
+                margin: 10px auto;
+                padding: 30px 20px 30px 50px;
+                background-repeat: no-repeat;
+                background-position: 10px center;
+                max-width: 460px;
+            }
+
+
+
+            .warning {
+                color: #9F6000;
+                background-color: #FEEFB3;
+                background-image: url('https://i.imgur.com/Z8q7ww7.png');
+            }
+
+            .ira{
+                background: #6a4aed none repeat scroll 0 0;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 10px 20px;
+                text-decoration: none;
+                text-transform: capitalize;
+            }
+
+    </style>
+	
+</head>
+<body>
+
+<section>
+    <div class="rt-container">
+          <div class="col-rt-12">
+              <div class="Scriptcontent">
+              
+            <!-- Error Message HTML -->
+    		
+	
+            <div class="warning">Hubo un error en nuestro servidor, por favor intente mas tarde</div>
+            <br>
+            <center><a class="ira" href="{% url 'home' %}" >ir a inicio</a></center>
+	
+	
+           <!-- End Error Message HTML -->
+    		</div>
+		</div>
+    </div>
+</section>
+     
+
+
+    <!-- Analytics -->
+
+	</body>
+</html>

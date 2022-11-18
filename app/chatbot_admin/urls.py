@@ -3,8 +3,7 @@ from .import views
 from chatbot_admin.views import LoginFormViews
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
-from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usuarios,modulo_clientes,modulo_historial_conversacion,modulo_Personalizar,modulo_Configurar,Error404View,modulo_profile
-from django.conf.urls import handler404
+from chatbot_admin.views import modulo_conversacion,FormularioCliente,modulo_usuarios,modulo_clientes,modulo_historial_conversacion,modulo_Personalizar,modulo_Configurar,modulo_profile
 urlpatterns = [
     path('',LoginFormViews.as_view(),name='login'),
 
@@ -32,4 +31,3 @@ urlpatterns = [
 
     path('profile/',login_required(modulo_profile.profile_view), name='profile'),
 ]
-handler404 = Error404View.as_view()

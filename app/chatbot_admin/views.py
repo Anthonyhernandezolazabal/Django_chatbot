@@ -178,16 +178,18 @@ MÓDULO RESPUESTAS
 ============================================="""
 class modulo_conversacion(HttpRequest):
   def respuestas(request):
-    if request.GET['i']:
-      empre_id=request.GET.get('i')
-      empresa_id_encode = empre_id[5:-5]
-      jsondata = datasetpreguntas.objects.filter(id_cliente=empresa_id_encode)
-      context = {
-        'datos':jsondata
-      }
-      return render(request, 'chatbot_admin/layouts/respuestas.html',context)
-    else:
-      return render(request, 'chatbot_admin/layouts/404.html')
+      if request.GET['i']:
+        empre_id=request.GET.get('i')
+        empresa_id_encode = empre_id[5:-5]
+        jsondata = datasetpreguntas.objects.filter(id_cliente=empresa_id_encode)
+        context = {
+          'datos':jsondata
+        }
+        return render(request, 'chatbot_admin/layouts/respuestas.html',context)
+      else:
+        return render(request, 'chatbot_admin/layouts/404.html')
+
+    
   def registrar_rpta(request):
     return render(request, 'chatbot_admin/layouts/registar_respuestas.html')
 
@@ -281,8 +283,51 @@ class Error404View(TemplateView):
   template_name = 'chatbot_admin/layouts/404.html'
 
 """=============================================
+ERROR 500
+============================================="""
+class Error505View(TemplateView):
+  template_name = 'chatbot_admin/layouts/500.html'
+  @classmethod
+  def as_error_view(cls):
+    v = cls.as_view()
+    def view(request):
+      r= v(request)
+      r.render()
+      return r
+    return view
+
+# from django.contrib.auth.models import User
+"""=============================================
 MÓDULO PROFILE
 ============================================="""
 class modulo_profile(HttpRequest):
   def profile_view(request):
-    return render(request, 'chatbot_admin/layouts/profile.html')
+
+    if request.GET['i']:
+      empre_id=request.GET.get('i')
+      id_cliente = empre_id[5:-5]
+
+      #obteniendo datos de usuario
+      datosusuario = UserProfile.objects.get(id_cliente=id_cliente)
+      datosempresa = cliente.objects.get(pk=id_cliente)
+      context = {
+        'datos_usuario':datosusuario,
+        'datos_empresa':datosempresa
+      }
+      return render(request, 'chatbot_admin/layouts/profile.html',context)
+    else:
+      return render(request, 'chatbot_admin/layouts/404.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

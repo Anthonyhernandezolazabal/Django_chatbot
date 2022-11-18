@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from chatbot_admin.models import configuraciones,datasetpreguntas
+from chatbot_admin.models import configuraciones,datasetpreguntas,cliente
 from chatbot.models import chatbot_style
   
 class ItemSerializer(serializers.ModelSerializer):
@@ -19,3 +19,8 @@ class ItemstyleSerializer(serializers.ModelSerializer):
         model = chatbot_style
         fields = '__all__' #todo los datos
         # fields = ['id','nombre','conversacion','id_cliente','registrado']
+        
+class ItemprofileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = cliente
+        fields = '__all__' #todo los datos

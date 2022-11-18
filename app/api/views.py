@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from chatbot_admin.models import configuraciones,cliente,datasetpreguntas
-from .serlializers import ItemSerializer,ItemstyleSerializer
+from .serlializers import ItemSerializer,ItemstyleSerializer,ItemprofileSerializer
 from django.shortcuts import render, get_object_or_404
 from chatbot.models import chatbot_style
 # Create your views here.
@@ -127,3 +127,37 @@ def update_style_items(request, pk):
         return Response({"message": "editado"}, status=status.HTTP_201_CREATED)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+'''=============================================
+   API PROFILE
+============================================= '''
+@api_view(['GET'])
+def view_profile_items(request):
+
+    id_empresa = request.GET.get('id_empresa')
+    if id_empresa:
+        items = cliente.objects.filter(pk=id_empresa)
+        if items:
+            data = ItemprofileSerializer(items, many=True)
+            return Response(data.data)
+        else:
+            return Response({"id":"sindatos"})
+    else:
+        items = cliente.objects.all()
+        if items:
+            data = ItemprofileSerializer(items, many=True)
+            return Response(data.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def update__profle_items(request, pk):
+    item = cliente.objects.get(pk=pk)
+    data = ItemprofileSerializer(instance=item, data=request.data)
+    if data.is_valid():
+        data.save()
+        # return Response(data.data, status=status.HTTP_201_CREATED)
+        return Response({"message": "editado"}, status=status.HTTP_201_CREATED)
+    else:
+        return Response({"message": "error"}, status=status.HTTP_404_NOT_FOUND)
+          
