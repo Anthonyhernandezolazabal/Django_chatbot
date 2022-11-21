@@ -53,8 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-# CORS_ORIGIN_WHITELIST = ['*']
-CORS_ORIGIN_WHITELIST = ['https://ariadnachatbot.tk']
+CORS_ORIGIN_WHITELIST = ['*']
 
 ROOT_URLCONF = 'bot.urls'
 
@@ -98,7 +97,7 @@ DATABASES = {
         'NAME': 'db_chatbot',
         'USER': 'proyectos',
         'PASSWORD': 'ingytal',
-        'HOST': '34.125.84.198',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
