@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = ['*']
+# CORS_ORIGIN_WHITELIST = ['*']
+CORS_ORIGIN_WHITELIST = ['https://ariadnachatbot.tk']
 
 ROOT_URLCONF = 'bot.urls'
 
