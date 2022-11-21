@@ -1,5 +1,5 @@
 //Desarrollo
-var URLactual = '//ariadna.gq/';
+var URLactual = '//ariadnachatbot.tk/';
 // var URLactual = '//192.168.214.5:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
