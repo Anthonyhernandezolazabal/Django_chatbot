@@ -14,10 +14,10 @@ SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 # CORS_ORIGIN_ALLOW_ALL = False
 
-# ALLOWED_HOSTS = ['ariadna.gq', '34.71.90.164']
+ALLOWED_HOSTS = ['ariadnachatbot.tk', '34.125.108.178']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = ["*"]
+#CORS_ORIGIN_WHITELIST = ["*"]
 
 ROOT_URLCONF = 'bot.urls'
 
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'bot.wsgi.application'
+#WSGI_APPLICATION = 'bot.wsgi.application'
 
 
 # Database
