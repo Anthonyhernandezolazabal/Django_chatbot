@@ -17,7 +17,7 @@ DEBUG = False
 # ALLOWED_HOSTS = ['*']
 # CORS_ORIGIN_ALLOW_ALL = False
 
-ALLOWED_HOSTS = ['ariadnachatbot.tk', '34.125.84.198']
+ALLOWED_HOSTS = ['ariadnachatbot.tk', '35.233.170.24']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
