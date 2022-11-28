@@ -493,7 +493,8 @@ function getBotResponse(a,b,c) {
                   <div class="slideshow-container">
                     <div id="slider">`
 
-                    rpta_rpta['respuesta_tipo'].forEach(elent_rpta => {
+                    let rpta_rpp = (rpta_rpta['respuesta_tipo']).reverse();
+                    rpta_rpp.forEach(elent_rpta => {
                       var acciones_rpta = elent_rpta['acciones'];
                       html_all += `
                       <div class="mySlides fade_">`
@@ -626,6 +627,7 @@ function show____confi(){
       method: 'GET',
     }).then(rsp => rsp.json()).then(function (response) {
 
+
       if (response[0].terminosycondiciones == "no_mostrar"){
         aceptar_terminos = true
       }else{
@@ -709,6 +711,7 @@ function validar_conf_chat(datos){
 
     //Mensaje de bienvenida
     let d__bienvenida = JSON.parse(d.texto_bienvenida)
+    
     if(d__bienvenida[0].tipo == "texto"){
       d__bienvenida[0].rptas.forEach(el__ement => {
         let bo__ddy = document.querySelector("#sh___ow__bienvenida");
@@ -795,14 +798,12 @@ function mostrar_texto_personalizado_fn(data,muestrame){
     <div style="padding: 0px 10px 0px 20px;" id="container-slider">
       <div class="slideshow-container">
         <div id="slider">`
+
+        let revert_result = (fn__d__bienvenida[0].rptas).reverse()
   
-        
-  
-        fn__d__bienvenida[0].rptas.forEach(elent_rpta => {
-  
+        revert_result.forEach(elent_rpta => {
   
           var acciones_rpta = elent_rpta['acciones'];
-          console.log("SOLUCION :",elent_rpta)
   
   
           html_all += `

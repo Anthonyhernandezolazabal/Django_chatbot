@@ -181,7 +181,7 @@ class modulo_conversacion(HttpRequest):
       if request.GET['i']:
         empre_id=request.GET.get('i')
         empresa_id_encode = empre_id[5:-5]
-        jsondata = datasetpreguntas.objects.filter(id_cliente=empresa_id_encode)
+        jsondata = datasetpreguntas.objects.filter(id_cliente=empresa_id_encode).order_by("-nombre")  #Muestra de manera desc
         context = {
           'datos':jsondata
         }

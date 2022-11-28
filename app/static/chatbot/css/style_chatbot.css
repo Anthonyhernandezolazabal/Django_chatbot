@@ -369,8 +369,9 @@
     position: relative;
     margin: 8px 0 5px 0;
     padding: 8px 10px;
-    /* max-width: 60%; */
-    max-width: 10101010101010101010isplay: block;
+    /* max-width: 60%; */ 
+    max-width: 100%;
+    display: block;
     word-wrap: break-word;
     border-radius: 3px;
     -webkit-animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
