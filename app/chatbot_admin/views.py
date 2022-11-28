@@ -238,7 +238,7 @@ class modulo_historial_conversacion(HttpRequest):
         return render(request, 'chatbot_admin/layouts/404.html')
 
       #POSTGRESQL
-      jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,email_persona,telefono_persona,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empresa_id_encode)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"'")
+      jsondata_h = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,registrado,pregunta,email_persona,telefono_persona,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(empresa_id_encode)+" AND  registrado BETWEEN SYMMETRIC '"+str(hoy)+"' AND '"+str(hasta)+"' ORDER BY nombre_persona DESC ")
       context = {
         'datos':jsondata_h
       }

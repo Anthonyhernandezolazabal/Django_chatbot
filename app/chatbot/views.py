@@ -360,7 +360,7 @@ class historialChatApiView(APIView):
     hasta = request.GET.get('hasta')
     id_empresa = request.GET.get('id_empresa')
     #POSTGRESQL
-    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"'")
+    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"' ORDER BY nombre_persona DESC")
     serializer_historial = historialChatSerializers(rpta, many=True)
     return Response(serializer_historial.data)
 '''=============================================
