@@ -22,6 +22,9 @@ urlpatterns = [
     path('guardar_img_slider/', mod_slider.guardar_imagen_slider,name='guardar_img_slider'),
     path('guardar_logo_chatbot/', mod_slider.guardarlogochatbot,name='guardar_logo_chatbot'),
     path('export_csv/',r_exportar.export_csv,name='export_csv'),
+    
+    path('show_reportes/',views.reportesInicio.as_view(), name='show_reportes'),
+    path('reporte_vistos/',views.reportes_pendientes_ver.as_view(), name='show_reportes'),
     # path('export_excel/',r_exportar.export_excel,name='export_excel'),
 
     # path('api/',include(router.urls))

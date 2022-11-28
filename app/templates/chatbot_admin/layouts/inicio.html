@@ -23,6 +23,55 @@
         {% else %}
         <h1><b id="username_user_i"></b> - Bienvenido</h1>
         {% endif %}
+
+
+
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card tilebox-one">
+              <div class="card-body">
+                <i class="mdi mdi-calendar-today float-end text-muted"></i>
+                <h6 class="text-muted text-uppercase mt-0">Interacciones del día</h6>
+                
+
+                <h2 class="m-b-20 datarpd">-</h2>
+
+
+                <figcaption class="blockquote-footer text-end mt-3 mb-0" style="font-size: 15px;cursor: pointer;" onclick="return fn_id_historial()"><span class="text-muted">Ver</span></figcaption>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="card tilebox-one">
+              <div class="card-body">
+                <i class="mdi mdi-calendar-month-outline float-end text-muted"></i>
+                <h6 class="text-muted text-uppercase mt-0">Total interacciones</h6>
+                <h2 class="m-b-20 datarpall"><span>-</span></h2>
+                <figcaption class="blockquote-footer text-end mt-3 mb-0" style="font-size: 15px;cursor: pointer;" onclick="return fn_id_historial()"><span class="text-muted">Ver</span></figcaption>
+              </div> 
+            </div> 
+          </div>
+
+          <div class="col-sm-4">
+            <div class="card tilebox-one">
+              <div class="card-body">
+                <i class="mdi mdi-robot-confused-outline float-end text-muted"></i>
+                <h6 class="text-muted text-uppercase mt-0">Interacciones Pendientes</h6>
+                <h2 class="m-b-20 datarpd_view"></h2>
+                <figcaption class="blockquote-footer text-end mt-3 mb-0" style="font-size: 15px;cursor: pointer;" onclick="return fn_id_historial()"><span class="text-muted">Ver</span></figcaption>
+              </div> <!-- end card-body-->
+            </div> <!--end card-->
+          </div>
+
+        </div>
+
+
+
+
+
+
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-10">
@@ -137,8 +186,34 @@
       datos.id_empresa = id_new_logueo
       localStorage.setItem('datos',JSON.stringify(datos))
     }
+    showDatarptes();
+    function showDatarptes(){
+      let hoy = new Date();
+      let desde = hoy.getFullYear() + '/' + ( hoy.getMonth() + 1 ) + '/' + hoy.getDate();
+      let hasta = hoy.getFullYear() + '/' + ( hoy.getMonth() + 1 ) + '/' + ( hoy.getDate() + 1 )
 
-    // 
+      fetch('/show_reportes/?id=' + id_empresa, {
+        method: 'GET',
+      }).then(rsp => rsp.json()).then(function (response) {
+        $(".datarpall").html(response.length)
+      })
+      
+      fetch('/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa , {
+        method: 'GET',
+      }).then(rsp => rsp.json()).then(function (rpta) {
+        $(".datarpd").html(rpta.length)
+      })
+
+      fetch('/reporte_vistos/?id=' + id_empresa , {
+        method: 'GET',
+      }).then(rsp => rsp.json()).then(function (rpta_view) {
+        // $(".datarpd").html(rpta.length)
+        $(".datarpd_view").html(rpta_view.length)
+      })
+
+
+    }
+
     // id_new_logueo.setAttribute('id_cliente02',document.querySelector('#id_empr').value);
   </script>
   {% endblock content %}

@@ -363,6 +363,43 @@ class historialChatApiView(APIView):
     rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id,key_session_alias,cliente_empresa_id_id,email_persona,telefono_persona,registrado,pregunta,respuesta FROM historial_chat WHERE cliente_empresa_id_id="+str(id_empresa)+" AND  registrado BETWEEN SYMMETRIC '"+str(desde)+"' AND '"+str(hasta)+"' ORDER BY nombre_persona DESC")
     serializer_historial = historialChatSerializers(rpta, many=True)
     return Response(serializer_historial.data)
+
+
+
+  
+'''=============================================
+  REPORTES DE INICIO
+============================================= '''
+class reportesInicio(APIView):
+  def get(self, request, format=None):
+    id_empresa = request.GET.get('id')
+    obj_idcl = cliente.objects.get(pk=id_empresa)
+    
+    #REPORTE DE CHAT SIN FECHAS
+    rpta = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,id FROM historial_chat WHERE cliente_empresa_id_id="+str(obj_idcl.id)+"")
+    
+    serializer_historial = historialChatSerializers(rpta, many=True)
+    return Response(serializer_historial.data)
+
+
+class reportes_pendientes_ver(APIView):
+  def get(self, request, format=None):
+    id_empresa = request.GET.get('id')
+    obj_idcl = cliente.objects.get(pk=id_empresa)
+    
+    #REPORTE DE CHAT SIN FECHAS
+    rpta_vistos = chat_user.objects.raw("SELECT DISTINCT ON (nombre_persona) nombre_persona,estado_chat,id FROM historial_chat WHERE cliente_empresa_id_id="+str(obj_idcl.id)+" AND estado_chat='novisto'")
+    
+    
+    serializer_historial = historialChatSerializers(rpta_vistos, many=True)
+    return Response(serializer_historial.data)
+
+
+
+
+
+
+
 '''=============================================
    MOSTRAR HISTORIAL POR USUARIOS
 ============================================= '''
