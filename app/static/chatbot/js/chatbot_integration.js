@@ -492,9 +492,11 @@ function getBotResponse(a,b,c) {
                 <div style="padding: 0px 10px 0px 20px;" id="container-slider">
                   <div class="slideshow-container">
                     <div id="slider">`
+                    console.log("totoaaaal :",rpta_rpta['respuesta_tipo'].length)
 
                     let rpta_rpp = (rpta_rpta['respuesta_tipo']).reverse();
                     rpta_rpp.forEach(elent_rpta => {
+                      
                       var acciones_rpta = elent_rpta['acciones'];
                       html_all += `
                       <div class="mySlides fade_">`
@@ -530,9 +532,25 @@ function getBotResponse(a,b,c) {
                             </div>`
                     });
       html_all += `
-                    </div>
-                    <a class="prev" onclick="plusSlides(-1,this)">❮</a>
-                    <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                    </div>`
+
+                      if(rpta_rpta['respuesta_tipo'].length !=0 && rpta_rpta['respuesta_tipo'].length!=1){
+                        html_all += `
+                            <a class="prev" onclick="plusSlides(-1,this)">❮</a>
+                            <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                        `
+
+                      }else{
+                        html_all += `
+                            <a class="prev" style="display: none" onclick="plusSlides(-1,this)">❮</a>
+                            <a class="next presionar" style="display: none" onclick="plusSlides(1,this)">❯</a>
+                        `
+
+                      }
+                  html_all += `
+
+
+
                   </div>
                   <br>
                 </div>`;
