@@ -645,7 +645,7 @@ function show____confi(){
         if(response[0].c_nombre == "1"){
           tmp_bot += `
                     <div class="field">
-                      <input type="text" placeholder="Nombre" class="cls_campos" id="txtusuario" name="txtusuario">
+                      <input type="text" placeholder="Nombre" class="cls_campos" id="txtusuario" onkeypress="startchat(event,this)" name="txtusuario">
                     </div>
                     <input type='hidden' id='key_alias'>
                     <input type='hidden' id='nombre_chat'>
@@ -655,13 +655,13 @@ function show____confi(){
         if(response[0].c_email == "1"){
           tmp_bot += `
             <div class="field">
-              <input type="email" placeholder="Correo electrónico" class="cls_campos" id="txtemail" name="txtemail">
+              <input type="email" placeholder="Correo electrónico" class="cls_campos" id="txtemail" name="txtemail" onkeypress="startchat(event,this)">
             </div>`
         }
         if(response[0].c_telefono == "1"){
           tmp_bot += `
             <div class="field">
-              <input type="number" placeholder="Número de teléfono" class="cls_campos" id="txttelefono" name="txttelefono">
+              <input type="number" placeholder="Número de teléfono" class="cls_campos" id="txttelefono" name="txttelefono" onkeypress="startchat(event,this)">
             </div>`
         }
 
@@ -784,6 +784,13 @@ function btn_terminos_condiciones(action, ac) {
 
 }
 
+
+function startchat(e,t){
+
+  if (e.keyCode == 13) {
+    hideChat(2);
+  }
+}
 /*=============================================
 Esta funcion lo uso para mostrar los textos de bienvenida sea por terminos y condiciones o no
 =============================================*/
