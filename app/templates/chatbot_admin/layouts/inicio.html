@@ -59,7 +59,7 @@
               <div class="card-body">
                 <i class="mdi mdi-robot-confused-outline float-end text-muted"></i>
                 <h6 class="text-muted text-uppercase mt-0">Interacciones Pendientes</h6>
-                <h2 class="m-b-20 datarpd_view"></h2>
+                <h2 class="m-b-20 datarpd_view">-</h2>
                 <figcaption class="blockquote-footer text-end mt-3 mb-0" style="font-size: 15px;cursor: pointer;" onclick="return fn_id_historial()"><span class="text-muted">Ver</span></figcaption>
               </div> <!-- end card-body-->
             </div> <!--end card-->
@@ -151,10 +151,6 @@
 
 
 
-
-
-
-
               </div>
             </div>
           </div>
@@ -164,9 +160,16 @@
   </div>
   <script>
     var Ls = localStorage.getItem('datos')
+    if($("#empresa_logueado").val() != ""){
+      showDatarptes($("#empresa_logueado").val());
+    }else{
+      showDatarptes(JSON.parse(Ls).id_empresa);
+    }
     var id_cliente = JSON.parse(Ls).id_cliente;
     var id_empresa = JSON.parse(Ls).id_empresa;
     var username_user_i = JSON.parse(Ls).username;
+
+    
     /*=============================================
     GENERANDO LINK
     =============================================*/
@@ -186,25 +189,26 @@
       datos.id_empresa = id_new_logueo
       localStorage.setItem('datos',JSON.stringify(datos))
     }
-    showDatarptes();
-    function showDatarptes(){
+    
+    
+    function showDatarptes(id_val){
       let hoy = new Date();
       let desde = hoy.getFullYear() + '/' + ( hoy.getMonth() + 1 ) + '/' + hoy.getDate();
       let hasta = hoy.getFullYear() + '/' + ( hoy.getMonth() + 1 ) + '/' + ( hoy.getDate() + 1 )
 
-      fetch('/show_reportes/?id=' + id_empresa, {
+      fetch('/show_reportes/?id=' + id_val, {
         method: 'GET',
       }).then(rsp => rsp.json()).then(function (response) {
         $(".datarpall").html(response.length)
       })
       
-      fetch('/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_empresa , {
+      fetch('/historial_fecha/?desde=' + desde + '&hasta=' + hasta + '&id_empresa=' + id_val , {
         method: 'GET',
       }).then(rsp => rsp.json()).then(function (rpta) {
         $(".datarpd").html(rpta.length)
       })
 
-      fetch('/reporte_vistos/?id=' + id_empresa , {
+      fetch('/reporte_vistos/?id=' + id_val , {
         method: 'GET',
       }).then(rsp => rsp.json()).then(function (rpta_view) {
         // $(".datarpd").html(rpta.length)
