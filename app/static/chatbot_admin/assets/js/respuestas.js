@@ -157,9 +157,18 @@ check_inpt3.addEventListener("click", () => {
   document.getElementById('div_pre_rpta').innerHTML = "";
 
 
+
+
   document.querySelector('.cls_modal').classList.remove("modal-full-width")
   // document.getElementById("divSlider").removeChild(document.getElementById("accordionExample"));
-  document.getElementById("divSlider").removeChild(document.getElementById("accordionExample"))
+  var div_slider = document.getElementById("accordionExample")
+  if (div_slider != undefined){
+    // div_slider.removeChild(document.getElementById("accordionExample"))
+    document.getElementById("divSlider").removeChild(div_slider)
+  }
+
+
+
   document.querySelector('#cls_col').className = 'col-lg-10';
 
 
@@ -1099,10 +1108,11 @@ function rpt_aut_save(a) {
       fetch('/getjson/?json_rpt=' + json_ls + '&json_nombre=' + nnn + '&nombre_bd=' + nombre_d_db + '&id_empresa=' + id_empresa + '&id_usu=' + id_usu + '&estado=' + a + '&id_registro=' + pr____g, {
         method: 'GET',
       }).then(function (response) {
+        console.log("RESPUESTA :",response)
         eliminarLS()
         // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
         // location.replace(url_python)
-        location.href = "../respuestas/?i=" + (randomCoding().toString() + id_empresa +  randomCoding().toString())
+        // location.href = "../respuestas/?i=" + (randomCoding().toString() + id_empresa +  randomCoding().toString())
         cerrar_loader('exito_entreno');
       }).catch(e => {
         cerrar_loader('error_entreno');

@@ -261,24 +261,33 @@ def getjson(request):
 
 
     if estado_rpta == "Registrar":
-      # CREAR EL ARCHIVO JSON
-      # arrayRecibido = json.loads(json_rpt)
-      arrayRecibido = json.loads(json_rpt, strict=False)
-      print("nombre_bdarrayRecibido:",arrayRecibido)
-      set_datosAdd = datasetpreguntas(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
-      set_datosAdd.save()
-      data = {}
-      data["conversations"] = []
-      for x in range(0,len(arrayRecibido)):
-          data['conversations'].append({
-            'messages': arrayRecibido[x][0]['preguntas_new'],
-            'response': arrayRecibido[x][0]['respuesta_new'],
-          })
-      with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
-          json.dump(data, file, indent=4,ensure_ascii=False)
-      conversation_directory(id_empresa)
-      initialize(id_user_create)
-      train_bot(load_conversations())
+
+      try:
+        # CREAR EL ARCHIVO JSON
+        # arrayRecibido = json.loads(json_rpt)
+        arrayRecibido = json.loads(json_rpt, strict=False)
+        print("nombre_bdarrayRecibido:",arrayRecibido)
+        set_datosAdd = datasetpreguntas(nombre=json_nombre,conversacion=json_rpt,id_cliente=cliente.objects.get(pk=id_empresa))
+        set_datosAdd.save()
+        data = {}
+        data["conversations"] = []
+        for x in range(0,len(arrayRecibido)):
+            data['conversations'].append({
+              'messages': arrayRecibido[x][0]['preguntas_new'],
+              'response': arrayRecibido[x][0]['respuesta_new'],
+            })
+        with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+            json.dump(data, file, indent=4,ensure_ascii=False)
+        conversation_directory(id_empresa)
+        initialize(id_user_create)
+        train_bot(load_conversations())
+
+        return HttpResponse(str("Registrado"))
+        
+      except Exception as inst:
+
+        return HttpResponse(str("Error",inst))
+
 
     if estado_rpta == "Editar":
       # 1. Eliminamos el json para reemplazar
