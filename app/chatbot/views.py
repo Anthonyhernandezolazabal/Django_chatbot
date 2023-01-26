@@ -290,40 +290,46 @@ def getjson(request):
 
 
     if estado_rpta == "Editar":
-      # 1. Eliminamos el json para reemplazar
-      with os.scandir(ruta_actual + '/empresa_'+id_empresa) as ficheros:
-          for fichero in ficheros:
-            if fichero.name == nombre_bd+'_'+id_empresa+'.json':
-              eliminar = ruta_actual + '/empresa_'+id_empresa+'/'+fichero.name
-              os.remove(eliminar)
-              print("ELIMINADO")
 
-      # 2. Eliminamos la base de datos para entrenar con los nuevos datos
-      bd_deleted = os.path.join(BASE_DIR)
-      delee = bd_deleted+"/"+"midbaprendida_"+id_user_create+".sqlite3"
-      os.remove(delee)
-      print("ELIMINADO BD")
+      try:
+        # 1. Eliminamos el json para reemplazar
+        with os.scandir(ruta_actual + '/empresa_'+id_empresa) as ficheros:
+            for fichero in ficheros:
+              if fichero.name == nombre_bd+'_'+id_empresa+'.json':
+                eliminar = ruta_actual + '/empresa_'+id_empresa+'/'+fichero.name
+                os.remove(eliminar)
+                print("ELIMINADO")
 
-      # 3. Crea el nuevo archivo JSON
-      arrayRecibido = json.loads(json_rpt)
-      #Editamos
-      datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
-      data = {}
-      data["conversations"] = []
-      for x in range(0,len(arrayRecibido)):
-          data['conversations'].append({
-            'messages': arrayRecibido[x][0]['preguntas_new'],
-            'response': arrayRecibido[x][0]['respuesta_new'],
-          })
-      with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
-          json.dump(data, file, indent=4,ensure_ascii=False)
+        # 2. Eliminamos la base de datos para entrenar con los nuevos datos
+        bd_deleted = os.path.join(BASE_DIR)
+        delee = bd_deleted+"/"+"midbaprendida_"+id_user_create+".sqlite3"
+        os.remove(delee)
+        print("ELIMINADO BD")
 
-      # 4. Entrena y crea la nueva base de datos
-      conversation_directory(id_empresa)
-      initialize(id_user_create)
-      train_bot(load_conversations())
+        # 3. Crea el nuevo archivo JSON
+        arrayRecibido = json.loads(json_rpt)
+        #Editamos
+        datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
+        data = {}
+        data["conversations"] = []
+        for x in range(0,len(arrayRecibido)):
+            data['conversations'].append({
+              'messages': arrayRecibido[x][0]['preguntas_new'],
+              'response': arrayRecibido[x][0]['respuesta_new'],
+            })
+        with open(ruta_actual+'/empresa_'+id_empresa+'/'+json_nombre+'_'+id_empresa+'.json', 'w', encoding='utf8') as file:
+            json.dump(data, file, indent=4,ensure_ascii=False)
 
-  return render(request, 'chatbot_admin/layouts/inicio.html')
+        # 4. Entrena y crea la nueva base de datos
+        conversation_directory(id_empresa)
+        initialize(id_user_create)
+        train_bot(load_conversations())
+
+        return HttpResponse(str("Registrado"))
+        
+      except Exception as inst:
+
+              return HttpResponse(str("Error",inst))
 
 
 def getjsondelet(request):
