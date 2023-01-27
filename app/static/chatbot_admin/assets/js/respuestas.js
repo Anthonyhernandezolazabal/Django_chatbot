@@ -499,7 +499,11 @@ function myFunction_save() {
     if (seltexto.checked == true) {
       // Obtener texto ingresado en los input de respuesta
       document.querySelectorAll('.texto_autorpta').forEach(rpta_all_all => {
-        var respuestas_all = rpta_all_all.value
+        var respuestas____all = rpta_all_all.value
+        // la g indica de forma global
+        var regex = new RegExp("\"", "g");
+        var respuestas_all = respuestas____all.replace(regex, "'");
+
         if (respuestas_all == '') {
           validar_input_respuestas_save = false
         } else {

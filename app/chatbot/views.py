@@ -286,7 +286,7 @@ def getjson(request):
         
       except Exception as inst:
 
-        return HttpResponse(str("Error",inst))
+        return HttpResponse(inst)
 
 
     if estado_rpta == "Editar":
@@ -329,7 +329,7 @@ def getjson(request):
         
       except Exception as inst:
 
-              return HttpResponse(str("Error",inst))
+              return HttpResponse(inst)
 
 
 def getjsondelet(request):
