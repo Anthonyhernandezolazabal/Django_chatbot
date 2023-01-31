@@ -584,6 +584,8 @@ function getBotResponse(a,b,c) {
                 div_r.append(r)
                 div_r.scrollTop = div_r.scrollHeight;
                 presionar_click();
+                devolver_click()
+                
 
                 document.querySelectorAll('.btn_accion').forEach(act_sld => {
 
