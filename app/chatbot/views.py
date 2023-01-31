@@ -309,7 +309,7 @@ def getjson(request):
         # 3. Crea el nuevo archivo JSON
         arrayRecibido = json.loads(json_rpt)
         #Editamos
-        datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt)
+        datasetpreguntas.objects.filter(pk=id_registro).update(nombre=json_nombre,conversacion=json_rpt,registrado=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
         data = {}
         data["conversations"] = []
         for x in range(0,len(arrayRecibido)):

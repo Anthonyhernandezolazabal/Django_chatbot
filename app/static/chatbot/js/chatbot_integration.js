@@ -499,9 +499,8 @@ function getBotResponse(a,b,c) {
                 <div style="padding: 0px 10px 0px 20px;" id="container-slider">
                   <div class="slideshow-container" style="background: #efefef;">
                     <div id="slider">`
-                    console.log("totoaaaal :",rpta_rpta['respuesta_tipo'].length)
 
-                    let rpta_rpp = (rpta_rpta['respuesta_tipo']).reverse();
+                    let rpta_rpp = (rpta_rpta['respuesta_tipo']);
                     rpta_rpp.forEach(elent_rpta => {
                       
                       var acciones_rpta = elent_rpta['acciones'];
@@ -821,7 +820,6 @@ function startchat(e,t){
 /*=============================================
 Esta funcion lo uso para mostrar los textos de bienvenida sea por terminos y condiciones o no
 =============================================*/
-var validar_img = 0;
 function mostrar_texto_personalizado_fn(data,muestrame){
 
   let fn__d__bienvenida = JSON.parse(data.texto_bienvenida)
@@ -849,10 +847,8 @@ function mostrar_texto_personalizado_fn(data,muestrame){
             }
   
             if (elent_rpta['img'] != '') {
-              validar_img = 1; //con imagen en slider
               html_all += `<div class="pos_accion">`
             } else{
-              validar_img = 0; //con imagen en slider
               html_all += `<div class="pos_accion" style="position:inherit !important">`
             }
   
@@ -880,7 +876,6 @@ function mostrar_texto_personalizado_fn(data,muestrame){
           html_all += `
                     </div>`
                     
-                  console.log("validar img:",validar_img)
                       html_all += `
                         <a class="prev dev" style="background: #efefef;color: #666 !important;left: -27.1px;" onclick="plusSlides(-1,this)">❮</a>
                         <a class="next presionar" style="background: #efefef;color: #666 !important;right: -27.1px;" onclick="plusSlides(1,this)">❯</a>
