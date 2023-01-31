@@ -369,6 +369,7 @@
     position: relative;
     margin: 8px 0 5px 0;
     padding: 8px 10px;
+    margin-right: 10px;
     /* max-width: 60%; */ 
     max-width: 100%;
     display: block;
@@ -735,22 +736,22 @@ img {
 .next {
     cursor: pointer;
     position: absolute;
-    top: 85px;
+    top: 50%;
     width: auto;
-    padding: 16px;
+    padding: 9px;
     margin-top: -22px;
     color: white;
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
+    border-radius: 3px 0 0 3px;
     user-select: none;
 }
 
 /* Position the "next button" to the right */
 .next {
     right: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 0px 3px 3px 0;
 }
 
 /* On hover, add a black background color with a little bit see-through */
@@ -827,6 +828,7 @@ img {
 .pos_accion {
     position: inherit;
     width: 100%;
+    padding: 10px;
 }
 
 @keyframes fade_ {

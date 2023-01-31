@@ -1116,7 +1116,7 @@ function rpt_aut_save(a) {
         eliminarLS()
         // var url_python = '{% url "respuestas" %}?empre_id='+id_empresa
         // location.replace(url_python)
-        // location.href = "../respuestas/?i=" + (randomCoding().toString() + id_empresa +  randomCoding().toString())
+        location.href = "../respuestas/?i=" + (randomCoding().toString() + id_empresa +  randomCoding().toString())
         cerrar_loader('exito_entreno');
       }).catch(e => {
         cerrar_loader('error_entreno');
@@ -1599,6 +1599,11 @@ function muestrame__prg(p){
     $("#rpta_json_nomb").val(response[0].nombre)
     $("#name__org").val(response[0].nombre)
     console.log("pta222 :",response[0].conversacion)
+    
+    var sssss = new RegExp("\"", "g");
+    var respuestas_a_____ll = response[0].conversacion.replace(sssss, "\"");
+    console.log("pta222333 :",respuestas_a_____ll)
+
     JSON.parse(response[0].conversacion).forEach(element => 
       {
 
@@ -1626,6 +1631,10 @@ function muestrame__prg(p){
             'tipo': "texto",
             'rpta': respuesta__slider_texto,
           }
+
+          
+   
+
           rpta__ls_tipo.push(rpta_all)
           rptaFinal_texto = {
             'respuesta_tipo': rpta__ls_tipo

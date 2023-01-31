@@ -1,6 +1,6 @@
 //Desarrollo
 var URLactual = '//ariadnachatbot.tk/';
-// var URLactual = '//192.168.214.5:8000/';
+// var URLactual = '//192.168.1.46:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
@@ -274,6 +274,13 @@ function presionar_click(){
     presionar[presionar.length-1].click();
   }
 }
+function devolver_click(){
+  var dev = document.querySelectorAll('.dev');
+  for (let i = 0; i < dev.length; i++) {
+    dev[dev.length-1].click();
+  }
+
+}
 
 /*=============================================
 EMPEZAR A CHATEAR
@@ -490,7 +497,7 @@ function getBotResponse(a,b,c) {
         
         html_all += `
                 <div style="padding: 0px 10px 0px 20px;" id="container-slider">
-                  <div class="slideshow-container">
+                  <div class="slideshow-container" style="background: #efefef;">
                     <div id="slider">`
                     console.log("totoaaaal :",rpta_rpta['respuesta_tipo'].length)
 
@@ -513,7 +520,7 @@ function getBotResponse(a,b,c) {
 
 
                         html_all += `
-                        <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${decodeURIComponent(elent_rpta['titulo_imagen'])}</h5>
+                        <h5 style="margin-top: 0;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${decodeURIComponent(elent_rpta['titulo_imagen'])}</h5>
                         <h6 style="margin: 0;font-size: 14px;">${decodeURIComponent(elent_rpta['descripcion'])}</h6>
                         `
                         acciones_rpta.forEach(act => {
@@ -536,14 +543,14 @@ function getBotResponse(a,b,c) {
 
                       if(rpta_rpta['respuesta_tipo'].length !=0 && rpta_rpta['respuesta_tipo'].length!=1){
                         html_all += `
-                            <a class="prev" onclick="plusSlides(-1,this)">❮</a>
-                            <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                            <a class="prev dev" style="background: #efefef;color: #666 !important;left: -27.1px;" onclick="plusSlides(-1,this)">❮</a>
+                            <a class="next presionar" style="background: #efefef;color: #666 !important;right: -27.1px;" onclick="plusSlides(1,this)">❯</a>
                         `
 
                       }else{
                         html_all += `
-                            <a class="prev" style="display: none" onclick="plusSlides(-1,this)">❮</a>
-                            <a class="next presionar" style="display: none" onclick="plusSlides(1,this)">❯</a>
+                            <a class="prev dev" style="background: #efefef;color: #666 !important;left: -27.1px;" style="display: none" onclick="plusSlides(-1,this)">❮</a>
+                            <a class="next presionar" style="display: none;background: #efefef;color: #666 !important;right: -27.1px;" onclick="plusSlides(1,this)">❯</a>
                         `
 
                       }
@@ -812,6 +819,7 @@ function startchat(e,t){
 /*=============================================
 Esta funcion lo uso para mostrar los textos de bienvenida sea por terminos y condiciones o no
 =============================================*/
+var validar_img = 0;
 function mostrar_texto_personalizado_fn(data,muestrame){
 
   let fn__d__bienvenida = JSON.parse(data.texto_bienvenida)
@@ -821,10 +829,10 @@ function mostrar_texto_personalizado_fn(data,muestrame){
 
     html_all += `
     <div style="padding: 0px 10px 0px 20px;" id="container-slider">
-      <div class="slideshow-container">
+      <div class="slideshow-container" style="background: #efefef;">
         <div id="slider">`
 
-        let revert_result = (fn__d__bienvenida[0].rptas).reverse()
+        let revert_result = (fn__d__bienvenida[0].rptas)
   
         revert_result.forEach(elent_rpta => {
   
@@ -839,14 +847,16 @@ function mostrar_texto_personalizado_fn(data,muestrame){
             }
   
             if (elent_rpta['img'] != '') {
+              validar_img = 1; //con imagen en slider
               html_all += `<div class="pos_accion">`
             } else{
+              validar_img = 0; //con imagen en slider
               html_all += `<div class="pos_accion" style="position:inherit !important">`
             }
   
   
             html_all += `
-            <h5 style="margin-top: 5px;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
+            <h5 style="margin-top: 0;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${elent_rpta['titulo_imagen']}</h5>
             <h6 style="margin: 0;font-size: 14px;">${elent_rpta['descripcion']}</h6>
             `
   
@@ -866,9 +876,14 @@ function mostrar_texto_personalizado_fn(data,muestrame){
           });
   
           html_all += `
-                    </div>
-                    <a class="prev" onclick="plusSlides(-1,this)">❮</a>
-                    <a class="next presionar" onclick="plusSlides(1,this)">❯</a>
+                    </div>`
+                    
+                  console.log("validar img:",validar_img)
+                      html_all += `
+                        <a class="prev dev" style="background: #efefef;color: #666 !important;left: -27.1px;" onclick="plusSlides(-1,this)">❮</a>
+                        <a class="next presionar" style="background: #efefef;color: #666 !important;right: -27.1px;" onclick="plusSlides(1,this)">❯</a>
+                      `
+          html_all += `
                   </div>
                   <br>
                 </div>`;
@@ -895,6 +910,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
                     r.innerHTML = html_all
                     div_r.append(r)
                     presionar_click();
+                    devolver_click();
   
                   }
   
@@ -909,6 +925,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
                     r.innerHTML = html_all
                     div_r.append(r)
                     presionar_click();
+                    devolver_click();
   
                   }
   

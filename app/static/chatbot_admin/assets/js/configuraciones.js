@@ -280,7 +280,7 @@ ht_____ml += `
                                             </div>
                                             <label for="example-fileinput" class="form-label">Accion:</label>
                                             <div class="mb-2">
-                                                <input class="form-control accioninicial__sld1"  value="${e__l.acciones}" required type="text" placeholder="Formular pregunta" id="textaction_sldr01" name="textaction_sldr01" style="margin-bottom: 15px;">
+                                                <input class="form-control accioninicial__sld1"  value="${e__l.acciones[0]}" required type="text" placeholder="Formular pregunta" id="textaction_sldr01" name="textaction_sldr01" style="margin-bottom: 15px;">
                                                 <div id="padre__add_new_action_sldr">`
                                             
                                                 let c____b = e__l.acciones;
