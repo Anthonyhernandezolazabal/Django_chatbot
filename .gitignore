@@ -11,9 +11,9 @@ app/profile_user/migrations/*
 
 app/api/__pycache__/*
 app/api/migrations/*
-configuracion_servidor.txt
+# configuracion_servidor.txt
 
-notes.txt
+# notes.txt
 
 app/*.sqlite3
 
@@ -25,5 +25,5 @@ recursosCajaSullana
 app/media/
 app/bot/__pycache__/*
 
-app/cert.crt
-app/cert.key
+# app/cert.crt
+# app/cert.key

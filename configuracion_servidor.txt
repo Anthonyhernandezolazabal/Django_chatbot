@@ -1,0 +1,62 @@
+CREATE DATABASE db_chatbot;
+CREATE USER proyectos WITH PASSWORD '70562134';
+
+ALTER ROLE proyectos SET client_encoding TO 'utf8';
+ALTER ROLE proyectos SET default_transaction_isolation TO 'read committed';
+ALTER ROLE proyectos SET timezone TO 'UTC';
+
+GRANT ALL PRIVILEGES ON DATABASE db_chatbot TO proyectos;
+
+\q
+
+http://34.173.186.4/
+ariadna.gq
+sudo -H pip3 install virtualenv
+
+virtualenv env
+pip install gunicorn psycopg2-binary
+
+git clone https://github.com/Anthonyhernandezolazabal/Django_chatbot.git
+
+sudo python3 manage.py migrate
+
+[ 'ariadna.gq', '34.71.90.164']
+
+sudo pip update gunicorn==20.0.2
+pip install --upgrade gunicorn==20.0.2
+
+python3 -m  venv env
+
+
+~/myprojectdir/manage.py runserver 0.0.0.0:8000
+http://ariadna.gq:8000
+
+
+gunicorn --bind 0.0.0.0:8000 myproject.wsgi
+
+
+cd ~/myprojectdir
+gunicorn --bind 0.0.0.0:8000 app.wsgi
+gunicorn --bind 0.0.0.0:8000 Django_chatbot.wsgi
+gunicorn --bind 0.0.0.0:8000 bot.wsgi
+
+config
+bot
+
+gunicorn --bind 0.0.0.0:8000 bot.wsgi
+sudo gunicorn bot.wsgi
+
+http://ariadna.gq:8000/
+
+sudo vi /etc/systemd/system/gunicorn.socket
+
+sudo ln -s /etc/nginx/sites-available/Django_chatbot /etc/nginx/sites-enabled
+
+/home/proyectos_ingytalsac/Django_chatbot
+
+sudo systemctl status gunicorn.socket
+sudo systemctl status gunicorn
+sudo systemctl status nginx
+
+sudo systemctl restart nginx
+sudo systemctl restart gunicorn

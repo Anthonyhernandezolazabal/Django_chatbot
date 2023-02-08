@@ -1,0 +1,62 @@
+Anthonyhernandezolazabal
+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
+
+
+sudo systemctl restart gunicorn
+sudo systemctl restart nginx
+
+
+/var/www/html/bmbijou_catalogo
+
+sudo a2ensite bmbijou.com.conf
+sudo service apache2 restart
+
+sudo python3 manage.py runserver_plus 0.0.0.0:443 --cert-file cert.pem --key-file key.pem
+
+
+python manage.py runserver_plus 0.0.0.0:8000 --cert-file cert.pem --key-file key.pem
+
+PARA PROD
+CAMBIAR NOMBRE DB
+CAMBIAR RUTA TOTALES
+
+Git Clone url : clonar repositios
+Git Branch nombre: Crea nuevas ramas
+git branch -D rama_anthony : eliminar rama
+git branch rama_anthony: entrar a una rama
+rm --cached nombredelarchivo:ignorar los archivos que no suban al repositorio:
+
+CREAR
+>>> art=Articulos(nombre='mesa',seccion='decoracion',precio=90)
+>>> art.save()
+>>> art2=Articulos(nombre='camisa',seccion='confeccion',precio=75)
+>>> art2.save()
+
+>>> art3=Articulos.objects.create(nombre='taladro',seccion='ferreteria',precio=65)
+
+ACTUALIZAR
+>>> art.precio=95
+
+ELIMINAR 
+>>> art5=Articulos.objects.get(id=2)   
+>>> art5.delete()
+
+
+
+gunicorn.service - Ejecutando el chatbot
+sudo systemctl - ver el estado de los servicios
+
+================================================
+sudo systemctl restart *nombre_del_servicio
+
+sudo systemctl restart nginx.service
+sudo systemctl status nginx.service
+
+
+git rm --cached
+
+
+BASE DE DATOS
+
+nombre: chatbot_db
+CREATE USER postgres WITH PASSWORD '70562134';
