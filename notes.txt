@@ -60,3 +60,8 @@ BASE DE DATOS
 
 nombre: chatbot_db
 CREATE USER postgres WITH PASSWORD '70562134';
+
+
+!Importante
+Linea 265 264 comentar para error de inicio debido a la libreria chatterbot
+site-packages/sqlalchemy/util/compat.py

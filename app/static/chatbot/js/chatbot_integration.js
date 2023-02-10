@@ -1,6 +1,7 @@
 //Desarrollo
-var URLactual = '//ariadnachatbot.tk/';
+// var URLactual = '//ariadnachatbot.tk/';
 // var URLactual = '//192.168.1.46:8000/';
+var URLactual = '//192.168.0.107:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
@@ -70,7 +71,12 @@ var htmlbot = `
     
     </div>
   </div>
-  <a id="prime" style="display:none" class="bot__fab is-float is-visible"><i class="prime zmdi zmdi-close"></i></a>
+  <a id="prime" style="display:none" class="bot__fab is-float is-visible">
+  <div class="containter-before-open">
+  <img class="image-before-open" src="//192.168.0.107:8000/media/logo_chatbot/sully-web-2_piBuKhO.gif">
+  </div>
+  </a>
+
 </div>`;
 div_chatbot.innerHTML = htmlbot
 div_chatbot.setAttribute('id', 'chatboot_anthony_2020')
@@ -395,6 +401,8 @@ function getBotResponse(a,b,c) {
     p.className = "chat_msg_item chat_msg_item_user cls_color_user"; //Agrego una clase dentro del div
     p.innerHTML = userHtml
     div_p.append(p)
+
+    //Una vez terminas de scribir el mensaje, el scroll se mueve hacia abajo
     div_p.scrollTop = div_p.scrollHeight;
     document.querySelectorAll('.cls_color_user').forEach(col => {
       col.style.background = document.querySelector('#cam_ps').value
@@ -446,6 +454,7 @@ function getBotResponse(a,b,c) {
               let div_r_null = document.querySelector("#chat_form");
               let r_n = document.createElement("div");
               r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
+              //Mensaje de respuesta
               r_n.innerHTML = '<span>' +rpta1+ '</span>'
               div_r_null.append(r_n)
   
@@ -532,7 +541,7 @@ function getBotResponse(a,b,c) {
 
                           }
                         });
-
+                      
                     html_all += `
                               </div>
                             </div>`
@@ -581,18 +590,17 @@ function getBotResponse(a,b,c) {
                 r.className = "chat_msg_item chat_msg_item_admin2"; //Agrego una clase dentro del div
                 r.innerHTML = html_all
                 div_r.append(r)
-                div_r.scrollTop = div_r.scrollHeight;
                 presionar_click();
                 devolver_click()
-                
+                //Bajar scroll de respuesta slider
+                div_r.scrollTop = div_r.scrollHeight;
 
                 document.querySelectorAll('.btn_accion').forEach(act_sld => {
 
                   act_sld.style.background = document.querySelector('#color_chat_acciones').value
                   
                 });
-                
-      
+                          
               }, 1600)
 
       }

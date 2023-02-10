@@ -25,7 +25,7 @@ sudo python3 manage.py migrate
 sudo pip update gunicorn==20.0.2
 pip install --upgrade gunicorn==20.0.2
 
-python3 -m  venv env
+python3  venv env
 
 
 ~/myprojectdir/manage.py runserver 0.0.0.0:8000

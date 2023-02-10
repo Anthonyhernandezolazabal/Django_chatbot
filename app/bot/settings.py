@@ -12,13 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t4z5qn&qcy_#$7ysoqp3$r5%)py4*b)=&43#480rlzkun^27(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
-# CORS_ORIGIN_ALLOW_ALL = False
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = False
 
-ALLOWED_HOSTS = ['ariadnachatbot.tk', '35.233.170.24']
-CORS_ORIGIN_ALLOW_ALL = True
+# ALLOWED_HOSTS = ['ariadnachatbot.tk', '35.233.170.24']
+# CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = ["*"]
+# CORS_ORIGIN_WHITELIST = ["*"]
 
 ROOT_URLCONF = 'bot.urls'
 
@@ -79,28 +79,28 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # Desarrollo
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'db_chatbot',
-#         'USER': 'postgres',
-#         'PASSWORD': '70562134',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
-# Produccion
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_chatbot',
-        'USER': 'proyectos',
-        'PASSWORD': 'ingytal',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432'
     }
 }
+
+# Produccion
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_chatbot',
+#         'USER': 'proyectos',
+#         'PASSWORD': 'ingytal',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

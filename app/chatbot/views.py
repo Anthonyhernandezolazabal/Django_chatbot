@@ -290,9 +290,10 @@ def getjson(request):
 
 
     if estado_rpta == "Editar":
-
+ 
       try:
         # 1. Eliminamos el json para reemplazar
+        print("Ingresamos a editar")
         with os.scandir(ruta_actual + '/empresa_'+id_empresa) as ficheros:
             for fichero in ficheros:
               if fichero.name == nombre_bd+'_'+id_empresa+'.json':
