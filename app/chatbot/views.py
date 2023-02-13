@@ -21,7 +21,12 @@ import time
 import csv
 # import xlwt
 import datetime
+import json
+import base64
 
+
+# Variable global para mantener el seguimiento de la conversación
+expecting_dni = False
 BASE_DIR = Path(__file__).resolve().parent.parent
 ruta_actual = os.path.join(BASE_DIR,'set_datos').replace('\\', '/')
 ''' =============================================
@@ -117,12 +122,15 @@ def getnombre(request):
 
 # ==== EJECUTAR CONVERSACIÓN ===
 def getchat(request):
+  global expecting_dni
+
   if request.GET['msg']:
     entradatmp=''
 
     nombre_chat = request.GET.get('nombre_chat')
     email_chat = request.GET.get('email_chat')
     phone_chat = request.GET.get('phone_chat')
+    usuario_chat = request.GET.get('user_chat')
     #nombre_chat getchat : anthony
     user_cook = request.GET.get('user_alias')
     #user_cook getchat : rynyshe55uhli6eaqei7k8b65bw5du
@@ -153,7 +161,27 @@ def getchat(request):
       return HttpResponse(str(rpta2))
     else:
       if chat_input!='adios':
+        
+        # response2 = bot[id_user_create].get_response(chat_input)
+        # response2 = str(response2).encode('utf-8')
+  
+        # decoded_string = base64.b64decode(response2)
+        
+        # print("clase2")
+        # response2 = json.loads(decoded_string)
+        
+        # response2 = reemplazar_texto(response2, "usuario_chat", usuario_chat)
+
+        # print(response2)
+        # response2 = json.dumps(response2)
+        # response2 = base64.b64encode(response2.encode('utf-8')).decode()
+        # print("clase codificada")
+        # print(response2)
+
         response = bot[id_user_create].get_response(chat_input)
+        
+
+
         if response.confidence > 0.0:
           myuser['bol']= 0
           user[user_cook] = myuser
@@ -173,6 +201,7 @@ def getchat(request):
             telefono_persona=phone_chat,
             cliente_empresa_id=cliente.objects.get(pk=id_empresa_id))
           user_chat.save()
+
           return HttpResponse(str(response))  
         else:
           # if user_autenticate == 'True':
@@ -695,5 +724,18 @@ class r_exportar(HttpRequest):
 
 #     return Response({"message": "Haciendo un put correctamente"}, status=status.HTTP_201_CREATED)
 
+'''=============================================
+   Utilitarios
+============================================= '''
 
-    
+# def reemplazar_texto(json_obj, texto_a_reemplazar, nuevo_texto):
+#     if isinstance(json_obj, dict):
+#         for key in json_obj:
+#             if isinstance(json_obj[key], (dict, list)):
+#                 reemplazar_texto(json_obj[key], texto_a_reemplazar, nuevo_texto)
+#             elif isinstance(json_obj[key], str):
+#                 json_obj[key] = json_obj[key].replace(texto_a_reemplazar, nuevo_texto)
+#     elif isinstance(json_obj, list):
+#         for item in json_obj:
+#             reemplazar_texto(item, texto_a_reemplazar, nuevo_texto)
+#     return json_obj

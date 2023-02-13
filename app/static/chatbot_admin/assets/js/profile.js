@@ -7,7 +7,10 @@ var id_empresa = JSON.parse(Ls).id_empresa;
 
 function editprofile(){
     if(id_empresa != ""){
-            show____profile(id_empresa)
+          const boxEdit = document.querySelector("#box-edit");
+          boxEdit.style.display = "block";
+          
+          show____profile(id_empresa)
     }else{
         localStorage.removeItem('pregunta')
         window.location.href = '{% url "logout" %}'
@@ -31,6 +34,8 @@ function show____profile(id){
         $("#showbtn").html(`<button type="submit" class="btn btn-primary">Guardar</button>`)
 
       }) 
+     
+
 }
 
 function getCookie(name) {
@@ -84,7 +89,8 @@ $('#frmeditprofile').submit(e=>{
             $(".prdrubro").html(rubro)
             $('#frmeditprofile').trigger('reset');
             $("#showbtn").html("");
-
+            const boxEdit = document.querySelector("#box-edit");
+            boxEdit.style.display = "none";
         }else
         if(response.message == "error"){
             $.NotificationApp.send("Opps!", "Ocurrió un erro, vuelva a intentar mas tarde", "top-right", "rgba(0,0,0,0.2)", "error")

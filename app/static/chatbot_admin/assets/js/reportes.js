@@ -34,7 +34,13 @@ $('input[name="dates"]').daterangepicker({
                   <h1 class="me-2 rounded-circle" height="48">${total_datos[i].nombre_persona.charAt(0).toUpperCase()}</h1>
                   <div class="w-100 overflow-hidden" style="margin: auto;">
                     <h5 class="mt-0 mb-0 font-14">
-                      <span class="float-end text-muted font-12 f____ch" attr_hr="${total_datos[i].fecha_historial_chat}">Hora</span>
+                      <span class="float-end text-muted font-12 f____ch" attr_hr="${total_datos[i].fecha_historial_chat}">
+                        ${new Date(total_datos[i].fecha_historial_chat).toLocaleString("en-US", {
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                        })}
+                      </span>
                       ${total_datos[i].nombre_persona_sin_alias}
                     </h5>
                     <p class="mt-1 mb-0 text-muted font-14">
@@ -238,6 +244,8 @@ document.querySelectorAll(".f____ch").forEach(h__r => {
   // Poner la hora que se realizó el chat
   let d = $(h__r).attr("attr_hr")
   $(h__r).html(f____(new Date(d)))
+  console.log("Hora del historial "+d)
+
 });
 ac_all()
 function ac_all(){
