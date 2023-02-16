@@ -10,6 +10,7 @@ show____confi();
 var boddy = document.querySelector("body");
 var div_chatbot = document.createElement("div");
 var habilidar_chat = false;
+
 var htmlbot = `
 <div class="fabs_bot" style='z-index: 9999999;'>
   <div class="chat__bot is-visible">
@@ -298,6 +299,7 @@ function escribir(e,t) {
       if(aceptar_terminos == true){
         getBotResponse();
         document.getElementById('textInput').value = ''
+
       }else{
         //Eliminar todo los T&C
         document.querySelectorAll(".t_y_c_cls").forEach(element => {
@@ -369,6 +371,7 @@ var ls_LS = localStorage.getItem('datos')
 var user_autenticate
 var aprendiendo = 0;
 function getBotResponse(a,b,c) {
+  
   var id_cliente_usu_attr = document.getElementById('libreria_chatbot').getAttribute('user')
   var id_empresa_e_attr = document.getElementById('libreria_chatbot').getAttribute('empresa')
   
@@ -433,7 +436,9 @@ function getBotResponse(a,b,c) {
     }else{
       elegir = rawText
     }
-    fetch(URLactual+'getchat/?msg=' + elegir + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat + '&email_chat=' + email + '&phone_chat=' + phone, {
+    var localstorage = localStorage.getItem("alias_key");
+    var usuario_chat = JSON.parse(localstorage).nombre;
+    fetch(URLactual+'getchat/?msg=' + elegir + '&id_user_create=' + id_cliente_usu_attr + '&id_empresa_id=' + id_empresa_e_attr + '&user_autenticate=' + user_autenticate + '&user_alias=' + key_alias + '&nombre_chat=' + nombre_chat + '&email_chat=' + email + '&phone_chat=' + phone + '&user_chat=' + usuario_chat , {
       method: 'GET',
     }).then(rsp => rsp.text()).then(function (response) {
       let decodedStr = atob(response);
@@ -455,7 +460,7 @@ function getBotResponse(a,b,c) {
               let r_n = document.createElement("div");
               r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
               //Mensaje de respuesta
-              r_n.innerHTML = '<span>' +rpta1+ '</span>'
+              r_n.innerHTML = '<span>' +replaceTextInText(rpta1, 'usuario_chat', usuario_chat)+ '</span>'
               div_r_null.append(r_n)
   
               
@@ -472,7 +477,7 @@ function getBotResponse(a,b,c) {
             let div_r_null = document.querySelector("#chat_form");
             let r_n = document.createElement("div");
             r_n.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-            r_n.innerHTML = '<span>' +rpta2+ '</span>'
+            r_n.innerHTML = '<span>' +replaceTextInText(rpta2, 'usuario_chat', usuario_chat)+ '</span>'
             div_r_null.append(r_n)
             div_r_null.scrollTop = div_r_null.scrollHeight;
           }, 1600);
@@ -486,13 +491,13 @@ function getBotResponse(a,b,c) {
       if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'texto') {
         document.getElementById('carga_new').style.display = "block";
         rpta_rpta['respuesta_tipo'][0]['rpta'].forEach(rpta_one => {
-
+          rpta_one['respueta_sl_texto'] = hyperlinksAnchored(decodeURIComponent((rpta_one['respueta_sl_texto'])))
           setTimeout(() => {
             document.getElementById('carga_new').style.display = "none";
             var div_r = document.querySelector("#chat_form");
             let r = document.createElement("div");
             r.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-            r.innerHTML = '<span>'+ decodeURIComponent(rpta_one['respueta_sl_texto']) +'</span>'
+            r.innerHTML = '<span>'+ replaceTextInText(rpta_one['respueta_sl_texto'], 'usuario_chat', usuario_chat) +'</span>'
             div_r.append(r)
             div_r.scrollTop = div_r.scrollHeight;
           }, 1600);
@@ -502,7 +507,7 @@ function getBotResponse(a,b,c) {
       if (rpta_rpta['respuesta_tipo'][0]['tipo'] == 'slider') {
 
         document.getElementById('carga_new').style.display = "block";
-        html_all_pre_rpta += '<span>'+ decodeURIComponent(rpta_rpta['pre_respuesta']['pre_rpta']) +'</span>'
+        html_all_pre_rpta += '<span>'+ replaceTextInText(decodeURIComponent(rpta_rpta['pre_respuesta']['pre_rpta']), 'usuario_chat', usuario_chat) +'</span>'
         
         html_all += `
                 <div style="padding: 0px 10px 0px 20px;" id="container-slider">
@@ -529,7 +534,7 @@ function getBotResponse(a,b,c) {
 
                         html_all += `
                         <h5 style="margin-top: 0;margin-bottom: 0;font-family: font_caja_sullana;font-size: 15px;">${decodeURIComponent(elent_rpta['titulo_imagen'])}</h5>
-                        <h6 style="margin: 0;font-size: 14px;">${decodeURIComponent(elent_rpta['descripcion'])}</h6>
+                        <h6 style="margin: 0;font-size: 14px;">${replaceTextInText(decodeURIComponent(elent_rpta['descripcion']), 'usuario_chat', usuario_chat)}</h6>
                         `
                         acciones_rpta.forEach(act => {
                           if (acciones_rpta.length == 1) {
@@ -745,13 +750,14 @@ function validar_conf_chat(datos){
 
     //Mensaje de bienvenida
     let d__bienvenida = JSON.parse(d.texto_bienvenida)
-    
+  
     if(d__bienvenida[0].tipo == "texto"){
       d__bienvenida[0].rptas.forEach(el__ement => {
         let bo__ddy = document.querySelector("#sh___ow__bienvenida");
         let div___chatbot = document.createElement("div");
         div___chatbot.innerHTML = `
         <div class="chat_msg_item chat_msg_item_admin">
+          
           ${el__ement}
         </div>`
         bo__ddy.append(div___chatbot);
@@ -829,10 +835,20 @@ function startchat(e,t){
 Esta funcion lo uso para mostrar los textos de bienvenida sea por terminos y condiciones o no
 =============================================*/
 function mostrar_texto_personalizado_fn(data,muestrame){
+  
+  //Extraer el nombre del usuario_chat
+  var localstorage = localStorage.getItem("alias_key");
+  var usuario_chat = JSON.parse(localstorage).nombre;
 
   let fn__d__bienvenida = JSON.parse(data.texto_bienvenida)
 
   if (fn__d__bienvenida[0].tipo == "slider"){
+
+
+  
+    fn__d__bienvenida[0].pre_rpta = fn__d__bienvenida[0].pre_rpta.replace("usuario_chat", usuario_chat);
+
+
     let html_all = "";
 
     html_all += `
@@ -841,7 +857,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
         <div id="slider">`
 
         let revert_result = (fn__d__bienvenida[0].rptas)
-  
+
         revert_result.forEach(elent_rpta => {
   
           var acciones_rpta = elent_rpta['acciones'];
@@ -916,7 +932,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
                     div_r.append(r)
                     presionar_click();
                     devolver_click();
-  
+                    div_r.scrollTop = div_r.scrollHeight;
                   }
   
                   if(muestrame == "slider"){
@@ -931,10 +947,11 @@ function mostrar_texto_personalizado_fn(data,muestrame){
                     div_r.append(r)
                     presionar_click();
                     devolver_click();
-  
+                    div_r.scrollTop = div_r.scrollHeight;
                   }
   
-  
+                
+
                 },1500)
   }
   if (fn__d__bienvenida[0].tipo == "texto"){
@@ -948,7 +965,7 @@ function mostrar_texto_personalizado_fn(data,muestrame){
       let div___r2_ = document.querySelector("#chat_form");
       let r2__ = document.createElement("div");
       r2__.className = "chat_msg_item chat_msg_item_admin"; //Agrego una clase dentro del div
-      r2__.innerHTML = '<span>'+ it__ +'</span>'
+      r2__.innerHTML = '<span>'+it__ +'</span>'
       div___r2_.append(r2__)
     
     },1500)
@@ -987,8 +1004,16 @@ function chatbot_personalizado() {
 
     
   })
+}
 
 
+/*===================Utilitarios===================== */
 
+/**Agrega etiqueta anchor a texto que tenga la estructura de un link*/
+function hyperlinksAnchored(text) {
+  return text.replace(/(http)?(s)?(:\/\/)?(([-\w]+\.)+([^\s]+))/g, '<a href="http$2://$4" target="_blank">$1$2$3$4</a>');
+}
 
+function replaceTextInText(text, textToReplace, newText) {
+  return text.replace(textToReplace, newText);
 }
