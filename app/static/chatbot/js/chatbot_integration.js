@@ -1,7 +1,7 @@
 //Desarrollo
-// var URLactual = '//ariadnachatbot.tk/';
+var URLactual = '//ariadnachatbot.tk/';
 // var URLactual = '//192.168.1.46:8000/';
-var URLactual = '//192.168.0.107:8000/';
+// var URLactual = '//192.168.0.107:8000/';
 //Desarrollo
 // var URLactual = '//35.222.244.103:8000/';
 var aceptar_terminos = false; //Aún no acepta T&C
